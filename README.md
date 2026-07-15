@@ -1,8 +1,8 @@
 # my-claude
 
-**나만의 Claude 에이전트 · 스킬 · 오케스트레이션 관리 저장소**
+**새 프로젝트를 시작할 때 가져다 쓰는 Claude 기본 셋팅(부트스트랩 템플릿)**
 
-Claude Code에서 사용하는 커스텀 서브에이전트, 스킬, 슬래시 커맨드, 워크플로우(오케스트레이션)를 한곳에서 작성하고 Git으로 버전 관리하기 위한 개인 저장소입니다. 여기서 자산을 작성·수정한 뒤 전역 `~/.claude`로 심링크하거나 복사해서 실제 Claude Code에 반영합니다.
+Claude Code에서 쓸 커스텀 서브에이전트·스킬·슬래시 커맨드·워크플로우(오케스트레이션)를 한곳에서 작성·검증·버전 관리하는 저장소입니다. 여기 자산은 특정 프로젝트에 종속되지 않은 **재사용 기본값**이며, 새 프로젝트를 열면 전역 `~/.claude` 또는 그 프로젝트의 `.claude/`로 심링크/복사해 적용합니다. **작성 → 검증 → 새 프로젝트에 적용**의 순환으로 굴러갑니다.
 
 ---
 
@@ -25,6 +25,21 @@ my-claude/
 | `skills/` | 재사용 가능한 작업 절차/지침 묶음. Claude가 필요 시 로드해 따르는 스킬. |
 | `commands/` | `/이름` 형태로 호출하는 슬래시 커맨드. |
 | `workflows/` | 여러 에이전트를 결정론적으로 조율하는 오케스트레이션 스크립트/설계 문서. |
+
+---
+
+## 현재 포함된 자산
+
+기본 셋팅이 제공하는 자산 카탈로그입니다. (상세는 각 디렉터리와 파일 frontmatter에서 확인)
+
+| 유형 | 자산 |
+| --- | --- |
+| **agents** | `api-designer`, `data-modeler`, `backend-engineer`, `performance-optimizer` — 백엔드 개발팀 |
+| **workflows** | `backend-feature` — 백엔드 기능 개발 파이프라인(설계→모델→구현→테스트→리뷰→보안) |
+| **skills** | (아직 없음 — 추가 예정) |
+| **commands** | (아직 없음 — 추가 예정) |
+
+> 백엔드 워크플로우는 전역 `~/.claude`에 이미 있는 `code-reviewer`·`security-auditor`·`test-writer`를 함께 재사용합니다. 이 저장소에서 중복 정의하지 않습니다.
 
 ---
 
@@ -71,24 +86,39 @@ skills/
 
 ---
 
-## `~/.claude`와 연동하기
+## 새 프로젝트에 적용하기
 
-이 레포에서 작성한 자산을 전역 Claude Code에 반영하는 방법입니다. **심링크**를 쓰면 이 레포만 수정해도 즉시 반영됩니다.
+이 템플릿의 자산을 실제 Claude Code에 반영하는 방법입니다. **심링크**를 쓰면 이 레포만 수정해도 연결된 모든 곳에 즉시 반영됩니다.
+
+### 전역 적용 (모든 프로젝트)
+
+`~/.claude`에 연결하면 어느 프로젝트에서든 쓸 수 있습니다.
 
 ```bash
 # 개별 에이전트를 심링크
-ln -s ~/SideProjects/my-claude/agents/code-reviewer.md ~/.claude/agents/code-reviewer.md
+ln -s ~/SideProjects/my-claude/agents/api-designer.md ~/.claude/agents/api-designer.md
 
 # 스킬 폴더를 통째로 심링크
 ln -s ~/SideProjects/my-claude/skills/my-skill ~/.claude/skills/my-skill
 
 # 커맨드 심링크
 ln -s ~/SideProjects/my-claude/commands/deploy.md ~/.claude/commands/deploy.md
+
+# 에이전트 전체를 한 번에
+for f in ~/SideProjects/my-claude/agents/*.md; do ln -s "$f" ~/.claude/agents/; done
 ```
 
-> 심링크 대신 복사(`cp`)를 쓰면 스냅샷처럼 고정되지만, 수정할 때마다 다시 복사해야 합니다. 상시 관리에는 심링크를 권장합니다.
+### 프로젝트별 적용 (그 프로젝트에서만)
 
-특정 프로젝트에서만 쓰고 싶다면 전역 `~/.claude` 대신 그 프로젝트의 `.claude/` 아래로 연결하면 됩니다.
+특정 새 프로젝트에서만 쓰고 싶으면 전역 `~/.claude` 대신 그 프로젝트의 `.claude/` 아래로 연결합니다.
+
+```bash
+# 새 프로젝트 루트에서
+mkdir -p .claude/agents
+ln -s ~/SideProjects/my-claude/agents/backend-engineer.md .claude/agents/backend-engineer.md
+```
+
+> 심링크 대신 복사(`cp`)를 쓰면 스냅샷처럼 고정되지만, 수정할 때마다 다시 복사해야 합니다. 템플릿을 계속 개선하며 재사용하려면 심링크를 권장합니다.
 
 ---
 
