@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>my-claude 구조 Playground</title>
+<style>
+  :root {
+    --bg: #f7f8fa;
+    --panel: #ffffff;
+    --panel-2: #f0f2f5;
+    --border: #e2e5ea;
+    --text: #1c2128;
+    --text-dim: #6b7280;
+    --edge: #c2c8d0;
+    --edge-strong: #7c3aed;
+    --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+    /* kind palette */
+    --k-root: #64748b;
+    --k-dir: #94a3b8;
+    --k-agent: #2563eb;
+    --k-skill: #16a34a;
+    --k-command: #d97706;
+    --k-workflow: #db2777;
+    --k-tool: #0891b2;
+    --k-external: #7c3aed;
+    --k-file: #b6bcc6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117;
+      --panel: #161b22;
+      --panel-2: #1c232d;
+      --border: #2a3139;
+      --text: #e6edf3;
+      --text-dim: #9aa4b0;
+      --edge: #39424e;
+      --edge-strong: #a78bfa;
+      --shadow: 0 1px 3px rgba(0,0,0,.4), 0 4px 20px rgba(0,0,0,.35);
+      --k-root: #94a3b8;
+      --k-dir: #64748b;
+      --k-agent: #60a5fa;
+      --k-skill: #4ade80;
+      --k-command: #fbbf24;
+      --k-workflow: #f472b6;
+      --k-tool: #22d3ee;
+      --k-external: #a78bfa;
+      --k-file: #4b5563;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo",
+                 "Noto Sans KR", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+  }
+  .app { display: flex; flex-direction: column; height: 100vh; }
+
+  header {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding: 12px 20px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    z-index: 5;
+  }
+  header h1 { font-size: 16px; margin: 0; font-weight: 650; letter-spacing: -.01em; }
+  header h1 .sub { color: var(--text-dim); font-weight: 400; margin-left: 8px; font-size: 13px; }
+
+  .toolbar { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+
+  .seg { display: inline-flex; background: var(--panel-2); border: 1px solid var(--border);
+         border-radius: 9px; padding: 3px; }
+  .seg button {
+    border: 0; background: transparent; color: var(--text-dim);
+    font-size: 13px; font-weight: 550; padding: 6px 14px; border-radius: 6px;
+    cursor: pointer; font-family: inherit; transition: all .12s;
+  }
+  .seg button.active { background: var(--panel); color: var(--text); box-shadow: var(--shadow); }
+
+  .btn {
+    border: 1px solid var(--border); background: var(--panel); color: var(--text);
+    font-size: 13px; font-weight: 550; padding: 7px 12px; border-radius: 8px;
+    cursor: pointer; font-family: inherit; transition: all .12s;
+  }
+  .btn:hover { background: var(--panel-2); }
+
+  .main { flex: 1; display: flex; min-height: 0; position: relative; }
+
+  /* ---- graph canvas ---- */
+  .stage { flex: 1; position: relative; overflow: hidden; }
+  svg { width: 100%; height: 100%; display: block; cursor: grab; }
+  svg.panning { cursor: grabbing; }
+
+  .link { stroke: var(--edge); stroke-width: 1.5; fill: none; transition: opacity .15s, stroke .15s; }
+  .link.flow { stroke-dasharray: none; }
+  .link.symlink { stroke-dasharray: 3 4; }
+  .link.dim { opacity: .12; }
+  .link.hl { stroke: var(--edge-strong); stroke-width: 2.4; }
+
+  .node { cursor: pointer; }
+  .node circle { stroke: var(--panel); stroke-width: 2.5; transition: opacity .15s; }
+  .node text {
+    font-size: 12px; font-weight: 550; fill: var(--text);
+    paint-order: stroke; stroke: var(--panel); stroke-width: 3.5px;
+    stroke-linejoin: round; pointer-events: none; user-select: none;
+  }
+  .node.empty circle { opacity: .45; stroke-dasharray: 3 3; }
+  .node.dim { opacity: .2; }
+  .node.selected circle { stroke: var(--edge-strong); stroke-width: 3.5; }
+
+  /* ---- left controls ---- */
+  .side-left {
+    position: absolute; top: 14px; left: 14px; width: 210px;
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    box-shadow: var(--shadow); padding: 14px; z-index: 3;
+  }
+  .side-left h3 { margin: 0 0 10px; font-size: 12px; text-transform: uppercase;
+                  letter-spacing: .05em; color: var(--text-dim); font-weight: 650; }
+  .legend-item { display: flex; align-items: center; gap: 9px; padding: 4px 0;
+                 font-size: 13px; cursor: pointer; user-select: none; }
+  .legend-item .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+  .legend-item .cnt { margin-left: auto; color: var(--text-dim); font-size: 11px;
+                      background: var(--panel-2); border-radius: 20px; padding: 1px 7px; min-width: 20px; text-align: center; }
+  .legend-item.off { opacity: .4; }
+  .legend-item.off .label { text-decoration: line-through; }
+
+  .hint { margin-top: 12px; font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+
+  /* ---- right detail ---- */
+  .side-right {
+    width: 320px; background: var(--panel); border-left: 1px solid var(--border);
+    padding: 20px; overflow-y: auto; z-index: 3;
+  }
+  .side-right.hidden { display: none; }
+  .detail-kind { display: inline-flex; align-items: center; gap: 7px; font-size: 12px;
+                 font-weight: 600; padding: 4px 10px; border-radius: 20px;
+                 background: var(--panel-2); }
+  .detail-kind .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .detail-title { font-size: 20px; font-weight: 700; margin: 12px 0 4px; letter-spacing: -.01em; word-break: break-word; }
+  .detail-path { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px;
+                 color: var(--text-dim); word-break: break-all; margin-bottom: 16px; }
+  .detail-desc { font-size: 13.5px; line-height: 1.6; margin-bottom: 18px; }
+  .detail-sec { margin-bottom: 16px; }
+  .detail-sec h4 { margin: 0 0 8px; font-size: 11px; text-transform: uppercase;
+                   letter-spacing: .05em; color: var(--text-dim); font-weight: 650; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 12px; padding: 3px 9px; border-radius: 6px; background: var(--panel-2);
+          border: 1px solid var(--border); font-family: ui-monospace, Menlo, monospace; }
+  .kv { font-size: 12.5px; line-height: 1.55; }
+  .kv b { font-family: ui-monospace, Menlo, monospace; color: var(--k-agent); font-weight: 600; }
+  .empty-state { color: var(--text-dim); font-size: 13.5px; line-height: 1.6; padding-top: 30px; text-align: center; }
+  .close-x { float: right; cursor: pointer; color: var(--text-dim); font-size: 18px; line-height: 1;
+             border: 0; background: transparent; padding: 0; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>my-claude 구조 <span class="sub">자산·의존성 노드 그래프 Playground</span></h1>
+    <div class="toolbar">
+      <div class="seg" id="viewSeg">
+        <button data-view="structure" class="active">구조</button>
+        <button data-view="dependency">의존성/흐름</button>
+      </div>
+      <button class="btn" id="resetBtn">레이아웃 리셋</button>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="stage">
+      <svg id="svg">
+        <defs>
+          <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--edge)"/>
+          </marker>
+          <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--edge-strong)"/>
+          </marker>
+        </defs>
+        <g id="viewport">
+          <g id="links"></g>
+          <g id="nodes"></g>
+        </g>
+      </svg>
+
+      <div class="side-left">
+        <h3 id="legendTitle">범례 · 필터</h3>
+        <div id="legend"></div>
+        <div class="hint" id="hint"></div>
+      </div>
+    </div>
+
+    <aside class="side-right hidden" id="detail"></aside>
+  </div>
+</div>
+
+<script>
+/* ============================================================================
+ * my-claude 저장소 스냅샷 (2026-07 기준).
+ * 새 자산을 추가하려면: NODES에 { id, label, kind, path, meta } 한 줄을 넣고,
+ * EDGES에 { source, target, rel } 를 추가하면 그래프에 자동 반영됩니다.
+ *   kind : root | dir | agent | skill | command | workflow | tool | external | file
+ *   rel  : contains(구조) | flow(유형 흐름) | uses(agent→tool) | symlink(→ ~/.claude)
+ * ========================================================================== */
+
+const KIND = {
+  root:     { label: '루트',       color: 'var(--k-root)',     r: 15 },
+  dir:      { label: '디렉터리',    color: 'var(--k-dir)',      r: 12 },
+  agent:    { label: '에이전트',    color: 'var(--k-agent)',    r: 11 },
+  skill:    { label: '스킬',        color: 'var(--k-skill)',    r: 11 },
+  command:  { label: '커맨드',      color: 'var(--k-command)',  r: 11 },
+  workflow: { label: '워크플로우',  color: 'var(--k-workflow)', r: 11 },
+  tool:     { label: '도구',        color: 'var(--k-tool)',     r: 8  },
+  external: { label: '~/.claude',   color: 'var(--k-external)', r: 13 },
+  file:     { label: '파일(빈 문서)', color: 'var(--k-file)',    r: 8  },
+};
+
+/* ---- 구조 뷰: 실제 파일/디렉터리 트리 ---- */
+const STRUCT_NODES = [
+  { id: 'root',        label: 'my-claude',    kind: 'root',     path: 'my-claude/', meta: { note: '커스텀 Claude 자산 저장소 (Git 관리 → ~/.claude 심링크)' } },
+  { id: 'f-readme',    label: 'README.md',    kind: 'file',     path: 'README.md',  meta: { note: '저장소 개요·연동 가이드' } },
+  { id: 'f-claudemd',  label: 'CLAUDE.md',    kind: 'file',     path: 'CLAUDE.md',  meta: { note: '이 저장소 작업 지침(프로젝트 규칙)' } },
+  { id: 'f-gitignore', label: '.gitignore',   kind: 'file',     path: '.gitignore', meta: { note: 'OS/에디터 잡파일 무시' } },
+  { id: 'd-agents',    label: 'agents/',      kind: 'dir',      path: 'agents/',    meta: { note: '서브에이전트 정의 (파일 1개 = 에이전트 1개)' } },
+  { id: 'd-skills',    label: 'skills/',      kind: 'dir',      path: 'skills/',    meta: { note: '재사용 절차·지침 묶음 (현재 스캐폴드)' }, empty: true },
+  { id: 'd-commands',  label: 'commands/',    kind: 'dir',      path: 'commands/',  meta: { note: '/이름 슬래시 커맨드 (현재 스캐폴드)' }, empty: true },
+  { id: 'd-workflows', label: 'workflows/',   kind: 'dir',      path: 'workflows/', meta: { note: '오케스트레이션 워크플로우 (현재 스캐폴드)' }, empty: true },
+
+  { id: 'api-designer', label: 'api-designer.md', kind: 'agent', path: 'agents/api-designer.md',
+    meta: {
+      name: 'api-designer',
+      desc: 'REST API를 설계하고 기존 API 설계를 리뷰하는 전문가. 새 엔드포인트/리소스를 설계하거나, 기존 API의 일관성·모범사례 준수를 검토하거나, OpenAPI 스펙을 작성할 때 사용.',
+      tools: ['Read', 'Grep', 'Glob', 'Write', 'Edit'],
+      inputs: ['request_type', 'resources', 'use_cases', 'existing_conventions', 'constraints', 'target'],
+      outputs: ['artifact', 'decisions', 'findings', 'open_questions'],
+    } },
+
+  { id: 'r-agents',    label: 'README.md', kind: 'file', path: 'agents/README.md',    meta: { note: 'agents/ 안내' } },
+  { id: 'r-skills',    label: 'README.md', kind: 'file', path: 'skills/README.md',    meta: { note: 'skills/ 안내' } },
+  { id: 'r-commands',  label: 'README.md', kind: 'file', path: 'commands/README.md',  meta: { note: 'commands/ 안내' } },
+  { id: 'r-workflows', label: 'README.md', kind: 'file', path: 'workflows/README.md', meta: { note: 'workflows/ 안내' } },
+];
+const STRUCT_EDGES = [
+  ['root','f-readme'], ['root','f-claudemd'], ['root','f-gitignore'],
+  ['root','d-agents'], ['root','d-skills'], ['root','d-commands'], ['root','d-workflows'],
+  ['d-agents','r-agents'], ['d-agents','api-designer'],
+  ['d-skills','r-skills'], ['d-commands','r-commands'], ['d-workflows','r-workflows'],
+].map(([s,t]) => ({ source: s, target: t, rel: 'contains' }));
+
+/* ---- 의존성/흐름 뷰: 자산 유형 간 설계상 데이터 흐름 ---- */
+const DEP_NODES = [
+  { id: 'command',  label: 'Command', kind: 'command',  meta: { note: '/이름 슬래시 커맨드. 스킬·에이전트를 호출하는 진입점.' } },
+  { id: 'skill',    label: 'Skill',   kind: 'skill',    meta: { note: '트리거 시 로드되는 절차·지침. 필요 시 에이전트에 위임.' } },
+  { id: 'workflow', label: 'Workflow',kind: 'workflow', meta: { note: '여러 에이전트를 fan-out/pipeline으로 결정론적 조율.' } },
+  { id: 'agent',    label: 'Agent',   kind: 'agent',    meta: { note: '특정 역할에 특화된 서브에이전트. 허용된 도구만 사용.' } },
+  { id: 'tools',    label: 'Tools',   kind: 'tool',     meta: { note: 'Read/Grep/Glob/Write/Edit/Bash 등 실제 실행 도구.' } },
+  { id: 'claude',   label: '~/.claude', kind: 'external', meta: { note: '전역 Claude Code 설치 위치. 자산을 심링크/복사해 반영.' } },
+
+  { id: 'api-designer', label: 'api-designer', kind: 'agent', path: 'agents/api-designer.md',
+    meta: {
+      name: 'api-designer',
+      desc: 'REST API를 설계하고 기존 API 설계를 리뷰하는 전문가. 새 엔드포인트/리소스를 설계하거나, 기존 API의 일관성·모범사례 준수를 검토하거나, OpenAPI 스펙을 작성할 때 사용.',
+      tools: ['Read', 'Grep', 'Glob', 'Write', 'Edit'],
+      inputs: ['request_type', 'resources', 'use_cases', 'existing_conventions', 'constraints', 'target'],
+      outputs: ['artifact', 'decisions', 'findings', 'open_questions'],
+    } },
+];
+const DEP_EDGES = [
+  { source: 'command',  target: 'skill', rel: 'flow' },
+  { source: 'command',  target: 'agent', rel: 'flow' },
+  { source: 'skill',    target: 'agent', rel: 'flow' },
+  { source: 'workflow', target: 'agent', rel: 'flow' },
+  { source: 'agent',    target: 'tools', rel: 'flow' },
+  { source: 'api-designer', target: 'agent', rel: 'flow' },
+  { source: 'api-designer', target: 'tools', rel: 'uses' },
+  // 자산 유형 → 전역 설치
+  { source: 'command',  target: 'claude', rel: 'symlink' },
+  { source: 'skill',    target: 'claude', rel: 'symlink' },
+  { source: 'workflow', target: 'claude', rel: 'symlink' },
+  { source: 'agent',    target: 'claude', rel: 'symlink' },
+];
+
+const VIEWS = {
+  structure:  { nodes: STRUCT_NODES, edges: STRUCT_EDGES,
+                hint: '실제 파일/디렉터리 트리. 흐릿한 점선 노드는 아직 자산이 없는 빈 디렉터리입니다.' },
+  dependency: { nodes: DEP_NODES,   edges: DEP_EDGES,
+                hint: '자산 유형 간 설계상 흐름: Command→Skill→Agent→Tools, Workflow→Agent. 점선은 ~/.claude 심링크 반영.' },
+};
+
+/* ============================================================================
+ * 렌더링 + 경량 force 시뮬레이션
+ * ========================================================================== */
+const svg = document.getElementById('svg');
+const viewport = document.getElementById('viewport');
+const gLinks = document.getElementById('links');
+const gNodes = document.getElementById('nodes');
+const detailEl = document.getElementById('detail');
+const legendEl = document.getElementById('legend');
+const hintEl = document.getElementById('hint');
+const SVGNS = 'http://www.w3.org/2000/svg';
+
+let state = {
+  view: 'structure',
+  nodes: [], edges: [],
+  hidden: new Set(),      // kinds filtered out
+  selected: null,
+  sim: null,
+  transform: { x: 0, y: 0, k: 1 },
+};
+
+function size() { const r = svg.getBoundingClientRect(); return { w: r.width, h: r.height }; }
+
+function buildView(view) {
+  state.view = view;
+  const def = VIEWS[view];
+  const { w, h } = size();
+  // 위치 유지: 같은 id면 기존 좌표 재사용
+  const prev = {}; state.nodes.forEach(n => prev[n.id] = n);
+  state.nodes = def.nodes.map((n, i) => {
+    const p = prev[n.id];
+    const angle = (i / def.nodes.length) * Math.PI * 2;
+    return Object.assign({}, n, {
+      x: p ? p.x : w/2 + Math.cos(angle) * 160 + (i%3)*8,
+      y: p ? p.y : h/2 + Math.sin(angle) * 140 + (i%2)*8,
+      vx: 0, vy: 0, fx: null, fy: null,
+    });
+  });
+  state.edges = def.edges.map(e => Object.assign({}, e));
+  state.selected = null;
+  hintEl.textContent = def.hint;
+  renderLegend();
+  renderGraph();
+  restartSim();
+  renderDetail(null);
+}
+
+function activeNodes() { return state.nodes.filter(n => !state.hidden.has(n.kind)); }
+function activeIds() { return new Set(activeNodes().map(n => n.id)); }
+function activeEdges() { const ids = activeIds(); return state.edges.filter(e => ids.has(e.source) && ids.has(e.target)); }
+
+/* ---- simulation ---- */
+function restartSim() {
+  if (state.sim) cancelAnimationFrame(state.sim);
+  let alpha = 1;
+  const step = () => {
+    alpha *= 0.985;
+    tick(alpha);
+    drawPositions();
+    if (alpha > 0.02) state.sim = requestAnimationFrame(step);
+    else state.sim = null;
+  };
+  step();
+}
+
+function tick(alpha) {
+  const { w, h } = size();
+  const ns = activeNodes();
+  const es = activeEdges();
+  const byId = {}; ns.forEach(n => byId[n.id] = n);
+  // 반발력
+  for (let i = 0; i < ns.length; i++) {
+    for (let j = i+1; j < ns.length; j++) {
+      const a = ns[i], b = ns[j];
+      let dx = a.x - b.x, dy = a.y - b.y;
+      let d2 = dx*dx + dy*dy || 0.01;
+      const force = 6000 / d2;
+      const d = Math.sqrt(d2);
+      const fx = (dx/d) * force, fy = (dy/d) * force;
+      a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+    }
+  }
+  // 스프링(엣지)
+  const LINK_LEN = 110;
+  es.forEach(e => {
+    const a = byId[e.source], b = byId[e.target];
+    if (!a || !b) return;
+    let dx = b.x - a.x, dy = b.y - a.y;
+    let d = Math.sqrt(dx*dx + dy*dy) || 0.01;
+    const k = (d - LINK_LEN) * 0.03;
+    const fx = (dx/d) * k, fy = (dy/d) * k;
+    a.vx += fx; a.vy += fy; b.vx -= fx; b.vy -= fy;
+  });
+  // 센터링 + 적분
+  ns.forEach(n => {
+    n.vx += (w/2 - n.x) * 0.004;
+    n.vy += (h/2 - n.y) * 0.004;
+    if (n.fx != null) { n.x = n.fx; n.y = n.fy; n.vx = 0; n.vy = 0; return; }
+    n.vx *= 0.82; n.vy *= 0.82;
+    n.x += n.vx * alpha * 2.2;
+    n.y += n.vy * alpha * 2.2;
+    n.x = Math.max(40, Math.min(w - 40, n.x));
+    n.y = Math.max(40, Math.min(h - 40, n.y));
+  });
+}
+
+/* ---- draw ---- */
+let linkEls = new Map(), nodeEls = new Map();
+
+function renderGraph() {
+  gLinks.innerHTML = ''; gNodes.innerHTML = '';
+  linkEls.clear(); nodeEls.clear();
+  const ids = activeIds();
+
+  activeEdges().forEach((e, i) => {
+    const p = document.createElementNS(SVGNS, 'path');
+    p.setAttribute('class', 'link ' + e.rel);
+    if (e.rel !== 'contains') p.setAttribute('marker-end', 'url(#arrow)');
+    p.dataset.source = e.source; p.dataset.target = e.target;
+    gLinks.appendChild(p);
+    linkEls.set(e.source + '>' + e.target, { el: p, e });
+  });
+
+  activeNodes().forEach(n => {
+    const g = document.createElementNS(SVGNS, 'g');
+    g.setAttribute('class', 'node' + (n.empty ? ' empty' : ''));
+    g.dataset.id = n.id;
+    const spec = KIND[n.kind];
+    const c = document.createElementNS(SVGNS, 'circle');
+    c.setAttribute('r', spec.r);
+    c.setAttribute('fill', spec.color);
+    const t = document.createElementNS(SVGNS, 'text');
+    t.setAttribute('text-anchor', 'middle');
+    t.setAttribute('dy', spec.r + 15);
+    t.textContent = n.label;
+    g.appendChild(c); g.appendChild(t);
+    gNodes.appendChild(g);
+    nodeEls.set(n.id, g);
+    attachNodeEvents(g, n);
+  });
+  drawPositions();
+}
+
+function drawPositions() {
+  const byId = {}; state.nodes.forEach(n => byId[n.id] = n);
+  linkEls.forEach(({ el, e }) => {
+    const a = byId[e.source], b = byId[e.target];
+    if (!a || !b) return;
+    // 타깃 원 반경만큼 화살표 여백
+    const spec = KIND[b.kind];
+    let dx = b.x - a.x, dy = b.y - a.y;
+    let d = Math.sqrt(dx*dx + dy*dy) || 1;
+    const ex = b.x - (dx/d) * (spec.r + 4);
+    const ey = b.y - (dy/d) * (spec.r + 4);
+    el.setAttribute('d', `M${a.x},${a.y} L${ex},${ey}`);
+  });
+  nodeEls.forEach((g, id) => {
+    const n = byId[id];
+    g.setAttribute('transform', `translate(${n.x},${n.y})`);
+  });
+}
+
+/* ---- interactions: drag + hover + select ---- */
+function attachNodeEvents(g, n) {
+  let dragging = false, moved = false;
+  const onDown = (ev) => {
+    ev.stopPropagation();
+    dragging = true; moved = false;
+    g.setPointerCapture?.(ev.pointerId);
+  };
+  const onMove = (ev) => {
+    if (!dragging) return;
+    moved = true;
+    const pt = toGraph(ev.clientX, ev.clientY);
+    n.fx = pt.x; n.fy = pt.y; n.x = pt.x; n.y = pt.y;
+    drawPositions();
+  };
+  const onUp = (ev) => {
+    if (!dragging) return;
+    dragging = false;
+    n.fx = null; n.fy = null;
+    if (!moved) selectNode(n);
+    else restartSim();
+  };
+  g.addEventListener('pointerdown', onDown);
+  g.addEventListener('pointermove', onMove);
+  g.addEventListener('pointerup', onUp);
+  g.addEventListener('pointerenter', () => hover(n.id));
+  g.addEventListener('pointerleave', () => { if (!state.selected) clearHover(); });
+}
+
+function neighborsOf(id) {
+  const set = new Set([id]);
+  activeEdges().forEach(e => {
+    if (e.source === id) set.add(e.target);
+    if (e.target === id) set.add(e.source);
+  });
+  return set;
+}
+
+function hover(id) {
+  const keep = neighborsOf(id);
+  nodeEls.forEach((g, nid) => g.classList.toggle('dim', !keep.has(nid)));
+  linkEls.forEach(({ el, e }) => {
+    const on = e.source === id || e.target === id;
+    el.classList.toggle('hl', on);
+    el.classList.toggle('dim', !on);
+    el.setAttribute('marker-end', e.rel !== 'contains' ? (on ? 'url(#arrow-hl)' : 'url(#arrow)') : '');
+  });
+}
+function clearHover() {
+  nodeEls.forEach(g => g.classList.remove('dim'));
+  linkEls.forEach(({ el, e }) => {
+    el.classList.remove('hl', 'dim');
+    if (e.rel !== 'contains') el.setAttribute('marker-end', 'url(#arrow)');
+  });
+}
+
+function selectNode(n) {
+  state.selected = n.id;
+  nodeEls.forEach((g, nid) => g.classList.toggle('selected', nid === n.id));
+  hover(n.id);
+  renderDetail(n);
+}
+function deselect() {
+  state.selected = null;
+  nodeEls.forEach(g => g.classList.remove('selected'));
+  clearHover();
+  renderDetail(null);
+}
+
+/* ---- detail panel ---- */
+function renderDetail(n) {
+  if (!n) {
+    detailEl.classList.add('hidden');
+    detailEl.innerHTML = '';
+    return;
+  }
+  detailEl.classList.remove('hidden');
+  const spec = KIND[n.kind];
+  const m = n.meta || {};
+  let html = `<button class="close-x" onclick="deselect()">✕</button>`;
+  html += `<span class="detail-kind"><span class="dot" style="background:${spec.color}"></span>${spec.label}${n.empty ? ' · 빈 스캐폴드' : ''}</span>`;
+  html += `<div class="detail-title">${escapeHtml(m.name || n.label)}</div>`;
+  if (n.path) html += `<div class="detail-path">${escapeHtml(n.path)}</div>`;
+  if (m.desc) html += `<div class="detail-desc">${escapeHtml(m.desc)}</div>`;
+  else if (m.note) html += `<div class="detail-desc">${escapeHtml(m.note)}</div>`;
+
+  if (m.tools) html += section('허용 도구 (tools)', chips(m.tools));
+  if (m.inputs) html += section('입력 계약 (inputs)', chips(m.inputs));
+  if (m.outputs) html += section('출력 계약 (outputs)', chips(m.outputs));
+
+  // 연결 관계 요약
+  const outs = activeEdges().filter(e => e.source === n.id).map(e => label(e.target) + relTag(e.rel));
+  const ins  = activeEdges().filter(e => e.target === n.id).map(e => label(e.source) + relTag(e.rel));
+  let rel = '';
+  if (ins.length) rel += `<div class="kv"><b>← 들어옴</b> ${ins.join(', ')}</div>`;
+  if (outs.length) rel += `<div class="kv" style="margin-top:6px"><b>→ 나감</b> ${outs.join(', ')}</div>`;
+  if (rel) html += section('연결 관계', rel);
+
+  detailEl.innerHTML = html;
+}
+function section(title, body) { return `<div class="detail-sec"><h4>${title}</h4>${body}</div>`; }
+function chips(arr) { return `<div class="chips">${arr.map(x => `<span class="chip">${escapeHtml(x)}</span>`).join('')}</div>`; }
+function label(id) { const n = state.nodes.find(x => x.id === id); return escapeHtml(n ? n.label : id); }
+function relTag(rel) {
+  const map = { contains: '', flow: '', uses: ' (uses)', symlink: ' (심링크)' };
+  return map[rel] || '';
+}
+function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c])); }
+
+/* ---- legend / filter ---- */
+function renderLegend() {
+  const counts = {};
+  state.nodes.forEach(n => counts[n.kind] = (counts[n.kind]||0)+1);
+  const order = Object.keys(KIND).filter(k => counts[k]);
+  legendEl.innerHTML = order.map(k => {
+    const spec = KIND[k];
+    const off = state.hidden.has(k) ? ' off' : '';
+    return `<div class="legend-item${off}" data-kind="${k}">
+      <span class="dot" style="background:${spec.color}"></span>
+      <span class="label">${spec.label}</span>
+      <span class="cnt">${counts[k]}</span>
+    </div>`;
+  }).join('');
+  legendEl.querySelectorAll('.legend-item').forEach(el => {
+    el.addEventListener('click', () => toggleKind(el.dataset.kind));
+  });
+}
+function toggleKind(k) {
+  if (state.hidden.has(k)) state.hidden.delete(k); else state.hidden.add(k);
+  if (state.selected) { const n = state.nodes.find(x => x.id === state.selected); if (state.hidden.has(n?.kind)) deselect(); }
+  renderLegend();
+  renderGraph();
+  restartSim();
+}
+
+/* ---- pan & zoom ---- */
+function applyTransform() {
+  const t = state.transform;
+  viewport.setAttribute('transform', `translate(${t.x},${t.y}) scale(${t.k})`);
+}
+function toGraph(clientX, clientY) {
+  const r = svg.getBoundingClientRect();
+  const t = state.transform;
+  return { x: (clientX - r.left - t.x) / t.k, y: (clientY - r.top - t.y) / t.k };
+}
+(function panZoom() {
+  let panning = false, sx = 0, sy = 0, ox = 0, oy = 0;
+  svg.addEventListener('pointerdown', (e) => {
+    if (e.target.closest('.node')) return;
+    panning = true; svg.classList.add('panning');
+    sx = e.clientX; sy = e.clientY; ox = state.transform.x; oy = state.transform.y;
+    deselect();
+  });
+  window.addEventListener('pointermove', (e) => {
+    if (!panning) return;
+    state.transform.x = ox + (e.clientX - sx);
+    state.transform.y = oy + (e.clientY - sy);
+    applyTransform();
+  });
+  window.addEventListener('pointerup', () => { panning = false; svg.classList.remove('panning'); });
+  svg.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const r = svg.getBoundingClientRect();
+    const mx = e.clientX - r.left, my = e.clientY - r.top;
+    const t = state.transform;
+    const factor = e.deltaY < 0 ? 1.1 : 0.9;
+    const nk = Math.max(0.4, Math.min(2.5, t.k * factor));
+    t.x = mx - (mx - t.x) * (nk / t.k);
+    t.y = my - (my - t.y) * (nk / t.k);
+    t.k = nk;
+    applyTransform();
+  }, { passive: false });
+})();
+
+/* ---- controls ---- */
+document.getElementById('viewSeg').addEventListener('click', (e) => {
+  const b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#viewSeg button').forEach(x => x.classList.toggle('active', x === b));
+  buildView(b.dataset.view);
+});
+document.getElementById('resetBtn').addEventListener('click', () => {
+  state.transform = { x: 0, y: 0, k: 1 }; applyTransform();
+  buildView(state.view);
+});
+window.addEventListener('resize', () => restartSim());
+
+/* ---- boot ---- */
+buildView('structure');
+</script>
+</body>
+</html>
