@@ -2,7 +2,7 @@
 
 **새 프로젝트를 시작할 때 가져다 쓰는 Claude 기본 셋팅(부트스트랩 템플릿)**
 
-Claude Code에서 쓸 커스텀 서브에이전트·스킬·슬래시 커맨드·워크플로우(오케스트레이션)를 한곳에서 작성·검증·버전 관리하는 저장소입니다. 여기 자산은 특정 프로젝트에 종속되지 않은 **재사용 기본값**이며, 새 프로젝트를 열면 전역 `~/.claude` 또는 그 프로젝트의 `.claude/`로 심링크/복사해 적용합니다. **작성 → 검증 → 새 프로젝트에 적용**의 순환으로 굴러갑니다.
+Claude Code에서 쓸 커스텀 서브에이전트·스킬·슬래시 커맨드를 한곳에서 작성·검증·버전 관리하는 저장소입니다. 여기 자산은 특정 프로젝트에 종속되지 않은 **재사용 기본값**이며, 새 프로젝트를 열면 전역 `~/.claude` 또는 그 프로젝트의 `.claude/`로 심링크/복사해 적용합니다. **작성 → 검증 → 새 프로젝트에 적용**의 순환으로 굴러갑니다.
 
 ---
 
@@ -15,8 +15,7 @@ my-claude/
 ├── .gitignore         # OS/에디터 잡파일 무시
 ├── agents/            # 커스텀 서브에이전트 정의 (.md + frontmatter)
 ├── skills/            # 커스텀 스킬 (SKILL.md 등)
-├── commands/          # 슬래시 커맨드 (.md)
-└── workflows/         # 오케스트레이션 워크플로우 스크립트/문서
+└── commands/          # 슬래시 커맨드 (.md)
 ```
 
 | 디렉터리 | 용도 |
@@ -24,7 +23,6 @@ my-claude/
 | `agents/` | 특정 작업을 위임할 수 있는 서브에이전트 정의. 파일 하나가 에이전트 하나. |
 | `skills/` | 재사용 가능한 작업 절차/지침 묶음. Claude가 필요 시 로드해 따르는 스킬. |
 | `commands/` | `/이름` 형태로 호출하는 슬래시 커맨드. |
-| `workflows/` | 여러 에이전트를 결정론적으로 조율하는 오케스트레이션 스크립트/설계 문서. |
 
 ---
 
@@ -34,12 +32,11 @@ my-claude/
 
 | 유형 | 자산 |
 | --- | --- |
-| **agents** | `api-designer`, `data-modeler`, `backend-engineer`, `performance-optimizer` — 백엔드 개발팀 |
-| **workflows** | `backend-feature` — 백엔드 기능 개발 파이프라인(설계→모델→구현→테스트→리뷰→보안) |
-| **skills** | (아직 없음 — 추가 예정) |
-| **commands** | (아직 없음 — 추가 예정) |
+| **agents (풀스택 기능 팀)** | `feature-pm` — 기능 분해·Phase 할당·팀 조율 · **설계** `api-designer`·`ui-designer`·`db-migrator` · **구현** `backend-impl`·`frontend-impl` · **검증** `boundary-verifier` · **테스트** `test-suite` |
+| **skills** | `nestjs` · `spring-boot` — 백엔드 관용 패턴 참조 |
+| **commands** | `commit` · `push` — git 커맨드 |
 
-> 백엔드 워크플로우는 전역 `~/.claude`에 이미 있는 `code-reviewer`·`security-auditor`·`test-writer`를 함께 재사용합니다. 이 저장소에서 중복 정의하지 않습니다.
+> 기능 팀은 전역 `~/.claude`에 이미 있는 `code-reviewer`·`security-auditor`·`test-writer`를 함께 재사용합니다. 이 저장소에서 중복 정의하지 않습니다.
 
 ---
 
@@ -80,10 +77,6 @@ skills/
 
 `/이름`으로 호출하는 슬래시 커맨드입니다. `commands/deploy.md` → `/deploy`.
 
-### 워크플로우 (`workflows/`)
-
-여러 서브에이전트를 fan-out / pipeline으로 조율하는 오케스트레이션입니다. 스크립트와 함께 설계 의도·단계 구성을 문서로 남깁니다.
-
 ---
 
 ## 새 프로젝트에 적용하기
@@ -115,7 +108,7 @@ for f in ~/SideProjects/my-claude/agents/*.md; do ln -s "$f" ~/.claude/agents/; 
 ```bash
 # 새 프로젝트 루트에서
 mkdir -p .claude/agents
-ln -s ~/SideProjects/my-claude/agents/backend-engineer.md .claude/agents/backend-engineer.md
+ln -s ~/SideProjects/my-claude/agents/backend-impl.md .claude/agents/backend-impl.md
 ```
 
 > 심링크 대신 복사(`cp`)를 쓰면 스냅샷처럼 고정되지만, 수정할 때마다 다시 복사해야 합니다. 템플릿을 계속 개선하며 재사용하려면 심링크를 권장합니다.
@@ -124,7 +117,7 @@ ln -s ~/SideProjects/my-claude/agents/backend-engineer.md .claude/agents/backend
 
 ## 새 자산 추가하기
 
-1. 해당 디렉터리에 파일/폴더를 만든다 (`agents/`, `skills/`, `commands/`, `workflows/`).
+1. 해당 디렉터리에 파일/폴더를 만든다 (`agents/`, `skills/`, `commands/`).
 2. frontmatter의 `name`, `description`을 채운다 — 특히 `description`은 **언제 쓰는지**를 명확히.
 3. `~/.claude`로 심링크해서 실제로 동작하는지 확인한다.
 4. 커밋한다.
