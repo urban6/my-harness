@@ -24,11 +24,11 @@ allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git log:*), Bash(git a
 4. **메시지 형식 (Conventional Commits 강제)**
    - `type(scope): subject`
    - type: `feat | fix | docs | style | refactor | perf | test | build | ci | chore | revert` 중 하나.
-   - subject: 명령형, 소문자 시작, 마침표 없음, 72자 이내.
+   - subject: 한국어로, 간결한 명령형, 마침표 없음, 72자 이내.
    - scope: 변경 영역(디렉터리/모듈)에서 추론하고, 애매하면 생략한다.
    - 필요 시 빈 줄 뒤 본문에 "무엇을/왜"를 불릿으로 적는다.
    - **Co-Authored-By 등 트레일러는 넣지 않는다.**
-   - 메시지 언어는 최근 커밋(`git log`)의 관례를 따르되(한국어면 한국어), **형식은 항상 Conventional Commits를 유지**한다.
+   - **접두부는 영어, 내용은 한국어**: `type`·`scope` 등 Conventional Commits 접두부(`type(scope):`)는 항상 영어 키워드로 쓰고, subject와 본문 설명은 한국어로 작성한다. `git log`가 영어여도 내용은 한국어를 유지한다.
 
 ### 안전장치
 - 스테이징할 변경이 전혀 없으면 커밋하지 말고 그대로 보고한다.
