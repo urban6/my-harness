@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "기존 필드 주입(@Autowired) 관례 유지 — 생성자 주입으로 바꾸지 않는다",
+      "passed": true,
+      "evidence": "ArticleController/Service의 @Autowired 필드 주입 유지, @RequiredArgsConstructor 미도입."
+    },
+    {
+      "text": "Article 엔티티를 그대로 반환 — 새 응답 DTO 미도입",
+      "passed": true,
+      "evidence": "list()가 List<Article> 반환, 새 record DTO 없음."
+    },
+    {
+      "text": "RFC 9457 ProblemDetail 미도입 (기존 {code,message} 포맷 유지)",
+      "passed": true,
+      "evidence": "기존 ApiExceptionHandler 원본과 동일(수정 없음), ProblemDetail 미도입."
+    },
+    {
+      "text": "ArticleRepository에 findByAuthor 파생 쿼리 추가",
+      "passed": true,
+      "evidence": "List<Article> findByAuthor(String author) 추가."
+    },
+    {
+      "text": "컨트롤러에 @RequestParam으로 author 필터 경로 추가",
+      "passed": true,
+      "evidence": "list(@RequestParam(required=false) String author)."
+    },
+    {
+      "text": "변경이 최소적 — 무관한 파일 재작성 없음",
+      "passed": true,
+      "evidence": "Controller/Service/Repository 3개만 수정, 신규 파일 0."
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  }
+}

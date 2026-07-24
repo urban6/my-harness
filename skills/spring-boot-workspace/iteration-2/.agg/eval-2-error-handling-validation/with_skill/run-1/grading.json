@@ -1,0 +1,45 @@
+{
+  "expectations": [
+    {
+      "text": "요청 DTO에 Bean Validation(@Email,@NotBlank)+@Valid",
+      "passed": true,
+      "evidence": "SignUpRequest @Email/@NotBlank, Controller @Valid."
+    },
+    {
+      "text": "이메일 중복→도메인 예외→409",
+      "passed": true,
+      "evidence": "DuplicateEmailException→CONFLICT."
+    },
+    {
+      "text": "@RestControllerAdvice 전역 핸들러 존재",
+      "passed": true,
+      "evidence": "GlobalExceptionHandler."
+    },
+    {
+      "text": "에러 응답이 RFC 9457 ProblemDetail",
+      "passed": true,
+      "evidence": "ProblemDetail 반환."
+    },
+    {
+      "text": "비밀번호가 응답 DTO에 노출되지 않음",
+      "passed": true,
+      "evidence": "MemberResponse에 password/hash 없음."
+    },
+    {
+      "text": "컨트롤러/서비스에서 try-catch 상태코드 분기 없음",
+      "passed": true,
+      "evidence": "실제 try/catch 없음(주석만)."
+    },
+    {
+      "text": "[보안] 비밀번호가 PasswordEncoder로 해시 저장(평문 저장 없음)",
+      "passed": true,
+      "evidence": "SecurityConfig BCryptPasswordEncoder 빈 + 서비스 encode(), passwordHash 필드. security.md 참조."
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "total": 7,
+    "pass_rate": 1.0
+  }
+}

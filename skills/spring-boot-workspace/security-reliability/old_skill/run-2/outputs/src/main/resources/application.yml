@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: member-service
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/app}
+    username: ${DB_USERNAME:app}
+    password: ${DB_PASSWORD}          # 기본값 없음 — 반드시 환경에서 주입
+  jpa:
+    hibernate:
+      ddl-auto: validate              # 운영은 validate/none. update·create 지양
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false               # OSIV 끔 — 지연 로딩 경계를 서비스로 강제
+
+server:
+  port: ${PORT:8080}

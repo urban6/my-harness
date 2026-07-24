@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: member-service
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:members;DB_CLOSE_DELAY=-1;MODE=PostgreSQL}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}   # 그린필드 로컬 기본. 운영은 validate/none + Flyway 권장.
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: ${PORT:8080}

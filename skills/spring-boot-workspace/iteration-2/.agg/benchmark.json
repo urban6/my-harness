@@ -1,0 +1,373 @@
+{
+  "metadata": {
+    "skill_name": "spring-boot",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "<model-name>",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-07-24T09:08:41Z",
+    "evals_run": [
+      0,
+      1,
+      2
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 0,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 72.1,
+        "tokens": 38676,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "\ucee8\ud2b8\ub864\ub7ec\uac00 \uc0dd\uc131\uc790 \uc8fc\uc785\uc744 \uc0ac\uc6a9\ud55c\ub2e4 (@Autowired \ud544\ub4dc \uc8fc\uc785 \uc5c6\uc74c)",
+          "passed": true,
+          "evidence": "@Autowired \uc5c6\uc74c, \uba85\uc2dc\uc801 \uc0dd\uc131\uc790 \uc8fc\uc785."
+        },
+        {
+          "text": "\uc694\uccad/\uc751\ub2f5\uc774 record DTO\uc774\uba70 \uc5d4\ud2f0\ud2f0(Product) \uc9c1\uc811 \ub178\ucd9c \uc5c6\uc74c",
+          "passed": true,
+          "evidence": "CreateProductRequest/ProductResponse \ubaa8\ub450 public record."
+        },
+        {
+          "text": "\uc0dd\uc131(POST) \uc751\ub2f5\uc774 201 Created + Location \ud5e4\ub354",
+          "passed": true,
+          "evidence": "ResponseEntity.created/fromCurrentRequest."
+        },
+        {
+          "text": "\ubaa9\ub85d \uc870\ud68c\uac00 Page<T>+Pageable \ud398\uc774\uc9c0\ub124\uc774\uc158",
+          "passed": true,
+          "evidence": "Page/Pageable + @PageableDefault."
+        },
+        {
+          "text": "\uc5c6\ub294 \ub9ac\uc18c\uc2a4 \uc870\ud68c \uc2dc \ub3c4\uba54\uc778 \uc608\uc678",
+          "passed": true,
+          "evidence": "orElseThrow(ProductNotFoundException)."
+        },
+        {
+          "text": "\uc11c\ube44\uc2a4 \uc4f0\uae30\uc5d0 @Transactional, \uc870\ud68c readOnly",
+          "passed": true,
+          "evidence": "\ud074\ub798\uc2a4 readOnly=true + \uc4f0\uae30 \uc624\ubc84\ub77c\uc774\ub4dc."
+        },
+        {
+          "text": "import\uac00 jakarta.* (javax \uc544\ub2d8)",
+          "passed": true,
+          "evidence": "jakarta.* \uc0ac\uc6a9."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 47.7,
+        "tokens": 28572,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "\uae30\uc874 \ud544\ub4dc \uc8fc\uc785(@Autowired) \uc720\uc9c0 \u2014 \uc0dd\uc131\uc790 \uc8fc\uc785\uc73c\ub85c \uc548 \ubc14\uafc8",
+          "passed": true,
+          "evidence": "@Autowired \ud544\ub4dc \uc8fc\uc785 \uc720\uc9c0."
+        },
+        {
+          "text": "Article \uc5d4\ud2f0\ud2f0 \uc9c1\uc811 \ubc18\ud658 \u2014 \uc0c8 DTO \ubbf8\ub3c4\uc785",
+          "passed": true,
+          "evidence": "List<Article> \ubc18\ud658."
+        },
+        {
+          "text": "RFC 9457 \ubbf8\ub3c4\uc785 (\uae30\uc874 {code,message} \uc720\uc9c0)",
+          "passed": true,
+          "evidence": "ApiExceptionHandler \ubbf8\uc218\uc815."
+        },
+        {
+          "text": "ArticleRepository\uc5d0 findByAuthor \ud30c\uc0dd \ucffc\ub9ac \ucd94\uac00",
+          "passed": true,
+          "evidence": "findByAuthor(String) \ucd94\uac00."
+        },
+        {
+          "text": "\ucee8\ud2b8\ub864\ub7ec\uc5d0 @RequestParam author \ud544\ud130 \uacbd\ub85c \ucd94\uac00",
+          "passed": true,
+          "evidence": "list(@RequestParam(required=false) String author)."
+        },
+        {
+          "text": "\ubcc0\uacbd\uc774 \ucd5c\uc18c\uc801 \u2014 \ubb34\uad00 \ud30c\uc77c \uc7ac\uc791\uc131 \uc5c6\uc74c",
+          "passed": true,
+          "evidence": "3\uac1c \ud30c\uc77c\ub9cc \uc218\uc815, \uc2e0\uaddc 0."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 97.8,
+        "tokens": 42266,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "\uc694\uccad DTO\uc5d0 Bean Validation(@Email,@NotBlank)+@Valid",
+          "passed": true,
+          "evidence": "SignUpRequest @Email/@NotBlank, Controller @Valid."
+        },
+        {
+          "text": "\uc774\uba54\uc77c \uc911\ubcf5\u2192\ub3c4\uba54\uc778 \uc608\uc678\u2192409",
+          "passed": true,
+          "evidence": "DuplicateEmailException\u2192CONFLICT."
+        },
+        {
+          "text": "@RestControllerAdvice \uc804\uc5ed \ud578\ub4e4\ub7ec \uc874\uc7ac",
+          "passed": true,
+          "evidence": "GlobalExceptionHandler."
+        },
+        {
+          "text": "\uc5d0\ub7ec \uc751\ub2f5\uc774 RFC 9457 ProblemDetail",
+          "passed": true,
+          "evidence": "ProblemDetail \ubc18\ud658."
+        },
+        {
+          "text": "\ube44\ubc00\ubc88\ud638\uac00 \uc751\ub2f5 DTO\uc5d0 \ub178\ucd9c\ub418\uc9c0 \uc54a\uc74c",
+          "passed": true,
+          "evidence": "MemberResponse\uc5d0 password/hash \uc5c6\uc74c."
+        },
+        {
+          "text": "\ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4\uc5d0\uc11c try-catch \uc0c1\ud0dc\ucf54\ub4dc \ubd84\uae30 \uc5c6\uc74c",
+          "passed": true,
+          "evidence": "\uc2e4\uc81c try/catch \uc5c6\uc74c(\uc8fc\uc11d\ub9cc)."
+        },
+        {
+          "text": "[\ubcf4\uc548] \ube44\ubc00\ubc88\ud638\uac00 PasswordEncoder\ub85c \ud574\uc2dc \uc800\uc7a5(\ud3c9\ubb38 \uc800\uc7a5 \uc5c6\uc74c)",
+          "passed": true,
+          "evidence": "\uc774 \ub7f0\uc740 \ubaa8\ub378 \uc7ac\ub7c9\uc73c\ub85c BCrypt \uad6c\ud604('\ud3c9\ubb38 \uc800\uc7a5\uc740 \uc548\ud2f0\ud328\ud134'). \ub2e8, \uad6c \uc2a4\ud0ac\uc5d4 \ubcf4\uc548 \uc9c0\uce68\uc774 \uc5c6\uc5b4 iteration-1\uc5d0\uc120 \ub3d9\uc77c \uacfc\uc81c\ub97c \uc8fc\uc11d\ub9cc \ub0a8\uae30\uace0 \ud3c9\ubb38 \uc800\uc7a5\ud588\uc74c \u2014 \ubcc0\ub3d9\uc131 \uc788\uc74c."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 69.3,
+        "tokens": 38509,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "\ucee8\ud2b8\ub864\ub7ec\uac00 \uc0dd\uc131\uc790 \uc8fc\uc785\uc744 \uc0ac\uc6a9\ud55c\ub2e4 (@Autowired \ud544\ub4dc \uc8fc\uc785 \uc5c6\uc74c)",
+          "passed": true,
+          "evidence": "@Autowired \uc5c6\uc74c, \uba85\uc2dc\uc801 \uc0dd\uc131\uc790 \uc8fc\uc785."
+        },
+        {
+          "text": "\uc694\uccad/\uc751\ub2f5\uc774 record DTO\uc774\uba70 \uc5d4\ud2f0\ud2f0(Product) \uc9c1\uc811 \ub178\ucd9c \uc5c6\uc74c",
+          "passed": true,
+          "evidence": "CreateProductRequest/ProductResponse \ubaa8\ub450 public record."
+        },
+        {
+          "text": "\uc0dd\uc131(POST) \uc751\ub2f5\uc774 201 Created + Location \ud5e4\ub354",
+          "passed": true,
+          "evidence": "ResponseEntity.created/fromCurrentRequest."
+        },
+        {
+          "text": "\ubaa9\ub85d \uc870\ud68c\uac00 Page<T>+Pageable \ud398\uc774\uc9c0\ub124\uc774\uc158",
+          "passed": true,
+          "evidence": "Page/Pageable + @PageableDefault."
+        },
+        {
+          "text": "\uc5c6\ub294 \ub9ac\uc18c\uc2a4 \uc870\ud68c \uc2dc \ub3c4\uba54\uc778 \uc608\uc678",
+          "passed": true,
+          "evidence": "orElseThrow(ProductNotFoundException)."
+        },
+        {
+          "text": "\uc11c\ube44\uc2a4 \uc4f0\uae30\uc5d0 @Transactional, \uc870\ud68c readOnly",
+          "passed": true,
+          "evidence": "\ud074\ub798\uc2a4 readOnly=true + \uc4f0\uae30 \uc624\ubc84\ub77c\uc774\ub4dc."
+        },
+        {
+          "text": "import\uac00 jakarta.* (javax \uc544\ub2d8)",
+          "passed": true,
+          "evidence": "jakarta.* \uc0ac\uc6a9."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 45.0,
+        "tokens": 29144,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "\uae30\uc874 \ud544\ub4dc \uc8fc\uc785(@Autowired) \uc720\uc9c0 \u2014 \uc0dd\uc131\uc790 \uc8fc\uc785\uc73c\ub85c \uc548 \ubc14\uafc8",
+          "passed": true,
+          "evidence": "@Autowired \ud544\ub4dc \uc8fc\uc785 \uc720\uc9c0."
+        },
+        {
+          "text": "Article \uc5d4\ud2f0\ud2f0 \uc9c1\uc811 \ubc18\ud658 \u2014 \uc0c8 DTO \ubbf8\ub3c4\uc785",
+          "passed": true,
+          "evidence": "List<Article> \ubc18\ud658."
+        },
+        {
+          "text": "RFC 9457 \ubbf8\ub3c4\uc785 (\uae30\uc874 {code,message} \uc720\uc9c0)",
+          "passed": true,
+          "evidence": "ApiExceptionHandler \ubbf8\uc218\uc815."
+        },
+        {
+          "text": "ArticleRepository\uc5d0 findByAuthor \ud30c\uc0dd \ucffc\ub9ac \ucd94\uac00",
+          "passed": true,
+          "evidence": "findByAuthor(String) \ucd94\uac00."
+        },
+        {
+          "text": "\ucee8\ud2b8\ub864\ub7ec\uc5d0 @RequestParam author \ud544\ud130 \uacbd\ub85c \ucd94\uac00",
+          "passed": true,
+          "evidence": "list(@RequestParam(required=false) String author)."
+        },
+        {
+          "text": "\ubcc0\uacbd\uc774 \ucd5c\uc18c\uc801 \u2014 \ubb34\uad00 \ud30c\uc77c \uc7ac\uc791\uc131 \uc5c6\uc74c",
+          "passed": true,
+          "evidence": "3\uac1c \ud30c\uc77c\ub9cc \uc218\uc815, \uc2e0\uaddc 0."
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 75.1,
+        "tokens": 41583,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "\uc694\uccad DTO\uc5d0 Bean Validation(@Email,@NotBlank)+@Valid",
+          "passed": true,
+          "evidence": "SignUpRequest @Email/@NotBlank, Controller @Valid."
+        },
+        {
+          "text": "\uc774\uba54\uc77c \uc911\ubcf5\u2192\ub3c4\uba54\uc778 \uc608\uc678\u2192409",
+          "passed": true,
+          "evidence": "DuplicateEmailException\u2192CONFLICT."
+        },
+        {
+          "text": "@RestControllerAdvice \uc804\uc5ed \ud578\ub4e4\ub7ec \uc874\uc7ac",
+          "passed": true,
+          "evidence": "GlobalExceptionHandler."
+        },
+        {
+          "text": "\uc5d0\ub7ec \uc751\ub2f5\uc774 RFC 9457 ProblemDetail",
+          "passed": true,
+          "evidence": "ProblemDetail \ubc18\ud658."
+        },
+        {
+          "text": "\ube44\ubc00\ubc88\ud638\uac00 \uc751\ub2f5 DTO\uc5d0 \ub178\ucd9c\ub418\uc9c0 \uc54a\uc74c",
+          "passed": true,
+          "evidence": "MemberResponse\uc5d0 password/hash \uc5c6\uc74c."
+        },
+        {
+          "text": "\ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4\uc5d0\uc11c try-catch \uc0c1\ud0dc\ucf54\ub4dc \ubd84\uae30 \uc5c6\uc74c",
+          "passed": true,
+          "evidence": "\uc2e4\uc81c try/catch \uc5c6\uc74c(\uc8fc\uc11d\ub9cc)."
+        },
+        {
+          "text": "[\ubcf4\uc548] \ube44\ubc00\ubc88\ud638\uac00 PasswordEncoder\ub85c \ud574\uc2dc \uc800\uc7a5(\ud3c9\ubb38 \uc800\uc7a5 \uc5c6\uc74c)",
+          "passed": true,
+          "evidence": "SecurityConfig BCryptPasswordEncoder \ube48 + \uc11c\ube44\uc2a4 encode(), passwordHash \ud544\ub4dc. security.md \ucc38\uc870."
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "old_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 72.5333,
+        "stddev": 25.0528,
+        "min": 47.7,
+        "max": 97.8
+      },
+      "tokens": {
+        "mean": 36504.6667,
+        "stddev": 7100.5229,
+        "min": 28572,
+        "max": 42266
+      }
+    },
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 63.1333,
+        "stddev": 15.9695,
+        "min": 45.0,
+        "max": 75.1
+      },
+      "tokens": {
+        "mean": 36412.0,
+        "stddev": 6479.2158,
+        "min": 29144,
+        "max": 41583
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.00",
+      "time_seconds": "+9.4",
+      "tokens": "+93"
+    }
+  },
+  "notes": []
+}

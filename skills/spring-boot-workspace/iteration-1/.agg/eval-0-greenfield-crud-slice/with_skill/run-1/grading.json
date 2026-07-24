@@ -1,0 +1,45 @@
+{
+  "expectations": [
+    {
+      "text": "컨트롤러가 생성자 주입을 사용한다 (@Autowired 필드 주입이 없다)",
+      "passed": true,
+      "evidence": "산출물 전체에 @Autowired 없음. ProductController가 명시적 생성자로 주입."
+    },
+    {
+      "text": "요청/응답이 record DTO이며 컨트롤러 시그니처에 엔티티(Product)를 직접 노출하지 않는다",
+      "passed": true,
+      "evidence": "CreateProductRequest, ProductResponse 모두 public record. 컨트롤러는 DTO만 사용."
+    },
+    {
+      "text": "생성(POST) 응답이 201 Created + Location 헤더다",
+      "passed": true,
+      "evidence": "ProductController에 ResponseEntity.created/fromCurrentRequest 사용."
+    },
+    {
+      "text": "목록 조회가 Page<T> + Pageable로 페이지네이션된다",
+      "passed": true,
+      "evidence": "Controller/Service에 Page<>, Pageable 사용."
+    },
+    {
+      "text": "없는 리소스 조회 시 도메인 예외를 던진다",
+      "passed": true,
+      "evidence": "ProductService에서 orElseThrow(ProductNotFoundException)."
+    },
+    {
+      "text": "서비스 쓰기 메서드에 @Transactional, 조회는 readOnly",
+      "passed": true,
+      "evidence": "클래스 @Transactional(readOnly=true) + 쓰기 메서드 오버라이드."
+    },
+    {
+      "text": "import가 jakarta.* 다 (javax.* 아님)",
+      "passed": true,
+      "evidence": "javax. 매칭 0건, jakarta.persistence/validation 사용."
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 0,
+    "total": 7,
+    "pass_rate": 1.0
+  }
+}

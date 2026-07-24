@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Set Review - spring-boot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Lora', Georgia, serif; background: #faf9f5; padding: 2rem; color: #141413; }
+    h1 { font-family: 'Poppins', sans-serif; margin-bottom: 0.5rem; font-size: 1.5rem; }
+    .description { color: #b0aea5; margin-bottom: 1.5rem; font-style: italic; max-width: 900px; }
+    .controls { margin-bottom: 1rem; display: flex; gap: 0.5rem; }
+    .btn { font-family: 'Poppins', sans-serif; padding: 0.5rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-size: 0.875rem; font-weight: 500; }
+    .btn-add { background: #6a9bcc; color: white; }
+    .btn-add:hover { background: #5889b8; }
+    .btn-export { background: #d97757; color: white; }
+    .btn-export:hover { background: #c4613f; }
+    table { width: 100%; max-width: 1100px; border-collapse: collapse; background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    th { font-family: 'Poppins', sans-serif; background: #141413; color: #faf9f5; padding: 0.75rem 1rem; text-align: left; font-size: 0.875rem; }
+    td { padding: 0.75rem 1rem; border-bottom: 1px solid #e8e6dc; vertical-align: top; }
+    tr:nth-child(even) td { background: #faf9f5; }
+    tr:hover td { background: #f3f1ea; }
+    .section-header td { background: #e8e6dc; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 0.8rem; color: #141413; text-transform: uppercase; letter-spacing: 0.05em; }
+    .query-input { width: 100%; padding: 0.4rem; border: 1px solid #e8e6dc; border-radius: 4px; font-size: 0.875rem; font-family: 'Lora', Georgia, serif; resize: vertical; min-height: 60px; }
+    .query-input:focus { outline: none; border-color: #d97757; box-shadow: 0 0 0 2px rgba(217,119,87,0.15); }
+    .toggle { position: relative; display: inline-block; width: 44px; height: 24px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle .slider { position: absolute; inset: 0; background: #b0aea5; border-radius: 24px; cursor: pointer; transition: 0.2s; }
+    .toggle .slider::before { content: ""; position: absolute; width: 18px; height: 18px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.2s; }
+    .toggle input:checked + .slider { background: #d97757; }
+    .toggle input:checked + .slider::before { transform: translateX(20px); }
+    .btn-delete { background: #c44; color: white; padding: 0.3rem 0.6rem; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-family: 'Poppins', sans-serif; }
+    .btn-delete:hover { background: #a33; }
+    .summary { margin-top: 1rem; color: #b0aea5; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+  <h1>Eval Set Review: <span id="skill-name">spring-boot</span></h1>
+  <p class="description">Current description: <span id="skill-desc">Spring Boot(3.x)로 REST API·서비스·영속성 코드를 작성하거나 수정할 때 따르는 관용 패턴·레시피 모음. 컨트롤러·서비스·리포지토리 레이어링, record DTO·Bean Validation, 예외 처리(RFC 9457 ProblemDetail), JPA·트랜잭션·페이지네이션, 설정·시크릿 외부화, 비밀번호 해싱 등 보안 기본, 테스트 규약을 제공한다. build.gradle(.kts)/pom.xml에 org.springframework.boot 의존성이 있거나 @SpringBootApplication·@RestController·@Entity가 보이는 프로젝트에서 엔드포인트·서비스·엔티티·DTO·예외 핸들러를 만들 때 반드시 사용. "Spring Boot로 API 만들어줘", "컨트롤러/서비스/리포지토리 추가", "JPA 엔티티 매핑", "회원가입 API", "에러 응답 포맷 일관되게" 같은 요청을 Spring 또는 Kotlin+Spring 프로젝트에서 받으면 이 스킬을 참조한다.</span></p>
+
+  <div class="controls">
+    <button class="btn btn-add" onclick="addRow()">+ Add Query</button>
+    <button class="btn btn-export" onclick="exportEvalSet()">Export Eval Set</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width:65%">Query</th>
+        <th style="width:18%">Should Trigger</th>
+        <th style="width:10%">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="eval-body"></tbody>
+  </table>
+
+  <p class="summary" id="summary"></p>
+
+  <script>
+    const EVAL_DATA = [
+  {"query": "우리 서비스에 주문 취소 기능 추가해야 해. OrderController에 DELETE 엔드포인트 만들고 서비스에서 취소 상태로 바꾸는 로직까지 짜줘", "should_trigger": true},
+  {"query": "build.gradle에 spring-boot-starter-web 들어있는 프로젝트야. 상품 검색 엔드포인트 만들어줘. 이름이랑 카테고리로 필터링하고 페이징도 되게", "should_trigger": true},
+  {"query": "회원 엔티티에 프로필 이미지 url 필드 하나 추가하고, 리포지토리에 이메일로 찾는 메서드도 넣어줘", "should_trigger": true},
+  {"query": "이 @RestController가 지금 엔티티를 그대로 반환하는데 응답 DTO로 바꾸고 요청쪽 검증도 붙여줘", "should_trigger": true},
+  {"query": "스프링부트 3.2 프로젝트인데 에러 응답이 컨트롤러마다 제각각이야. 404, 400, 409를 하나의 일관된 포맷으로 통일하고 싶어", "should_trigger": true},
+  {"query": "결제 서비스에 트랜잭션 처리해야 하는데 @Transactional 어디에 어떻게 걸어야 하는지랑 코드 좀 봐줘", "should_trigger": true},
+  {"query": "코틀린 스프링부트인데 게시글 CRUD 좀 만들어줘. JPA 엔티티부터 컨트롤러까지 다", "should_trigger": true},
+  {"query": "회원가입 API 만드는데 비밀번호 저장이랑 이메일 중복 체크하는 서비스 로직 작성해줘. 스프링부트야", "should_trigger": true},
+  {"query": "pom.xml에 data-jpa 있고 지금 목록 조회가 List로 전부 내려줘. Pageable로 페이지네이션 되게 바꿔줘", "should_trigger": true},
+  {"query": "지금 서비스 코드가 컨트롤러에서 리포지토리를 직접 호출하고 있어. 레이어 좀 제대로 나눠서 리팩터링해줘. 스프링 프로젝트야", "should_trigger": true},
+  {"query": "NestJS 프로젝트에 주문 컨트롤러랑 서비스 추가해줘. TypeORM 엔티티랑 DTO도 같이", "should_trigger": false},
+  {"query": "Django REST framework로 상품 API 만들어줘. serializer랑 viewset 써서", "should_trigger": false},
+  {"query": "이거 순수 자바 알고리즘 문제인데 시간복잡도가 너무 커. 스프링 안 쓰고 그냥 자바야. 최적화해줘", "should_trigger": false},
+  {"query": "리액트 프론트에서 이 REST API 호출하는 커스텀 훅 만들어줘. axios랑 react-query로", "should_trigger": false},
+  {"query": "Spring Boot 앱 배포용 Dockerfile이랑 GitHub Actions CI 워크플로우 좀 작성해줘", "should_trigger": false},
+  {"query": "스프링 없이 순수 JPA/Hibernate로 EntityManager 직접 쓰는 콘솔 앱 예제 보여줘", "should_trigger": false},
+  {"query": "Gradle 빌드가 너무 느려. 캐시랑 병렬 빌드 설정으로 속도 개선하는 법 알려줘", "should_trigger": false},
+  {"query": "봄맞이 사무실 비품 재고를 엑셀로 정리하려는데 spring 카테고리 상품만 필터링하는 수식 알려줘", "should_trigger": false},
+  {"query": "Micronaut로 REST 컨트롤러 만들어줘. @Controller랑 @Get 애노테이션 쓰는 방식으로", "should_trigger": false},
+  {"query": "자바로 CSV 파일 여러 개 읽어서 통계 뽑는 배치 스크립트 짜줘. 웹 서버 아니고 그냥 실행형", "should_trigger": false}
+];
+
+    let evalItems = [...EVAL_DATA];
+
+    function render() {
+      const tbody = document.getElementById('eval-body');
+      tbody.innerHTML = '';
+
+      // Sort: should-trigger first, then should-not-trigger
+      const sorted = evalItems
+        .map((item, origIdx) => ({ ...item, origIdx }))
+        .sort((a, b) => (b.should_trigger ? 1 : 0) - (a.should_trigger ? 1 : 0));
+
+      let lastGroup = null;
+      sorted.forEach(item => {
+        const group = item.should_trigger ? 'trigger' : 'no-trigger';
+        if (group !== lastGroup) {
+          const headerRow = document.createElement('tr');
+          headerRow.className = 'section-header';
+          headerRow.innerHTML = `<td colspan="3">${item.should_trigger ? 'Should Trigger' : 'Should NOT Trigger'}</td>`;
+          tbody.appendChild(headerRow);
+          lastGroup = group;
+        }
+
+        const idx = item.origIdx;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><textarea class="query-input" onchange="updateQuery(${idx}, this.value)">${escapeHtml(item.query)}</textarea></td>
+          <td>
+            <label class="toggle">
+              <input type="checkbox" ${item.should_trigger ? 'checked' : ''} onchange="updateTrigger(${idx}, this.checked)">
+              <span class="slider"></span>
+            </label>
+            <span style="margin-left:8px;font-size:0.8rem;color:#b0aea5">${item.should_trigger ? 'Yes' : 'No'}</span>
+          </td>
+          <td><button class="btn-delete" onclick="deleteRow(${idx})">Delete</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      updateSummary();
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function updateQuery(idx, value) { evalItems[idx].query = value; updateSummary(); }
+    function updateTrigger(idx, value) { evalItems[idx].should_trigger = value; render(); }
+    function deleteRow(idx) { evalItems.splice(idx, 1); render(); }
+
+    function addRow() {
+      evalItems.push({ query: '', should_trigger: true });
+      render();
+      const inputs = document.querySelectorAll('.query-input');
+      inputs[inputs.length - 1].focus();
+    }
+
+    function updateSummary() {
+      const trigger = evalItems.filter(i => i.should_trigger).length;
+      const noTrigger = evalItems.filter(i => !i.should_trigger).length;
+      document.getElementById('summary').textContent =
+        `${evalItems.length} queries total: ${trigger} should trigger, ${noTrigger} should not trigger`;
+    }
+
+    function exportEvalSet() {
+      const valid = evalItems.filter(i => i.query.trim() !== '');
+      const data = valid.map(i => ({ query: i.query.trim(), should_trigger: i.should_trigger }));
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'eval_set.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    render();
+  </script>
+</body>
+</html>

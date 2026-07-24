@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "text": "요청 DTO에 Bean Validation(@Email,@NotBlank) + 컨트롤러 @Valid",
+      "passed": true,
+      "evidence": "SignUpRequest에 @Email/@NotBlank/@Size, @Valid 사용."
+    },
+    {
+      "text": "이메일 중복이 도메인 예외→전역 핸들러에서 409",
+      "passed": true,
+      "evidence": "DuplicateEmailException → 409."
+    },
+    {
+      "text": "@RestControllerAdvice 전역 예외 핸들러 존재",
+      "passed": true,
+      "evidence": "GlobalExceptionHandler @RestControllerAdvice."
+    },
+    {
+      "text": "에러 응답이 RFC 9457 ProblemDetail 형태",
+      "passed": false,
+      "evidence": "ProblemDetail 미사용. 커스텀 ErrorResponse(timestamp/status/error/message/path)로 일관 처리 — 표준 RFC 9457은 아님."
+    },
+    {
+      "text": "비밀번호가 응답 DTO에 노출되지 않음",
+      "passed": true,
+      "evidence": "MemberResponse에 password 없음."
+    },
+    {
+      "text": "컨트롤러/서비스에서 try-catch로 상태코드 분기하지 않음",
+      "passed": true,
+      "evidence": "catch 0건."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 1,
+    "total": 6,
+    "pass_rate": 0.83
+  }
+}

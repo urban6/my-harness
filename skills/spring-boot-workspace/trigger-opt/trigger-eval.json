@@ -1,0 +1,22 @@
+[
+  {"query": "우리 서비스에 주문 취소 기능 추가해야 해. OrderController에 DELETE 엔드포인트 만들고 서비스에서 취소 상태로 바꾸는 로직까지 짜줘", "should_trigger": true},
+  {"query": "build.gradle에 spring-boot-starter-web 들어있는 프로젝트야. 상품 검색 엔드포인트 만들어줘. 이름이랑 카테고리로 필터링하고 페이징도 되게", "should_trigger": true},
+  {"query": "회원 엔티티에 프로필 이미지 url 필드 하나 추가하고, 리포지토리에 이메일로 찾는 메서드도 넣어줘", "should_trigger": true},
+  {"query": "이 @RestController가 지금 엔티티를 그대로 반환하는데 응답 DTO로 바꾸고 요청쪽 검증도 붙여줘", "should_trigger": true},
+  {"query": "스프링부트 3.2 프로젝트인데 에러 응답이 컨트롤러마다 제각각이야. 404, 400, 409를 하나의 일관된 포맷으로 통일하고 싶어", "should_trigger": true},
+  {"query": "결제 서비스에 트랜잭션 처리해야 하는데 @Transactional 어디에 어떻게 걸어야 하는지랑 코드 좀 봐줘", "should_trigger": true},
+  {"query": "코틀린 스프링부트인데 게시글 CRUD 좀 만들어줘. JPA 엔티티부터 컨트롤러까지 다", "should_trigger": true},
+  {"query": "회원가입 API 만드는데 비밀번호 저장이랑 이메일 중복 체크하는 서비스 로직 작성해줘. 스프링부트야", "should_trigger": true},
+  {"query": "pom.xml에 data-jpa 있고 지금 목록 조회가 List로 전부 내려줘. Pageable로 페이지네이션 되게 바꿔줘", "should_trigger": true},
+  {"query": "지금 서비스 코드가 컨트롤러에서 리포지토리를 직접 호출하고 있어. 레이어 좀 제대로 나눠서 리팩터링해줘. 스프링 프로젝트야", "should_trigger": true},
+  {"query": "NestJS 프로젝트에 주문 컨트롤러랑 서비스 추가해줘. TypeORM 엔티티랑 DTO도 같이", "should_trigger": false},
+  {"query": "Django REST framework로 상품 API 만들어줘. serializer랑 viewset 써서", "should_trigger": false},
+  {"query": "이거 순수 자바 알고리즘 문제인데 시간복잡도가 너무 커. 스프링 안 쓰고 그냥 자바야. 최적화해줘", "should_trigger": false},
+  {"query": "리액트 프론트에서 이 REST API 호출하는 커스텀 훅 만들어줘. axios랑 react-query로", "should_trigger": false},
+  {"query": "Spring Boot 앱 배포용 Dockerfile이랑 GitHub Actions CI 워크플로우 좀 작성해줘", "should_trigger": false},
+  {"query": "스프링 없이 순수 JPA/Hibernate로 EntityManager 직접 쓰는 콘솔 앱 예제 보여줘", "should_trigger": false},
+  {"query": "Gradle 빌드가 너무 느려. 캐시랑 병렬 빌드 설정으로 속도 개선하는 법 알려줘", "should_trigger": false},
+  {"query": "봄맞이 사무실 비품 재고를 엑셀로 정리하려는데 spring 카테고리 상품만 필터링하는 수식 알려줘", "should_trigger": false},
+  {"query": "Micronaut로 REST 컨트롤러 만들어줘. @Controller랑 @Get 애노테이션 쓰는 방식으로", "should_trigger": false},
+  {"query": "자바로 CSV 파일 여러 개 읽어서 통계 뽑는 배치 스크립트 짜줘. 웹 서버 아니고 그냥 실행형", "should_trigger": false}
+]

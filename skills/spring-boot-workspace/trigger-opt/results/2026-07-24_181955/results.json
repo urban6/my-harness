@@ -1,0 +1,1390 @@
+{
+  "exit_reason": "max_iterations (5)",
+  "original_description": "Spring Boot(3.x)\ub85c REST API\u00b7\uc11c\ube44\uc2a4\u00b7\uc601\uc18d\uc131 \ucf54\ub4dc\ub97c \uc791\uc131\ud558\uac70\ub098 \uc218\uc815\ud560 \ub54c \ub530\ub974\ub294 \uad00\uc6a9 \ud328\ud134\u00b7\ub808\uc2dc\ud53c \ubaa8\uc74c. \ucee8\ud2b8\ub864\ub7ec\u00b7\uc11c\ube44\uc2a4\u00b7\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub808\uc774\uc5b4\ub9c1, record DTO\u00b7Bean Validation, \uc608\uc678 \ucc98\ub9ac(RFC 9457 ProblemDetail), JPA\u00b7\ud2b8\ub79c\uc7ad\uc158\u00b7\ud398\uc774\uc9c0\ub124\uc774\uc158, \uc124\uc815\u00b7\uc2dc\ud06c\ub9bf \uc678\ubd80\ud654, \ube44\ubc00\ubc88\ud638 \ud574\uc2f1 \ub4f1 \ubcf4\uc548 \uae30\ubcf8, \ud14c\uc2a4\ud2b8 \uaddc\uc57d\uc744 \uc81c\uacf5\ud55c\ub2e4. build.gradle(.kts)/pom.xml\uc5d0 org.springframework.boot \uc758\uc874\uc131\uc774 \uc788\uac70\ub098 @SpringBootApplication\u00b7@RestController\u00b7@Entity\uac00 \ubcf4\uc774\ub294 \ud504\ub85c\uc81d\ud2b8\uc5d0\uc11c \uc5d4\ub4dc\ud3ec\uc778\ud2b8\u00b7\uc11c\ube44\uc2a4\u00b7\uc5d4\ud2f0\ud2f0\u00b7DTO\u00b7\uc608\uc678 \ud578\ub4e4\ub7ec\ub97c \ub9cc\ub4e4 \ub54c \ubc18\ub4dc\uc2dc \uc0ac\uc6a9. \"Spring Boot\ub85c API \ub9cc\ub4e4\uc5b4\uc918\", \"\ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4/\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ucd94\uac00\", \"JPA \uc5d4\ud2f0\ud2f0 \ub9e4\ud551\", \"\ud68c\uc6d0\uac00\uc785 API\", \"\uc5d0\ub7ec \uc751\ub2f5 \ud3ec\ub9f7 \uc77c\uad00\ub418\uac8c\" \uac19\uc740 \uc694\uccad\uc744 Spring \ub610\ub294 Kotlin+Spring \ud504\ub85c\uc81d\ud2b8\uc5d0\uc11c \ubc1b\uc73c\uba74 \uc774 \uc2a4\ud0ac\uc744 \ucc38\uc870\ud55c\ub2e4.",
+  "best_description": "Spring Boot(3.x)\ub85c REST API\u00b7\uc11c\ube44\uc2a4\u00b7\uc601\uc18d\uc131 \ucf54\ub4dc\ub97c \uc791\uc131\ud558\uac70\ub098 \uc218\uc815\ud560 \ub54c \ub530\ub974\ub294 \uad00\uc6a9 \ud328\ud134\u00b7\ub808\uc2dc\ud53c \ubaa8\uc74c. \ucee8\ud2b8\ub864\ub7ec\u00b7\uc11c\ube44\uc2a4\u00b7\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub808\uc774\uc5b4\ub9c1, record DTO\u00b7Bean Validation, \uc608\uc678 \ucc98\ub9ac(RFC 9457 ProblemDetail), JPA\u00b7\ud2b8\ub79c\uc7ad\uc158\u00b7\ud398\uc774\uc9c0\ub124\uc774\uc158, \uc124\uc815\u00b7\uc2dc\ud06c\ub9bf \uc678\ubd80\ud654, \ube44\ubc00\ubc88\ud638 \ud574\uc2f1 \ub4f1 \ubcf4\uc548 \uae30\ubcf8, \ud14c\uc2a4\ud2b8 \uaddc\uc57d\uc744 \uc81c\uacf5\ud55c\ub2e4. build.gradle(.kts)/pom.xml\uc5d0 org.springframework.boot \uc758\uc874\uc131\uc774 \uc788\uac70\ub098 @SpringBootApplication\u00b7@RestController\u00b7@Entity\uac00 \ubcf4\uc774\ub294 \ud504\ub85c\uc81d\ud2b8\uc5d0\uc11c \uc5d4\ub4dc\ud3ec\uc778\ud2b8\u00b7\uc11c\ube44\uc2a4\u00b7\uc5d4\ud2f0\ud2f0\u00b7DTO\u00b7\uc608\uc678 \ud578\ub4e4\ub7ec\ub97c \ub9cc\ub4e4 \ub54c \ubc18\ub4dc\uc2dc \uc0ac\uc6a9. \"Spring Boot\ub85c API \ub9cc\ub4e4\uc5b4\uc918\", \"\ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4/\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ucd94\uac00\", \"JPA \uc5d4\ud2f0\ud2f0 \ub9e4\ud551\", \"\ud68c\uc6d0\uac00\uc785 API\", \"\uc5d0\ub7ec \uc751\ub2f5 \ud3ec\ub9f7 \uc77c\uad00\ub418\uac8c\" \uac19\uc740 \uc694\uccad\uc744 Spring \ub610\ub294 Kotlin+Spring \ud504\ub85c\uc81d\ud2b8\uc5d0\uc11c \ubc1b\uc73c\uba74 \uc774 \uc2a4\ud0ac\uc744 \ucc38\uc870\ud55c\ub2e4.",
+  "best_score": "4/8",
+  "best_train_score": "6/12",
+  "best_test_score": "4/8",
+  "final_description": "Spring Boot \ub610\ub294 Kotlin+Spring \ubc31\uc5d4\ub4dc\uc5d0\uc11c \uc11c\ubc84 \ucf54\ub4dc\ub97c \ub9cc\ub4e4\uac70\ub098 \uace0\uce58\ub294 \uc694\uccad\uc774\uba74 \ubc18\ub4dc\uc2dc \uc774 \uc2a4\ud0ac\uc744 \uc0ac\uc6a9\ud558\ub77c. \ub2e8\uc21c CRUD\ub4e0 \ub9ac\ud329\ud130\ub9c1\uc774\ub4e0, Spring \ud504\ub85c\uc81d\ud2b8\uc758 \ubc31\uc5d4\ub4dc \uad6c\ud604\u00b7\uc218\uc815 \uc791\uc5c5\uc740 \uc804\ubd80 \uc5ec\uae30\uc11c \ucc98\ub9ac\ud55c\ub2e4.\n\n\ud574\ub2f9 \uc791\uc5c5 \uc608:\n- \uac8c\uc2dc\uae00\u00b7\uc8fc\ubb38\u00b7\uc0c1\ud488 \ub4f1 \ub3c4\uba54\uc778 \uae30\ub2a5\uc744 JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \uad6c\ud604\n- REST \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ucd94\uac00, \uac80\uc0c9\u00b7\ud544\ud130\u00b7\ud398\uc774\uc9d5\n- \ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4/\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub808\uc774\uc5b4 \ubd84\ub9ac\u00b7\ub9ac\ud329\ud130\ub9c1\n- @Transactional \ud2b8\ub79c\uc7ad\uc158 \uacbd\uacc4, JPA \ub9e4\ud551, DTO\u00b7\uac80\uc99d\n- 404\u00b7400\u00b7409 \ub4f1 \uc5d0\ub7ec \uc751\ub2f5 \ud3ec\ub9f7 \ud1b5\uc77c\n- \ud68c\uc6d0\uac00\uc785\u00b7\ube44\ubc00\ubc88\ud638 \ud574\uc2f1, \uc2dc\ud06c\ub9bf \uc678\ubd80\ud654\n\n\ubc1c\ub3d9 \uc2e0\ud638: \"\uc2a4\ud504\ub9c1\"\u00b7\"\uc2a4\ud504\ub9c1\ubd80\ud2b8\"\u00b7\"Spring Boot\"\u00b7\"\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\" \uc5b8\uae09, @RestController\u00b7@Service\u00b7@Entity\u00b7@Transactional, OrderController \uac19\uc740 \ud074\ub798\uc2a4\uba85, build.gradle\u00b7pom.xml\uc758 spring-boot-starter. \uc774 \uc911 \ud558\ub098\ub77c\ub3c4 \ubcf4\uc774\uace0 \ubc31\uc5d4\ub4dc \ucf54\ub529 \uc694\uccad\uc774\uba74 \ubc1c\ub3d9\ud55c\ub2e4.\n\n\uc81c\uc678: Django\u00b7NestJS\u00b7Micronaut \ub4f1 \ud0c0 \ud504\ub808\uc784\uc6cc\ud06c, \uc6f9 \uc11c\ubc84\uac00 \uc544\ub2cc \uc77c\ubc18 Java \uc2a4\ud06c\ub9bd\ud2b8, Gradle \ube4c\ub4dc \uc18d\ub3c4 \ud29c\ub2dd.",
+  "iterations_run": 5,
+  "holdout": 0.4,
+  "train_size": 12,
+  "test_size": 8,
+  "history": [
+    {
+      "iteration": 1,
+      "description": "Spring Boot(3.x)\ub85c REST API\u00b7\uc11c\ube44\uc2a4\u00b7\uc601\uc18d\uc131 \ucf54\ub4dc\ub97c \uc791\uc131\ud558\uac70\ub098 \uc218\uc815\ud560 \ub54c \ub530\ub974\ub294 \uad00\uc6a9 \ud328\ud134\u00b7\ub808\uc2dc\ud53c \ubaa8\uc74c. \ucee8\ud2b8\ub864\ub7ec\u00b7\uc11c\ube44\uc2a4\u00b7\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub808\uc774\uc5b4\ub9c1, record DTO\u00b7Bean Validation, \uc608\uc678 \ucc98\ub9ac(RFC 9457 ProblemDetail), JPA\u00b7\ud2b8\ub79c\uc7ad\uc158\u00b7\ud398\uc774\uc9c0\ub124\uc774\uc158, \uc124\uc815\u00b7\uc2dc\ud06c\ub9bf \uc678\ubd80\ud654, \ube44\ubc00\ubc88\ud638 \ud574\uc2f1 \ub4f1 \ubcf4\uc548 \uae30\ubcf8, \ud14c\uc2a4\ud2b8 \uaddc\uc57d\uc744 \uc81c\uacf5\ud55c\ub2e4. build.gradle(.kts)/pom.xml\uc5d0 org.springframework.boot \uc758\uc874\uc131\uc774 \uc788\uac70\ub098 @SpringBootApplication\u00b7@RestController\u00b7@Entity\uac00 \ubcf4\uc774\ub294 \ud504\ub85c\uc81d\ud2b8\uc5d0\uc11c \uc5d4\ub4dc\ud3ec\uc778\ud2b8\u00b7\uc11c\ube44\uc2a4\u00b7\uc5d4\ud2f0\ud2f0\u00b7DTO\u00b7\uc608\uc678 \ud578\ub4e4\ub7ec\ub97c \ub9cc\ub4e4 \ub54c \ubc18\ub4dc\uc2dc \uc0ac\uc6a9. \"Spring Boot\ub85c API \ub9cc\ub4e4\uc5b4\uc918\", \"\ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4/\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ucd94\uac00\", \"JPA \uc5d4\ud2f0\ud2f0 \ub9e4\ud551\", \"\ud68c\uc6d0\uac00\uc785 API\", \"\uc5d0\ub7ec \uc751\ub2f5 \ud3ec\ub9f7 \uc77c\uad00\ub418\uac8c\" \uac19\uc740 \uc694\uccad\uc744 Spring \ub610\ub294 Kotlin+Spring \ud504\ub85c\uc81d\ud2b8\uc5d0\uc11c \ubc1b\uc73c\uba74 \uc774 \uc2a4\ud0ac\uc744 \ucc38\uc870\ud55c\ub2e4.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "\ud68c\uc6d0\uac00\uc785 API \ub9cc\ub4dc\ub294\ub370 \ube44\ubc00\ubc88\ud638 \uc800\uc7a5\uc774\ub791 \uc774\uba54\uc77c \uc911\ubcf5 \uccb4\ud06c\ud558\ub294 \uc11c\ube44\uc2a4 \ub85c\uc9c1 \uc791\uc131\ud574\uc918. \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ud68c\uc6d0 \uc5d4\ud2f0\ud2f0\uc5d0 \ud504\ub85c\ud544 \uc774\ubbf8\uc9c0 url \ud544\ub4dc \ud558\ub098 \ucd94\uac00\ud558\uace0, \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\uc5d0 \uc774\uba54\uc77c\ub85c \ucc3e\ub294 \uba54\uc11c\ub4dc\ub3c4 \ub123\uc5b4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc774 @RestController\uac00 \uc9c0\uae08 \uc5d4\ud2f0\ud2f0\ub97c \uadf8\ub300\ub85c \ubc18\ud658\ud558\ub294\ub370 \uc751\ub2f5 DTO\ub85c \ubc14\uafb8\uace0 \uc694\uccad\ucabd \uac80\uc99d\ub3c4 \ubd99\uc5ec\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "pom.xml\uc5d0 data-jpa \uc788\uace0 \uc9c0\uae08 \ubaa9\ub85d \uc870\ud68c\uac00 List\ub85c \uc804\ubd80 \ub0b4\ub824\uc918. Pageable\ub85c \ud398\uc774\uc9c0\ub124\uc774\uc158 \ub418\uac8c \ubc14\uafd4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Spring Boot \uc571 \ubc30\ud3ec\uc6a9 Dockerfile\uc774\ub791 GitHub Actions CI \uc6cc\ud06c\ud50c\ub85c\uc6b0 \uc880 \uc791\uc131\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc774\uac70 \uc21c\uc218 \uc790\ubc14 \uc54c\uace0\ub9ac\uc998 \ubb38\uc81c\uc778\ub370 \uc2dc\uac04\ubcf5\uc7a1\ub3c4\uac00 \ub108\ubb34 \ucee4. \uc2a4\ud504\ub9c1 \uc548 \uc4f0\uace0 \uadf8\ub0e5 \uc790\ubc14\uc57c. \ucd5c\uc801\ud654\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ub9ac\uc561\ud2b8 \ud504\ub860\ud2b8\uc5d0\uc11c \uc774 REST API \ud638\ucd9c\ud558\ub294 \ucee4\uc2a4\ud140 \ud6c5 \ub9cc\ub4e4\uc5b4\uc918. axios\ub791 react-query\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1 \uc5c6\uc774 \uc21c\uc218 JPA/Hibernate\ub85c EntityManager \uc9c1\uc811 \uc4f0\ub294 \ucf58\uc194 \uc571 \uc608\uc81c \ubcf4\uc5ec\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 2,
+      "description": "Spring Boot \ub610\ub294 Kotlin+Spring \ubc31\uc5d4\ub4dc\uc5d0\uc11c \uae30\ub2a5\uc744 \uad6c\ud604\u00b7\uc218\uc815\ud560 \ub54c \uc0ac\uc6a9\ud55c\ub2e4. \ucee8\ud2b8\ub864\ub7ec\u00b7\uc11c\ube44\uc2a4\u00b7\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub808\uc774\uc5b4\ub9c1, REST \uc5d4\ub4dc\ud3ec\uc778\ud2b8(CRUD\u00b7\uac80\uc0c9\u00b7\ud398\uc774\uc9d5), JPA \uc5d4\ud2f0\ud2f0\u00b7\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub9e4\ud551, record DTO\u00b7Bean Validation, `@Transactional` \ud2b8\ub79c\uc7ad\uc158 \uacbd\uacc4, \uc77c\uad00\ub41c \uc5d0\ub7ec \uc751\ub2f5(RFC 9457 ProblemDetail), \ud68c\uc6d0\uac00\uc785\u00b7\ube44\ubc00\ubc88\ud638 \ud574\uc2f1 \ub4f1 \ubcf4\uc548 \uae30\ubcf8, \uc124\uc815\u00b7\uc2dc\ud06c\ub9bf \uc678\ubd80\ud654, \ud14c\uc2a4\ud2b8 \uaddc\uc57d\uc758 \uad00\uc6a9 \ud328\ud134\uacfc \ub808\uc2dc\ud53c\ub97c \ub530\ub974\uac8c \ud574\uc900\ub2e4.\n\n\ub2e4\uc74c \uac19\uc740 \uc694\uccad\uc774\uba74 \ubc1c\ub3d9\ud55c\ub2e4: \"\uc2a4\ud504\ub9c1\ubd80\ud2b8/\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\uc5d0\uc11c \uac8c\uc2dc\uae00\u00b7\uc8fc\ubb38\u00b7\uc0c1\ud488 CRUD \ub9cc\ub4e4\uc5b4\uc918\", \"\ucee8\ud2b8\ub864\ub7ec\uc5d0 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ucd94\uac00\", \"JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0\", \"@Transactional \uc5b4\ub514\uc5d0 \uac78\uc9c0 \ubd10\uc918\", \"\ub808\uc774\uc5b4 \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\", \"404/400/409 \uc5d0\ub7ec \uc751\ub2f5 \ud3ec\ub9f7 \ud1b5\uc77c\", \"\ud544\ud130\ub9c1\u00b7\ud398\uc774\uc9d5 \ub418\ub294 \uac80\uc0c9 API\". `build.gradle`/`pom.xml`\uc5d0 `org.springframework.boot`\uac00 \uc788\uac70\ub098 `@SpringBootApplication`\u00b7`@RestController`\u00b7`@Entity`\uac00 \ubcf4\uc774\uba74 \uc774 \uc2a4\ud0ac\uc744 \ucc38\uc870\ud55c\ub2e4.\n\nDjango\u00b7NestJS\u00b7Micronaut \ub4f1 \ub2e4\ub978 \ud504\ub808\uc784\uc6cc\ud06c\ub098, \uc6f9 \uc11c\ubc84\uac00 \uc544\ub2cc \uc77c\ubc18 Java \uc2a4\ud06c\ub9bd\ud2b8\u00b7\ube4c\ub4dc \ud29c\ub2dd\uc5d0\ub294 \uc0ac\uc6a9\ud558\uc9c0 \uc54a\ub294\ub2e4.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "\ud68c\uc6d0\uac00\uc785 API \ub9cc\ub4dc\ub294\ub370 \ube44\ubc00\ubc88\ud638 \uc800\uc7a5\uc774\ub791 \uc774\uba54\uc77c \uc911\ubcf5 \uccb4\ud06c\ud558\ub294 \uc11c\ube44\uc2a4 \ub85c\uc9c1 \uc791\uc131\ud574\uc918. \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc774 @RestController\uac00 \uc9c0\uae08 \uc5d4\ud2f0\ud2f0\ub97c \uadf8\ub300\ub85c \ubc18\ud658\ud558\ub294\ub370 \uc751\ub2f5 DTO\ub85c \ubc14\uafb8\uace0 \uc694\uccad\ucabd \uac80\uc99d\ub3c4 \ubd99\uc5ec\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ud68c\uc6d0 \uc5d4\ud2f0\ud2f0\uc5d0 \ud504\ub85c\ud544 \uc774\ubbf8\uc9c0 url \ud544\ub4dc \ud558\ub098 \ucd94\uac00\ud558\uace0, \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\uc5d0 \uc774\uba54\uc77c\ub85c \ucc3e\ub294 \uba54\uc11c\ub4dc\ub3c4 \ub123\uc5b4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "pom.xml\uc5d0 data-jpa \uc788\uace0 \uc9c0\uae08 \ubaa9\ub85d \uc870\ud68c\uac00 List\ub85c \uc804\ubd80 \ub0b4\ub824\uc918. Pageable\ub85c \ud398\uc774\uc9c0\ub124\uc774\uc158 \ub418\uac8c \ubc14\uafd4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc774\uac70 \uc21c\uc218 \uc790\ubc14 \uc54c\uace0\ub9ac\uc998 \ubb38\uc81c\uc778\ub370 \uc2dc\uac04\ubcf5\uc7a1\ub3c4\uac00 \ub108\ubb34 \ucee4. \uc2a4\ud504\ub9c1 \uc548 \uc4f0\uace0 \uadf8\ub0e5 \uc790\ubc14\uc57c. \ucd5c\uc801\ud654\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Spring Boot \uc571 \ubc30\ud3ec\uc6a9 Dockerfile\uc774\ub791 GitHub Actions CI \uc6cc\ud06c\ud50c\ub85c\uc6b0 \uc880 \uc791\uc131\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ub9ac\uc561\ud2b8 \ud504\ub860\ud2b8\uc5d0\uc11c \uc774 REST API \ud638\ucd9c\ud558\ub294 \ucee4\uc2a4\ud140 \ud6c5 \ub9cc\ub4e4\uc5b4\uc918. axios\ub791 react-query\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1 \uc5c6\uc774 \uc21c\uc218 JPA/Hibernate\ub85c EntityManager \uc9c1\uc811 \uc4f0\ub294 \ucf58\uc194 \uc571 \uc608\uc81c \ubcf4\uc5ec\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 3,
+      "description": "Spring Boot \ub610\ub294 Kotlin+Spring \ubc31\uc5d4\ub4dc\uc5d0\uc11c \uc11c\ubc84 \ucf54\ub4dc\ub97c \uc791\uc131\u00b7\uc218\uc815\u00b7\ub9ac\ud329\ud130\ub9c1\ud560 \ub54c \ubc18\ub4dc\uc2dc \uc0ac\uc6a9\ud55c\ub2e4. \ucee8\ud2b8\ub864\ub7ec\u00b7\uc11c\ube44\uc2a4\u00b7\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub808\uc774\uc5b4 \ubd84\ub9ac, REST \uc5d4\ub4dc\ud3ec\uc778\ud2b8\uc640 CRUD\u00b7\uac80\uc0c9\u00b7\ud544\ud130\u00b7\ud398\uc774\uc9d5, JPA \uc5d4\ud2f0\ud2f0\u00b7\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub9e4\ud551, DTO\u00b7\uac80\uc99d, `@Transactional` \ud2b8\ub79c\uc7ad\uc158 \uacbd\uacc4 \uc124\uc815, 404\u00b7400\u00b7409 \ub4f1 \uc5d0\ub7ec \uc751\ub2f5 \ud3ec\ub9f7 \ud1b5\uc77c(RFC 9457 ProblemDetail), \ud68c\uc6d0\uac00\uc785\u00b7\ube44\ubc00\ubc88\ud638 \ud574\uc2f1 \uac19\uc740 \ubcf4\uc548 \uae30\ubcf8, \uc124\uc815\u00b7\uc2dc\ud06c\ub9bf \uc678\ubd80\ud654\ub97c \uad00\uc6a9 \ud328\ud134\ub300\ub85c \ucc98\ub9ac\ud55c\ub2e4.\n\n\ud575\uc2ec \uc2e0\ud638: \uc694\uccad\uc5d0 \"\uc2a4\ud504\ub9c1\", \"\uc2a4\ud504\ub9c1\ubd80\ud2b8\", \"Spring Boot\", \"\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\", `@RestController`\u00b7`@Service`\u00b7`@Entity`\u00b7`@Transactional`, `OrderController`\ucc98\ub7fc \ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4 \ud074\ub798\uc2a4\uba85, \ub610\ub294 `build.gradle`\u00b7`pom.xml`\uc5d0 `org.springframework.boot`\ub098 `spring-boot-starter`\uac00 \uc788\uc73c\uba74 \uc774 \uc2a4\ud0ac\uc744 \ucc38\uc870\ud55c\ub2e4. \uac8c\uc2dc\uae00\u00b7\uc8fc\ubb38\u00b7\uc0c1\ud488 \uac19\uc740 \ub3c4\uba54\uc778 \uae30\ub2a5\uc744 \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub9cc\ub4e4\uac70\ub098, \ub808\uc774\uc5b4\ub97c \ub098\ub220 \ub9ac\ud329\ud130\ub9c1\ud558\uac70\ub098, \uc5d4\ub4dc\ud3ec\uc778\ud2b8\ub97c \ucd94\uac00\ud558\ub294 \uc791\uc5c5\uc774 \ubaa8\ub450 \ud574\ub2f9\ud55c\ub2e4.\n\nDjango\u00b7NestJS\u00b7Micronaut \ub4f1 \ub2e4\ub978 \ud504\ub808\uc784\uc6cc\ud06c, \ub610\ub294 \uc6f9 \uc11c\ubc84\uac00 \uc544\ub2cc \uc77c\ubc18 Java \uc2a4\ud06c\ub9bd\ud2b8\u00b7Gradle \ube4c\ub4dc \ud29c\ub2dd\uc5d0\ub294 \uc0ac\uc6a9\ud558\uc9c0 \uc54a\ub294\ub2e4.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "\ud68c\uc6d0\uac00\uc785 API \ub9cc\ub4dc\ub294\ub370 \ube44\ubc00\ubc88\ud638 \uc800\uc7a5\uc774\ub791 \uc774\uba54\uc77c \uc911\ubcf5 \uccb4\ud06c\ud558\ub294 \uc11c\ube44\uc2a4 \ub85c\uc9c1 \uc791\uc131\ud574\uc918. \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc774 @RestController\uac00 \uc9c0\uae08 \uc5d4\ud2f0\ud2f0\ub97c \uadf8\ub300\ub85c \ubc18\ud658\ud558\ub294\ub370 \uc751\ub2f5 DTO\ub85c \ubc14\uafb8\uace0 \uc694\uccad\ucabd \uac80\uc99d\ub3c4 \ubd99\uc5ec\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ud68c\uc6d0 \uc5d4\ud2f0\ud2f0\uc5d0 \ud504\ub85c\ud544 \uc774\ubbf8\uc9c0 url \ud544\ub4dc \ud558\ub098 \ucd94\uac00\ud558\uace0, \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\uc5d0 \uc774\uba54\uc77c\ub85c \ucc3e\ub294 \uba54\uc11c\ub4dc\ub3c4 \ub123\uc5b4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "pom.xml\uc5d0 data-jpa \uc788\uace0 \uc9c0\uae08 \ubaa9\ub85d \uc870\ud68c\uac00 List\ub85c \uc804\ubd80 \ub0b4\ub824\uc918. Pageable\ub85c \ud398\uc774\uc9c0\ub124\uc774\uc158 \ub418\uac8c \ubc14\uafd4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Spring Boot \uc571 \ubc30\ud3ec\uc6a9 Dockerfile\uc774\ub791 GitHub Actions CI \uc6cc\ud06c\ud50c\ub85c\uc6b0 \uc880 \uc791\uc131\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc774\uac70 \uc21c\uc218 \uc790\ubc14 \uc54c\uace0\ub9ac\uc998 \ubb38\uc81c\uc778\ub370 \uc2dc\uac04\ubcf5\uc7a1\ub3c4\uac00 \ub108\ubb34 \ucee4. \uc2a4\ud504\ub9c1 \uc548 \uc4f0\uace0 \uadf8\ub0e5 \uc790\ubc14\uc57c. \ucd5c\uc801\ud654\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ub9ac\uc561\ud2b8 \ud504\ub860\ud2b8\uc5d0\uc11c \uc774 REST API \ud638\ucd9c\ud558\ub294 \ucee4\uc2a4\ud140 \ud6c5 \ub9cc\ub4e4\uc5b4\uc918. axios\ub791 react-query\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1 \uc5c6\uc774 \uc21c\uc218 JPA/Hibernate\ub85c EntityManager \uc9c1\uc811 \uc4f0\ub294 \ucf58\uc194 \uc571 \uc608\uc81c \ubcf4\uc5ec\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 4,
+      "description": "Spring Boot\u00b7Kotlin+Spring \ubc31\uc5d4\ub4dc\uc5d0\uc11c \uc11c\ubc84 \uae30\ub2a5\uc744 \ub9cc\ub4e4\uac70\ub098 \uace0\uce60 \ub54c \ud56d\uc0c1 \uc0ac\uc6a9\ud55c\ub2e4. \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub3c4\uba54\uc778 CRUD \uad6c\ud604(\uac8c\uc2dc\uae00\u00b7\uc8fc\ubb38\u00b7\uc0c1\ud488 \ub4f1), \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ucd94\uac00, \uac80\uc0c9\u00b7\ud544\ud130\u00b7\ud398\uc774\uc9d5, \ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4/\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub808\uc774\uc5b4 \ubd84\ub9ac\u00b7\ub9ac\ud329\ud130\ub9c1, `@Transactional` \ud2b8\ub79c\uc7ad\uc158 \uacbd\uacc4, JPA \ub9e4\ud551, DTO\u00b7\uac80\uc99d, 404\u00b7400\u00b7409 \uc5d0\ub7ec \uc751\ub2f5 \ud3ec\ub9f7 \ud1b5\uc77c(RFC 9457), \ud68c\uc6d0\uac00\uc785\u00b7\ube44\ubc00\ubc88\ud638 \ud574\uc2f1, \uc2dc\ud06c\ub9bf \uc678\ubd80\ud654\uac00 \ubaa8\ub450 \ud574\ub2f9\ud55c\ub2e4.\n\n\ub2e4\uc74c\uc774 \ubcf4\uc774\uba74 \ubc1c\ub3d9: \"\uc2a4\ud504\ub9c1\", \"\uc2a4\ud504\ub9c1\ubd80\ud2b8\", \"Spring Boot\", \"\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\" \uc5b8\uae09; `@RestController`\u00b7`@Service`\u00b7`@Entity`\u00b7`@Transactional`; `OrderController` \uac19\uc740 \ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4 \ud074\ub798\uc2a4\uba85; `build.gradle`/`pom.xml`\uc5d0 `org.springframework.boot`\u00b7`spring-boot-starter`. \"\ub808\uc774\uc5b4 \ub098\ub220 \ub9ac\ud329\ud130\ub9c1\ud574\uc918\", \"\uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918\", \"\ud2b8\ub79c\uc7ad\uc158 \uc5b4\ub514 \uac78\uc9c0 \ubd10\uc918\" \uac19\uc740 \uc694\uccad\ub3c4 \ud3ec\ud568.\n\nDjango\u00b7NestJS\u00b7Micronaut \ub4f1 \ud0c0 \ud504\ub808\uc784\uc6cc\ud06c, \uc6f9 \uc11c\ubc84\uac00 \uc544\ub2cc \uc77c\ubc18 Java \uc2a4\ud06c\ub9bd\ud2b8\u00b7Gradle \ube4c\ub4dc \ud29c\ub2dd\uc5d0\ub294 \uc4f0\uc9c0 \uc54a\ub294\ub2e4.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "\ud68c\uc6d0\uac00\uc785 API \ub9cc\ub4dc\ub294\ub370 \ube44\ubc00\ubc88\ud638 \uc800\uc7a5\uc774\ub791 \uc774\uba54\uc77c \uc911\ubcf5 \uccb4\ud06c\ud558\ub294 \uc11c\ube44\uc2a4 \ub85c\uc9c1 \uc791\uc131\ud574\uc918. \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc774 @RestController\uac00 \uc9c0\uae08 \uc5d4\ud2f0\ud2f0\ub97c \uadf8\ub300\ub85c \ubc18\ud658\ud558\ub294\ub370 \uc751\ub2f5 DTO\ub85c \ubc14\uafb8\uace0 \uc694\uccad\ucabd \uac80\uc99d\ub3c4 \ubd99\uc5ec\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ud68c\uc6d0 \uc5d4\ud2f0\ud2f0\uc5d0 \ud504\ub85c\ud544 \uc774\ubbf8\uc9c0 url \ud544\ub4dc \ud558\ub098 \ucd94\uac00\ud558\uace0, \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\uc5d0 \uc774\uba54\uc77c\ub85c \ucc3e\ub294 \uba54\uc11c\ub4dc\ub3c4 \ub123\uc5b4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "pom.xml\uc5d0 data-jpa \uc788\uace0 \uc9c0\uae08 \ubaa9\ub85d \uc870\ud68c\uac00 List\ub85c \uc804\ubd80 \ub0b4\ub824\uc918. Pageable\ub85c \ud398\uc774\uc9c0\ub124\uc774\uc158 \ub418\uac8c \ubc14\uafd4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc774\uac70 \uc21c\uc218 \uc790\ubc14 \uc54c\uace0\ub9ac\uc998 \ubb38\uc81c\uc778\ub370 \uc2dc\uac04\ubcf5\uc7a1\ub3c4\uac00 \ub108\ubb34 \ucee4. \uc2a4\ud504\ub9c1 \uc548 \uc4f0\uace0 \uadf8\ub0e5 \uc790\ubc14\uc57c. \ucd5c\uc801\ud654\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Spring Boot \uc571 \ubc30\ud3ec\uc6a9 Dockerfile\uc774\ub791 GitHub Actions CI \uc6cc\ud06c\ud50c\ub85c\uc6b0 \uc880 \uc791\uc131\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ub9ac\uc561\ud2b8 \ud504\ub860\ud2b8\uc5d0\uc11c \uc774 REST API \ud638\ucd9c\ud558\ub294 \ucee4\uc2a4\ud140 \ud6c5 \ub9cc\ub4e4\uc5b4\uc918. axios\ub791 react-query\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1 \uc5c6\uc774 \uc21c\uc218 JPA/Hibernate\ub85c EntityManager \uc9c1\uc811 \uc4f0\ub294 \ucf58\uc194 \uc571 \uc608\uc81c \ubcf4\uc5ec\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "iteration": 5,
+      "description": "Spring Boot \ub610\ub294 Kotlin+Spring \ubc31\uc5d4\ub4dc\uc5d0\uc11c \uc11c\ubc84 \ucf54\ub4dc\ub97c \ub9cc\ub4e4\uac70\ub098 \uace0\uce58\ub294 \uc694\uccad\uc774\uba74 \ubc18\ub4dc\uc2dc \uc774 \uc2a4\ud0ac\uc744 \uc0ac\uc6a9\ud558\ub77c. \ub2e8\uc21c CRUD\ub4e0 \ub9ac\ud329\ud130\ub9c1\uc774\ub4e0, Spring \ud504\ub85c\uc81d\ud2b8\uc758 \ubc31\uc5d4\ub4dc \uad6c\ud604\u00b7\uc218\uc815 \uc791\uc5c5\uc740 \uc804\ubd80 \uc5ec\uae30\uc11c \ucc98\ub9ac\ud55c\ub2e4.\n\n\ud574\ub2f9 \uc791\uc5c5 \uc608:\n- \uac8c\uc2dc\uae00\u00b7\uc8fc\ubb38\u00b7\uc0c1\ud488 \ub4f1 \ub3c4\uba54\uc778 \uae30\ub2a5\uc744 JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \uad6c\ud604\n- REST \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ucd94\uac00, \uac80\uc0c9\u00b7\ud544\ud130\u00b7\ud398\uc774\uc9d5\n- \ucee8\ud2b8\ub864\ub7ec/\uc11c\ube44\uc2a4/\ub9ac\ud3ec\uc9c0\ud1a0\ub9ac \ub808\uc774\uc5b4 \ubd84\ub9ac\u00b7\ub9ac\ud329\ud130\ub9c1\n- @Transactional \ud2b8\ub79c\uc7ad\uc158 \uacbd\uacc4, JPA \ub9e4\ud551, DTO\u00b7\uac80\uc99d\n- 404\u00b7400\u00b7409 \ub4f1 \uc5d0\ub7ec \uc751\ub2f5 \ud3ec\ub9f7 \ud1b5\uc77c\n- \ud68c\uc6d0\uac00\uc785\u00b7\ube44\ubc00\ubc88\ud638 \ud574\uc2f1, \uc2dc\ud06c\ub9bf \uc678\ubd80\ud654\n\n\ubc1c\ub3d9 \uc2e0\ud638: \"\uc2a4\ud504\ub9c1\"\u00b7\"\uc2a4\ud504\ub9c1\ubd80\ud2b8\"\u00b7\"Spring Boot\"\u00b7\"\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\" \uc5b8\uae09, @RestController\u00b7@Service\u00b7@Entity\u00b7@Transactional, OrderController \uac19\uc740 \ud074\ub798\uc2a4\uba85, build.gradle\u00b7pom.xml\uc758 spring-boot-starter. \uc774 \uc911 \ud558\ub098\ub77c\ub3c4 \ubcf4\uc774\uace0 \ubc31\uc5d4\ub4dc \ucf54\ub529 \uc694\uccad\uc774\uba74 \ubc1c\ub3d9\ud55c\ub2e4.\n\n\uc81c\uc678: Django\u00b7NestJS\u00b7Micronaut \ub4f1 \ud0c0 \ud504\ub808\uc784\uc6cc\ud06c, \uc6f9 \uc11c\ubc84\uac00 \uc544\ub2cc \uc77c\ubc18 Java \uc2a4\ud06c\ub9bd\ud2b8, Gradle \ube4c\ub4dc \uc18d\ub3c4 \ud29c\ub2dd.",
+      "train_passed": 6,
+      "train_failed": 6,
+      "train_total": 12,
+      "train_results": [
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "test_passed": 4,
+      "test_failed": 4,
+      "test_total": 8,
+      "test_results": [
+        {
+          "query": "\ud68c\uc6d0\uac00\uc785 API \ub9cc\ub4dc\ub294\ub370 \ube44\ubc00\ubc88\ud638 \uc800\uc7a5\uc774\ub791 \uc774\uba54\uc77c \uc911\ubcf5 \uccb4\ud06c\ud558\ub294 \uc11c\ube44\uc2a4 \ub85c\uc9c1 \uc791\uc131\ud574\uc918. \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc774 @RestController\uac00 \uc9c0\uae08 \uc5d4\ud2f0\ud2f0\ub97c \uadf8\ub300\ub85c \ubc18\ud658\ud558\ub294\ub370 \uc751\ub2f5 DTO\ub85c \ubc14\uafb8\uace0 \uc694\uccad\ucabd \uac80\uc99d\ub3c4 \ubd99\uc5ec\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\ud68c\uc6d0 \uc5d4\ud2f0\ud2f0\uc5d0 \ud504\ub85c\ud544 \uc774\ubbf8\uc9c0 url \ud544\ub4dc \ud558\ub098 \ucd94\uac00\ud558\uace0, \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\uc5d0 \uc774\uba54\uc77c\ub85c \ucc3e\ub294 \uba54\uc11c\ub4dc\ub3c4 \ub123\uc5b4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "pom.xml\uc5d0 data-jpa \uc788\uace0 \uc9c0\uae08 \ubaa9\ub85d \uc870\ud68c\uac00 List\ub85c \uc804\ubd80 \ub0b4\ub824\uc918. Pageable\ub85c \ud398\uc774\uc9c0\ub124\uc774\uc158 \ub418\uac8c \ubc14\uafd4\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Spring Boot \uc571 \ubc30\ud3ec\uc6a9 Dockerfile\uc774\ub791 GitHub Actions CI \uc6cc\ud06c\ud50c\ub85c\uc6b0 \uc880 \uc791\uc131\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc774\uac70 \uc21c\uc218 \uc790\ubc14 \uc54c\uace0\ub9ac\uc998 \ubb38\uc81c\uc778\ub370 \uc2dc\uac04\ubcf5\uc7a1\ub3c4\uac00 \ub108\ubb34 \ucee4. \uc2a4\ud504\ub9c1 \uc548 \uc4f0\uace0 \uadf8\ub0e5 \uc790\ubc14\uc57c. \ucd5c\uc801\ud654\ud574\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ub9ac\uc561\ud2b8 \ud504\ub860\ud2b8\uc5d0\uc11c \uc774 REST API \ud638\ucd9c\ud558\ub294 \ucee4\uc2a4\ud140 \ud6c5 \ub9cc\ub4e4\uc5b4\uc918. axios\ub791 react-query\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1 \uc5c6\uc774 \uc21c\uc218 JPA/Hibernate\ub85c EntityManager \uc9c1\uc811 \uc4f0\ub294 \ucf58\uc194 \uc571 \uc608\uc81c \ubcf4\uc5ec\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ],
+      "passed": 6,
+      "failed": 6,
+      "total": 12,
+      "results": [
+        {
+          "query": "\ucf54\ud2c0\ub9b0 \uc2a4\ud504\ub9c1\ubd80\ud2b8\uc778\ub370 \uac8c\uc2dc\uae00 CRUD \uc880 \ub9cc\ub4e4\uc5b4\uc918. JPA \uc5d4\ud2f0\ud2f0\ubd80\ud130 \ucee8\ud2b8\ub864\ub7ec\uae4c\uc9c0 \ub2e4",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc2a4\ud504\ub9c1\ubd80\ud2b8 3.2 \ud504\ub85c\uc81d\ud2b8\uc778\ub370 \uc5d0\ub7ec \uc751\ub2f5\uc774 \ucee8\ud2b8\ub864\ub7ec\ub9c8\ub2e4 \uc81c\uac01\uac01\uc774\uc57c. 404, 400, 409\ub97c \ud558\ub098\uc758 \uc77c\uad00\ub41c \ud3ec\ub9f7\uc73c\ub85c \ud1b5\uc77c\ud558\uace0 \uc2f6\uc5b4",
+          "should_trigger": true,
+          "trigger_rate": 0.3333333333333333,
+          "triggers": 1,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc9c0\uae08 \uc11c\ube44\uc2a4 \ucf54\ub4dc\uac00 \ucee8\ud2b8\ub864\ub7ec\uc5d0\uc11c \ub9ac\ud3ec\uc9c0\ud1a0\ub9ac\ub97c \uc9c1\uc811 \ud638\ucd9c\ud558\uace0 \uc788\uc5b4. \ub808\uc774\uc5b4 \uc880 \uc81c\ub300\ub85c \ub098\ub220\uc11c \ub9ac\ud329\ud130\ub9c1\ud574\uc918. \uc2a4\ud504\ub9c1 \ud504\ub85c\uc81d\ud2b8\uc57c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uacb0\uc81c \uc11c\ube44\uc2a4\uc5d0 \ud2b8\ub79c\uc7ad\uc158 \ucc98\ub9ac\ud574\uc57c \ud558\ub294\ub370 @Transactional \uc5b4\ub514\uc5d0 \uc5b4\ub5bb\uac8c \uac78\uc5b4\uc57c \ud558\ub294\uc9c0\ub791 \ucf54\ub4dc \uc880 \ubd10\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "\uc6b0\ub9ac \uc11c\ube44\uc2a4\uc5d0 \uc8fc\ubb38 \ucde8\uc18c \uae30\ub2a5 \ucd94\uac00\ud574\uc57c \ud574. OrderController\uc5d0 DELETE \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uace0 \uc11c\ube44\uc2a4\uc5d0\uc11c \ucde8\uc18c \uc0c1\ud0dc\ub85c \ubc14\uafb8\ub294 \ub85c\uc9c1\uae4c\uc9c0 \uc9dc\uc918",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "build.gradle\uc5d0 spring-boot-starter-web \ub4e4\uc5b4\uc788\ub294 \ud504\ub85c\uc81d\ud2b8\uc57c. \uc0c1\ud488 \uac80\uc0c9 \uc5d4\ub4dc\ud3ec\uc778\ud2b8 \ub9cc\ub4e4\uc5b4\uc918. \uc774\ub984\uc774\ub791 \uce74\ud14c\uace0\ub9ac\ub85c \ud544\ud130\ub9c1\ud558\uace0 \ud398\uc774\uc9d5\ub3c4 \ub418\uac8c",
+          "should_trigger": true,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": false
+        },
+        {
+          "query": "Django REST framework\ub85c \uc0c1\ud488 API \ub9cc\ub4e4\uc5b4\uc918. serializer\ub791 viewset \uc368\uc11c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Micronaut\ub85c REST \ucee8\ud2b8\ub864\ub7ec \ub9cc\ub4e4\uc5b4\uc918. @Controller\ub791 @Get \uc560\ub178\ud14c\uc774\uc158 \uc4f0\ub294 \ubc29\uc2dd\uc73c\ub85c",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "NestJS \ud504\ub85c\uc81d\ud2b8\uc5d0 \uc8fc\ubb38 \ucee8\ud2b8\ub864\ub7ec\ub791 \uc11c\ube44\uc2a4 \ucd94\uac00\ud574\uc918. TypeORM \uc5d4\ud2f0\ud2f0\ub791 DTO\ub3c4 \uac19\uc774",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\ubd04\ub9de\uc774 \uc0ac\ubb34\uc2e4 \ube44\ud488 \uc7ac\uace0\ub97c \uc5d1\uc140\ub85c \uc815\ub9ac\ud558\ub824\ub294\ub370 spring \uce74\ud14c\uace0\ub9ac \uc0c1\ud488\ub9cc \ud544\ud130\ub9c1\ud558\ub294 \uc218\uc2dd \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "\uc790\ubc14\ub85c CSV \ud30c\uc77c \uc5ec\ub7ec \uac1c \uc77d\uc5b4\uc11c \ud1b5\uacc4 \ubf51\ub294 \ubc30\uce58 \uc2a4\ud06c\ub9bd\ud2b8 \uc9dc\uc918. \uc6f9 \uc11c\ubc84 \uc544\ub2c8\uace0 \uadf8\ub0e5 \uc2e4\ud589\ud615",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        },
+        {
+          "query": "Gradle \ube4c\ub4dc\uac00 \ub108\ubb34 \ub290\ub824. \uce90\uc2dc\ub791 \ubcd1\ub82c \ube4c\ub4dc \uc124\uc815\uc73c\ub85c \uc18d\ub3c4 \uac1c\uc120\ud558\ub294 \ubc95 \uc54c\ub824\uc918",
+          "should_trigger": false,
+          "trigger_rate": 0.0,
+          "triggers": 0,
+          "runs": 3,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}

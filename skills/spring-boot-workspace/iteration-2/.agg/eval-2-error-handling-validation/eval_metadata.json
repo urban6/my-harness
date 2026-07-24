@@ -1,0 +1,6 @@
+{
+  "eval_id": 2,
+  "eval_name": "error-handling-validation",
+  "prompt": "Spring Boot로 회원 가입 API(POST /members)를 만들어줘. 요청 바디는 이메일, 비밀번호, 닉네임이야. 이메일이 이미 등록돼 있으면 409로 응답하고, 이메일 형식이 틀렸거나 필수값이 비면 400으로 응답해줘. 에러 응답 포맷은 전체적으로 일관되게 가고 싶어.",
+  "assertions": []
+}

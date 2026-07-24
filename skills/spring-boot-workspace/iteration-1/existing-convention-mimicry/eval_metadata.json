@@ -1,0 +1,6 @@
+{
+  "eval_id": 1,
+  "eval_name": "existing-convention-mimicry",
+  "prompt": "첨부한 기존 블로그 프로젝트에 기능을 하나 추가해줘. 특정 저자(author)가 쓴 글만 필터링해서 조회하는 기능이 필요해. GET /articles?author=kim 처럼 쿼리 파라미터로 저자를 받아서 그 저자의 글 목록을 반환하면 돼. 기존 코드에 자연스럽게 녹아들게 작성해줘.",
+  "assertions": []
+}
