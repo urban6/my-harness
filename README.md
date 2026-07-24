@@ -14,9 +14,9 @@ my-harness/
 └── CLAUDE.md   # 이 레포 작업 시 지침
 ```
 
-## 포함 구성요소
+## 구성요소
 
-| 유형 | 자산 |
+| 유형 | 구성요소 |
 | --- | --- |
 | **agents** | `feature-pm` · `api-designer` · `ui-designer` · `db-migrator` · `backend-impl` · `frontend-impl` · `boundary-verifier` · `test-suite` · `architecture-expert` · `debugger` · `performance-optimizer` |
 | **skills** | `nestjs` · `spring-boot` (백엔드 관용 패턴 참조) |
@@ -24,42 +24,70 @@ my-harness/
 
 > 상세 사용법은 각 파일의 frontmatter `description`을 참고하세요.
 
-## 에이전트 팀으로 돌리기
+## 오케스트레이션
 
-`~~ 개발해줘`처럼 두루뭉술하게 요청하면 메인 에이전트가 **혼자** 처리한다. 팀 오케스트레이션은 프롬프트에서 명시적으로 깨워야 하고, 반드시 **메인 세션에서 시작**해야 한다(서브에이전트는 추가 스폰이 막힘 — `agents/feature-pm.md`).
+에이전트 여러 개를 팀으로 굴리려면 프롬프트에서 **이름으로 지목**해야 합니다. 자동 트리거는 신뢰도가 낮아, `~~ 개발해줘`처럼 두루뭉술하게 요청하면 메인 에이전트가 혼자 처리합니다. 또 팀은 **메인 세션에서 시작**해야 합니다 — 서브에이전트는 추가 스폰이 막혀 있습니다(`agents/feature-pm.md`).
 
-**1. 오케스트레이터 지목 (풀스택 기능 단위)** — `feature-pm`이 요구 분해 → 설계(api/ui/db) → 구현(backend/frontend) + 검증(boundary-verifier) → 테스트(test-suite)를 Phase 0~4로 스폰·조율한다. 워커끼리는 `SendMessage`로 대화하고, 산출물은 `_workspace/features/{name}/`에 쌓인다.
+| 이럴 때 | 이렇게 |
+| --- | --- |
+| 기능 하나를 처음부터 끝까지 | `feature-pm`에 맡긴다 |
+| 단계가 정해진 몇 스텝 | 역할을 순서대로 나열한다 |
+| 전면 감사·마이그레이션 | Workflow로 병렬 fan-out |
 
-```
+### 1. 오케스트레이터에게 맡기기
+
+`feature-pm`이 요구 분해 → 설계(`api-designer`·`ui-designer`·`db-migrator`) → 구현·검증(`backend-impl`·`frontend-impl`·`boundary-verifier`) → 테스트(`test-suite`)를 Phase 0~4로 스폰·조율합니다.
+
+워커끼리는 `SendMessage`로 직접 대화하고, 산출물은 `_workspace/features/{name}/`에 단계별로 쌓입니다.
+
+```text
 feature-pm 에이전트로 "로그인" 기능을 풀스택으로 개발해줘 —
 요구 분해 → 설계 → 구현 → 검증 → 통합까지 Phase 파이프라인으로.
 ```
 
-**2. 역할 직접 지정 (가벼운 협업)** — 정식 오케스트레이터 없이 프롬프트로 파이프라인을 엮는다.
+### 2. 파이프라인 직접 엮기
 
+오케스트레이터 없이, 프롬프트에 순서만 적어 가벼운 협업을 만듭니다. 진단 에이전트(`debugger`·`performance-optimizer`·`architecture-expert`)는 독립 실행이라 이렇게 엮기 좋습니다.
+
+```text
+결제 API가 느려 — debugger로 원인 찾고, performance-optimizer로
+병목 진단한 다음, architecture-expert 관점에서 구조 개선안까지 정리해줘.
 ```
-결제 모듈 구현하고, 끝나면 security-auditor 감사 → test-writer 테스트 → code-reviewer 리뷰 순서로.
-```
 
-**3. 대규모 병렬 (Workflow)** — 전면 감사·마이그레이션 같은 fan-out. `ultracode` 키워드나 "워크플로우로 병렬 오케스트레이션"으로 opt-in(토큰 소모 큼).
+### 3. 대규모 병렬 (Workflow)
 
-> **팀을 부르는 신호**: ① 에이전트를 이름으로 지목(자동 트리거는 신뢰도 낮음) ② "병렬로/나눠서" 명시 ③ "구현 → 검증 → 테스트" 순서 명시 ④ 대규모면 `ultracode`.
+전면 감사·마이그레이션처럼 수십 갈래로 퍼지는 작업입니다. 토큰 소모가 크므로 `ultracode` 키워드나 "워크플로우로 병렬 오케스트레이션"이라고 직접 opt-in해야 동작합니다.
+
+**팀이 깨어나는 조건**
+
+- 에이전트를 **이름으로** 지목한다
+- "병렬로"·"나눠서"를 명시한다
+- "구현 → 검증 → 테스트"처럼 순서를 적는다
+- 대규모면 `ultracode`를 붙인다
 
 ## 적용 방법
 
-심링크를 쓰면 이 레포만 고쳐도 연결된 모든 곳에 바로 반영됩니다.
+`install.sh`가 구성요소를 사용처로 **심링크**합니다. 심링크라서 이 레포만 고쳐도 연결된 모든 곳에 바로 반영됩니다. 구성요소가 아닌 것(`README.md`, `*-workspace/` 평가 부산물)은 자동 제외됩니다.
 
 ```bash
-# 전역 — 모든 프로젝트에서 사용
-ln -s ~/SideProjects/my_harness/agents/api-designer.md ~/.claude/agents/
+# 전역 — 모든 프로젝트에서 사용 (~/.claude 로 링크, 기본값)
+./install.sh install
 
-# 프로젝트별 — 그 프로젝트에서만 사용
-ln -s ~/SideProjects/my_harness/skills/spring-boot .claude/skills/spring-boot
+# 프로젝트별 — .claude/ 로만 링크 (경로 생략 시 현재 디렉터리)
+./install.sh install --project
+./install.sh install --project ~/SideProjects/my-app
+
+# 미리보기 · 현황 · 제거
+./install.sh install --global --dry-run   # 변경 없이 수행 예정만 출력
+./install.sh list                         # 무엇이 링크됐는지 확인
+./install.sh uninstall                    # 우리 심링크만 제거 (남의 파일 안 건드림)
 ```
 
-## 컨벤션
+멱등적이라 **재실행 = 동기화**입니다(새 구성요소 반영, 기존 링크는 `already`로 skip). 유형·이름으로 골라 적용할 수도 있습니다:
 
-- **네이밍**: kebab-case (`api-designer`).
-- **description**: "무엇을 하는지"보다 **"언제 쓰는지"**를 적는다 — 자동 트리거 정확도를 좌우한다.
-- **최소 권한**: 에이전트 `tools`는 실제 필요한 것만 나열한다.
-- **커밋 단위**: 자산 하나 = 커밋 하나 (관련 변경은 함께).
+```bash
+./install.sh install --type agents            # agents 전체만
+./install.sh install debugger nestjs commit   # 개별 구성요소만 (확장자 없이)
+```
+
+기존에 실제 파일/다른 링크가 있으면 `CONFLICT`로 건너뛰며, 덮어쓰려면 `--force`(기존은 `.bak`로 백업)를 붙입니다.
