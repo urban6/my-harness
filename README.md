@@ -33,6 +33,7 @@ my-harness/
 | 유형 | 자산 |
 | --- | --- |
 | **agents (풀스택 기능 팀)** | `feature-pm` — 기능 분해·Phase 할당·팀 조율 · **설계** `api-designer`·`ui-designer`·`db-migrator` · **구현** `backend-impl`·`frontend-impl` · **검증** `boundary-verifier` · **테스트** `test-suite` |
+| **agents (진단 전문가)** | `architecture-expert` — 아키텍처 진단·ADR · `debugger` — 버그 재현·근본 원인 규명 · `performance-optimizer` — 성능 병목 진단 |
 | **skills** | `nestjs` · `spring-boot` — 백엔드 관용 패턴 참조 |
 | **commands** | `commit` · `push` — git 커맨드 |
 
