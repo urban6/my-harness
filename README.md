@@ -1,4 +1,4 @@
-# my-claude
+# my-harness
 
 **새 프로젝트를 시작할 때 가져다 쓰는 Claude 기본 셋팅(부트스트랩 템플릿)**
 
@@ -9,7 +9,7 @@ Claude Code에서 쓸 커스텀 서브에이전트·스킬·슬래시 커맨드�
 ## 디렉터리 구조
 
 ```
-my-claude/
+my-harness/
 ├── README.md          # 이 문서
 ├── CLAUDE.md          # 이 레포 작업 시 Claude에게 주는 프로젝트 지침
 ├── .gitignore         # OS/에디터 잡파일 무시
@@ -89,16 +89,16 @@ skills/
 
 ```bash
 # 개별 에이전트를 심링크
-ln -s ~/SideProjects/my-claude/agents/api-designer.md ~/.claude/agents/api-designer.md
+ln -s ~/SideProjects/my-harness/agents/api-designer.md ~/.claude/agents/api-designer.md
 
 # 스킬 폴더를 통째로 심링크
-ln -s ~/SideProjects/my-claude/skills/my-skill ~/.claude/skills/my-skill
+ln -s ~/SideProjects/my-harness/skills/my-skill ~/.claude/skills/my-skill
 
 # 커맨드 심링크
-ln -s ~/SideProjects/my-claude/commands/deploy.md ~/.claude/commands/deploy.md
+ln -s ~/SideProjects/my-harness/commands/deploy.md ~/.claude/commands/deploy.md
 
 # 에이전트 전체를 한 번에
-for f in ~/SideProjects/my-claude/agents/*.md; do ln -s "$f" ~/.claude/agents/; done
+for f in ~/SideProjects/my-harness/agents/*.md; do ln -s "$f" ~/.claude/agents/; done
 ```
 
 ### 프로젝트별 적용 (그 프로젝트에서만)
@@ -108,7 +108,7 @@ for f in ~/SideProjects/my-claude/agents/*.md; do ln -s "$f" ~/.claude/agents/; 
 ```bash
 # 새 프로젝트 루트에서
 mkdir -p .claude/agents
-ln -s ~/SideProjects/my-claude/agents/backend-impl.md .claude/agents/backend-impl.md
+ln -s ~/SideProjects/my-harness/agents/backend-impl.md .claude/agents/backend-impl.md
 ```
 
 > 심링크 대신 복사(`cp`)를 쓰면 스냅샷처럼 고정되지만, 수정할 때마다 다시 복사해야 합니다. 템플릿을 계속 개선하며 재사용하려면 심링크를 권장합니다.
