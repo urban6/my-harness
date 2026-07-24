@@ -42,7 +42,7 @@ public class Order {
 ```
 
 주의:
-- `03_db_design.md`(db-migrator 산출물)의 스키마·제약·인덱스에 정확히 맞춘다.
+- DB 스키마 설계 문서/마이그레이션이 있으면 그 스키마·제약·인덱스에 정확히 맞춘다.
 - `equals`/`hashCode`는 신중히 — 가변 필드로 만들지 말 것. 필요하면 비즈니스 키 또는 할당된 ID 기반으로.
 - `@GeneratedValue` 전략은 DB에 맞춘다(PostgreSQL은 보통 `IDENTITY` 또는 시퀀스).
 - 연관관계는 기본 `LAZY`(특히 `@ManyToOne`은 명시적으로 `fetch = FetchType.LAZY`).
@@ -87,7 +87,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
 ## 체크리스트
 
-- [ ] 엔티티가 `03_db_design.md` 스키마·제약과 일치하는가?
+- [ ] 엔티티가 (있다면) DB 스키마 설계·제약과 일치하는가?
 - [ ] `@ManyToOne`/`@OneToOne`이 `LAZY`인가?
 - [ ] 목록이 `Page`+`Pageable`인가?
 - [ ] 연관 로딩이 필요한 목록에 N+1 대책(fetch join/`@EntityGraph`)이 있는가?

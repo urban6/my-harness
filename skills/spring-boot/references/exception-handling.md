@@ -1,6 +1,6 @@
 # 예외 처리 — RFC 9457 ProblemDetail
 
-에러 응답은 **RFC 9457**(`application/problem+json`)로 통일한다. `api-designer`의 기본 에러 포맷과 정렬된다. Spring 6/Boot 3는 `ProblemDetail`을 기본 제공한다.
+에러 응답은 **RFC 9457**(`application/problem+json`)로 통일한다. Spring 6/Boot 3는 `ProblemDetail`을 기본 제공한다. 프로젝트나 API 설계 문서에 다른 에러 포맷 규약이 있으면 그것을 따른다(핵심 원칙 1).
 
 ## 도메인 예외
 

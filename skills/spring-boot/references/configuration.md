@@ -63,7 +63,7 @@ app:
 
 ## 시크릿 외부화 (중요)
 
-- 자격증명·API 키·토큰을 **소스/커밋에 하드코딩하지 않는다**(backend-impl 절차의 "비밀값 하드코딩 금지"와 정렬).
+- 자격증명·API 키·토큰을 **소스/커밋에 하드코딩하지 않는다**(핵심 원칙 8 "비밀값 외부화"와 정렬).
 - 주입 경로: 환경변수 → 외부 시크릿 매니저(Vault, AWS/GCP Secrets Manager 등) → CI/CD 시크릿.
 - `application-*.yml`에 실제 비밀값을 커밋하지 않는다. 예시는 `application-example.yml`이나 `.env.example`로.
 
@@ -73,7 +73,7 @@ app:
   ```
   src/main/resources/db/migration/V1__init.sql   # Flyway 관례
   ```
-- `03_db_design.md`(db-migrator)의 DDL/마이그레이션을 이 위치로 옮긴다.
+- DB 스키마 설계/마이그레이션 DDL이 있으면 이 위치로 옮긴다.
 
 ## 체크리스트
 

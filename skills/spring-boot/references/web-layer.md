@@ -4,7 +4,7 @@
 
 - `@RestController`로 얇게 유지 — HTTP 매핑·검증·응답 변환만. 비즈니스 로직은 서비스로 위임.
 - 요청/응답은 **record DTO**. JPA 엔티티를 직접 받거나 반환하지 않는다.
-- 상태코드·`Location` 헤더는 `api_contract`(api-designer 산출물)에 정확히 맞춘다.
+- 상태코드·`Location` 헤더는 API 계약(설계 문서가 있으면 그것)에 정확히 맞춘다.
 
 ## 컨트롤러 템플릿
 
@@ -72,7 +72,7 @@ public record OrderResponse(
 - 컨트롤러 파라미터에 `@Valid`를 붙여야 검증이 동작한다. 검증 실패는 `MethodArgumentNotValidException` → 예외 핸들러가 400으로 매핑(`exception-handling.md`).
 - 중첩 객체 검증은 필드에 `@Valid`를 추가한다.
 
-## 상태코드 매핑 (기본값 — api_contract 우선)
+## 상태코드 매핑 (기본값 — API 계약이 있으면 그것을 우선)
 
 | 상황 | 코드 | 비고 |
 | --- | --- | --- |
@@ -97,5 +97,5 @@ public record OrderResponse(
 
 - [ ] 요청/응답이 record DTO인가? 엔티티 노출이 없는가?
 - [ ] `@Valid`가 붙어 있고 제약 애노테이션이 계약과 일치하는가?
-- [ ] 상태코드·`Location`이 `api_contract`와 일치하는가?
+- [ ] 상태코드·`Location`이 API 계약(있다면)과 일치하는가?
 - [ ] 컨트롤러가 얇은가(로직·트랜잭션·리포지토리 접근 없음)?
