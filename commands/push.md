@@ -1,16 +1,16 @@
 ---
 description: 현재 브랜치를 원격에 안전하게 푸시한다. 업스트림 설정·보호 브랜치 확인·강제 푸시 가드를 포함. 커밋을 원격에 올릴 때 사용.
 argument-hint: [선택: 원격 이름 또는 추가 지시]
-allowed-tools: Bash(git status:*), Bash(git branch:*), Bash(git rev-parse:*), Bash(git log:*), Bash(git remote:*), Bash(git push:*)
+allowed-tools: Bash(git status:*), Bash(git branch:*), Bash(git rev-parse:*), Bash(git log:*), Bash(git remote:*), Bash(git push:*), Bash(echo:*)
 ---
 
 ## 현재 저장소 상태
 
 - 현황: !`git status -sb`
 - 현재 브랜치: !`git rev-parse --abbrev-ref HEAD`
-- 업스트림(없으면 비어 있음): !`git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null`
+- 업스트림: !`git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "(없음 — 최초 푸시)"`
 - 원격 목록: !`git remote -v`
-- 아직 안 올린 커밋: !`git log @{u}..HEAD --oneline 2>/dev/null`
+- 아직 안 올린 커밋: !`git log @{u}..HEAD --oneline 2>/dev/null || echo "(업스트림 없음 — 브랜치 커밋 전체가 미푸시)"`
 
 ## 작업
 
