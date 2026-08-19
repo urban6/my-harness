@@ -19,13 +19,9 @@ my-harness/
 
 | 유형 | 구성요소 |
 | --- | --- |
-| **agents · 오케스트레이터** | `feature-pm` — 아래 워커들을 Phase 0~3으로 스폰·조율 |
-| **agents · 파이프라인 워커** | `backend-designer`(설계) → `backend-impl`(구현) → `boundary-verifier`(검증) → `test-writer`(테스트) |
-| **agents · 진단**(읽기 전용) | `architecture-expert` · `debugger` · `performance-optimizer` · `security-auditor` · `code-reviewer` |
+| **agents** | `feature-pm` · `backend-designer` · `backend-impl` · `boundary-verifier` · `test-writer` · `architecture-expert` · `debugger` · `performance-optimizer` · `security-auditor` · `code-reviewer` |
 | **skills** | `spring-boot` · `nestjs` (백엔드 관용 패턴 참조) |
 | **commands** | `commit` · `push` |
-
-파이프라인 워커 4종은 `feature-pm`이 Phase 순서대로 스폰하며, 낱개로 직접 부를 수도 있습니다. 진단 5종은 코드를 고치지 않고 근거와 권고만 돌려줍니다.
 
 > 상세 사용법은 각 파일의 frontmatter `description`을 참고하세요.
 
