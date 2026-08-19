@@ -20,7 +20,7 @@ my-harness/
 | 유형 | 구성요소 |
 | --- | --- |
 | **agents** | `feature-pm` · `backend-designer` · `backend-impl` · `boundary-verifier` · `test-writer` · `architecture-expert` · `debugger` · `performance-optimizer` · `security-auditor` · `code-reviewer` |
-| **skills** | `spring-boot` · `nestjs` (백엔드 관용 패턴 참조) |
+| **skills** | `spring-boot` · `nestjs` |
 | **commands** | `commit` · `push` |
 
 > 상세 사용법은 각 파일의 frontmatter `description`을 참고하세요.
