@@ -47,7 +47,7 @@ src/
 가능하면 CLI로 보일러플레이트를 생성해 관례를 맞춘다:
 ```bash
 nest g module order
-nest g controller order --no-spec     # 테스트 파일 생성은 test-writer가 관리
+nest g controller order --no-spec     # 스펙 파일은 테스트 규약에 따라 별도 관리
 nest g service order --no-spec
 ```
 

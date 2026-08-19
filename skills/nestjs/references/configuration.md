@@ -55,7 +55,7 @@ export class SomeService {
 
 ## 시크릿 외부화 (중요)
 
-- 자격증명·API 키·토큰을 **소스/커밋에 하드코딩하지 않는다**(backend-impl 절차의 "비밀값 하드코딩 금지"와 정렬).
+- 자격증명·API 키·토큰을 **소스/커밋에 하드코딩하지 않는다**(핵심 원칙 8 "비밀값은 외부화").
 - `.env`는 로컬 전용 — **커밋하지 않는다**(`.gitignore`). 예시는 `.env.example`로 키 목록만.
 - 주입 경로: 환경변수 → 외부 시크릿 매니저(Vault, AWS/GCP Secrets Manager 등) → CI/CD 시크릿.
 - `DATABASE_URL` 등 연결 문자열에 비밀번호가 포함되므로 특히 주의.

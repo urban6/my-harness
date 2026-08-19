@@ -1,6 +1,6 @@
 # 예외 처리 — 예외 필터 · RFC 9457
 
-에러 응답은 **RFC 9457**(`application/problem+json`)로 통일한다. `api-designer`의 기본 에러 포맷과 정렬된다. NestJS 기본 에러 바디(`{ statusCode, message, error }`) 대신 전역 예외 필터로 ProblemDetail 형태를 만든다.
+에러 응답은 **RFC 9457**(`application/problem+json`)로 통일한다. NestJS 기본 에러 바디(`{ statusCode, message, error }`) 대신 전역 예외 필터로 ProblemDetail 형태를 만든다. 프로젝트나 API 설계 문서에 다른 에러 포맷 규약이 있으면 그것을 따른다(핵심 원칙 1).
 
 ## 예외 던지기
 

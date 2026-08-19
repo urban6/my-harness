@@ -4,7 +4,7 @@
 
 - `@Controller`는 얇게 — 라우팅·검증·응답 변환만. 비즈니스 로직은 서비스로 위임.
 - 요청/응답은 **DTO 클래스**. Prisma 모델을 직접 받거나 반환하지 않는다.
-- 상태코드는 `api_contract`(api-designer 산출물)에 맞춘다. NestJS는 기본 200(POST는 201)을 주므로 필요 시 `@HttpCode`로 명시.
+- 상태코드는 API 계약(설계 문서가 있으면 그것)에 정확히 맞춘다. NestJS는 기본 200(POST는 201)을 주므로 필요 시 `@HttpCode`로 명시.
 
 ## 컨트롤러 템플릿
 
@@ -86,7 +86,7 @@ export class OrderResponseDto {
 - Prisma 모델을 그대로 반환하지 않는다 — 노출 필드만 담은 DTO로 매핑(서비스에서, `service-layer.md`).
 - 민감 필드(비밀번호 해시 등) 누출 방지. 필요하면 `ClassSerializerInterceptor` + `@Exclude`.
 
-## 상태코드 매핑 (기본값 — api_contract 우선)
+## 상태코드 매핑 (기본값 — API 계약이 있으면 그것이 우선)
 
 | 상황 | 코드 | NestJS |
 | --- | --- | --- |
@@ -111,5 +111,5 @@ export class OrderResponseDto {
 
 - [ ] 요청/응답이 DTO 클래스인가? Prisma 모델 노출이 없는가?
 - [ ] DTO에 class-validator 제약이 계약과 일치하는가?
-- [ ] 상태코드·`Location`이 `api_contract`와 일치하는가(`@HttpCode` 명시)?
+- [ ] 상태코드·`Location`이 API 계약과 일치하는가(`@HttpCode` 명시)?
 - [ ] 컨트롤러가 얇은가(로직·리포지토리 접근 없음)?

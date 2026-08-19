@@ -28,7 +28,7 @@ export class PrismaModule {}
 
 ## 스키마 (schema.prisma)
 
-`03_db_design.md`(db-migrator 산출물)의 스키마·제약·인덱스를 여기에 정확히 옮긴다.
+DB 스키마 설계 문서/마이그레이션이 있으면 그 스키마·제약·인덱스를 여기에 정확히 옮긴다.
 
 ```prisma
 generator client {
@@ -90,7 +90,7 @@ const [items, total] = await this.prisma.$transaction([
 
 ## 체크리스트
 
-- [ ] `schema.prisma`가 `03_db_design.md`의 스키마·제약·인덱스와 일치하는가?
+- [ ] `schema.prisma`가 DB 스키마 설계(있으면)의 제약·인덱스와 일치하는가?
 - [ ] 스키마 변경 후 `prisma generate`를 돌렸는가?
 - [ ] 마이그레이션으로 스키마를 버전 관리하는가(운영에서 `db push` 아님)?
 - [ ] 목록이 페이지네이션되고 카운트가 같은 트랜잭션인가?
