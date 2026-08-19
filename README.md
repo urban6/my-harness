@@ -27,11 +27,7 @@ my-harness/
 
 ## 오케스트레이션
 
-에이전트·스킬은 프롬프트에서 **이름으로 지목**해야 확실히 걸립니다 — 두루뭉술하게 요청하면 메인 에이전트가 혼자 처리합니다. `feature-pm`은 **메인 세션에서 직접 호출**하세요(서브에이전트는 추가 스폰이 막혀 있습니다).
-
-아래 템플릿의 `{ }`는 채워 넣을 자리입니다.
-
-### 기능 개발 — 통째로 위임
+### 기능 개발 — A
 
 ```text
 feature-pm 에이전트로 {기능명} 기능을 개발해줘.
@@ -42,11 +38,9 @@ Phase 0에서 스택을 확정해 모든 워커에 주입하고,
 각 Phase 산출물 경로와 마지막에 {테스트 명령} 결과를 그대로 보여줘.
 ```
 
-산출물은 `_workspace/features/{기능명}/`에 `00_requirements.json` → `01_api_design.md`·`02_db_design.md` → `03_integration_summary.md` 순으로 쌓입니다.
+산출물은 `_workspace/features/{기능명}/`에 `00_requirements.json` → `01_api_design.md`·`02_db_design.md` → `03_integration_summary.md` 순으로 쌓이고, 진행 상태는 같은 디렉터리의 `progress.md`에 기록됩니다.
 
-### 기능 개발 — 직접 엮기
-
-워커 조합·순서를 손으로 통제하고 싶을 때. PM을 거치지 않으므로 **스택을 프롬프트에 명시**하세요.
+### 기능 개발 — B
 
 ```text
 {기능명} 기능을 설계부터 구현까지 진행해줘.
@@ -103,8 +97,6 @@ Phase 0에서 스택을 확정해 모든 워커에 주입하고,
 
 ## 적용 방법
 
-`install.sh`가 구성요소를 사용처로 **심링크**합니다 — 이 레포만 고치면 연결된 모든 곳에 반영됩니다. 멱등적이라 **재실행 = 동기화**입니다.
-
 ```bash
 ./install.sh install                          # 전역 (~/.claude, 기본값)
 ./install.sh install --project [경로]         # 프로젝트별 (.claude/, 생략 시 현재 디렉터리)
@@ -114,5 +106,3 @@ Phase 0에서 스택을 확정해 모든 워커에 주입하고,
 ./install.sh list                             # 무엇이 링크됐는지 확인
 ./install.sh uninstall                        # 우리 심링크만 제거 (남의 파일 안 건드림)
 ```
-
-구성요소가 아닌 것(안내용 `README.md`, `*-workspace/` 평가 부산물)은 자동 제외됩니다. 기존 파일·타 링크가 있으면 `CONFLICT`로 건너뛰고, `--force`를 붙이면 `.bak`로 백업한 뒤 교체합니다.
