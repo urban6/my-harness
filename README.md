@@ -8,11 +8,12 @@ Claude Code용 커스텀 에이전트·스킬·커맨드를 한곳에서 작성�
 
 ```
 my-harness/
-├── agents/     # 서브에이전트 정의 (.md, 파일 하나 = 에이전트 하나)
-├── skills/     # 재사용 작업 절차 묶음 (SKILL.md + 참고 자료)
-├── commands/   # 슬래시 커맨드 (/이름)
-├── install.sh  # 구성요소를 사용처로 심링크하는 설치 스크립트
-└── CLAUDE.md   # 이 레포 작업 시 지침
+├── agents/
+├── skills/
+├── commands/
+├── prompts/
+├── install.sh
+└── CLAUDE.md
 ```
 
 ## 구성요소
@@ -22,37 +23,15 @@ my-harness/
 | **agents** | `feature-pm` · `backend-designer` · `backend-impl` · `boundary-verifier` · `test-writer` · `architecture-expert` · `debugger` · `performance-optimizer` · `security-auditor` · `code-reviewer` |
 | **skills** | `spring-boot` · `nestjs` |
 | **commands** | `commit` · `push` |
+| **prompts** | `feature-development` |
 
 > 상세 사용법은 각 파일의 frontmatter `description`을 참고하세요.
 
 ## 오케스트레이션
 
-### 기능 개발 — A
+### 기능 개발
 
-```text
-feature-pm 에이전트로 {기능명} 기능을 개발해줘.
-스택은 {스택}이고, 범위는 {포함 / 제외}야.
-
-Phase 0에서 스택을 확정해 모든 워커에 주입하고,
-설계(backend-designer) → 구현·검증(backend-impl·boundary-verifier) → 테스트(test-writer) 순으로 진행해줘.
-각 Phase 산출물 경로와 마지막에 {테스트 명령} 결과를 그대로 보여줘.
-```
-
-산출물은 `_workspace/features/{기능명}/`에 `00_requirements.json` → `01_api_design.md`·`02_db_design.md` → `03_integration_summary.md` 순으로 쌓이고, 진행 상태는 같은 디렉터리의 `progress.md`에 기록됩니다.
-
-### 기능 개발 — B
-
-```text
-{기능명} 기능을 설계부터 구현까지 진행해줘.
-스택은 {스택}, {범위}야.
-
-1) backend-designer로 엔드포인트·요청/응답 스키마·에러 응답과
-   테이블·인덱스·제약을 한 번에 정리. 정합 요약표까지 남겨줘.
-2) 그 산출물을 입력으로 {구현 스킬 또는 backend-impl}로 구현
-3) architecture-expert로 {레이어·의존성 규칙}이 지켜졌는지 점검
-
-각 단계 산출물 경로를 알려주고, 마지막에 {테스트 명령} 결과를 그대로 보여줘.
-```
+설계부터 구현·테스트까지 진행하는 프롬프트는 [`prompts/feature-development.md`](prompts/feature-development.md)에 있습니다. 복사해서 `{빈칸}`만 채워 쓰세요.
 
 ### 코드 리뷰 · 점검
 
@@ -79,20 +58,6 @@ Phase 0에서 스택을 확정해 모든 워커에 주입하고,
 3) architecture-expert 관점에서 구조적 개선안을 트레이드오프로 비교
 
 셋 다 진단만 하고 코드는 고치지 마. 마지막에 안 A/B/C로 정리해줘.
-```
-
-### 채워 넣은 예시 — Spring Boot
-
-```text
-주문(Order) API를 설계부터 구현까지 진행해줘.
-스택은 Spring Boot 3.x + JPA + PostgreSQL이야.
-
-1) backend-designer로 엔드포인트·요청/응답 스키마·에러 응답(RFC 9457)과
-   테이블·인덱스·제약을 한 번에 정리. JPA 엔티티 + Flyway SQL 기준으로.
-2) 그 산출물을 입력으로 spring-boot 스킬을 따라 컨트롤러·서비스·리포지토리 구현
-3) architecture-expert로 web → service → repository 단방향이 지켜졌는지 점검
-
-각 단계 산출물 경로를 알려주고, 마지막에 ./gradlew test 결과를 그대로 보여줘.
 ```
 
 ## 적용 방법
