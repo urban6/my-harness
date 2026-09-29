@@ -23,7 +23,7 @@ my-harness/
 | **agents** | `feature-pm` · `backend-designer` · `backend-impl` · `boundary-verifier` · `test-writer` · `architecture-expert` · `debugger` · `performance-optimizer` · `security-auditor` · `code-reviewer` |
 | **skills** | `spring-boot` · `nestjs` |
 | **commands** | `commit` · `push` |
-| **prompts** | `feature-development` |
+| **prompts** | `feature-development` · `code-review` |
 
 > 상세 사용법은 각 파일의 frontmatter `description`을 참고하세요.
 
@@ -33,20 +33,9 @@ my-harness/
 
 설계부터 구현·테스트까지 진행하는 프롬프트는 [`prompts/feature-development.md`](prompts/feature-development.md)에 있습니다. 복사해서 `{빈칸}`만 채워 쓰세요.
 
-### 코드 리뷰 · 점검
+### 코드 리뷰
 
-```text
-{대상 범위 — 경로나 최근 변경}를 {커밋 전 / 배포 전}에 점검해줘.
-
-1) architecture-expert로 {레이어·의존성 규칙}이 깨진 곳,
-   {경계 밖으로 새면 안 되는 타입}이 노출된 곳을 찾아줘.
-2) security-auditor로 인증·인가·민감 데이터 노출을 심각도와 함께 점검.
-3) {스킬명} 스킬의 references/{문서}.md 체크리스트로 {점검 항목}을 항목별로.
-4) code-reviewer로 가독성·네이밍·에러 핸들링·중복을 마무리 점검.
-
-넷 다 진단만 하고 수정은 하지 마 — 고칠지는 내가 정할게.
-발견 항목은 file:line 근거와 함께 심각도 순으로 정리해줘.
-```
+커밋이나 배포 전에 여러 관점으로 점검하는 프롬프트는 [`prompts/code-review.md`](prompts/code-review.md)에 있습니다. 복사해서 `{빈칸}`만 채워 쓰세요.
 
 ### 디버깅 · 성능 개선
 
