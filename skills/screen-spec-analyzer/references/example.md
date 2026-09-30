@@ -1,72 +1,33 @@
-# 예시: 투표 게시글 상세 (analyze 모드, 일부 발췌)
+# 예시: 투표 게시글 상세
 
-가상의 화면이다. 마커 01~05, 설명 패널 있음. 형식 참고용이며 필드 구성을 그대로 복사하지 않는다.
+가상 화면이다(마커 01~05). 형식 참고용이며 필드 구성을 그대로 복사하지 않는다.
 
-## 1단계 인벤토리
+````
+리소스 2개: 투표 상세(GET /vote-posts/{id}), 댓글 목록(GET /vote-posts/{id}/comments)
 
-| 영역 | 요소 | 캡처 표시값 | 분류 | 비고 |
+### GET /vote-posts/{id}
+| 필드 | 타입 | null | 근거 | 비고 |
 |---|---|---|---|---|
-| 01 | 게시글 제목 | "점심 메뉴 투표" | DATA | |
-| 02 | 마감 배지 | "D-3" | DERIVED | 원천: 마감 일시 |
-| 03 | 투표 버튼 | "투표하기" (활성) | ACTION, USER_CTX | 이미 투표했으면 비활성으로 추정 |
-| 03 | 안내 문구 | "투표 종료 후 결과가 공개됩니다" | STATIC, RULE | 종료 전 집계 비노출 |
-| 05 | 댓글 수 | "댓글 24" | DATA | 목록은 3건만 표시 → 페이지네이션 필요 |
+| id | long | N | - | |
+| title | string | N | 01 | |
+| status | enum(VOTING, …) | N | 02 | 서버 시각 기준. 추정: SCHEDULED, CLOSED |
+| voteEndAt | datetime | N | 02 | D-3 계산 원천 |
+| result | object | Y | 03 | 종료 전 null("종료 후 공개" 문구) |
+| commentCount | integer | N | 05 | |
+| viewer.votedChoice | enum(AGREE, DISAGREE) | Y | 03 | 미투표면 null |
+| viewer.canVote | boolean | N | 03 | 가정: 로그인 + 미투표 + 기간 내 |
 
-## 3-1 리소스 트리
+### GET /vote-posts/{id}/comments
+| 필드 | 타입 | null | 근거 | 비고 |
+|---|---|---|---|---|
+| items[].id | long | N | - | |
+| items[].author.name | string | N | 05 | |
+| items[].content | string | N | 05 | |
+| items[].likeCount | integer | N | 05 | |
+| items[].viewer.liked | boolean | N | 05 | 빈 하트 |
+| nextCursor | string | Y | - | 24건 중 3건 표시 |
 
-```yaml
-screen: vote-post-detail
-resources:
-  - name: votePost
-    source: TBD
-    fields:
-      - path: id
-        type: long
-        nullable: false
-        category: TECHNICAL
-        example: 1024
-        evidence: "-"
-        confidence: high
-      - path: title
-        type: string
-        nullable: false
-        category: DATA
-        example: "점심 메뉴 투표"
-        evidence: "01"
-        confidence: high
-      - path: voteEndAt
-        type: datetime
-        nullable: false
-        category: DATA
-        example: "2026-10-03T18:00:00+09:00"
-        evidence: "02"
-        confidence: medium
-      - path: status
-        type: enum
-        values: [IN_PROGRESS]
-        inferred: [CLOSED]
-        nullable: false
-        category: DERIVED
-        example: IN_PROGRESS
-        evidence: "02"
-        confidence: medium
-      - path: viewer.hasVoted
-        type: boolean
-        nullable: false
-        category: USER_CTX
-        example: false
-        evidence: "03"
-        confidence: low
-```
-
-## 3-3 규칙
-
-| 규칙 | 근거 | 강제 위치 |
-|---|---|---|
-| 종료 전에는 선택지별 득표 수를 응답에서 제외 | 03 안내 문구 | 서버 필수 |
-| 1인 1회 투표 | 03 버튼 비활성 추정 | 서버 필수 |
-
-## 3-4 확인 필요 질문
-
-1. 투표 후 선택 변경·취소가 가능한가? → 답에 따라 바뀌는 것: 변경 엔드포인트(PUT/DELETE) 유무, `viewer.selectedOptionId` 필드 추가
-2. D-day 기준 시각은 KST 자정인가, 마감 시각 기준 24시간 단위인가? → 답에 따라 바뀌는 것: 없음(클라 계산) / 서버가 `dDay`를 내려야 하는지 여부
+확인 필요
+1. 투표 후 변경할 수 있나? → viewer.votedChoice 의미, viewer.canVote 조건
+2. 종료 후 결과는 득표 수인가, 비율인가? → result 구조
+````
