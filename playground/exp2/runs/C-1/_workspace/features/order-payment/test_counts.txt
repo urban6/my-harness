@@ -1,0 +1,19 @@
+TOTAL tests=270 failures=0 errors=0 skipped=0
+
+Per class:
+C3 오류 우선순위: tests=23
+com.example.order.OrderPaymentSmokeTest: tests=3
+com.example.order.ProductSmokeTest: tests=3
+R10 동시성: tests=7
+R11 에러 포맷 (RFC 9457 problem+json): tests=17
+R1 상품: tests=21
+R2.4 할인 계산 / C1 int 범위를 넘는 금액: tests=23
+R2.1~R2.3 쿠폰 등록·조회: tests=32
+R2.5/R2.6 쿠폰 사용 조건과 복원: tests=13
+R3 주문 생성·조회: tests=29
+R4 멱등성: tests=23
+R5 결제: tests=18
+R6 결제 만료 (order.payment-ttl=PT3S): tests=10
+R7 취소·환불: tests=12
+R8 배송: tests=7
+R9 주문 목록: tests=29

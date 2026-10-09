@@ -1,0 +1,37 @@
+[run:B-1] start 2026-10-10 00:20:47 group=B budget=$60 timeout=240m
+[run:B-1] end exit=0 wall=1249s
+[meta:B-1] status=success cost=$4.636992200000001 turns=34 isolation_ok=True leaks=0 warnings=0 compactions=0 discard=False
+[grade:B-1] assemble_ok=true
+[grade:B-1] tests={"tests": 146, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:B-1] coverage={"branch_covered": 157, "branch_total": 170, "branch_coverage": 0.9235}
+[grade:B-1] boot_ok=true
+88/88 passed (100%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:B-1] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:B-1] acceptance 92/92 requirement_mean=1.0 rates={'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R6': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:B-1] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp2/results/B-1.json
+[run:C-1] start 2026-10-10 00:42:53 group=C budget=$60 timeout=240m
+[run:C-1] end exit=0 wall=2863s
+[meta:C-1] status=success cost=$9.104882499999999 turns=5 isolation_ok=True leaks=0 warnings=0 compactions=0 discard=False
+[grade:C-1] assemble_ok=true
+[grade:C-1] tests={"tests": 270, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:C-1] coverage={"branch_covered": 126, "branch_total": 142, "branch_coverage": 0.8873}
+[grade:C-1] boot_ok=true
+88/88 passed (100%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:C-1] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:C-1] acceptance 92/92 requirement_mean=1.0 rates={'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R6': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:C-1] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp2/results/C-1.json
+[run:A-1] start 2026-10-10 01:32:29 group=A budget=$60 timeout=240m
+[run:A-1] end exit=0 wall=1236s
+[meta:A-1] status=success cost=$4.303171 turns=28 isolation_ok=True leaks=0 warnings=0 compactions=0 discard=False
+[grade:A-1] assemble_ok=true
+[grade:A-1] tests={"tests": 151, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:A-1] coverage={"branch_covered": 153, "branch_total": 176, "branch_coverage": 0.8693}
+[grade:A-1] boot_ok=true
+88/88 passed (100%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:A-1] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:A-1] acceptance 92/92 requirement_mean=1.0 rates={'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R6': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:A-1] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp2/results/A-1.json
+[round] done: B-1 C-1 A-1
