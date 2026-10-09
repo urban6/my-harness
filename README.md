@@ -2,7 +2,7 @@
 
 **새 백엔드 프로젝트를 시작할 때 가져다 쓰는 Claude 기본 셋팅(부트스트랩 템플릿)**
 
-Claude Code용 커스텀 에이전트·스킬·커맨드를 한곳에서 작성·검증·관리합니다. 범위는 **백엔드**(REST API·서비스·영속성)이며, 특정 프로젝트·스택에 종속되지 않은 **재사용 기본값**입니다. 새 프로젝트에는 `install.sh`로 심링크해 씁니다.
+Claude Code에서 쓸 커스텀 에이전트, 스킬, 커맨드를 이 저장소 한곳에서 만들고 검증하고 관리합니다. 다루는 범위는 백엔드(REST API, 서비스, 영속성)입니다. 특정 프로젝트나 스택에 묶이지 않아서 어느 프로젝트에서든 기본값으로 다시 쓸 수 있습니다. 새 프로젝트에는 `install.sh`로 심링크를 걸어 씁니다.
 
 ## 구조
 
@@ -27,21 +27,21 @@ my-harness/
 | **prompts** | `feature-development` · `code-review` |
 | **docs** | `superpowers` |
 
-> 상세 사용법은 각 파일의 frontmatter `description`을 참고하세요.
+> 자세한 사용법은 각 파일 frontmatter의 `description`에 적혀 있습니다.
 
 ## 외부 플러그인
 
-[superpowers](https://github.com/obra/superpowers)는 하네스와 별도로, 절차 스킬로만 씁니다. 사용 원칙·상황별 스킬·하네스 자산과의 경계는 [`docs/superpowers.md`](docs/superpowers.md)에 있습니다.
+[superpowers](https://github.com/obra/superpowers)는 하네스와 따로 두고 절차 스킬로만 씁니다. 어떤 원칙으로 쓰는지, 상황마다 어떤 스킬을 고르는지, 하네스 자산과는 어디서 선을 긋는지는 [`docs/superpowers.md`](docs/superpowers.md)에 정리해 두었습니다.
 
 ## 오케스트레이션
 
 ### 기능 개발
 
-설계부터 구현·테스트까지 진행하는 프롬프트는 [`prompts/feature-development.md`](prompts/feature-development.md)에 있습니다. 복사해서 `{빈칸}`만 채워 쓰세요.
+설계에서 구현, 테스트까지 진행하는 프롬프트는 [`prompts/feature-development.md`](prompts/feature-development.md)에 있습니다. 복사한 뒤 `{빈칸}`만 채우면 됩니다.
 
 ### 코드 리뷰
 
-커밋이나 배포 전에 여러 관점으로 점검하는 프롬프트는 [`prompts/code-review.md`](prompts/code-review.md)에 있습니다. 복사해서 `{빈칸}`만 채워 쓰세요.
+커밋하거나 배포하기 전에 코드를 여러 관점에서 점검하는 프롬프트는 [`prompts/code-review.md`](prompts/code-review.md)에 있습니다. 이것도 복사한 뒤 `{빈칸}`만 채우면 됩니다.
 
 ### 디버깅 · 성능 개선
 
