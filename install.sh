@@ -2,17 +2,17 @@
 #
 # install.sh — my_harness 자산을 ~/.claude 또는 프로젝트 .claude/ 로 심링크한다.
 #
-# 자산(agents·commands·skills)을 이 레포에서 관리하고 사용처로 심링크하면,
+# 자산(agents·commands·rules·skills)을 이 레포에서 관리하고 사용처로 심링크하면,
 # 레포만 고쳐도 연결된 모든 곳에 즉시 반영된다.
 #
 # 사용법:
-#   ./install.sh install   [--global | --project [PATH]] [--type agents|skills|commands] [NAME...] [--dry-run] [--force]
-#   ./install.sh uninstall [--global | --project [PATH]] [--type agents|skills|commands] [NAME...] [--dry-run]
+#   ./install.sh install   [--global | --project [PATH]] [--type agents|skills|commands|rules] [NAME...] [--dry-run] [--force]
+#   ./install.sh uninstall [--global | --project [PATH]] [--type agents|skills|commands|rules] [NAME...] [--dry-run]
 #   ./install.sh list      [--global | --project [PATH]]
 #
 #   --global            대상 = ~/.claude (기본값)
 #   --project [PATH]    대상 = PATH/.claude (PATH 생략 시 현재 디렉터리)
-#   --type TYPE         유형 한정(agents|skills|commands). 반복 지정 가능
+#   --type TYPE         유형 한정(agents|skills|commands|rules). 반복 지정 가능
 #   NAME...             개별 자산 이름(확장자 없이). 예: debugger nestjs commit
 #   --dry-run           실제 변경 없이 수행 예정 작업만 출력
 #   --force             기존 파일/타 심링크를 백업(.bak) 후 교체 (install 한정)
@@ -23,7 +23,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # 링크 대상이 되는 자산 유형
-ASSET_TYPES=(agents commands skills)
+ASSET_TYPES=(agents commands rules skills)
 
 # --- 인자 파싱 --------------------------------------------------------------
 CMD="${1:-}"
@@ -138,7 +138,7 @@ unlink_one() {
 }
 
 # 유형별 소스 항목 순회 → (src, base, label) 로 콜백 실행
-#   agents/commands: *.md 파일 / skills: 하위 디렉터리
+#   agents/commands/rules: *.md 파일 / skills: 하위 디렉터리
 for_each_asset() {
   local cb="$1" type src_dir base src
   for type in "${SEL_TYPES[@]}"; do

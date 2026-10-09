@@ -12,9 +12,10 @@ my-harness/
 ├── skills/      # 스택별 구현 패턴
 ├── commands/    # 슬래시 커맨드
 ├── rules/       # 규칙 (경로별 지침)
-├── hooks/       # 훅 스크립트
+├── hooks/       # 훅 스크립트 (settings.json에 등록, 설치 대상 아님)
 ├── prompts/     # 복사해 쓰는 프롬프트 (설치 대상 아님)
 ├── docs/        # 외부 플러그인 사용법 (설치 대상 아님)
+├── playground/  # 방식별 비교 실험 (설치 대상 아님)
 ├── install.sh
 └── CLAUDE.md
 ```
