@@ -12,6 +12,7 @@ my-harness/
 ├── skills/
 ├── commands/
 ├── prompts/
+├── docs/
 ├── install.sh
 └── CLAUDE.md
 ```
@@ -24,8 +25,13 @@ my-harness/
 | **skills** | `spring-boot` · `nestjs` |
 | **commands** | `commit` · `push` |
 | **prompts** | `feature-development` · `code-review` |
+| **docs** | `superpowers` |
 
 > 상세 사용법은 각 파일의 frontmatter `description`을 참고하세요.
+
+## 외부 플러그인
+
+[superpowers](https://github.com/obra/superpowers)는 하네스와 별도로, 절차 스킬로만 씁니다. 사용 원칙·상황별 스킬·하네스 자산과의 경계는 [`docs/superpowers.md`](docs/superpowers.md)에 있습니다.
 
 ## 오케스트레이션
 
