@@ -21,7 +21,7 @@ my-harness/
 | --- | --- |
 | **agents** | `feature-pm` · `backend-designer` · `backend-impl` · `boundary-verifier` · `test-writer` · `architecture-expert` · `debugger` · `performance-optimizer` · `security-auditor` · `code-reviewer` |
 | **skills** | `spring-boot` · `nestjs` |
-| **commands** | `commit` · `push` |
+| **commands** | `commit` · `push` · `pre-pr` · `post-pr` |
 | **prompts** | `feature-development` · `code-review` |
 | **docs** | `superpowers` |
 

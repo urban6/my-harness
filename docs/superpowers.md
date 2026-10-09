@@ -16,7 +16,7 @@
 
 - 스킬은 **이름으로 명시할 때만** 쓴다.
 - 기능 단위 오케스트레이션(설계 → 구현 → 검증 → 테스트)은 `feature-pm`이 맡는다. superpowers의 전체 흐름(brainstorming → writing-plans → subagent-driven-development)으로 대체하지 않는다.
-- 커밋·푸시는 `commit`·`push` 스킬로 하고, 사용자가 요청할 때만 한다.
+- 커밋·푸시는 `/commit`·`/push`, PR 생성·대응은 `/pre-pr`·`/post-pr` 커맨드로 하고, 사용자가 요청할 때만 한다.
 
 ## 상황별 스킬
 
@@ -25,7 +25,7 @@
 | 버그·실패 테스트의 원인을 찾을 때 | `systematic-debugging` |
 | "완료·통과했다"고 말하기 전 | `verification-before-completion` |
 | 테스트를 먼저 쓰며 구현할 때 | `test-driven-development` |
-| 리뷰 피드백을 받아 반영할 때 | `receiving-code-review` |
+| PR 밖에서 받은 리뷰 피드백을 반영할 때 (PR 리뷰는 `/post-pr`) | `receiving-code-review` |
 | 서로 독립인 작업 2개 이상을 병렬로 돌릴 때 | `dispatching-parallel-agents` |
 | 작업 공간을 격리해야 할 때 | `using-git-worktrees` |
 | 스킬을 만들거나 고칠 때 | `writing-skills` |
@@ -53,9 +53,9 @@ superpowers:receiving-code-review로 아래 리뷰를 검토하고, 반영할 �
 | `feature-pm` · `backend-designer` | `brainstorming` · `writing-plans` · `subagent-driven-development` · `executing-plans` | 기능 개발은 하네스. superpowers 흐름은 쓰지 않는다 |
 | `debugger` | `systematic-debugging` | 에이전트에 진단을 맡기거나, 메인 세션에서 스킬 절차로 직접 디버깅 |
 | `test-writer` | `test-driven-development` | 구현 후 보강은 `test-writer`, 테스트 선행은 스킬 |
-| `code-reviewer` · `prompts/code-review.md` | `requesting-code-review` · `receiving-code-review` | 리뷰 요청은 하네스, 받은 리뷰 처리는 `receiving-code-review` |
+| `code-reviewer` · `prompts/code-review.md` · `/post-pr` | `requesting-code-review` · `receiving-code-review` | 리뷰 요청과 PR 리뷰 대응은 하네스, PR 밖 피드백은 `receiving-code-review` |
 | `boundary-verifier` | `verification-before-completion` | 겹치지 않음. 경계면 정합성 vs 완료 주장 전 증거 확인 |
-| `commit` · `push` | `finishing-a-development-branch` | 하네스를 쓴다 |
+| `/commit` · `/push` · `/pre-pr` · `/post-pr` | `finishing-a-development-branch` | 하네스를 쓴다 |
 
 ## 주의
 
