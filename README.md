@@ -1,43 +1,79 @@
 # my-harness
 
-Claude Code에서 쓸 커스텀 에이전트, 스킬, 커맨드를 이 저장소 한곳에서 만들고 검증하고 관리합니다. 다루는 범위는 백엔드(REST API, 서비스, 영속성)입니다. 특정 프로젝트나 스택에 묶이지 않아서 어느 프로젝트에서든 기본값으로 다시 쓸 수 있습니다. 새 프로젝트에는 `install.sh`로 심링크를 걸어 씁니다.
+새 백엔드 프로젝트를 시작할 때 가져다 쓰는 Claude Code 기본 세팅입니다.
+
+에이전트, 스킬, 커맨드를 이 저장소에서 만들고 검증한 뒤, `install.sh`로 전역(`~/.claude`)이나 프로젝트(`.claude/`)에 심링크를 걸어 씁니다. 다루는 범위는 백엔드(REST API, 서비스, 영속성)이고, 특정 프로젝트나 스택에 묶이지 않게 작성합니다.
+
+## 빠른 시작
+
+```bash
+./install.sh install   # 전체 자산을 ~/.claude에 링크
+./install.sh list      # 링크된 항목 확인
+```
+
+프로젝트에만 넣거나 일부만 고르는 방법은 [설치 옵션](#설치-옵션)에 있습니다.
 
 ## 구조
 
 ```
 my-harness/
-├── agents/
-├── skills/
-├── commands/
-├── prompts/
-├── docs/
+├── agents/      # 서브에이전트
+├── skills/      # 스택별 구현 패턴
+├── commands/    # 슬래시 커맨드
+├── prompts/     # 복사해 쓰는 프롬프트 (설치 대상 아님)
+├── docs/        # 외부 플러그인 사용법 (설치 대상 아님)
 ├── install.sh
 └── CLAUDE.md
 ```
 
-## 구성요소
+## 에이전트
 
-| 유형 | 구성요소 |
+**기능 개발** — `feature-pm`이 나머지 넷을 순서대로 부립니다.
+
+| 이름 | 하는 일 |
 | --- | --- |
-| **agents** | `feature-pm` · `backend-designer` · `backend-impl` · `boundary-verifier` · `test-writer` · `architecture-expert` · `debugger` · `performance-optimizer` · `security-auditor` · `code-reviewer` |
-| **skills** | `spring-boot` · `nestjs` · `screen-spec-analyzer` |
-| **commands** | `commit` · `push` · `pre-pr` · `post-pr` |
-| **prompts** | `feature-development` · `code-review` · `screen-spec` |
+| `feature-pm` | 요구사항 분해, 스택 확정, 워커 조율 (메인 세션에서 직접 호출) |
+| `backend-designer` | API와 DB 스키마를 함께 설계 |
+| `backend-impl` | 설계를 코드로 구현 |
+| `boundary-verifier` | 설계와 구현이 서로 맞는지 검증 |
+| `test-writer` | 단위·통합 테스트 작성 |
 
-## 외부 플러그인
+**진단** — 코드를 직접 고치지 않고 원인과 개선안만 알려 줍니다.
 
-- [superpowers](docs/superpowers.md)
-- [ponytail](docs/ponytail.md)
+| 이름 | 하는 일 |
+| --- | --- |
+| `architecture-expert` | 구조·의존성 진단, 기술 선택 비교 |
+| `code-reviewer` | 가독성, 네이밍, 에러 처리, 중복 리뷰 |
+| `debugger` | 버그 재현, 근본 원인 특정 |
+| `performance-optimizer` | 병목, N+1, 복잡도 진단 |
+| `security-auditor` | 인증·인가, 인젝션 등 보안 점검 |
 
-## 오케스트레이션
+## 스킬
 
-### 기능 개발
+| 이름 | 하는 일 |
+| --- | --- |
+| `spring-boot` | Spring Boot 3.x 구현 패턴 |
+| `nestjs` | NestJS 구현 패턴 |
+| `screen-spec-analyzer` | 화면 캡처나 화면정의서에서 API 응답 필드 추출 |
 
-설계에서 구현, 테스트까지 진행하는 프롬프트는 [`prompts/feature-development.md`](prompts/feature-development.md)에 있습니다. 복사한 뒤 `{빈칸}`만 채우면 됩니다.
+## 커맨드
 
-### 코드 리뷰
+| 이름 | 하는 일 |
+| --- | --- |
+| `/commit` | 변경을 논리 단위로 나눠 커밋 |
+| `/push` | 보호 브랜치와 강제 푸시를 확인하고 푸시 |
+| `/pre-pr` | 테스트·린트·진단을 거쳐 PR 생성 |
+| `/post-pr` | PR의 CI 결과와 리뷰 코멘트 대응, 머지 후 브랜치 정리 |
 
-커밋하거나 배포하기 전에 코드를 여러 관점에서 점검하는 프롬프트는 [`prompts/code-review.md`](prompts/code-review.md)에 있습니다. 이것도 복사한 뒤 `{빈칸}`만 채우면 됩니다.
+## 상황별 프롬프트
+
+프롬프트를 복사해 `{빈칸}`만 채워 씁니다.
+
+| 상황 | 프롬프트 |
+| --- | --- |
+| 기능 개발 (설계 → 구현 → 테스트) | [`prompts/feature-development.md`](prompts/feature-development.md) |
+| 커밋·배포 전 코드 리뷰 | [`prompts/code-review.md`](prompts/code-review.md) |
+| 화면 캡처로 API 응답 설계 | [`prompts/screen-spec.md`](prompts/screen-spec.md) |
 
 ### 디버깅 · 성능 개선
 
@@ -51,7 +87,12 @@ my-harness/
 셋 다 진단만 하고 코드는 고치지 마. 마지막에 안 A/B/C로 정리해줘.
 ```
 
-## 적용 방법
+## 외부 플러그인
+
+- [superpowers](docs/superpowers.md)
+- [ponytail](docs/ponytail.md)
+
+## 설치 옵션
 
 ```bash
 ./install.sh install                          # 전역 (~/.claude, 기본값)
@@ -59,6 +100,7 @@ my-harness/
 ./install.sh install --type agents            # 유형만
 ./install.sh install debugger nestjs commit   # 개별 구성요소만 (확장자 없이)
 ./install.sh install --dry-run                # 변경 없이 수행 예정만 출력
+./install.sh install --force                  # 기존 파일은 .bak으로 백업하고 교체
 ./install.sh list                             # 무엇이 링크됐는지 확인
 ./install.sh uninstall                        # 우리 심링크만 제거 (남의 파일 안 건드림)
 ```
