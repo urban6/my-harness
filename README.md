@@ -4,15 +4,6 @@
 
 에이전트, 스킬, 커맨드를 이 저장소에서 만들고 검증한 뒤, `install.sh`로 전역(`~/.claude`)이나 프로젝트(`.claude/`)에 심링크를 걸어 씁니다. 다루는 범위는 백엔드(REST API, 서비스, 영속성)이고, 특정 프로젝트나 스택에 묶이지 않게 작성합니다.
 
-## 설치
-
-```bash
-./install.sh install   # 전체 자산을 ~/.claude에 링크
-./install.sh list      # 링크된 항목 확인
-```
-
-프로젝트에만 넣거나 일부만 고르는 방법은 [설치 옵션](#설치-옵션)에 있습니다.
-
 ## 구조
 
 ```
@@ -92,7 +83,7 @@ my-harness/
 - [superpowers](docs/superpowers.md)
 - [ponytail](docs/ponytail.md)
 
-## 설치 옵션
+## 설치
 
 ```bash
 ./install.sh install                          # 전역 (~/.claude, 기본값)
