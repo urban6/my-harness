@@ -20,9 +20,9 @@ my-harness/
 | 유형 | 구성요소 |
 | --- | --- |
 | **agents** | `feature-pm` · `backend-designer` · `backend-impl` · `boundary-verifier` · `test-writer` · `architecture-expert` · `debugger` · `performance-optimizer` · `security-auditor` · `code-reviewer` |
-| **skills** | `spring-boot` · `nestjs` |
+| **skills** | `spring-boot` · `nestjs` · `screen-spec-analyzer` |
 | **commands** | `commit` · `push` · `pre-pr` · `post-pr` |
-| **prompts** | `feature-development` · `code-review` |
+| **prompts** | `feature-development` · `code-review` · `screen-spec` |
 | **docs** | `superpowers` |
 
 ## 외부 플러그인
