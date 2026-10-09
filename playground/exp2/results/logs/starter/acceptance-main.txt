@@ -1,0 +1,90 @@
+FAIL[status]           R1   r1_create_201 — create product: expected 201, got 404 body={"timestamp":"2026-10-09T13:00:10.798+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R1   r1_location_resolves — create product: expected 201, got 404 body={"timestamp":"2026-10-09T13:00:10.801+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R1   r1_invalid_400 — invalid product {'price': 1000, 'stock': 1}: expected 400, got 404 body={"timestamp":"2026-10-09T13:00:10.804+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R1   r1_bounds_201 — boundary product {'name': 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx: expected 201, got 404 body={"timestamp":"2026-10-09T13:00:10.806+00:00","status":404,"error":"Not Found","path":"/api/pro
+FAIL[status]           R1   r1_get_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.808+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R1   r1_reserved_available — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.811+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_create_201 — create coupon: expected 201, got 404 body={"timestamp":"2026-10-09T13:00:10.814+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[status]           R2   r2_code_rules — code 'abcd': expected 400, got 404 body={"timestamp":"2026-10-09T13:00:10.816+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[status]           R2   r2_value_rules — invalid {'type': 'FIXED', 'value': 0}: expected 400, got 404 body={"timestamp":"2026-10-09T13:00:10.819+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[status]           R2   r2_window_rules — validFrom >= validUntil: expected 400, got 404 body={"timestamp":"2026-10-09T13:00:10.822+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[status]           R2   r2_duplicate_409 — fixture coupon create failed: 404 {"timestamp":"2026-10-09T13:00:10.824+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[status]           R2   r2_get_404 — fixture coupon create failed: 404 {"timestamp":"2026-10-09T13:00:10.827+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[status]           R2   r2_fixed_discount — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.829+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_rate_floor — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.831+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_rate_max_cap — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.834+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_fixed_max_cap — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.836+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_capped_by_subtotal — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.839+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_validity_window_409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.841+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_min_order_amount — fixture coupon create failed: 404 {"timestamp":"2026-10-09T13:00:10.844+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[status]           R2   r2_one_per_user — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.847+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_exhausted_409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.850+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_used_count — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.852+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R2   r2_restore_and_reuse — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.854+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_create_201 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.856+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_location_get — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.859+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_headers_400 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.861+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_items_400 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.863+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_items_bounds_201 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.866+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_large_amount — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.868+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_unknown_product_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.871+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_unknown_coupon_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.873+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_insufficient_available_409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.876+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_atomic_stock — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.878+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_atomic_coupon — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.880+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_get_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.882+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_precedence_400_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.885+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_precedence_404_409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.887+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_precedence_coupon404_stock409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.889+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R3   r3_precedence_stock_coupon — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.891+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_replay_create — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.894+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_replay_original_snapshot — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.896+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_mismatch_body_422 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.898+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_mismatch_user_422 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.901+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_key_spaces_independent — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.903+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_failed_retry_409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.905+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_failed_retry_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.907+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_concurrent_same_key — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.910+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_pay_replay — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.913+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_pay_mismatch_422 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.915+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R4   r4_precedence_400_422 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.917+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_approve — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.919+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_decline_402 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.922+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_pg_error_503 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.924+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_pg_timeout_503 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.928+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_retry_same_pg_key — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.930+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_invalid_state_409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.932+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_not_found_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.934+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_card_token_400 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.936+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R5   r5_zero_total_no_pg — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.938+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R7   r7_cancel_pending — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.940+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R7   r7_refund_paid — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.943+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R7   r7_refund_fail_503 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.945+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R7   r7_invalid_states_409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.948+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R7   r7_not_found_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.951+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R8   r8_ship_deliver — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.953+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R8   r8_invalid_transitions_409 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.955+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R8   r8_not_found_404 — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.957+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R9   r9_shape_user_filter — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.959+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R9   r9_sorted_desc — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.961+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R9   r9_status_filter — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.963+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R9   r9_cursor_paging — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.965+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R9   r9_last_page_null — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.967+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R9   r9_stable_under_insert — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.969+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R9   r9_default_size — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.971+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R9   r9_invalid_params_400 — list {'size': 0}: expected 400, got 404 body={"timestamp":"2026-10-09T13:00:10.973+00:00","status":404,"error":"Not Found","path":"/api/orders"}
+FAIL[status]           R10  r10_stock_race — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.975+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R10  r10_coupon_quantity_race — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.977+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R10  r10_same_user_coupon_race — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.979+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R10  r10_cross_order_no_deadlock — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.981+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R10  r10_concurrent_pay — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.983+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R11  r11_validation_problem — validation: expected 400, got 404 body={"timestamp":"2026-10-09T13:00:10.985+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R11  r11_malformed_json — malformed JSON: expected 400, got 404 body={"timestamp":"2026-10-09T13:00:10.987+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R11  r11_header_problem — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.989+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R11  r11_query_problem — size=0: expected 400, got 404 body={"timestamp":"2026-10-09T13:00:10.990+00:00","status":404,"error":"Not Found","path":"/api/orders"}
+FAIL[status]           R11  r11_not_found_codes — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.993+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R11  r11_conflict_codes — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.995+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R11  r11_payment_codes — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.997+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R11  r11_idempotency_code — fixture product create failed: 404 {"timestamp":"2026-10-09T13:00:10.999+00:00","status":404,"error":"Not Found","path":"/api/products"}
+
+0/88 passed (0%), requirement rates: {'R1': 0.0, 'R2': 0.0, 'R3': 0.0, 'R4': 0.0, 'R5': 0.0, 'R7': 0.0, 'R8': 0.0, 'R9': 0.0, 'R10': 0.0, 'R11': 0.0}

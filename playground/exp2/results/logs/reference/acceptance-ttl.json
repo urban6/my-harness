@@ -1,0 +1,11 @@
+{
+  "passed": 0,
+  "total": 0,
+  "pass_rate": 0.0,
+  "requirement_rates": {},
+  "requirement_mean": 0.0,
+  "requirements_met": [],
+  "failure_categories": {},
+  "cases": [],
+  "phase": "ttl"
+}

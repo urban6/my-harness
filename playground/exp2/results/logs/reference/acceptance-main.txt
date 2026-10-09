@@ -1,0 +1,18 @@
+PASS                   R4   r4_replay_create
+PASS                   R4   r4_replay_original_snapshot
+PASS                   R4   r4_mismatch_body_422
+PASS                   R4   r4_mismatch_user_422
+PASS                   R4   r4_key_spaces_independent
+PASS                   R4   r4_failed_retry_409
+PASS                   R4   r4_failed_retry_404
+PASS                   R4   r4_concurrent_same_key
+PASS                   R4   r4_pay_replay
+PASS                   R4   r4_pay_mismatch_422
+PASS                   R4   r4_precedence_400_422
+PASS                   R10  r10_stock_race
+PASS                   R10  r10_coupon_quantity_race
+PASS                   R10  r10_same_user_coupon_race
+PASS                   R10  r10_cross_order_no_deadlock
+PASS                   R10  r10_concurrent_pay
+
+16/16 passed (100%), requirement rates: {'R4': 1.0, 'R10': 1.0}

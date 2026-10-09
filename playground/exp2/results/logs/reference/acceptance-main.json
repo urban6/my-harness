@@ -1,0 +1,164 @@
+{
+  "passed": 16,
+  "total": 16,
+  "pass_rate": 1.0,
+  "requirement_rates": {
+    "R4": 1.0,
+    "R10": 1.0
+  },
+  "requirement_mean": 0.1818,
+  "requirements_met": [
+    "R4",
+    "R10"
+  ],
+  "failure_categories": {},
+  "cases": [
+    {
+      "id": "r4_replay_create",
+      "req": "R4",
+      "rules": [
+        "R4.2"
+      ],
+      "passed": true,
+      "seconds": 0.16
+    },
+    {
+      "id": "r4_replay_original_snapshot",
+      "req": "R4",
+      "rules": [
+        "R4.2"
+      ],
+      "passed": true,
+      "seconds": 0.06
+    },
+    {
+      "id": "r4_mismatch_body_422",
+      "req": "R4",
+      "rules": [
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_mismatch_user_422",
+      "req": "R4",
+      "rules": [
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_key_spaces_independent",
+      "req": "R4",
+      "rules": [
+        "R4.1"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_failed_retry_409",
+      "req": "R4",
+      "rules": [
+        "R4.4"
+      ],
+      "passed": true,
+      "seconds": 0.04
+    },
+    {
+      "id": "r4_failed_retry_404",
+      "req": "R4",
+      "rules": [
+        "R4.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_concurrent_same_key",
+      "req": "R4",
+      "rules": [
+        "R4.5"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r4_pay_replay",
+      "req": "R4",
+      "rules": [
+        "R4.2",
+        "R5.3"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r4_pay_mismatch_422",
+      "req": "R4",
+      "rules": [
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.05
+    },
+    {
+      "id": "r4_precedence_400_422",
+      "req": "R4",
+      "rules": [
+        "C3",
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r10_stock_race",
+      "req": "R10",
+      "rules": [
+        "R10.1"
+      ],
+      "passed": true,
+      "seconds": 0.2
+    },
+    {
+      "id": "r10_coupon_quantity_race",
+      "req": "R10",
+      "rules": [
+        "R10.2"
+      ],
+      "passed": true,
+      "seconds": 0.16
+    },
+    {
+      "id": "r10_same_user_coupon_race",
+      "req": "R10",
+      "rules": [
+        "R10.3"
+      ],
+      "passed": true,
+      "seconds": 0.07
+    },
+    {
+      "id": "r10_cross_order_no_deadlock",
+      "req": "R10",
+      "rules": [
+        "R10.4"
+      ],
+      "passed": true,
+      "seconds": 0.24
+    },
+    {
+      "id": "r10_concurrent_pay",
+      "req": "R10",
+      "rules": [
+        "R10.5"
+      ],
+      "passed": true,
+      "seconds": 0.06
+    }
+  ],
+  "phase": "main"
+}
