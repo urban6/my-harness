@@ -17,6 +17,7 @@
 - 시각(`createdAt`)은 ISO-8601 문자열이다.
 - 주문 상태는 `ORDERED`(생성 직후)와 `CANCELLED`(취소 후) 두 가지다.
 - 한 요청에 오류가 여럿이면 400 → 404 → 409 순으로 먼저 해당하는 것을 반환한다.
+- DB 접속 정보는 표준 Spring 속성(`spring.datasource.url`·`username`·`password`)으로 받으며, 실행 시 환경 변수(`SPRING_DATASOURCE_URL` 등)로 덮어쓸 수 있어야 한다. 서버 포트도 `SERVER_PORT`로 덮어쓸 수 있어야 한다.
 
 ## 요구사항
 | ID | 기능 | 계약 | 규칙 |
