@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order
+    username: order
+    # password: 기본값을 커밋하지 않는다. 실행 시 SPRING_DATASOURCE_PASSWORD 환경 변수로 주입한다.
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+  flyway:
+    enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      accept-float-as-int: false
+    mapper:
+      allow-coercion-of-scalars: false
+
+server:
+  port: 8080

@@ -1,0 +1,28 @@
+[run:A-3] start 2026-10-09 20:38:06 group=A budget=$40 timeout=180m
+[run:A-3] end exit=0 wall=353s
+[meta:A-3] status=success cost=$1.2042216000000003 turns=15 isolation_ok=True leaks=0 warnings=0 compactions=0 discard=False
+[grade:A-3] assemble_ok=true
+[grade:A-3] tests={"tests": 55, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:A-3] coverage={"branch_covered": 29, "branch_total": 34, "branch_coverage": 0.8529}
+[grade:A-3] boot_ok=true
+34/34 passed (100%), requirements met: ['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8']
+[grade:A-3] written /Users/jeonseungchul/SideProjects/my_harness/playground/results/A-3.json
+[run:B-3] start 2026-10-09 20:44:27 group=B budget=$40 timeout=180m
+[run:B-3] end exit=0 wall=355s
+[meta:B-3] status=success cost=$1.3872034 turns=14 isolation_ok=True leaks=0 warnings=0 compactions=0 discard=False
+[grade:B-3] assemble_ok=true
+[grade:B-3] tests={"tests": 49, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:B-3] coverage={"branch_covered": 21, "branch_total": 22, "branch_coverage": 0.9545}
+[grade:B-3] boot_ok=true
+34/34 passed (100%), requirements met: ['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8']
+[grade:B-3] written /Users/jeonseungchul/SideProjects/my_harness/playground/results/B-3.json
+[run:C-3] start 2026-10-09 20:50:49 group=C budget=$40 timeout=180m
+[run:C-3] end exit=0 wall=1217s
+[meta:C-3] status=success cost=$5.029889700000001 turns=5 isolation_ok=True leaks=0 warnings=2 compactions=0 discard=False
+[grade:C-3] assemble_ok=true
+[grade:C-3] tests={"tests": 91, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:C-3] coverage={"branch_covered": 38, "branch_total": 42, "branch_coverage": 0.9048}
+[grade:C-3] boot_ok=true
+34/34 passed (100%), requirements met: ['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8']
+[grade:C-3] written /Users/jeonseungchul/SideProjects/my_harness/playground/results/C-3.json
+[round] done: A-3 B-3 C-3

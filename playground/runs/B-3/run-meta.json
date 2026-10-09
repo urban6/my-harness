@@ -1,0 +1,106 @@
+{
+  "run": "B-3",
+  "group": "B",
+  "status": "success",
+  "exit_code": 0,
+  "wall_seconds": 355,
+  "cost_usd": 1.3872034,
+  "duration_ms": 354178,
+  "num_turns": 14,
+  "usage": {
+    "input_tokens": 22,
+    "cache_creation_input_tokens": 65399,
+    "cache_read_input_tokens": 605017,
+    "output_tokens": 37146,
+    "output_tokens_details": {
+      "thinking_tokens": 9421
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 65399,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2069,
+        "cache_read_input_tokens": 82419,
+        "cache_creation_input_tokens": 1492,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1492
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-opus-5-5": {
+      "inputTokens": 22,
+      "outputTokens": 37146,
+      "cacheReadInputTokens": 605017,
+      "cacheCreationInputTokens": 65399,
+      "webSearchRequests": 0,
+      "costUSD": 1.3872034,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 9421,
+      "canonicalModel": "claude-opus-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "model": "claude-opus-5-5",
+  "isolation": {
+    "agent_tool_present": false,
+    "workflow_tool_present": false,
+    "skills_loaded": true,
+    "spring_boot_skill_available": true,
+    "ok": true,
+    "problems": []
+  },
+  "compactions": 0,
+  "subagent_events_in_log": 0,
+  "tool_counts": {
+    "Bash": 11,
+    "Skill": 1
+  },
+  "skill_calls": {
+    "spring-boot": 1
+  },
+  "agent_calls": {},
+  "forbidden_access": [],
+  "warnings": [],
+  "discard": false
+}

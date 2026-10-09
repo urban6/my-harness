@@ -1,0 +1,241 @@
+{
+  "run": "B-3",
+  "assemble_ok": true,
+  "tests": {
+    "tests": 49,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "gradle_exit": 0,
+    "ok": true
+  },
+  "test_rerun": false,
+  "coverage": {
+    "branch_covered": 21,
+    "branch_total": 22,
+    "branch_coverage": 0.9545
+  },
+  "boot_ok": true,
+  "acceptance": {
+    "passed": 34,
+    "total": 34,
+    "pass_rate": 1.0,
+    "requirements_met": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7",
+      "R8"
+    ],
+    "failure_categories": {},
+    "cases": [
+      {
+        "id": "r1_create_201",
+        "req": "R1",
+        "passed": true,
+        "seconds": 0.09
+      },
+      {
+        "id": "r1_location_resolves",
+        "req": "R1",
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r1_stock_zero_201",
+        "req": "R1",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r1_blank_name_400",
+        "req": "R1",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r1_missing_name_400",
+        "req": "R1",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r1_price_zero_400",
+        "req": "R1",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r1_stock_negative_400",
+        "req": "R1",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r2_get_200",
+        "req": "R2",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r2_not_found_404",
+        "req": "R2",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_create_201",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.08
+      },
+      {
+        "id": "r3_stock_deducted",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r3_empty_items_400",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_quantity_zero_400",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_duplicate_product_400",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_unknown_product_404",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_insufficient_409",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_atomic_no_partial",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r3_precedence_400_over_404",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_precedence_404_over_409",
+        "req": "R3",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r4_get_200",
+        "req": "R4",
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r4_not_found_404",
+        "req": "R4",
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r5_cancel_200",
+        "req": "R5",
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r5_stock_restored",
+        "req": "R5",
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "r5_cancel_twice_409",
+        "req": "R5",
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r5_cancel_not_found_404",
+        "req": "R5",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r6_defaults",
+        "req": "R6",
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r6_sorted_newest_first",
+        "req": "R6",
+        "passed": true,
+        "seconds": 3.4
+      },
+      {
+        "id": "r6_page_and_size",
+        "req": "R6",
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "r6_invalid_params_400",
+        "req": "R6",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r7_concurrency",
+        "req": "R7",
+        "passed": true,
+        "seconds": 0.28
+      },
+      {
+        "id": "r8_validation_problem",
+        "req": "R8",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r8_not_found_problem",
+        "req": "R8",
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r8_conflict_problem",
+        "req": "R8",
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r8_malformed_json_problem",
+        "req": "R8",
+        "passed": true,
+        "seconds": 0.0
+      }
+    ]
+  }
+}

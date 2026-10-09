@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: order-service
+  # 표준 속성. 실행 시 SPRING_DATASOURCE_URL / SPRING_DATASOURCE_USERNAME / SPRING_DATASOURCE_PASSWORD 로 덮어쓴다.
+  # 비밀번호는 기본값을 두지 않고 환경에서 주입한다.
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order_service
+    username: order_service
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+  jackson:
+    # 금액·수량은 정수만 허용한다(1.5, "100" 같은 입력은 400).
+    deserialization:
+      accept-float-as-int: false
+    mapper:
+      allow-coercion-of-scalars: false
+
+# SERVER_PORT 로 덮어쓴다.
+server:
+  port: 8080
