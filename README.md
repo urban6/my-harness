@@ -11,6 +11,8 @@ my-harness/
 ├── agents/      # 서브에이전트
 ├── skills/      # 스택별 구현 패턴
 ├── commands/    # 슬래시 커맨드
+├── rules/       # 규칙 (경로별 지침)
+├── hooks/       # 훅 스크립트
 ├── prompts/     # 복사해 쓰는 프롬프트 (설치 대상 아님)
 ├── docs/        # 외부 플러그인 사용법 (설치 대상 아님)
 ├── install.sh
