@@ -1,0 +1,903 @@
+{
+  "B-2": {
+    "label": "S1",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#validationFailure",
+        "ProductApiTest#create_allowsZeroStock",
+        "ProductApiTest#create_returns201WithLocationAndBody",
+        "ProductApiTest#create_returns400_whenInvalid"
+      ],
+      "missing": [
+        "응답 본문이 R2와 정확히 같은 필드 집합({id,name,price,stock})만 갖는지는 단언하지 않는다. 경계값 중 price=1과 stock=0이 성공하는 경우는 검증한다.",
+        "price=1, stock=0 같은 허용 경계값은 검증한다. 다만 create_returns201WithLocationAndBody는 Location 헤더 값을 직접 단언하지 않는다. 대신 그 값으로 GET 요청을 보내 확인할 뿐이다. 헤더 값 자체는 create_allowsZeroStock에서 endsWith로 단언한다."
+      ]
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest#get_returns404_whenMissing",
+        "ProductApiTest#get_returnsProduct"
+      ],
+      "missing": [
+        "응답에 다른 필드가 없는지(정확한 필드 집합)는 단언하지 않는다.",
+        "응답에 {id, name, price, stock} 외의 필드가 없는지(필드 집합 정확성)는 단언하지 않는다."
+      ]
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateApiTest#create_isAllOrNothing",
+        "OrderCreateApiTest#create_returns201AndDecreasesStock",
+        "OrderCreateApiTest#create_returns400_whenInvalid",
+        "OrderCreateApiTest#create_returns404_whenProductMissing",
+        "OrderCreateApiTest#create_returns409_whenStockInsufficient"
+      ],
+      "missing": [
+        "핵심 규칙은 모두 검증한다. 오류 우선순위(400>404, 404>409)도 create_prefers400Over404와 create_prefers404Over409로 검증한다.",
+        "400과 409가 함께 있을 때 400이 우선하는지는 직접 검증하지 않는다. 400>404(create_prefers400Over404)와 404>409(create_prefers404Over409)만 따로 검증한다."
+      ]
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderQueryApiTest#get_keepsUnitPriceAtOrderTime",
+        "OrderQueryApiTest#get_returns404_whenMissing",
+        "OrderQueryApiTest#get_returnsOrder"
+      ],
+      "missing": [
+        "특별히 빠진 규칙이 없다."
+      ]
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCancelApiTest#cancel_returns200AndRestoresStock",
+        "OrderCancelApiTest#cancel_returns404_whenMissing",
+        "OrderCancelApiTest#cancel_returns409_whenAlreadyCancelled"
+      ],
+      "missing": [
+        "취소 응답 본문의 items[].productId·quantity 필드는 단언하지 않음(R4 형태 일부만 확인)",
+        "취소 응답의 items[].productId·quantity 값은 단언하지 않고, 개수와 첫 항목의 unitPrice만 확인한다.",
+        "취소 응답에서 items[].productId와 quantity는 단언하지 않는다. unitPrice와 개수만 확인하므로 R4 형태 전체를 검증하지는 않는다."
+      ]
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListApiTest#list_breaksTiesByIdDesc",
+        "OrderListApiTest#list_paginates",
+        "OrderListApiTest#list_returns400_whenOutOfRange",
+        "OrderListApiTest#list_returnsEmpty",
+        "OrderListApiTest#list_usesDefaultsAndSortsLatestFirst"
+      ],
+      "missing": [
+        "경계값 size=1이 성공하는지는 직접 확인하지 않음",
+        "size=1 하한 경계에서 성공하는 경우는 검증하지 않는다.",
+        "허용 경계값 size=1은 성공하는지 검증하지 않는다(size=100, page=0은 검증한다). 비숫자 size(예: size=abc)도 검증하지 않는다."
+      ]
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversell"
+      ],
+      "missing": [
+        "특별히 빠진 규칙이 없다."
+      ]
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#conflict",
+        "ErrorFormatTest#notFound",
+        "ErrorFormatTest#orderBodyParseFailure",
+        "ErrorFormatTest#productBodyParseFailure",
+        "ErrorFormatTest#validationFailure"
+      ],
+      "missing": [
+        "R7 동시성 테스트의 409 응답은 Problem Details 형식을 단언하지 않고 상태코드만 확인한다. 다만 일반 409 응답의 형식은 conflict 테스트에서 검증한다.",
+        "R7 동시성 상황의 409 응답이 Problem Details 형식인지는 단언하지 않는다(상태코드만 집계함)."
+      ]
+    }
+  },
+  "C-3": {
+    "label": "S2",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest#r1_create_nameBlank_returns400",
+        "ProductApiTest#r1_create_priceNotPositive_returns400",
+        "ProductApiTest#r1_create_stockNegative_returns400",
+        "ProductApiTest#r1_create_stockZero_allowed",
+        "ProductApiTest#r1_create_valid_returns201_withLocationAndBody"
+      ],
+      "missing": []
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest#r2_get_existing_returns200WithShape",
+        "ProductApiTest#r2_get_unknownId_returns404"
+      ],
+      "missing": []
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateApiTest#r3_atomicity_laterItemInsufficient_noStockDeducted",
+        "OrderCreateApiTest#r3_create_duplicateProductId_returns400",
+        "OrderCreateApiTest#r3_create_partiallyUnknownProduct_returns404_noStockChange",
+        "OrderCreateApiTest#r3_create_valid_returns201_withLocationAndBody",
+        "OrderCreateApiTest#r3_priority_404BeatsConflict"
+      ],
+      "missing": []
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderQueryCancelApiTest#r4_get_createdAtIsIso8601String",
+        "OrderQueryCancelApiTest#r4_get_returns200WithShape",
+        "OrderQueryCancelApiTest#r4_get_totalPriceIsSumOfUnitPriceTimesQuantity",
+        "OrderQueryCancelApiTest#r4_get_unitPriceIsPriceAtOrderTime",
+        "OrderQueryCancelApiTest#r4_get_unknownId_returns404"
+      ],
+      "missing": []
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderQueryCancelApiTest#r5_cancel_restoresStock",
+        "OrderQueryCancelApiTest#r5_cancel_returns200_cancelled",
+        "OrderQueryCancelApiTest#r5_cancel_twice_returns409_noDoubleRestore",
+        "OrderQueryCancelApiTest#r5_cancel_unknownOrder_returns404"
+      ],
+      "missing": []
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListApiTest#r6_list_contentElementEqualsR4Shape",
+        "OrderListApiTest#r6_list_defaults_page0_size20",
+        "OrderListApiTest#r6_list_invalidParams_returns400",
+        "OrderListApiTest#r6_list_sortedByCreatedAtDesc",
+        "OrderListApiTest#r6_list_tieBrokenByIdDesc"
+      ],
+      "missing": []
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#r7_concurrentMultiItemOrders_oppositeOrder_noDeadlock_consistentStock",
+        "OrderConcurrencyTest#r7_concurrentOrders_exactly10Succeed_10Conflict_stockZero"
+      ],
+      "missing": []
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatApiTest#r8_alreadyCancelled_isProblemJson",
+        "ErrorFormatApiTest#r8_insufficientStock_isProblemJson",
+        "ErrorFormatApiTest#r8_malformedJson_isProblemJson",
+        "ErrorFormatApiTest#r8_orderNotFound_isProblemJson",
+        "ErrorFormatApiTest#r8_productNotFound_isProblemJson",
+        "ErrorFormatApiTest#r8_validationError_isProblemJson"
+      ],
+      "missing": []
+    }
+  },
+  "B-3": {
+    "label": "S3",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#productErrors_areProblems",
+        "ProductApiTest.Create#create_allowsZeroStock",
+        "ProductApiTest.Create#create_returns201WithLocationAndBody",
+        "ProductApiTest.Create#create_returns400_whenInvalid"
+      ],
+      "missing": [
+        "핵심 규칙(201+Location, 본문이 R2 응답과 같은 형태, name 누락·빈 문자열·공백만 있는 문자열, price ≤ 0, stock < 0일 때 400)이 모두 검증됨. 빠진 규칙 없음.",
+        "핵심 규칙은 모두 검증됨. 사소한 누락: name이 명시적 null인 경우는 별도 케이스 없음(누락 케이스로 대체)."
+      ]
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#productErrors_areProblems",
+        "ProductApiTest.Create#create_returns201WithLocationAndBody",
+        "ProductApiTest.Get#get_returns200",
+        "ProductApiTest.Get#get_returns404_whenMissing"
+      ],
+      "missing": [
+        "빠진 규칙 없음."
+      ]
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateApiTest#create_prefers400Over404And409",
+        "OrderCreateApiTest#create_returns201_andDecreasesStock",
+        "OrderCreateApiTest#create_returns400_whenInvalid",
+        "OrderCreateApiTest#create_returns404_whenProductMissing",
+        "OrderCreateApiTest#create_returns409_andKeepsAllStock_whenAnyItemShort"
+      ],
+      "missing": [
+        "201+Location, 본문 형태(status=ORDERED), items 비어 있음·quantity < 1·productId 중복일 때 400, 404, 409, 재고 전부 차감/전혀 미차감(원자성), 400→404→409 우선순위가 모두 검증됨. 빠진 규칙 없음.",
+        "정상 생성 테스트는 Location 끝이 /api/orders/1인지만 확인함. 생성 응답과 조회 응답의 형태 동일성은 R4 테스트에서만 비교함."
+      ]
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderQueryApiTest#get_keepsUnitPriceAtOrderTime",
+        "OrderQueryApiTest#get_returns404_whenMissing",
+        "OrderQueryApiTest#get_returnsOrderWithItemsAndTotal"
+      ],
+      "missing": [
+        "빠진 규칙 없음. 응답 필드, totalPrice 합계, 주문 시점 unitPrice 유지, createdAt ISO-8601 형식, 404가 모두 검증됨.",
+        "createdAt 정규식은 날짜 앞부분만 검사하고, ISO-8601 엄격 파싱은 Instant.parse로만 확인함."
+      ]
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCancelApiTest#cancel_returns200_andRestoresStock",
+        "OrderCancelApiTest#cancel_returns404_whenMissing",
+        "OrderCancelApiTest#cancel_returns409_whenAlreadyCancelled_andDoesNotRestoreTwice"
+      ],
+      "missing": [
+        "빠진 규칙 없음. 200 + CANCELLED, 응답 형태, 재고 복원, 이미 취소된 주문 409(재고 이중 복원 없음), 없는 주문 404가 모두 검증됨.",
+        "취소 응답의 items[1] 세부 필드는 단언하지 않음."
+      ]
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListApiTest#list_acceptsBoundarySizes",
+        "OrderListApiTest#list_breaksTiesByIdDesc",
+        "OrderListApiTest#list_paginates",
+        "OrderListApiTest#list_returns400_whenOutOfRange",
+        "OrderListApiTest#list_usesDefaults_andSortsByCreatedAtDesc"
+      ],
+      "missing": [
+        "기본값(page 0, size 20), 페이지네이션, 경계값(size 1·100), 범위 밖 400, createdAt 내림차순, 같을 때 id 내림차순, 원소가 R4 형태인지가 모두 검증됨. 빠진 규칙 없음.",
+        "page 기본값이 실제로 첫 페이지를 가리키는지는 데이터 3건으로만 확인함. 마지막 페이지를 넘어선 page 요청은 다루지 않음."
+      ]
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversell"
+      ],
+      "missing": [
+        "빠진 규칙 없음. 재고 10개 상품에 수량 1 주문 20건을 동시에 요청해 201 10건, 409 10건, 최종 재고 0, 주문 10건을 단언함.",
+        "201 응답 본문 내용은 단언하지 않음."
+      ]
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#invalidPathVariable_returns400Problem",
+        "ErrorFormatTest#malformedJson_returns400Problem",
+        "ErrorFormatTest#orderErrors_areProblems",
+        "ErrorFormatTest#productErrors_areProblems",
+        "ErrorFormatTest#wrongJsonType_returns400Problem",
+        "OrderConcurrencyTest#concurrentOrders_neverOversell"
+      ],
+      "missing": [
+        "R7 동시성 409 응답은 Content-Type(application/problem+json)만 확인하고 type·title·status·detail 필드는 확인하지 않음",
+        "R7 동시성 상황의 409 응답은 Content-Type만 단언하고 type·title·status·detail 필드는 단언하지 않음. 그 밖의 R1~R6 에러와 JSON 파싱 실패는 problem() 헬퍼로 Content-Type과 필수 필드가 모두 검증됨.",
+        "type이 URI 형식인지는 확인하지 않고 문자열 여부만 확인함. R7 동시성 409는 Content-Type만 확인함. 400>404>409 우선순위는 주문 생성에서만 검증함."
+      ]
+    }
+  },
+  "C-1": {
+    "label": "S4",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#r8_wrongTypeJson_isProblemJson",
+        "OrderFlowSmokeTest#createProduct_returns201_withLocationAndBody",
+        "ProductApiTest#r1_createProduct_allowsZeroStock",
+        "ProductApiTest#r1_createProduct_invalidBody_returns400",
+        "ProductApiTest#r1_createProduct_locationPointsToSameBody",
+        "ProductApiTest#r1_createProduct_returns201WithLocationAndBody"
+      ],
+      "missing": [
+        "price/stock에 소수(정수가 아닌 숫자)를 넣었을 때 400인지는 검증하지 않음"
+      ]
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest#r2_getProduct_nonNumericId_returns400",
+        "ProductApiTest#r2_getProduct_returns200WithBody",
+        "ProductApiTest#r2_getProduct_unknownId_returns404"
+      ],
+      "missing": []
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateApiTest#r3_createOrder_invalidBody_returns400",
+        "OrderCreateApiTest#r3_createOrder_mixed404And409_returns404",
+        "OrderCreateApiTest#r3_createOrder_partialInsufficientStock_isAtomic",
+        "OrderCreateApiTest#r3_createOrder_returns201WithLocationAndBody",
+        "OrderCreateApiTest#r3_createOrder_unknownProduct_returns404"
+      ],
+      "missing": [
+        "400과 409가 함께 있는 요청의 우선순위(400 반환)를 직접 확인하는 테스트는 없다.",
+        "오류 우선순위 중 400과 409가 섞인 경우는 테스트가 없음(400+404, 404+409 조합만 검증)",
+        "400과 409만 섞인 요청의 우선순위는 직접 검증하지 않음(400>404, 404>409만 검증)"
+      ]
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderRetrieveCancelApiTest#r4_getOrder_createdAtIsIso8601_andMatchesCreateResponse",
+        "OrderRetrieveCancelApiTest#r4_getOrder_returns200WithShape",
+        "OrderRetrieveCancelApiTest#r4_getOrder_totalPriceIsSumOfUnitPriceTimesQuantity",
+        "OrderRetrieveCancelApiTest#r4_getOrder_unitPriceIsSnapshotAtOrderTime",
+        "OrderRetrieveCancelApiTest#r4_getOrder_unknownId_returns404"
+      ],
+      "missing": []
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderRetrieveCancelApiTest#r5_cancelOrder_restoresStockForAllItems",
+        "OrderRetrieveCancelApiTest#r5_cancelOrder_returns200AndCancelledStatus",
+        "OrderRetrieveCancelApiTest#r5_cancelOrder_twice_returns409WithoutExtraRestore",
+        "OrderRetrieveCancelApiTest#r5_cancelOrder_unknownId_returns404"
+      ],
+      "missing": []
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListApiTest#r6_list_contentElementEqualsGetOrderBody",
+        "OrderListApiTest#r6_list_defaults",
+        "OrderListApiTest#r6_list_invalidParams_return400",
+        "OrderListApiTest#r6_list_paging",
+        "OrderListApiTest#r6_list_sortedByCreatedAtDescThenIdDesc"
+      ],
+      "missing": []
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#r7_concurrentOrders_createdOrderCountMatchesSuccesses",
+        "OrderConcurrencyTest#r7_concurrentOrders_exactlyStockSucceed"
+      ],
+      "missing": []
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#r8_alreadyCancelled_isProblemJson",
+        "ErrorFormatTest#r8_brokenJson_isProblemJson",
+        "ErrorFormatTest#r8_insufficientStock_isProblemJson",
+        "ErrorFormatTest#r8_productNotFound_isProblemJson",
+        "ErrorFormatTest#r8_validationError_isProblemJson"
+      ],
+      "missing": [
+        "R7 동시 요청에서 나온 409 응답이 Problem Details 형식인지는 단언하지 않는다. 상태코드 개수만 센다."
+      ]
+    }
+  },
+  "A-1": {
+    "label": "S5",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest.CreateProduct#allowsZeroStock",
+        "ProductApiTest.CreateProduct#createsProduct",
+        "ProductApiTest.CreateProduct#rejectsInvalidProduct"
+      ],
+      "missing": []
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest.CreateProduct#createsProduct",
+        "ProductApiTest.GetProduct#returns404WhenMissing",
+        "ProductApiTest.GetProduct#returnsProduct"
+      ],
+      "missing": []
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiTest.CreateOrder#appliesErrorPrecedence",
+        "OrderApiTest.CreateOrder#createsOrderAndDecreasesStock",
+        "OrderApiTest.CreateOrder#rejectsInvalidRequest",
+        "OrderApiTest.CreateOrder#returns404ForUnknownProduct",
+        "OrderApiTest.CreateOrder#returns409AndKeepsAllStockWhenAnyItemIsShort"
+      ],
+      "missing": []
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiTest.GetOrder#keepsUnitPriceAtOrderTime",
+        "OrderApiTest.GetOrder#returns404WhenMissing",
+        "OrderApiTest.GetOrder#returnsOrder"
+      ],
+      "missing": []
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiTest.CancelOrder#cancelsOrderAndRestoresStock",
+        "OrderApiTest.CancelOrder#returns404WhenMissing",
+        "OrderApiTest.CancelOrder#returns409WhenAlreadyCancelled"
+      ],
+      "missing": [
+        "취소 응답의 각 항목 필드(productId·quantity·unitPrice)는 직접 단언하지 않고, GET 조회 결과와 같은지로만 확인한다."
+      ]
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiTest.ListOrders#acceptsBoundaryValues",
+        "OrderApiTest.ListOrders#paginates",
+        "OrderApiTest.ListOrders#rejectsOutOfRange",
+        "OrderApiTest.ListOrders#sortsByCreatedAtDescThenIdDesc",
+        "OrderApiTest.ListOrders#usesDefaultsAndOrderShape"
+      ],
+      "missing": [
+        "page와 size가 동시에 잘못된 경우의 처리는 검증하지 않음",
+        "size만 지정하고 page를 생략했을 때 page 기본값 0이 적용되는지는 단언하지 않는다."
+      ]
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#onlyStockAmountOfConcurrentOrdersSucceed"
+      ],
+      "missing": []
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#malformedOrderBody",
+        "ErrorFormatTest#malformedProductBody",
+        "ErrorFormatTest#problemContentTypeEvenWhenAcceptingJson",
+        "ErrorFormatTest#problemFieldsForEachStatus",
+        "OrderConcurrencyTest#onlyStockAmountOfConcurrentOrdersSucceed"
+      ],
+      "missing": [
+        "JSON 파싱 실패 검증은 상품 등록·주문 생성 두 API에만 있음 (그 외 에러 응답은 R1~R7 테스트의 assertProblem으로 형식 검증됨)"
+      ]
+    }
+  },
+  "A-3": {
+    "label": "S6",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest.Create#acceptsBoundaryValues",
+        "ProductApiTest.Create#createsProduct",
+        "ProductApiTest.Create#rejectsInvalidRequest"
+      ],
+      "missing": []
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest.Create#createsProduct",
+        "ProductApiTest.Get#notFound",
+        "ProductApiTest.Get#returnsProduct"
+      ],
+      "missing": []
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateApiTest#badRequestTakesPrecedenceOverNotFound",
+        "OrderCreateApiTest#createsOrderAndDeductsStock",
+        "OrderCreateApiTest#insufficientStockIsAtomic",
+        "OrderCreateApiTest#notFoundProduct",
+        "OrderCreateApiTest#notFoundTakesPrecedenceOverConflict",
+        "OrderCreateApiTest#rejectsInvalidRequest"
+      ],
+      "missing": [
+        "공통 규약의 400 > 409 우선순위(검증 오류와 재고 부족이 함께 있는 경우)는 직접 검증하지 않음"
+      ]
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderQueryApiTest#notFound",
+        "OrderQueryApiTest#returnsOrder",
+        "OrderQueryApiTest#unitPriceIsSnapshotAtOrderTime"
+      ],
+      "missing": []
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCancelApiTest#alreadyCancelled",
+        "OrderCancelApiTest#cancelsOrderAndRestoresStock",
+        "OrderCancelApiTest#notFound",
+        "OrderConcurrencyTest#concurrentCancelRestoresStockOnce"
+      ],
+      "missing": []
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListApiTest#contentHasOrderShape",
+        "OrderListApiTest#defaults",
+        "OrderListApiTest#paginatesNewestFirst",
+        "OrderListApiTest#rejectsOutOfRange",
+        "OrderListApiTest#tieBreaksByIdDescending"
+      ],
+      "missing": []
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrdersNeverOversell"
+      ],
+      "missing": [
+        "동시성 테스트의 409 응답은 상태코드만 확인하고 Problem Details 형식은 확인하지 않음(같은 재고 부족 409 형식은 R8 테스트에서 별도로 검증됨)"
+      ]
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#allDefinedErrorsUseProblemDetails",
+        "ErrorFormatTest#malformedJson",
+        "ErrorFormatTest#missingBody",
+        "ErrorFormatTest#problemJsonWithoutAcceptHeader",
+        "ErrorFormatTest#typeMismatchInBody"
+      ],
+      "missing": [
+        "R7 동시성 테스트에서 나온 409 응답은 상태코드만 확인하고 Problem Details 형식은 단언하지 않음"
+      ]
+    }
+  },
+  "A-2": {
+    "label": "S7",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest.Create#allowsZeroStock",
+        "ProductApiTest.Create#createsProductWithLocationAndBody",
+        "ProductApiTest.Create#doesNotPersistInvalidProduct",
+        "ProductApiTest.Create#rejectsEmptyOrBlankName",
+        "ProductApiTest.Create#rejectsNegativeOrMissingStock",
+        "ProductApiTest.Create#rejectsNonPositivePrice"
+      ],
+      "missing": []
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest.Get#returns404WhenMissing",
+        "ProductApiTest.Get#returnsProduct"
+      ],
+      "missing": []
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#createsOrderAndDeductsStock",
+        "OrderCreateTest#deductsNothingWhenAnyItemLacksStock",
+        "OrderCreateTest#rejectsDuplicateProductIds",
+        "OrderCreateTest#reports400BeforeOtherErrors",
+        "OrderCreateTest#returns404ForUnknownProductWithoutDeductingStock"
+      ],
+      "missing": []
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderQueryTest#keepsUnitPriceAtOrderTime",
+        "OrderQueryTest#returns404WhenMissing",
+        "OrderQueryTest#returnsOrderWithItemsAndTotal"
+      ],
+      "missing": []
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCancelTest#cancelsOrderAndRestoresStock",
+        "OrderCancelTest#returns404WhenMissing",
+        "OrderCancelTest#returns409WhenAlreadyCancelledWithoutRestoringTwice"
+      ],
+      "missing": []
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListTest#acceptsBoundarySizes",
+        "OrderListTest#ordersByCreatedAtDescThenIdDesc",
+        "OrderListTest#paginates",
+        "OrderListTest#rejectsOutOfRangeParameters",
+        "OrderListTest#returnsNewestFirstWithDefaultPaging"
+      ],
+      "missing": []
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#exactlyStockManyConcurrentOrdersSucceed"
+      ],
+      "missing": []
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#conflictIsProblemDetail",
+        "ErrorFormatTest#malformedJsonIsProblemDetail",
+        "ErrorFormatTest#notFoundIsProblemDetail",
+        "ErrorFormatTest#paginationErrorIsProblemDetail",
+        "ErrorFormatTest#problemContentTypeEvenWhenClientAcceptsJson",
+        "ErrorFormatTest#validationErrorIsProblemDetail"
+      ],
+      "missing": []
+    }
+  },
+  "C-2": {
+    "label": "S8",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiSmokeTest#createProduct_returns201WithLocation_andGetReturnsSameShape",
+        "ProductApiTest.R1_CreateProduct#invalidName_returns400",
+        "ProductApiTest.R1_CreateProduct#invalidPrice_returns400",
+        "ProductApiTest.R1_CreateProduct#invalidStock_returns400",
+        "ProductApiTest.R1_CreateProduct#validRequest_returns201WithLocationAndBody"
+      ],
+      "missing": []
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiSmokeTest#createProduct_returns201WithLocation_andGetReturnsSameShape",
+        "ProductApiSmokeTest#getProduct_unknownId_returns404Problem",
+        "ProductApiTest.R2_GetProduct#existing_returns200WithShape",
+        "ProductApiTest.R2_GetProduct#unknownId_returns404"
+      ],
+      "missing": []
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiTest.R3_CreateOrder#duplicateProductId_returns400",
+        "OrderApiTest.R3_CreateOrder#itemsMissingOrEmpty_returns400",
+        "OrderApiTest.R3_CreateOrder#oneShortItem_rollsBackEverything",
+        "OrderApiTest.R3_CreateOrder#priority_404_beats_409",
+        "OrderApiTest.R3_CreateOrder#unknownProduct_returns404",
+        "OrderApiTest.R3_CreateOrder#valid_returns201_ORDERED_andDecreasesStock"
+      ],
+      "missing": []
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiSmokeTest#createOrder_decreasesStock_andGetReturnsSameShape",
+        "OrderApiTest.R4_GetOrder#createdAt_isIso8601",
+        "OrderApiTest.R4_GetOrder#multiItem_totalPriceIsSum",
+        "OrderApiTest.R4_GetOrder#unitPrice_isSnapshotAtOrderTime",
+        "OrderApiTest.R4_GetOrder#unknownOrder_returns404"
+      ],
+      "missing": []
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiSmokeTest#cancelOrder_restoresStock_andSecondCancelReturns409",
+        "OrderApiTest.R5_CancelOrder#cancel_restoresAllStock",
+        "OrderApiTest.R5_CancelOrder#secondCancel_returns409_withoutDoubleRestore",
+        "OrderApiTest.R5_CancelOrder#unknownOrder_returns404",
+        "OrderConcurrencyTest#concurrentCancel_restoresStockOnce"
+      ],
+      "missing": []
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiTest.R6_ListOrders#defaultPaging_returns20_andElementsAreR4Shape",
+        "OrderApiTest.R6_ListOrders#empty_returnsDefaultsAndEmptyContent",
+        "OrderApiTest.R6_ListOrders#invalidParams_return400",
+        "OrderApiTest.R6_ListOrders#sizeBoundaries_areAllowed",
+        "OrderApiTest.R6_ListOrders#sortedByCreatedAtDesc_thenIdDesc"
+      ],
+      "missing": []
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderApiSmokeTest#concurrentOrders_stock10_20requests_exactly10Succeed",
+        "OrderConcurrencyTest#concurrentMultiItemOrders_areAtomic",
+        "OrderConcurrencyTest#stock10_20concurrentOrders_exactly10Created_10Conflict"
+      ],
+      "missing": []
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProblemDetailsApiTest#acceptApplicationJson_conflicts",
+        "ProblemDetailsApiTest#acceptApplicationJson_stillReturnsProblemJson",
+        "ProblemDetailsApiTest#brokenJson_returns400Malformed",
+        "ProblemDetailsApiTest#contractErrors_haveAllRequiredFields",
+        "ProblemDetailsApiTest#malformedProblem_hasNonBlankDetail"
+      ],
+      "missing": []
+    }
+  },
+  "B-1": {
+    "label": "S9",
+    "R1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest.Create#create_allowsZeroStock",
+        "ProductApiTest.Create#create_returns201WithLocation_andBodyMatchesGet",
+        "ProductApiTest.Create#create_returns400_whenNameBlank",
+        "ProductApiTest.Create#create_returns400_whenPriceNotPositive",
+        "ProductApiTest.Create#create_returns400_whenStockNegative"
+      ],
+      "missing": [
+        "특별히 누락된 핵심 규칙 없음"
+      ]
+    },
+    "R2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest.Get#get_returns200WithProduct",
+        "ProductApiTest.Get#get_returns404_whenProductMissing"
+      ],
+      "missing": [
+        "없음"
+      ]
+    },
+    "R3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateApiTest#create_returns201WithLocation_andDecreasesStock",
+        "OrderCreateApiTest#create_returns400_whenDuplicateProductId",
+        "OrderCreateApiTest#create_returns404_whenProductMissing",
+        "OrderCreateApiTest#create_returns409_whenStockInsufficient_andDecreasesNothing",
+        "OrderCreateApiTest#errorPriority_400_beats_404_and_409"
+      ],
+      "missing": [
+        "특별히 누락된 핵심 규칙 없음"
+      ]
+    },
+    "R4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderQueryApiTest#get_keepsUnitPriceAtOrderTime_evenIfProductPriceChanges",
+        "OrderQueryApiTest#get_returns200WithItemsAndTotals",
+        "OrderQueryApiTest#get_returns404_whenOrderMissing"
+      ],
+      "missing": [
+        "없음"
+      ]
+    },
+    "R5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCancelApiTest#cancel_returns200Cancelled_andRestoresStock",
+        "OrderCancelApiTest#cancel_returns404_whenOrderMissing",
+        "OrderCancelApiTest#cancel_returns409_whenAlreadyCancelled_andDoesNotRestoreTwice"
+      ],
+      "missing": [
+        "없음"
+      ]
+    },
+    "R6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListApiTest#list_acceptsBoundaryValues",
+        "OrderListApiTest#list_returns400_whenPageOrSizeOutOfRange",
+        "OrderListApiTest#list_returnsRequestedPage_withElementsShapedLikeOrderDetail",
+        "OrderListApiTest#list_sortsByCreatedAtDesc_thenIdDesc",
+        "OrderListApiTest#list_usesDefaultPageAndSize"
+      ],
+      "missing": [
+        "없음"
+      ]
+    },
+    "R7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversell"
+      ],
+      "missing": [
+        "동시 요청 중 409 응답의 Problem Details 형식은 단언하지 않음"
+      ]
+    },
+    "R8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ErrorFormatTest#nonNumericId_returnsProblem400",
+        "ErrorFormatTest#notFound_and_conflict_areProblems",
+        "ErrorFormatTest#orderCreate_returnsProblem_whenJsonUnparsable",
+        "ErrorFormatTest#productCreate_returnsProblem_whenJsonUnparsable",
+        "ErrorFormatTest#validationError_includesFieldErrors"
+      ],
+      "missing": [
+        "R7 동시성 시나리오의 409 응답에 대한 Problem Details 형식 검증은 없음",
+        "R7 동시성 테스트의 409 응답은 상태코드만 확인하고 Problem Details 형식은 단언하지 않음"
+      ]
+    }
+  }
+}

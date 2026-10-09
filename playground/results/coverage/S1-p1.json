@@ -1,0 +1,80 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#create_returns201WithLocationAndBody",
+        "ProductApiTest#create_allowsZeroStock",
+        "ProductApiTest#create_returns400_whenInvalid"
+      ],
+      "missing": ""
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#get_returnsProduct",
+        "ProductApiTest#get_returns404_whenMissing"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#create_returns201AndDecreasesStock",
+        "OrderCreateApiTest#create_returns400_whenInvalid",
+        "OrderCreateApiTest#create_returns404_whenProductMissing",
+        "OrderCreateApiTest#create_returns409_whenStockInsufficient",
+        "OrderCreateApiTest#create_isAllOrNothing"
+      ],
+      "missing": ""
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderQueryApiTest#get_returnsOrder",
+        "OrderQueryApiTest#get_keepsUnitPriceAtOrderTime",
+        "OrderQueryApiTest#get_returns404_whenMissing"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderCancelApiTest#cancel_returns200AndRestoresStock",
+        "OrderCancelApiTest#cancel_returns409_whenAlreadyCancelled",
+        "OrderCancelApiTest#cancel_returns404_whenMissing"
+      ],
+      "missing": "취소 응답 본문의 items[].productId·quantity 필드는 단언하지 않음(R4 형태 일부만 확인)"
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#list_usesDefaultsAndSortsLatestFirst",
+        "OrderListApiTest#list_breaksTiesByIdDesc",
+        "OrderListApiTest#list_paginates",
+        "OrderListApiTest#list_returnsEmpty",
+        "OrderListApiTest#list_returns400_whenOutOfRange"
+      ],
+      "missing": "경계값 size=1이 성공하는지는 직접 확인하지 않음"
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversell"
+      ],
+      "missing": ""
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#productBodyParseFailure",
+        "ErrorFormatTest#orderBodyParseFailure",
+        "ErrorFormatTest#validationFailure",
+        "ErrorFormatTest#notFound",
+        "ErrorFormatTest#conflict"
+      ],
+      "missing": ""
+    }
+  },
+  "cost_usd": 0.1690544
+}

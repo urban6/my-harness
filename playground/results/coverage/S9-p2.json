@@ -1,0 +1,82 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.Create#create_returns201WithLocation_andBodyMatchesGet",
+        "ProductApiTest.Create#create_returns400_whenNameBlank",
+        "ProductApiTest.Create#create_returns400_whenPriceNotPositive",
+        "ProductApiTest.Create#create_returns400_whenStockNegative",
+        "ProductApiTest.Create#create_allowsZeroStock"
+      ],
+      "missing": ""
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.Get#get_returns200WithProduct",
+        "ProductApiTest.Get#get_returns404_whenProductMissing"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#create_returns201WithLocation_andDecreasesStock",
+        "OrderCreateApiTest#create_returns400_whenDuplicateProductId",
+        "OrderCreateApiTest#create_returns404_whenProductMissing",
+        "OrderCreateApiTest#create_returns409_whenStockInsufficient_andDecreasesNothing",
+        "OrderCreateApiTest#errorPriority_400_beats_404_and_409"
+      ],
+      "missing": ""
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderQueryApiTest#get_returns200WithItemsAndTotals",
+        "OrderQueryApiTest#get_keepsUnitPriceAtOrderTime_evenIfProductPriceChanges",
+        "OrderQueryApiTest#get_returns404_whenOrderMissing"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderCancelApiTest#cancel_returns200Cancelled_andRestoresStock",
+        "OrderCancelApiTest#cancel_returns409_whenAlreadyCancelled_andDoesNotRestoreTwice",
+        "OrderCancelApiTest#cancel_returns404_whenOrderMissing"
+      ],
+      "missing": ""
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#list_usesDefaultPageAndSize",
+        "OrderListApiTest#list_returnsRequestedPage_withElementsShapedLikeOrderDetail",
+        "OrderListApiTest#list_sortsByCreatedAtDesc_thenIdDesc",
+        "OrderListApiTest#list_returns400_whenPageOrSizeOutOfRange",
+        "OrderListApiTest#list_acceptsBoundaryValues"
+      ],
+      "missing": ""
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversell"
+      ],
+      "missing": ""
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#productCreate_returnsProblem_whenJsonUnparsable",
+        "ErrorFormatTest#orderCreate_returnsProblem_whenJsonUnparsable",
+        "ErrorFormatTest#notFound_and_conflict_areProblems",
+        "ErrorFormatTest#validationError_includesFieldErrors",
+        "ErrorFormatTest#nonNumericId_returnsProblem400"
+      ],
+      "missing": "R7 동시성 테스트의 409 응답은 상태코드만 확인하고 Problem Details 형식은 단언하지 않음"
+    }
+  },
+  "cost_usd": 0.1733984
+}

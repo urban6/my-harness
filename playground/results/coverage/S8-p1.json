@@ -1,0 +1,90 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.R1_CreateProduct#validRequest_returns201WithLocationAndBody",
+        "ProductApiTest.R1_CreateProduct#invalidName_returns400",
+        "ProductApiTest.R1_CreateProduct#invalidPrice_returns400",
+        "ProductApiTest.R1_CreateProduct#invalidStock_returns400",
+        "ProductApiSmokeTest#createProduct_returns201WithLocation_andGetReturnsSameShape"
+      ],
+      "missing": ""
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.R2_GetProduct#existing_returns200WithShape",
+        "ProductApiTest.R2_GetProduct#unknownId_returns404",
+        "ProductApiSmokeTest#getProduct_unknownId_returns404Problem",
+        "ProductApiSmokeTest#createProduct_returns201WithLocation_andGetReturnsSameShape"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderApiTest.R3_CreateOrder#valid_returns201_ORDERED_andDecreasesStock",
+        "OrderApiTest.R3_CreateOrder#itemsMissingOrEmpty_returns400",
+        "OrderApiTest.R3_CreateOrder#duplicateProductId_returns400",
+        "OrderApiTest.R3_CreateOrder#oneShortItem_rollsBackEverything",
+        "OrderApiTest.R3_CreateOrder#priority_404_beats_409"
+      ],
+      "missing": ""
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderApiTest.R4_GetOrder#multiItem_totalPriceIsSum",
+        "OrderApiTest.R4_GetOrder#unitPrice_isSnapshotAtOrderTime",
+        "OrderApiTest.R4_GetOrder#createdAt_isIso8601",
+        "OrderApiTest.R4_GetOrder#unknownOrder_returns404",
+        "OrderApiSmokeTest#createOrder_decreasesStock_andGetReturnsSameShape"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderApiTest.R5_CancelOrder#cancel_restoresAllStock",
+        "OrderApiTest.R5_CancelOrder#secondCancel_returns409_withoutDoubleRestore",
+        "OrderApiTest.R5_CancelOrder#unknownOrder_returns404",
+        "OrderApiSmokeTest#cancelOrder_restoresStock_andSecondCancelReturns409",
+        "OrderConcurrencyTest#concurrentCancel_restoresStockOnce"
+      ],
+      "missing": ""
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderApiTest.R6_ListOrders#empty_returnsDefaultsAndEmptyContent",
+        "OrderApiTest.R6_ListOrders#defaultPaging_returns20_andElementsAreR4Shape",
+        "OrderApiTest.R6_ListOrders#sortedByCreatedAtDesc_thenIdDesc",
+        "OrderApiTest.R6_ListOrders#invalidParams_return400",
+        "OrderApiTest.R6_ListOrders#sizeBoundaries_areAllowed"
+      ],
+      "missing": ""
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#stock10_20concurrentOrders_exactly10Created_10Conflict",
+        "OrderApiSmokeTest#concurrentOrders_stock10_20requests_exactly10Succeed",
+        "OrderConcurrencyTest#concurrentMultiItemOrders_areAtomic"
+      ],
+      "missing": ""
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ProblemDetailsApiTest#contractErrors_haveAllRequiredFields",
+        "ProblemDetailsApiTest#brokenJson_returns400Malformed",
+        "ProblemDetailsApiTest#malformedProblem_hasNonBlankDetail",
+        "ProblemDetailsApiTest#acceptApplicationJson_stillReturnsProblemJson",
+        "ProblemDetailsApiTest#acceptApplicationJson_conflicts"
+      ],
+      "missing": ""
+    }
+  },
+  "cost_usd": 0.2518384
+}

@@ -1,0 +1,86 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#r1_create_valid_returns201_withLocationAndBody",
+        "ProductApiTest#r1_create_nameBlank_returns400",
+        "ProductApiTest#r1_create_priceNotPositive_returns400",
+        "ProductApiTest#r1_create_stockNegative_returns400",
+        "ProductApiTest#r1_create_stockZero_allowed"
+      ],
+      "missing": ""
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#r2_get_existing_returns200WithShape",
+        "ProductApiTest#r2_get_unknownId_returns404"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#r3_create_valid_returns201_withLocationAndBody",
+        "OrderCreateApiTest#r3_create_duplicateProductId_returns400",
+        "OrderCreateApiTest#r3_create_partiallyUnknownProduct_returns404_noStockChange",
+        "OrderCreateApiTest#r3_atomicity_laterItemInsufficient_noStockDeducted",
+        "OrderCreateApiTest#r3_priority_404BeatsConflict"
+      ],
+      "missing": ""
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderQueryCancelApiTest#r4_get_returns200WithShape",
+        "OrderQueryCancelApiTest#r4_get_totalPriceIsSumOfUnitPriceTimesQuantity",
+        "OrderQueryCancelApiTest#r4_get_unitPriceIsPriceAtOrderTime",
+        "OrderQueryCancelApiTest#r4_get_createdAtIsIso8601String",
+        "OrderQueryCancelApiTest#r4_get_unknownId_returns404"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderQueryCancelApiTest#r5_cancel_returns200_cancelled",
+        "OrderQueryCancelApiTest#r5_cancel_restoresStock",
+        "OrderQueryCancelApiTest#r5_cancel_twice_returns409_noDoubleRestore",
+        "OrderQueryCancelApiTest#r5_cancel_unknownOrder_returns404"
+      ],
+      "missing": ""
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#r6_list_defaults_page0_size20",
+        "OrderListApiTest#r6_list_contentElementEqualsR4Shape",
+        "OrderListApiTest#r6_list_sortedByCreatedAtDesc",
+        "OrderListApiTest#r6_list_tieBrokenByIdDesc",
+        "OrderListApiTest#r6_list_invalidParams_returns400"
+      ],
+      "missing": ""
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#r7_concurrentOrders_exactly10Succeed_10Conflict_stockZero",
+        "OrderConcurrencyTest#r7_concurrentMultiItemOrders_oppositeOrder_noDeadlock_consistentStock"
+      ],
+      "missing": ""
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatApiTest#r8_validationError_isProblemJson",
+        "ErrorFormatApiTest#r8_malformedJson_isProblemJson",
+        "ErrorFormatApiTest#r8_orderNotFound_isProblemJson",
+        "ErrorFormatApiTest#r8_insufficientStock_isProblemJson",
+        "ErrorFormatApiTest#r8_alreadyCancelled_isProblemJson"
+      ],
+      "missing": ""
+    }
+  },
+  "cost_usd": 0.2415864
+}

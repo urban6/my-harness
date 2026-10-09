@@ -1,0 +1,87 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#r1_createProduct_returns201WithLocationAndBody",
+        "ProductApiTest#r1_createProduct_invalidBody_returns400",
+        "ProductApiTest#r1_createProduct_allowsZeroStock",
+        "ProductApiTest#r1_createProduct_locationPointsToSameBody",
+        "ErrorFormatTest#r8_wrongTypeJson_isProblemJson"
+      ],
+      "missing": "price/stock에 소수(정수가 아닌 숫자)를 넣었을 때 400인지는 검증하지 않음"
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#r2_getProduct_returns200WithBody",
+        "ProductApiTest#r2_getProduct_unknownId_returns404",
+        "ProductApiTest#r2_getProduct_nonNumericId_returns400"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#r3_createOrder_returns201WithLocationAndBody",
+        "OrderCreateApiTest#r3_createOrder_invalidBody_returns400",
+        "OrderCreateApiTest#r3_createOrder_unknownProduct_returns404",
+        "OrderCreateApiTest#r3_createOrder_partialInsufficientStock_isAtomic",
+        "OrderCreateApiTest#r3_createOrder_mixed404And409_returns404"
+      ],
+      "missing": "400과 409만 섞인 요청의 우선순위는 직접 검증하지 않음(400>404, 404>409만 검증)"
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderRetrieveCancelApiTest#r4_getOrder_returns200WithShape",
+        "OrderRetrieveCancelApiTest#r4_getOrder_totalPriceIsSumOfUnitPriceTimesQuantity",
+        "OrderRetrieveCancelApiTest#r4_getOrder_unitPriceIsSnapshotAtOrderTime",
+        "OrderRetrieveCancelApiTest#r4_getOrder_createdAtIsIso8601_andMatchesCreateResponse",
+        "OrderRetrieveCancelApiTest#r4_getOrder_unknownId_returns404"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderRetrieveCancelApiTest#r5_cancelOrder_returns200AndCancelledStatus",
+        "OrderRetrieveCancelApiTest#r5_cancelOrder_restoresStockForAllItems",
+        "OrderRetrieveCancelApiTest#r5_cancelOrder_twice_returns409WithoutExtraRestore",
+        "OrderRetrieveCancelApiTest#r5_cancelOrder_unknownId_returns404"
+      ],
+      "missing": ""
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#r6_list_defaults",
+        "OrderListApiTest#r6_list_sortedByCreatedAtDescThenIdDesc",
+        "OrderListApiTest#r6_list_paging",
+        "OrderListApiTest#r6_list_contentElementEqualsGetOrderBody",
+        "OrderListApiTest#r6_list_invalidParams_return400"
+      ],
+      "missing": ""
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#r7_concurrentOrders_exactlyStockSucceed",
+        "OrderConcurrencyTest#r7_concurrentOrders_createdOrderCountMatchesSuccesses"
+      ],
+      "missing": ""
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#r8_brokenJson_isProblemJson",
+        "ErrorFormatTest#r8_validationError_isProblemJson",
+        "ErrorFormatTest#r8_productNotFound_isProblemJson",
+        "ErrorFormatTest#r8_insufficientStock_isProblemJson",
+        "ErrorFormatTest#r8_alreadyCancelled_isProblemJson"
+      ],
+      "missing": ""
+    }
+  },
+  "cost_usd": 0.2234464
+}

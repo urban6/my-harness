@@ -1,0 +1,82 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.Create#create_returns201WithLocationAndBody",
+        "ProductApiTest.Create#create_allowsZeroStock",
+        "ProductApiTest.Create#create_returns400_whenInvalid",
+        "ErrorFormatTest#productErrors_areProblems"
+      ],
+      "missing": "핵심 규칙은 모두 검증됨. 사소한 누락: name이 명시적 null인 경우는 별도 케이스 없음(누락 케이스로 대체)."
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.Get#get_returns200",
+        "ProductApiTest.Get#get_returns404_whenMissing",
+        "ErrorFormatTest#productErrors_areProblems"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#create_returns201_andDecreasesStock",
+        "OrderCreateApiTest#create_returns400_whenInvalid",
+        "OrderCreateApiTest#create_returns404_whenProductMissing",
+        "OrderCreateApiTest#create_returns409_andKeepsAllStock_whenAnyItemShort",
+        "OrderCreateApiTest#create_prefers400Over404And409"
+      ],
+      "missing": "정상 생성 테스트는 Location 끝이 /api/orders/1인지만 확인함. 생성 응답과 조회 응답의 형태 동일성은 R4 테스트에서만 비교함."
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderQueryApiTest#get_returnsOrderWithItemsAndTotal",
+        "OrderQueryApiTest#get_keepsUnitPriceAtOrderTime",
+        "OrderQueryApiTest#get_returns404_whenMissing"
+      ],
+      "missing": "createdAt 정규식은 날짜 앞부분만 검사하고, ISO-8601 엄격 파싱은 Instant.parse로만 확인함."
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderCancelApiTest#cancel_returns200_andRestoresStock",
+        "OrderCancelApiTest#cancel_returns409_whenAlreadyCancelled_andDoesNotRestoreTwice",
+        "OrderCancelApiTest#cancel_returns404_whenMissing"
+      ],
+      "missing": "취소 응답의 items[1] 세부 필드는 단언하지 않음."
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#list_usesDefaults_andSortsByCreatedAtDesc",
+        "OrderListApiTest#list_breaksTiesByIdDesc",
+        "OrderListApiTest#list_paginates",
+        "OrderListApiTest#list_acceptsBoundarySizes",
+        "OrderListApiTest#list_returns400_whenOutOfRange"
+      ],
+      "missing": "page 기본값이 실제로 첫 페이지를 가리키는지는 데이터 3건으로만 확인함. 마지막 페이지를 넘어선 page 요청은 다루지 않음."
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversell"
+      ],
+      "missing": "201 응답 본문 내용은 단언하지 않음."
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#malformedJson_returns400Problem",
+        "ErrorFormatTest#wrongJsonType_returns400Problem",
+        "ErrorFormatTest#productErrors_areProblems",
+        "ErrorFormatTest#orderErrors_areProblems",
+        "ErrorFormatTest#invalidPathVariable_returns400Problem"
+      ],
+      "missing": "type이 URI 형식인지는 확인하지 않고 문자열 여부만 확인함. R7 동시성 409는 Content-Type만 확인함. 400>404>409 우선순위는 주문 생성에서만 검증함."
+    }
+  },
+  "cost_usd": 0.1791064
+}

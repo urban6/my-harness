@@ -1,0 +1,80 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.CreateProduct#createsProduct",
+        "ProductApiTest.CreateProduct#allowsZeroStock",
+        "ProductApiTest.CreateProduct#rejectsInvalidProduct"
+      ],
+      "missing": ""
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.GetProduct#returnsProduct",
+        "ProductApiTest.GetProduct#returns404WhenMissing"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderApiTest.CreateOrder#createsOrderAndDecreasesStock",
+        "OrderApiTest.CreateOrder#rejectsInvalidRequest",
+        "OrderApiTest.CreateOrder#returns404ForUnknownProduct",
+        "OrderApiTest.CreateOrder#returns409AndKeepsAllStockWhenAnyItemIsShort",
+        "OrderApiTest.CreateOrder#appliesErrorPrecedence"
+      ],
+      "missing": ""
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderApiTest.GetOrder#returnsOrder",
+        "OrderApiTest.GetOrder#keepsUnitPriceAtOrderTime",
+        "OrderApiTest.GetOrder#returns404WhenMissing"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderApiTest.CancelOrder#cancelsOrderAndRestoresStock",
+        "OrderApiTest.CancelOrder#returns409WhenAlreadyCancelled",
+        "OrderApiTest.CancelOrder#returns404WhenMissing"
+      ],
+      "missing": ""
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderApiTest.ListOrders#usesDefaultsAndOrderShape",
+        "OrderApiTest.ListOrders#sortsByCreatedAtDescThenIdDesc",
+        "OrderApiTest.ListOrders#paginates",
+        "OrderApiTest.ListOrders#acceptsBoundaryValues",
+        "OrderApiTest.ListOrders#rejectsOutOfRange"
+      ],
+      "missing": ""
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#onlyStockAmountOfConcurrentOrdersSucceed"
+      ],
+      "missing": ""
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#malformedProductBody",
+        "ErrorFormatTest#malformedOrderBody",
+        "ErrorFormatTest#problemContentTypeEvenWhenAcceptingJson",
+        "ErrorFormatTest#problemFieldsForEachStatus",
+        "OrderConcurrencyTest#onlyStockAmountOfConcurrentOrdersSucceed"
+      ],
+      "missing": ""
+    }
+  },
+  "cost_usd": 0.1597304
+}

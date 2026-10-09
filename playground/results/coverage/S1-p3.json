@@ -1,0 +1,81 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#create_returns201WithLocationAndBody",
+        "ProductApiTest#create_allowsZeroStock",
+        "ProductApiTest#create_returns400_whenInvalid",
+        "ErrorFormatTest#validationFailure"
+      ],
+      "missing": "price=1, stock=0 같은 허용 경계값은 검증한다. 다만 create_returns201WithLocationAndBody는 Location 헤더 값을 직접 단언하지 않는다. 대신 그 값으로 GET 요청을 보내 확인할 뿐이다. 헤더 값 자체는 create_allowsZeroStock에서 endsWith로 단언한다."
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#get_returnsProduct",
+        "ProductApiTest#get_returns404_whenMissing"
+      ],
+      "missing": "응답에 {id, name, price, stock} 외의 필드가 없는지(필드 집합 정확성)는 단언하지 않는다."
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#create_returns201AndDecreasesStock",
+        "OrderCreateApiTest#create_returns400_whenInvalid",
+        "OrderCreateApiTest#create_returns404_whenProductMissing",
+        "OrderCreateApiTest#create_returns409_whenStockInsufficient",
+        "OrderCreateApiTest#create_isAllOrNothing"
+      ],
+      "missing": "400과 409가 함께 있을 때 400이 우선하는지는 직접 검증하지 않는다. 400>404(create_prefers400Over404)와 404>409(create_prefers404Over409)만 따로 검증한다."
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderQueryApiTest#get_returnsOrder",
+        "OrderQueryApiTest#get_keepsUnitPriceAtOrderTime",
+        "OrderQueryApiTest#get_returns404_whenMissing"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderCancelApiTest#cancel_returns200AndRestoresStock",
+        "OrderCancelApiTest#cancel_returns409_whenAlreadyCancelled",
+        "OrderCancelApiTest#cancel_returns404_whenMissing"
+      ],
+      "missing": "취소 응답에서 items[].productId와 quantity는 단언하지 않는다. unitPrice와 개수만 확인하므로 R4 형태 전체를 검증하지는 않는다."
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#list_usesDefaultsAndSortsLatestFirst",
+        "OrderListApiTest#list_breaksTiesByIdDesc",
+        "OrderListApiTest#list_paginates",
+        "OrderListApiTest#list_returns400_whenOutOfRange",
+        "OrderListApiTest#list_returnsEmpty"
+      ],
+      "missing": "허용 경계값 size=1은 성공하는지 검증하지 않는다(size=100, page=0은 검증한다). 비숫자 size(예: size=abc)도 검증하지 않는다."
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversell"
+      ],
+      "missing": ""
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#productBodyParseFailure",
+        "ErrorFormatTest#orderBodyParseFailure",
+        "ErrorFormatTest#notFound",
+        "ErrorFormatTest#conflict",
+        "ErrorFormatTest#validationFailure"
+      ],
+      "missing": "R7 동시성 상황의 409 응답이 Problem Details 형식인지는 단언하지 않는다(상태코드만 집계함)."
+    }
+  },
+  "cost_usd": 0.1612104
+}

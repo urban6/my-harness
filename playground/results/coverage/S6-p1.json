@@ -1,0 +1,81 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.Create#createsProduct",
+        "ProductApiTest.Create#acceptsBoundaryValues",
+        "ProductApiTest.Create#rejectsInvalidRequest"
+      ],
+      "missing": ""
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.Get#returnsProduct",
+        "ProductApiTest.Get#notFound",
+        "ProductApiTest.Create#createsProduct"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#createsOrderAndDeductsStock",
+        "OrderCreateApiTest#rejectsInvalidRequest",
+        "OrderCreateApiTest#notFoundProduct",
+        "OrderCreateApiTest#insufficientStockIsAtomic",
+        "OrderCreateApiTest#notFoundTakesPrecedenceOverConflict"
+      ],
+      "missing": ""
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderQueryApiTest#returnsOrder",
+        "OrderQueryApiTest#unitPriceIsSnapshotAtOrderTime",
+        "OrderQueryApiTest#notFound"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderCancelApiTest#cancelsOrderAndRestoresStock",
+        "OrderCancelApiTest#alreadyCancelled",
+        "OrderCancelApiTest#notFound"
+      ],
+      "missing": ""
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#defaults",
+        "OrderListApiTest#contentHasOrderShape",
+        "OrderListApiTest#paginatesNewestFirst",
+        "OrderListApiTest#tieBreaksByIdDescending",
+        "OrderListApiTest#rejectsOutOfRange"
+      ],
+      "missing": ""
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrdersNeverOversell"
+      ],
+      "missing": "동시성 테스트의 409 응답은 상태코드만 확인하고 Problem Details 형식은 확인하지 않음(같은 재고 부족 409 형식은 R8 테스트에서 별도로 검증됨)"
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#allDefinedErrorsUseProblemDetails",
+        "ErrorFormatTest#malformedJson",
+        "ErrorFormatTest#missingBody",
+        "ErrorFormatTest#typeMismatchInBody",
+        "ErrorFormatTest#problemJsonWithoutAcceptHeader"
+      ],
+      "missing": ""
+    }
+  },
+  "cost_usd": 0.1740424
+}

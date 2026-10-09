@@ -2,6 +2,7 @@
 
 > 상태: 확정 · 2026-10-09 · 요구사항: [`feature.md`](feature.md)
 > 파일럿(2026-10-09) 완료 — 하니스 수정 없이 본 실행. 결과는 §5 아래 "파일럿 결과" 참고
+> 본 실행·채점 완료(2026-10-09) — 결과: [`REPORT.md`](REPORT.md)
 
 ## 1. 목적
 
@@ -104,7 +105,7 @@ playground/
 ├── starter/        # 공통 스타터
 ├── acceptance/     # 숨긴 인수 테스트 + reference/ (run에서 읽기 차단)
 ├── pilot/          # 파일럿용 축소 feature.md (R1·R2·R8)
-├── scripts/        # run.sh · grade.sh · grading.init.gradle · analyze_session.py · aggregate.py
+├── scripts/        # run.sh · round.sh · grade.sh · grading.init.gradle · analyze_session.py · map_coverage.py · aggregate.py
 ├── runs/{군}-{n}/  # 실행 디렉터리 그 자체 (커밋, 빌드 산출물 제외)
 └── results/        # 채점 원자료·요약
 ```

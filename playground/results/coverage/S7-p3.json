@@ -1,0 +1,82 @@
+{
+  "verdict": {
+    "R1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.Create#createsProductWithLocationAndBody",
+        "ProductApiTest.Create#rejectsEmptyOrBlankName",
+        "ProductApiTest.Create#rejectsNonPositivePrice",
+        "ProductApiTest.Create#rejectsNegativeOrMissingStock",
+        "ProductApiTest.Create#doesNotPersistInvalidProduct"
+      ],
+      "missing": ""
+    },
+    "R2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest.Get#returnsProduct",
+        "ProductApiTest.Get#returns404WhenMissing"
+      ],
+      "missing": ""
+    },
+    "R3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateTest#createsOrderAndDeductsStock",
+        "OrderCreateTest#rejectsDuplicateProductIds",
+        "OrderCreateTest#returns404ForUnknownProductWithoutDeductingStock",
+        "OrderCreateTest#deductsNothingWhenAnyItemLacksStock",
+        "OrderCreateTest#reports400BeforeOtherErrors"
+      ],
+      "missing": ""
+    },
+    "R4": {
+      "covered": true,
+      "tests": [
+        "OrderQueryTest#returnsOrderWithItemsAndTotal",
+        "OrderQueryTest#keepsUnitPriceAtOrderTime",
+        "OrderQueryTest#returns404WhenMissing"
+      ],
+      "missing": ""
+    },
+    "R5": {
+      "covered": true,
+      "tests": [
+        "OrderCancelTest#cancelsOrderAndRestoresStock",
+        "OrderCancelTest#returns409WhenAlreadyCancelledWithoutRestoringTwice",
+        "OrderCancelTest#returns404WhenMissing"
+      ],
+      "missing": ""
+    },
+    "R6": {
+      "covered": true,
+      "tests": [
+        "OrderListTest#returnsNewestFirstWithDefaultPaging",
+        "OrderListTest#ordersByCreatedAtDescThenIdDesc",
+        "OrderListTest#paginates",
+        "OrderListTest#acceptsBoundarySizes",
+        "OrderListTest#rejectsOutOfRangeParameters"
+      ],
+      "missing": ""
+    },
+    "R7": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#exactlyStockManyConcurrentOrdersSucceed"
+      ],
+      "missing": ""
+    },
+    "R8": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#validationErrorIsProblemDetail",
+        "ErrorFormatTest#notFoundIsProblemDetail",
+        "ErrorFormatTest#conflictIsProblemDetail",
+        "ErrorFormatTest#malformedJsonIsProblemDetail",
+        "ErrorFormatTest#problemContentTypeEvenWhenClientAcceptsJson"
+      ],
+      "missing": ""
+    }
+  },
+  "cost_usd": 0.1437264
+}
