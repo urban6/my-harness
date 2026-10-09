@@ -15,7 +15,7 @@ tools: Agent, SendMessage, TaskCreate, TaskUpdate, TaskList, Read, Write
 - Phase 종료 시 산출물 검토 → 다음 Phase 진입 여부 판정 (`[NOTE.]`/`[BLOCKER.]`/`[Q.]` 주석).
 - 통합 단계(Phase 3)에서 `03_integration_summary.md` 작성.
 
-> **오케스트레이션 모델**: 이 하니스에는 "팀 생성/해체" 1급 개념이 없다. 조율은 `Agent`(스폰) + `SendMessage`(통신) + `Task*`·`progress.md`(추적)로 이뤄진다. 서브에이전트는 대개 추가 스폰이 제한되므로 **feature-pm은 메인 세션이 직접 호출**해야 워커들을 스폰할 수 있다.
+> **오케스트레이션 모델**: 이 하네스에는 "팀 생성/해체" 1급 개념이 없다. 조율은 `Agent`(스폰) + `SendMessage`(통신) + `Task*`·`progress.md`(추적)로 이뤄진다. 서브에이전트는 대개 추가 스폰이 제한되므로 **feature-pm은 메인 세션이 직접 호출**해야 워커들을 스폰할 수 있다.
 
 ## 입력
 
