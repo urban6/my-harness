@@ -23,11 +23,11 @@ my-harness/
 | **skills** | `spring-boot` · `nestjs` · `screen-spec-analyzer` |
 | **commands** | `commit` · `push` · `pre-pr` · `post-pr` |
 | **prompts** | `feature-development` · `code-review` · `screen-spec` |
-| **docs** | `superpowers` |
 
 ## 외부 플러그인
 
 - [superpowers](docs/superpowers.md)
+- [ponytail](docs/ponytail.md)
 
 ## 오케스트레이션
 
