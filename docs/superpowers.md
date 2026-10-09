@@ -16,7 +16,7 @@
 
 - 스킬은 **이름으로 명시할 때만** 쓴다.
 - 기능 단위 오케스트레이션(설계 → 구현 → 검증 → 테스트)은 `feature-pm`이 맡는다. superpowers의 전체 흐름(brainstorming → writing-plans → subagent-driven-development)으로 대체하지 않는다.
-- 커밋·푸시는 `/commit`·`/push`, PR 생성·대응은 `/pre-pr`·`/post-pr` 커맨드로 하고, 사용자가 요청할 때만 한다.
+- 커밋·푸시는 `/commit`·`/push`, PR 전 코드 리뷰는 `/pre-pr`, PR 대응은 `/post-pr` 커맨드로 하고, 사용자가 요청할 때만 한다.
 
 ## 상황별 스킬
 
