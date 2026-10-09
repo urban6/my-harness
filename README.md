@@ -29,7 +29,9 @@ my-harness/
 
 ## 외부 플러그인
 
-[superpowers](https://github.com/obra/superpowers)는 하네스와 따로 두고 절차 스킬로만 씁니다. 어떤 원칙으로 쓰는지, 상황마다 어떤 스킬을 고르는지, 하네스 자산과는 어디서 선을 긋는지는 [`docs/superpowers.md`](docs/superpowers.md)에 정리해 두었습니다.
+하네스와 따로 설치해 쓰는 플러그인입니다. 쓰는 원칙과 하네스 자산과의 경계는 각 `docs/` 문서에 정리합니다.
+
+- [superpowers](https://github.com/obra/superpowers) — 절차 스킬로만 사용. [`docs/superpowers.md`](docs/superpowers.md)
 
 ## 오케스트레이션
 
