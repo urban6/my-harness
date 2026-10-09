@@ -1,0 +1,85 @@
+{
+  "passed": 12,
+  "total": 12,
+  "pass_rate": 1.0,
+  "requirements_met": [
+    "R1",
+    "R2",
+    "R8"
+  ],
+  "failure_categories": {},
+  "cases": [
+    {
+      "id": "r1_create_201",
+      "req": "R1",
+      "passed": true,
+      "seconds": 0.12
+    },
+    {
+      "id": "r1_location_resolves",
+      "req": "R1",
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r1_stock_zero_201",
+      "req": "R1",
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r1_blank_name_400",
+      "req": "R1",
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r1_missing_name_400",
+      "req": "R1",
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r1_price_zero_400",
+      "req": "R1",
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r1_stock_negative_400",
+      "req": "R1",
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r2_get_200",
+      "req": "R2",
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r2_not_found_404",
+      "req": "R2",
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r8_validation_problem",
+      "req": "R8",
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r8_not_found_problem",
+      "req": "R8",
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r8_malformed_json_problem",
+      "req": "R8",
+      "passed": true,
+      "seconds": 0.0
+    }
+  ]
+}

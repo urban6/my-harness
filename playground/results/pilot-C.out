@@ -1,0 +1,3 @@
+[run:pilot-C] start 2026-10-09 18:41:15 group=C budget=$20 timeout=90m
+[run:pilot-C] end exit=0 wall=1013s
+[meta:pilot-C] status=success cost=$3.7501409000000008 turns=24 isolation_ok=True leaks=16 compactions=0 discard=True

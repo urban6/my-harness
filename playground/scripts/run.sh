@@ -10,7 +10,7 @@ NAME="$GROUP-$ROUND"
 FEATURE="$PLAYGROUND/feature.md"
 PROMPT="$(cat "$PLAYGROUND/prompt.txt")"
 BUDGET=40
-TIMEOUT=120m
+TIMEOUT=180m
 DRY_RUN=0
 while [[ $# -gt 0 ]]; do
     case "$1" in

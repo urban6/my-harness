@@ -9,6 +9,7 @@ import os
 import re
 from collections import Counter
 
+AGENT_TOOLS = ("Agent", "Task")  # 서브에이전트 도구 이름은 세션 종류에 따라 Agent 또는 Task로 노출된다
 PLAYGROUND = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EXPECT = {
     # 군별 격리 기대값: (Agent 도구 허용, Workflow 도구 허용, 스킬 로드)
@@ -24,7 +25,7 @@ def forbidden_patterns(run_dir):
         (re.compile(re.escape(os.path.join(PLAYGROUND, d))), d)
         for d in ("acceptance", "scripts", "results", "PRD.md")
     ] + [
-        (re.compile(re.escape(os.path.join(PLAYGROUND, "runs")) + r"/(?!" + re.escape(me) + r"(/|$))[^/\s\"']+"), "other-run"),
+        (re.compile(re.escape(os.path.join(PLAYGROUND, "runs")) + r"/(?!" + re.escape(me) + r"(?![\w.-]))[\w.-]+"), "other-run"),
         (re.compile(r"my_harness/CLAUDE\.md"), "harness-CLAUDE.md"),
         (re.compile(r"(^|[\s\"'=])\.\./\.\./"), "escape-../../"),
     ]
@@ -69,7 +70,7 @@ def main():
                 tool_counts[name] += 1
                 if name == "Skill":
                     skill_calls[str(inp.get("skill") or inp.get("command") or inp)] += 1
-                if name == "Agent":
+                if name in AGENT_TOOLS:
                     agent_calls[str(inp.get("subagent_type") or inp.get("name") or "?")] += 1
                 blob = json.dumps(inp, ensure_ascii=False)
                 if name == "Read" and "skills/spring-boot" in blob:
@@ -82,7 +83,7 @@ def main():
     skills = (init or {}).get("skills", [])
     exp = EXPECT[a.group]
     isolation = {
-        "agent_tool_present": "Agent" in tools,
+        "agent_tool_present": any(t in tools for t in AGENT_TOOLS),
         "workflow_tool_present": "Workflow" in tools,
         "skills_loaded": bool(skills),
         "spring_boot_skill_available": any("spring-boot" in s for s in skills),

@@ -1,0 +1,14 @@
+PASS                   R1 r1_create_201
+PASS                   R1 r1_location_resolves
+PASS                   R1 r1_stock_zero_201
+PASS                   R1 r1_blank_name_400
+PASS                   R1 r1_missing_name_400
+PASS                   R1 r1_price_zero_400
+PASS                   R1 r1_stock_negative_400
+PASS                   R2 r2_get_200
+PASS                   R2 r2_not_found_404
+PASS                   R8 r8_validation_problem
+PASS                   R8 r8_not_found_problem
+PASS                   R8 r8_malformed_json_problem
+
+12/12 passed (100%), requirements met: ['R1', 'R2', 'R8']

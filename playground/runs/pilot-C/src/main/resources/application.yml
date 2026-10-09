@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product
+    username: product
+    # password: 의도적으로 생략 — SPRING_DATASOURCE_PASSWORD 환경변수로 주입
+  jpa:
+    hibernate:
+      ddl-auto: validate          # 스키마는 Flyway가 관리. Hibernate는 대조만
+    open-in-view: false           # 지연 로딩 경계를 서비스 트랜잭션으로 강제
+  flyway:
+    enabled: true                 # 기본값이지만 의도를 명시. locations 기본값 classpath:db/migration
+  jackson:
+    deserialization:
+      accept-float-as-int: false        # "price": 1000.5 → 400 (01 §3.3)
+    mapper:
+      allow-coercion-of-scalars: false  # "price": "1000" → 400 (01 §3.3)
+
+server:
+  port: 8080
