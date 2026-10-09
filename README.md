@@ -25,13 +25,9 @@ my-harness/
 | **prompts** | `feature-development` · `code-review` |
 | **docs** | `superpowers` |
 
-> 자세한 사용법은 각 파일 frontmatter의 `description`에 적혀 있습니다.
-
 ## 외부 플러그인
 
-하네스와 따로 설치해 쓰는 플러그인입니다. 쓰는 원칙과 하네스 자산과의 경계는 각 `docs/` 문서에 정리합니다.
-
-- [superpowers](https://github.com/obra/superpowers) — 절차 스킬로만 사용. [`docs/superpowers.md`](docs/superpowers.md)
+- [superpowers](docs/superpowers.md)
 
 ## 오케스트레이션
 
