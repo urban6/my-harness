@@ -1,0 +1,12 @@
+[run:pilot-C] start 2026-10-09 22:12:12 group=C budget=$60 timeout=240m
+[run:pilot-C] end exit=0 wall=3000s
+[meta:pilot-C] status=success cost=$10.288944800000001 turns=6 isolation_ok=True leaks=0 warnings=2 compactions=0 discard=False
+[grade:pilot-C] assemble_ok=true
+[grade:pilot-C] tests={"tests": 278, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:pilot-C] coverage={"branch_covered": 146, "branch_total": 184, "branch_coverage": 0.7935}
+[grade:pilot-C] boot_ok=true
+77/88 passed (88%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 0.9091, 'R5': 0.4444, 'R7': 0.4, 'R8': 1.0, 'R9': 1.0, 'R10': 0.8, 'R11': 0.875}
+[grade:pilot-C] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:pilot-C] acceptance 81/92 requirement_mean=0.8571 rates={'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 0.9091, 'R5': 0.4444, 'R6': 1.0, 'R7': 0.4, 'R8': 1.0, 'R9': 1.0, 'R10': 0.8, 'R11': 0.875}
+[grade:pilot-C] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp2/results/pilot-C.json

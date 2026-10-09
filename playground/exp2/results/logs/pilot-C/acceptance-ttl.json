@@ -19,7 +19,7 @@
         "R6.2"
       ],
       "passed": true,
-      "seconds": 5.68
+      "seconds": 5.7
     },
     {
       "id": "r6_expires_at_ttl",
@@ -29,7 +29,7 @@
         "R6.1"
       ],
       "passed": true,
-      "seconds": 0.03
+      "seconds": 0.04
     },
     {
       "id": "r6_pay_after_expiry_409",
@@ -39,7 +39,7 @@
         "R6.1"
       ],
       "passed": true,
-      "seconds": 3.25
+      "seconds": 3.27
     },
     {
       "id": "r6_paid_not_expired",
@@ -48,7 +48,7 @@
         "R6.1"
       ],
       "passed": true,
-      "seconds": 5.56
+      "seconds": 5.57
     }
   ],
   "phase": "ttl"

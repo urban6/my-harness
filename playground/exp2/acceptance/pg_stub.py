@@ -7,7 +7,7 @@
   tok_error        500
   tok_slow         5초 지연 후 승인 (앱은 2초에 타임아웃해야 한다)
   tok_refund_fail  승인, 이후 환불 요청에 500
-  그 밖            승인
+  그 밖            승인 (cardToken 없음은 400)
 같은 Idempotency-Key의 결제 요청은 저장된 최초 결과를 즉시 돌려준다(500은 저장하지 않는다).
 
 관리용 (인수 테스트 전용)
@@ -55,8 +55,19 @@ class Handler(BaseHTTPRequestHandler):
             pass  # 앱이 타임아웃으로 먼저 끊은 경우
 
     def _body(self):
-        n = int(self.headers.get("Content-Length") or 0)
-        raw = self.rfile.read(n) if n else b""
+        if "chunked" in (self.headers.get("Transfer-Encoding") or "").lower():
+            raw = b""  # JDK HttpClient 등은 본문을 chunked로 보낸다
+            while True:
+                size = int(self.rfile.readline().split(b";")[0].strip() or b"0", 16)
+                if size == 0:
+                    while self.rfile.readline() not in (b"\r\n", b"\n", b""):
+                        pass
+                    break
+                raw += self.rfile.read(size)
+                self.rfile.readline()
+        else:
+            n = int(self.headers.get("Content-Length") or 0)
+            raw = self.rfile.read(n) if n else b""
         try:
             return json.loads(raw) if raw else {}
         except ValueError:
@@ -96,6 +107,8 @@ class Handler(BaseHTTPRequestHandler):
         if stored:
             call["replayed"] = True
             return self._send(*stored)
+        if not token:  # 본문을 못 읽었거나 계약과 다른 요청 — 조용히 승인하지 않는다
+            return self._send(400, {"error": "cardToken required"})
         if token == "tok_error":
             return self._send(500, {"error": "internal"})
         if token == "tok_slow":
