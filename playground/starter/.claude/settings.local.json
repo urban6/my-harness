@@ -1,0 +1,13 @@
+{
+  "claudeMdExcludes": [
+    "/Users/jeonseungchul/SideProjects/my_harness/CLAUDE.md"
+  ],
+  "permissions": {
+    "deny": [
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/acceptance/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/scripts/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/results/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/PRD.md)"
+    ]
+  }
+}

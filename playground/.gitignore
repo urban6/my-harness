@@ -1,0 +1,6 @@
+# 빌드 산출물 (runs/·acceptance/reference/·starter/ 공통)
+**/build/
+**/.gradle/
+*.class
+.DS_Store
+__pycache__/

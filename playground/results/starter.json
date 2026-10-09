@@ -1,0 +1,302 @@
+{
+  "run": "starter",
+  "assemble_ok": true,
+  "tests": {
+    "tests": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "gradle_exit": 0,
+    "ok": false
+  },
+  "test_rerun": true,
+  "coverage": {
+    "branch_covered": 0,
+    "branch_total": 0,
+    "branch_coverage": 0.0
+  },
+  "boot_ok": true,
+  "acceptance": {
+    "passed": 0,
+    "total": 34,
+    "pass_rate": 0.0,
+    "requirements_met": [],
+    "failure_categories": {
+      "status": 34
+    },
+    "cases": [
+      {
+        "id": "r1_create_201",
+        "req": "R1",
+        "passed": false,
+        "category": "status",
+        "message": "create product: expected 201, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.664+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.02
+      },
+      {
+        "id": "r1_location_resolves",
+        "req": "R1",
+        "passed": false,
+        "category": "status",
+        "message": "create product: expected 201, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.667+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r1_stock_zero_201",
+        "req": "R1",
+        "passed": false,
+        "category": "status",
+        "message": "stock=0: expected 201, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.670+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r1_blank_name_400",
+        "req": "R1",
+        "passed": false,
+        "category": "status",
+        "message": "blank name: expected 400, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.672+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r1_missing_name_400",
+        "req": "R1",
+        "passed": false,
+        "category": "status",
+        "message": "missing name: expected 400, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.675+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r1_price_zero_400",
+        "req": "R1",
+        "passed": false,
+        "category": "status",
+        "message": "price=0: expected 400, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.677+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r1_stock_negative_400",
+        "req": "R1",
+        "passed": false,
+        "category": "status",
+        "message": "stock=-1: expected 400, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.680+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r2_get_200",
+        "req": "R2",
+        "passed": false,
+        "category": "status",
+        "message": "create product: expected 201, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.682+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r2_not_found_404",
+        "req": "R2",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.684+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_create_201",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.687+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_stock_deducted",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.689+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_empty_items_400",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "empty items: expected 400, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.692+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/orders\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_quantity_zero_400",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.694+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_duplicate_product_400",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.696+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_unknown_product_404",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.699+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_insufficient_409",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.701+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_atomic_no_partial",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.703+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_precedence_400_over_404",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.706+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_precedence_404_over_409",
+        "req": "R3",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.708+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r4_get_200",
+        "req": "R4",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.710+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r4_not_found_404",
+        "req": "R4",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.712+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r5_cancel_200",
+        "req": "R5",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.714+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r5_stock_restored",
+        "req": "R5",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.716+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r5_cancel_twice_409",
+        "req": "R5",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.718+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r5_cancel_not_found_404",
+        "req": "R5",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.720+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r6_defaults",
+        "req": "R6",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.722+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r6_sorted_newest_first",
+        "req": "R6",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.724+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r6_page_and_size",
+        "req": "R6",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.726+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r6_invalid_params_400",
+        "req": "R6",
+        "passed": false,
+        "category": "status",
+        "message": "list size=0: expected 400, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.728+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/orders\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r7_concurrency",
+        "req": "R7",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.730+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r8_validation_problem",
+        "req": "R8",
+        "passed": false,
+        "category": "status",
+        "message": "validation error: expected 400, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.732+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r8_not_found_problem",
+        "req": "R8",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.734+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r8_conflict_problem",
+        "req": "R8",
+        "passed": false,
+        "category": "status",
+        "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-09T08:54:46.736+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      },
+      {
+        "id": "r8_malformed_json_problem",
+        "req": "R8",
+        "passed": false,
+        "category": "status",
+        "message": "malformed JSON: expected 400, got 404 body={\"timestamp\":\"2026-10-09T08:54:46.738+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+        "seconds": 0.0
+      }
+    ]
+  }
+}

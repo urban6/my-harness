@@ -22,12 +22,13 @@
 
 | 군 | 정의 | 군별 실행 옵션 |
 |---|---|---|
-| A Vanilla | 하니스 없음, 단일 세션 | `--disable-slash-commands --disallowedTools Agent` |
-| B Skills-only | `spring-boot` 스킬만, 단일 세션 | `--disallowedTools Agent --append-system-prompt "Spring Boot 코드는 spring-boot 스킬을 따른다."` |
+| A Vanilla | 하니스 없음, 단일 세션 | `--disable-slash-commands --disallowedTools Agent Workflow` |
+| B Skills-only | `spring-boot` 스킬만, 단일 세션 | `--disallowedTools Agent Workflow --append-system-prompt "Spring Boot 코드는 spring-boot 스킬을 따른다."` |
 | C Orchestration | `feature-pm` + 워커 4종 + 스킬 | `--agent feature-pm` |
 
 - 공통 옵션: `-p --output-format stream-json --verbose --model claude-opus-5-5 --effort high --permission-mode bypassPermissions --max-budget-usd 40 --strict-mcp-config`
 - 프롬프트는 모든 군 동일 — 군 차이는 실행 옵션으로만 만든다.
+- A·B는 `Agent`와 `Workflow`(다중 에이전트 실행 도구)를 모두 막아 단일 세션을 보장한다. 격리 여부는 run마다 세션 로그의 `init` 이벤트로 자동 검사한다.
 
 ```text
 feature.md의 기능을 개발해줘. 완료 조건을 모두 충족시키고, 마지막에 테스트 명령 결과를 그대로 보여줘.
@@ -95,7 +96,8 @@ playground/
 ├── PRD.md · feature.md · prompt.txt · REPORT.md
 ├── starter/        # 공통 스타터
 ├── acceptance/     # 숨긴 인수 테스트 + reference/ (run에서 읽기 차단)
-├── scripts/        # run.sh · grade.sh · grading.init.gradle · aggregate.py
+├── pilot/          # 파일럿용 축소 feature.md (R1·R2·R8)
+├── scripts/        # run.sh · grade.sh · grading.init.gradle · analyze_session.py · aggregate.py
 ├── runs/{군}-{n}/  # 실행 디렉터리 그 자체 (커밋, 빌드 산출물 제외)
 └── results/        # 채점 원자료·요약
 ```
