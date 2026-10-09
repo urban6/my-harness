@@ -17,16 +17,18 @@ allowed-tools: Bash(git status:*), Bash(git branch:*), Bash(git rev-parse:*), Ba
 
 PR을 올리기 전에 현재 브랜치의 변경을 코드 리뷰한다. 검증·진단·판정까지만 하고 PR은 만들지 않는다. 사용자 지시(있으면): $ARGUMENTS
 
-base는 `$ARGUMENTS`에 브랜치 이름이 있으면 그것을, 없으면 위 "기본 base 후보"를 쓴다. 아래에서 `{base}`로 부른다.
+base는 `$ARGUMENTS`에 브랜치 이름이 있으면 그것을, 없으면 위 "기본 base 후보"를 쓴다. 아래에서 `{base}`로 부르고, `origin/` 접두를 뗀 브랜치 이름은 `{base-name}`으로 부른다(예: `origin/main` → `main`).
+
+위 "base 이후 커밋"·"base 대비 변경 요약"은 `origin/HEAD` 기준이다. `{base}`가 이와 다르면 `git log --oneline {base}..HEAD`, `git diff --stat {base}...HEAD`로 다시 구해 그 결과를 쓴다.
 
 ### 절차
 1. **전제 확인** — 하나라도 걸리면 중단하고 보고한다.
-   - 현재 브랜치가 `{base}`이거나 `main`/`master`이다 → 작업 브랜치를 만들라고 안내한다.
-   - 커밋하지 않은 변경이 있다 → 무엇이 남았는지 보여 주고 `/commit`을 안내한다. 직접 커밋하지 않는다.
+   - 현재 브랜치가 `{base-name}`이거나 `main`/`master`이다 → 작업 브랜치를 만들라고 안내한다.
+   - 추적 중인 파일에 커밋하지 않은 변경(staged·unstaged)이 있다 → 무엇이 남았는지 보여 주고 `/commit`을 안내한다. 직접 커밋하지 않는다. untracked 파일만 있으면 중단하지 않고 목록을 보고의 "주의"에 남긴다.
    - 이 브랜치에 열린 PR이 이미 있다 → URL을 보여 주고 `/post-pr`을 안내한다.
    - `{base}` 이후 커밋이 없다 → 리뷰할 것이 없다고 보고한다.
 2. **검증** — 매니페스트(`build.gradle(.kts)`·`pom.xml`·`package.json`·`Makefile` 등)로 프로젝트의 테스트·린트·빌드 명령을 판별해 실행한다. 명령을 판별할 수 없으면 추측해 실행하지 말고 사용자에게 묻는다. 실패해도 진단은 계속하되, 결과는 판정에 반영한다.
-3. **진단** — 아래 에이전트를 **한 메시지에서 병렬로** `Agent`로 스폰한다. 대상은 `git diff {base}...HEAD`로 바뀐 파일로 한정하고, 프롬프트에 "진단만 하고 수정하지 마. file:line 근거와 심각도를 붙여 보고해"를 넣는다.
+3. **진단** — 아래 에이전트를 **한 메시지에서 병렬로** `Agent`로 스폰한다. 대상은 `git diff --name-only {base}...HEAD`로 구한 변경 파일로 한정한다. Bash가 없는 에이전트(`security-auditor` 등)도 범위를 알 수 있게 **변경 파일 목록을 프롬프트에 직접 넣고**, "진단만 하고 수정하지 마. file:line 근거와 심각도를 붙여 보고해"를 함께 넣는다.
    - 항상: `code-reviewer`, `security-auditor`
    - 레이어·모듈 경계·의존 방향이 바뀌었을 때: `architecture-expert`
    - 쿼리·반복 처리·핫패스가 바뀌었을 때: `performance-optimizer`
@@ -42,3 +44,4 @@ base는 `$ARGUMENTS`에 브랜치 이름이 있으면 그것을, 없으면 위 "
 - 판정(BLOCK/READY)과 검증 결과(실행한 명령과 결과)
 - 진단 요약 — 심각도별 개수와 주요 항목 `file:line`
 - 리뷰 포인트 — MEDIUM 이하 진단, 리뷰어가 봐야 할 곳
+- 주의(있으면) — 커밋되지 않은 untracked 파일 목록
