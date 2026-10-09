@@ -27,8 +27,12 @@ def forbidden_patterns(run_dir):
     ] + [
         (re.compile(re.escape(os.path.join(PLAYGROUND, "runs")) + r"/(?!" + re.escape(me) + r"(?![\w.-]))[\w.-]+"), "other-run"),
         (re.compile(r"my_harness/CLAUDE\.md"), "harness-CLAUDE.md"),
-        (re.compile(r"(^|[\s\"'=])\.\./\.\./"), "escape-../../"),
     ]
+
+
+# 휴리스틱: 상위로 두 단계 이상 이동. 하위 폴더에서 run 루트로 돌아오는 정상 사용도 걸리므로
+# 자동 폐기하지 않고 경고로만 남겨 사람이 확인한다.
+ESCAPE_HINT = re.compile(r"(^|[\s\"'=])\.\./\.\./")
 
 
 def main():
@@ -44,7 +48,7 @@ def main():
     init, result = None, None
     tool_counts, skill_calls, agent_calls = Counter(), Counter(), Counter()
     compactions, subagent_events = 0, 0
-    leaks = []
+    leaks, warnings = [], []
     patterns = forbidden_patterns(os.path.abspath(a.run_dir))
 
     for line in open(a.session, encoding="utf-8"):
@@ -78,6 +82,8 @@ def main():
                 for pat, label in patterns:
                     if pat.search(blob):
                         leaks.append({"tool": name, "match": label, "input": blob[:300]})
+                if ESCAPE_HINT.search(blob):
+                    warnings.append({"tool": name, "match": "escape-../../", "input": blob[:300]})
 
     tools = (init or {}).get("tools", [])
     skills = (init or {}).get("skills", [])
@@ -130,11 +136,12 @@ def main():
         "skill_calls": dict(skill_calls),
         "agent_calls": dict(agent_calls),
         "forbidden_access": leaks,
+        "warnings": warnings,
         "discard": bool(leaks) or not isolation["ok"],
     }
     json.dump(meta, open(a.out, "w"), ensure_ascii=False, indent=2)
     print(f"[meta:{meta['run']}] status={status} cost=${meta['cost_usd']} turns={meta['num_turns']} "
-          f"isolation_ok={isolation['ok']} leaks={len(leaks)} compactions={compactions} discard={meta['discard']}")
+          f"isolation_ok={isolation['ok']} leaks={len(leaks)} warnings={len(warnings)} compactions={compactions} discard={meta['discard']}")
 
 
 if __name__ == "__main__":

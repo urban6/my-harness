@@ -1,0 +1,36 @@
+PASS                   R1 r1_create_201
+PASS                   R1 r1_location_resolves
+PASS                   R1 r1_stock_zero_201
+PASS                   R1 r1_blank_name_400
+PASS                   R1 r1_missing_name_400
+PASS                   R1 r1_price_zero_400
+PASS                   R1 r1_stock_negative_400
+PASS                   R2 r2_get_200
+PASS                   R2 r2_not_found_404
+PASS                   R3 r3_create_201
+PASS                   R3 r3_stock_deducted
+PASS                   R3 r3_empty_items_400
+PASS                   R3 r3_quantity_zero_400
+PASS                   R3 r3_duplicate_product_400
+PASS                   R3 r3_unknown_product_404
+PASS                   R3 r3_insufficient_409
+PASS                   R3 r3_atomic_no_partial
+PASS                   R3 r3_precedence_400_over_404
+PASS                   R3 r3_precedence_404_over_409
+PASS                   R4 r4_get_200
+PASS                   R4 r4_not_found_404
+PASS                   R5 r5_cancel_200
+PASS                   R5 r5_stock_restored
+PASS                   R5 r5_cancel_twice_409
+PASS                   R5 r5_cancel_not_found_404
+PASS                   R6 r6_defaults
+PASS                   R6 r6_sorted_newest_first
+PASS                   R6 r6_page_and_size
+PASS                   R6 r6_invalid_params_400
+PASS                   R7 r7_concurrency
+PASS                   R8 r8_validation_problem
+PASS                   R8 r8_not_found_problem
+PASS                   R8 r8_conflict_problem
+PASS                   R8 r8_malformed_json_problem
+
+34/34 passed (100%), requirements met: ['R1', 'R2', 'R3', 'R4', 'R5', 'R6', 'R7', 'R8']

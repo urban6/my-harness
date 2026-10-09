@@ -1,0 +1,4 @@
+group,n,accuracy,test_quality,completeness,total,cost_usd,minutes
+A 일반,1,60.0,13.6,10.0,83.6,1.36,5.9
+B 스킬,1,60.0,15.0,10.0,85.0,1.36,5.7
+C 오케스트레이션,1,60.0,11.4,10.0,81.4,5.25,21.8
