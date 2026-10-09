@@ -1,0 +1,12 @@
+[run:pilot-A] start 2026-10-09 23:47:58 group=A budget=$60 timeout=240m
+[run:pilot-A] end exit=0 wall=997s
+[meta:pilot-A] status=success cost=$3.7435890000000005 turns=26 isolation_ok=True leaks=0 warnings=0 compactions=0 discard=False
+[grade:pilot-A] assemble_ok=true
+[grade:pilot-A] tests={"tests": 106, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:pilot-A] coverage={"branch_covered": 158, "branch_total": 176, "branch_coverage": 0.8977}
+[grade:pilot-A] boot_ok=true
+87/88 passed (99%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R7': 0.8, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:pilot-A] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:pilot-A] acceptance 91/92 requirement_mean=0.9818 rates={'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R6': 1.0, 'R7': 0.8, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:pilot-A] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp2/results/pilot-A.json

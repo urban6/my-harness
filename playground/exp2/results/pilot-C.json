@@ -95,7 +95,7 @@
           "R1.3"
         ],
         "passed": true,
-        "seconds": 0.07
+        "seconds": 0.08
       },
       {
         "id": "r1_reserved_available",
@@ -105,7 +105,7 @@
           "R3.4"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.02
       },
       {
         "id": "r2_create_201",
@@ -169,7 +169,7 @@
           "R2.4"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.04
       },
       {
         "id": "r2_rate_floor",
@@ -196,7 +196,7 @@
           "R2.4"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.04
       },
       {
         "id": "r2_capped_by_subtotal",
@@ -205,7 +205,7 @@
           "R2.4"
         ],
         "passed": true,
-        "seconds": 0.02
+        "seconds": 0.03
       },
       {
         "id": "r2_validity_window_409",
@@ -214,7 +214,7 @@
           "R2.5"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.04
       },
       {
         "id": "r2_min_order_amount",
@@ -223,7 +223,7 @@
           "R2.5"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.04
       },
       {
         "id": "r2_one_per_user",
@@ -232,7 +232,7 @@
           "R2.5"
         ],
         "passed": true,
-        "seconds": 0.04
+        "seconds": 0.05
       },
       {
         "id": "r2_exhausted_409",
@@ -250,7 +250,7 @@
           "R2.6"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.04
       },
       {
         "id": "r2_restore_and_reuse",
@@ -259,7 +259,7 @@
           "R2.6"
         ],
         "passed": true,
-        "seconds": 0.05
+        "seconds": 0.07
       },
       {
         "id": "r3_create_201",
@@ -279,7 +279,7 @@
           "R3.5"
         ],
         "passed": true,
-        "seconds": 0.02
+        "seconds": 0.03
       },
       {
         "id": "r3_headers_400",
@@ -289,7 +289,7 @@
           "R3.2"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.02
       },
       {
         "id": "r3_items_400",
@@ -298,7 +298,7 @@
           "R3.2"
         ],
         "passed": true,
-        "seconds": 0.1
+        "seconds": 0.09
       },
       {
         "id": "r3_items_bounds_201",
@@ -307,7 +307,7 @@
           "R3.2"
         ],
         "passed": true,
-        "seconds": 0.13
+        "seconds": 0.14
       },
       {
         "id": "r3_large_amount",
@@ -317,7 +317,7 @@
           "R2.4"
         ],
         "passed": true,
-        "seconds": 0.01
+        "seconds": 0.02
       },
       {
         "id": "r3_unknown_product_404",
@@ -345,7 +345,7 @@
           "R1.4"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.04
       },
       {
         "id": "r3_atomic_stock",
@@ -363,7 +363,7 @@
           "R3.4"
         ],
         "passed": true,
-        "seconds": 0.02
+        "seconds": 0.03
       },
       {
         "id": "r3_get_404",
@@ -462,7 +462,7 @@
           "R4.4"
         ],
         "passed": true,
-        "seconds": 0.05
+        "seconds": 0.04
       },
       {
         "id": "r4_failed_retry_404",
@@ -471,7 +471,7 @@
           "R4.4"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.04
       },
       {
         "id": "r4_concurrent_same_key",
@@ -499,7 +499,7 @@
           "R4.3"
         ],
         "passed": true,
-        "seconds": 0.04
+        "seconds": 0.05
       },
       {
         "id": "r4_precedence_400_422",
@@ -537,7 +537,7 @@
           "R5.6"
         ],
         "passed": true,
-        "seconds": 0.05
+        "seconds": 0.04
       },
       {
         "id": "r5_pg_timeout_503",
@@ -546,7 +546,7 @@
           "R5.6"
         ],
         "passed": true,
-        "seconds": 2.06
+        "seconds": 2.05
       },
       {
         "id": "r5_retry_same_pg_key",
@@ -556,7 +556,7 @@
           "R4.4"
         ],
         "passed": true,
-        "seconds": 5.89
+        "seconds": 5.85
       },
       {
         "id": "r5_invalid_state_409",
@@ -565,7 +565,7 @@
           "R5.2"
         ],
         "passed": true,
-        "seconds": 0.14
+        "seconds": 0.06
       },
       {
         "id": "r5_not_found_404",
@@ -583,7 +583,7 @@
           "R5.1"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.02
       },
       {
         "id": "r5_zero_total_no_pg",
@@ -592,7 +592,7 @@
           "R5.7"
         ],
         "passed": true,
-        "seconds": 0.04
+        "seconds": 0.03
       },
       {
         "id": "r7_cancel_pending",
@@ -602,7 +602,7 @@
           "R7.2"
         ],
         "passed": true,
-        "seconds": 0.04
+        "seconds": 0.03
       },
       {
         "id": "r7_refund_paid",
@@ -611,7 +611,7 @@
           "R7.3"
         ],
         "passed": true,
-        "seconds": 0.05
+        "seconds": 0.04
       },
       {
         "id": "r7_refund_fail_503",
@@ -620,7 +620,7 @@
           "R7.3"
         ],
         "passed": true,
-        "seconds": 0.05
+        "seconds": 0.04
       },
       {
         "id": "r7_invalid_states_409",
@@ -629,7 +629,7 @@
           "R7.4"
         ],
         "passed": true,
-        "seconds": 0.08
+        "seconds": 0.07
       },
       {
         "id": "r7_not_found_404",
@@ -647,7 +647,7 @@
           "R8.1"
         ],
         "passed": true,
-        "seconds": 0.04
+        "seconds": 0.03
       },
       {
         "id": "r8_invalid_transitions_409",
@@ -693,7 +693,7 @@
           "R9.2"
         ],
         "passed": true,
-        "seconds": 0.07
+        "seconds": 0.05
       },
       {
         "id": "r9_cursor_paging",
@@ -721,7 +721,7 @@
           "R9.5"
         ],
         "passed": true,
-        "seconds": 0.21
+        "seconds": 0.19
       },
       {
         "id": "r9_default_size",
@@ -730,7 +730,7 @@
           "R9.3"
         ],
         "passed": true,
-        "seconds": 0.67
+        "seconds": 0.58
       },
       {
         "id": "r9_invalid_params_400",
@@ -740,7 +740,7 @@
           "R9.3"
         ],
         "passed": true,
-        "seconds": 0.03
+        "seconds": 0.02
       },
       {
         "id": "r10_stock_race",
@@ -749,7 +749,7 @@
           "R10.1"
         ],
         "passed": true,
-        "seconds": 0.17
+        "seconds": 0.18
       },
       {
         "id": "r10_coupon_quantity_race",
@@ -758,7 +758,7 @@
           "R10.2"
         ],
         "passed": true,
-        "seconds": 0.21
+        "seconds": 0.24
       },
       {
         "id": "r10_same_user_coupon_race",
@@ -776,7 +776,7 @@
           "R10.4"
         ],
         "passed": true,
-        "seconds": 0.29
+        "seconds": 0.27
       },
       {
         "id": "r10_concurrent_pay",
@@ -844,7 +844,7 @@
           "R11.3"
         ],
         "passed": true,
-        "seconds": 0.06
+        "seconds": 0.05
       },
       {
         "id": "r11_payment_codes",
@@ -882,7 +882,7 @@
           "R6.1"
         ],
         "passed": true,
-        "seconds": 0.04
+        "seconds": 0.03
       },
       {
         "id": "r6_pay_after_expiry_409",
@@ -892,7 +892,7 @@
           "R6.1"
         ],
         "passed": true,
-        "seconds": 3.27
+        "seconds": 3.26
       },
       {
         "id": "r6_paid_not_expired",
@@ -901,7 +901,7 @@
           "R6.1"
         ],
         "passed": true,
-        "seconds": 5.57
+        "seconds": 5.55
       }
     ]
   }

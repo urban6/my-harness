@@ -37,7 +37,7 @@
         "R1.3"
       ],
       "passed": true,
-      "seconds": 0.09
+      "seconds": 0.08
     },
     {
       "id": "r1_location_resolves",
@@ -74,7 +74,7 @@
         "R1.3"
       ],
       "passed": true,
-      "seconds": 0.08
+      "seconds": 0.07
     },
     {
       "id": "r1_reserved_available",
@@ -166,7 +166,7 @@
         "R2.4"
       ],
       "passed": true,
-      "seconds": 0.03
+      "seconds": 0.02
     },
     {
       "id": "r2_fixed_max_cap",
@@ -175,7 +175,7 @@
         "R2.4"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.02
     },
     {
       "id": "r2_capped_by_subtotal",
@@ -193,7 +193,7 @@
         "R2.5"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.05
     },
     {
       "id": "r2_min_order_amount",
@@ -202,7 +202,7 @@
         "R2.5"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.05
     },
     {
       "id": "r2_one_per_user",
@@ -220,7 +220,7 @@
         "R2.5"
       ],
       "passed": true,
-      "seconds": 0.03
+      "seconds": 0.04
     },
     {
       "id": "r2_used_count",
@@ -238,7 +238,7 @@
         "R2.6"
       ],
       "passed": true,
-      "seconds": 0.07
+      "seconds": 0.06
     },
     {
       "id": "r3_create_201",
@@ -248,7 +248,7 @@
         "R3.5"
       ],
       "passed": true,
-      "seconds": 0.01
+      "seconds": 0.02
     },
     {
       "id": "r3_location_get",
@@ -277,7 +277,7 @@
         "R3.2"
       ],
       "passed": true,
-      "seconds": 0.09
+      "seconds": 0.1
     },
     {
       "id": "r3_items_bounds_201",
@@ -286,7 +286,7 @@
         "R3.2"
       ],
       "passed": true,
-      "seconds": 0.14
+      "seconds": 0.13
     },
     {
       "id": "r3_large_amount",
@@ -296,7 +296,7 @@
         "R2.4"
       ],
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.01
     },
     {
       "id": "r3_unknown_product_404",
@@ -305,7 +305,7 @@
         "R3.3"
       ],
       "passed": true,
-      "seconds": 0.01
+      "seconds": 0.0
     },
     {
       "id": "r3_unknown_coupon_404",
@@ -324,7 +324,7 @@
         "R1.4"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.02
     },
     {
       "id": "r3_atomic_stock",
@@ -333,7 +333,7 @@
         "R3.4"
       ],
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.01
     },
     {
       "id": "r3_atomic_coupon",
@@ -342,7 +342,7 @@
         "R3.4"
       ],
       "passed": true,
-      "seconds": 0.03
+      "seconds": 0.02
     },
     {
       "id": "r3_get_404",
@@ -387,7 +387,7 @@
         "C3"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.03
     },
     {
       "id": "r4_replay_create",
@@ -396,7 +396,7 @@
         "R4.2"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.03
     },
     {
       "id": "r4_replay_original_snapshot",
@@ -405,7 +405,7 @@
         "R4.2"
       ],
       "passed": true,
-      "seconds": 0.07
+      "seconds": 0.06
     },
     {
       "id": "r4_mismatch_body_422",
@@ -441,7 +441,7 @@
         "R4.4"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.03
     },
     {
       "id": "r4_failed_retry_404",
@@ -450,7 +450,7 @@
         "R4.4"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.03
     },
     {
       "id": "r4_concurrent_same_key",
@@ -478,7 +478,7 @@
         "R4.3"
       ],
       "passed": true,
-      "seconds": 0.05
+      "seconds": 0.04
     },
     {
       "id": "r4_precedence_400_422",
@@ -488,7 +488,7 @@
         "R4.3"
       ],
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.01
     },
     {
       "id": "r5_approve",
@@ -507,7 +507,7 @@
         "R5.5"
       ],
       "passed": true,
-      "seconds": 0.05
+      "seconds": 0.04
     },
     {
       "id": "r5_pg_error_503",
@@ -535,7 +535,7 @@
         "R4.4"
       ],
       "passed": true,
-      "seconds": 5.85
+      "seconds": 5.87
     },
     {
       "id": "r5_invalid_state_409",
@@ -544,7 +544,7 @@
         "R5.2"
       ],
       "passed": true,
-      "seconds": 0.06
+      "seconds": 0.11
     },
     {
       "id": "r5_not_found_404",
@@ -581,7 +581,7 @@
         "R7.2"
       ],
       "passed": true,
-      "seconds": 0.03
+      "seconds": 0.04
     },
     {
       "id": "r7_refund_paid",
@@ -590,7 +590,7 @@
         "R7.3"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.05
     },
     {
       "id": "r7_refund_fail_503",
@@ -599,7 +599,7 @@
         "R7.3"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.05
     },
     {
       "id": "r7_invalid_states_409",
@@ -635,7 +635,7 @@
         "R8.2"
       ],
       "passed": true,
-      "seconds": 0.06
+      "seconds": 0.05
     },
     {
       "id": "r8_not_found_404",
@@ -654,7 +654,7 @@
         "R9.2"
       ],
       "passed": true,
-      "seconds": 0.12
+      "seconds": 0.11
     },
     {
       "id": "r9_sorted_desc",
@@ -672,7 +672,7 @@
         "R9.2"
       ],
       "passed": true,
-      "seconds": 0.05
+      "seconds": 0.06
     },
     {
       "id": "r9_cursor_paging",
@@ -682,7 +682,7 @@
         "R9.3"
       ],
       "passed": true,
-      "seconds": 0.16
+      "seconds": 0.17
     },
     {
       "id": "r9_last_page_null",
@@ -691,7 +691,7 @@
         "R9.1"
       ],
       "passed": true,
-      "seconds": 0.11
+      "seconds": 0.1
     },
     {
       "id": "r9_stable_under_insert",
@@ -700,7 +700,7 @@
         "R9.5"
       ],
       "passed": true,
-      "seconds": 0.19
+      "seconds": 0.2
     },
     {
       "id": "r9_default_size",
@@ -709,7 +709,7 @@
         "R9.3"
       ],
       "passed": true,
-      "seconds": 0.58
+      "seconds": 0.64
     },
     {
       "id": "r9_invalid_params_400",
@@ -728,7 +728,7 @@
         "R10.1"
       ],
       "passed": true,
-      "seconds": 0.18
+      "seconds": 0.17
     },
     {
       "id": "r10_coupon_quantity_race",
@@ -737,7 +737,7 @@
         "R10.2"
       ],
       "passed": true,
-      "seconds": 0.24
+      "seconds": 0.2
     },
     {
       "id": "r10_same_user_coupon_race",
@@ -755,7 +755,7 @@
         "R10.4"
       ],
       "passed": true,
-      "seconds": 0.27
+      "seconds": 0.24
     },
     {
       "id": "r10_concurrent_pay",

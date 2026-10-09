@@ -47,7 +47,7 @@
         "R1.3"
       ],
       "passed": true,
-      "seconds": 0.01
+      "seconds": 0.04
     },
     {
       "id": "r1_invalid_400",
@@ -157,7 +157,7 @@
         "R2.4"
       ],
       "passed": true,
-      "seconds": 0.01
+      "seconds": 0.02
     },
     {
       "id": "r2_rate_max_cap",
@@ -193,7 +193,7 @@
         "R2.5"
       ],
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.03
     },
     {
       "id": "r2_min_order_amount",
@@ -277,7 +277,7 @@
         "R3.2"
       ],
       "passed": true,
-      "seconds": 0.07
+      "seconds": 0.06
     },
     {
       "id": "r3_items_bounds_201",
@@ -286,7 +286,7 @@
         "R3.2"
       ],
       "passed": true,
-      "seconds": 0.1
+      "seconds": 0.07
     },
     {
       "id": "r3_large_amount",
@@ -305,7 +305,7 @@
         "R3.3"
       ],
       "passed": true,
-      "seconds": 0.01
+      "seconds": 0.0
     },
     {
       "id": "r3_unknown_coupon_404",
@@ -459,7 +459,7 @@
         "R4.5"
       ],
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.03
     },
     {
       "id": "r4_pay_replay",
@@ -478,7 +478,7 @@
         "R4.3"
       ],
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.03
     },
     {
       "id": "r4_precedence_400_422",
@@ -488,7 +488,7 @@
         "R4.3"
       ],
       "passed": true,
-      "seconds": 0.01
+      "seconds": 0.02
     },
     {
       "id": "r5_approve",
@@ -525,7 +525,7 @@
         "R5.6"
       ],
       "passed": true,
-      "seconds": 2.03
+      "seconds": 2.04
     },
     {
       "id": "r5_retry_same_pg_key",
@@ -535,7 +535,7 @@
         "R4.4"
       ],
       "passed": true,
-      "seconds": 5.85
+      "seconds": 5.83
     },
     {
       "id": "r5_invalid_state_409",
@@ -544,7 +544,7 @@
         "R5.2"
       ],
       "passed": true,
-      "seconds": 0.05
+      "seconds": 0.04
     },
     {
       "id": "r5_not_found_404",
@@ -581,7 +581,7 @@
         "R7.2"
       ],
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.03
     },
     {
       "id": "r7_refund_paid",
@@ -608,7 +608,7 @@
         "R7.4"
       ],
       "passed": true,
-      "seconds": 0.05
+      "seconds": 0.06
     },
     {
       "id": "r7_not_found_404",
@@ -626,7 +626,7 @@
         "R8.1"
       ],
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.03
     },
     {
       "id": "r8_invalid_transitions_409",
@@ -654,7 +654,7 @@
         "R9.2"
       ],
       "passed": true,
-      "seconds": 0.08
+      "seconds": 0.07
     },
     {
       "id": "r9_sorted_desc",
@@ -663,7 +663,7 @@
         "R9.4"
       ],
       "passed": true,
-      "seconds": 0.1
+      "seconds": 0.08
     },
     {
       "id": "r9_status_filter",
@@ -672,7 +672,7 @@
         "R9.2"
       ],
       "passed": true,
-      "seconds": 0.05
+      "seconds": 0.04
     },
     {
       "id": "r9_cursor_paging",
@@ -682,7 +682,7 @@
         "R9.3"
       ],
       "passed": true,
-      "seconds": 0.13
+      "seconds": 0.11
     },
     {
       "id": "r9_last_page_null",
@@ -700,7 +700,7 @@
         "R9.5"
       ],
       "passed": true,
-      "seconds": 0.22
+      "seconds": 0.15
     },
     {
       "id": "r9_default_size",
@@ -709,7 +709,7 @@
         "R9.3"
       ],
       "passed": true,
-      "seconds": 0.54
+      "seconds": 0.42
     },
     {
       "id": "r9_invalid_params_400",
@@ -728,7 +728,7 @@
         "R10.1"
       ],
       "passed": true,
-      "seconds": 0.16
+      "seconds": 0.15
     },
     {
       "id": "r10_coupon_quantity_race",
@@ -737,7 +737,7 @@
         "R10.2"
       ],
       "passed": true,
-      "seconds": 0.13
+      "seconds": 0.14
     },
     {
       "id": "r10_same_user_coupon_race",
@@ -746,7 +746,7 @@
         "R10.3"
       ],
       "passed": true,
-      "seconds": 0.06
+      "seconds": 0.05
     },
     {
       "id": "r10_cross_order_no_deadlock",
@@ -775,7 +775,7 @@
         "R11.3"
       ],
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.0
     },
     {
       "id": "r11_malformed_json",

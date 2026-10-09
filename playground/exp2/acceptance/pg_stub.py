@@ -84,19 +84,19 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         u = urlparse(self.path)
+        body = self._body()  # 경로와 무관하게 본문을 항상 소비한다(keep-alive 연결에 남으면 다음 요청이 깨진다)
         if u.path == "/__admin/reset":
             with LOCK:
                 CALLS.clear(); BY_KEY.clear(); PAYMENTS.clear()
             return self._send(200, {"ok": True})
         if u.path == "/v1/payments":
-            return self._pay()
+            return self._pay(body)
         parts = u.path.strip("/").split("/")
         if len(parts) == 4 and parts[:2] == ["v1", "payments"] and parts[3] == "refund":
             return self._refund(parts[2])
         self._send(404, {"error": "not found"})
 
-    def _pay(self):
-        body = self._body()
+    def _pay(self, body):
         key = self.headers.get("Idempotency-Key")
         token = body.get("cardToken")
         call = {"kind": "payment", "orderId": body.get("orderId"), "amount": body.get("amount"),
