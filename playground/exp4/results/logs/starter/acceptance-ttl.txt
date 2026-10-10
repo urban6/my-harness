@@ -1,0 +1,6 @@
+FAIL[status]           R6   r6_expires_releases — fixture product create failed: 404 {"timestamp":"2026-10-10T03:54:15.022+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R6   r6_expires_at_ttl — fixture product create failed: 404 {"timestamp":"2026-10-10T03:54:15.026+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R6   r6_pay_after_expiry_409 — fixture product create failed: 404 {"timestamp":"2026-10-10T03:54:15.028+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[status]           R6   r6_paid_not_expired — fixture product create failed: 404 {"timestamp":"2026-10-10T03:54:15.031+00:00","status":404,"error":"Not Found","path":"/api/products"}
+
+0/4 passed (0%), requirement rates: {'R6': 0.0}

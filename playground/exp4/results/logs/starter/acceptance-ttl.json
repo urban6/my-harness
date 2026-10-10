@@ -1,0 +1,63 @@
+{
+  "passed": 0,
+  "total": 4,
+  "pass_rate": 0.0,
+  "requirement_rates": {
+    "R6": 0.0
+  },
+  "requirement_mean": 0.0,
+  "requirements_met": [],
+  "failure_categories": {
+    "status": 4
+  },
+  "cases": [
+    {
+      "id": "r6_expires_releases",
+      "req": "R6",
+      "rules": [
+        "R6.1",
+        "R6.2"
+      ],
+      "passed": false,
+      "category": "status",
+      "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-10T03:54:15.022+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+      "seconds": 0.02
+    },
+    {
+      "id": "r6_expires_at_ttl",
+      "req": "R6",
+      "rules": [
+        "R3.5",
+        "R6.1"
+      ],
+      "passed": false,
+      "category": "status",
+      "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-10T03:54:15.026+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+      "seconds": 0.0
+    },
+    {
+      "id": "r6_pay_after_expiry_409",
+      "req": "R6",
+      "rules": [
+        "R5.2",
+        "R6.1"
+      ],
+      "passed": false,
+      "category": "status",
+      "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-10T03:54:15.028+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+      "seconds": 0.0
+    },
+    {
+      "id": "r6_paid_not_expired",
+      "req": "R6",
+      "rules": [
+        "R6.1"
+      ],
+      "passed": false,
+      "category": "status",
+      "message": "fixture product create failed: 404 {\"timestamp\":\"2026-10-10T03:54:15.031+00:00\",\"status\":404,\"error\":\"Not Found\",\"path\":\"/api/products\"}",
+      "seconds": 0.0
+    }
+  ],
+  "phase": "ttl"
+}

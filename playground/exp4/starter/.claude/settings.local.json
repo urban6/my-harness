@@ -1,0 +1,30 @@
+{
+  "claudeMdExcludes": [
+    "/Users/jeonseungchul/SideProjects/my_harness/CLAUDE.md"
+  ],
+  "permissions": {
+    "deny": [
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp4/acceptance/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp4/scripts/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp4/results/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp4/PRD.md)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp2/acceptance/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp2/scripts/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp2/results/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp2/runs/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp2/starter/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp2/PRD.md)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp2/REPORT.md)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/exp3/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/acceptance/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/scripts/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/results/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/runs/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/pilot/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/starter/**)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/PRD.md)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/REPORT.md)",
+      "Read(//Users/jeonseungchul/SideProjects/my_harness/playground/feature.md)"
+    ]
+  }
+}
