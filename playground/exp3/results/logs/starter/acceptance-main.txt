@@ -1,0 +1,35 @@
+FAIL[status]           K1   k1_product — create product: expected 201, got 404 {"timestamp":"2026-10-10T06:34:10.010+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          K2   k2_coupon — coupon create failed in every date format: 404 {"timestamp":"2026-10-10T06:34:10.020+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[fixture]          K3   k3_order_create — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.022+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          K4   k4_discount — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.025+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          K5   k5_pay — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.027+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          K6   k6_cancel_pending — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.030+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          K7   k7_cancel_paid — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.032+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          K8   k8_ship_deliver — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.034+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          K9   k9_list — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.036+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          K10  k10_problem_details — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.040+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S1   s1_product_validation — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.042+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S2   s2_order_items_validation — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.046+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S3   s3_coupon_validation — coupon create failed in every date format: 404 {"timestamp":"2026-10-10T06:34:10.054+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[fixture]          S4   s4_malformed_json — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.056+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S5   s5_amount_overflow — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.058+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S6   s6_insufficient_stock_atomic — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.062+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S7   s7_discount_over_subtotal — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.064+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S8   s8_coupon_conditions — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.066+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S9   s9_coupon_once_per_user — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.068+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S10  s10_restore_on_cancel_refund — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.070+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S11  s11_invalid_transitions — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.073+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S14  s14_create_replay — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.075+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S15  s15_create_key_mismatch — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.077+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S16  s16_pay_replay — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.079+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S17  s17_gateway_failure — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.082+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S18  s18_declined — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.085+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S19  s19_refund_failure — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.087+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S20  s20_stock_race — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.090+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S21  s21_coupon_quantity_race — coupon create failed in every date format: 404 {"timestamp":"2026-10-10T06:34:10.096+00:00","status":404,"error":"Not Found","path":"/api/coupons"}
+FAIL[fixture]          S22  s22_concurrent_pay — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.098+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S23  s23_cross_order_deadlock — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.100+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S24  s24_cursor_stable — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.104+00:00","status":404,"error":"Not Found","path":"/api/products"}
+FAIL[fixture]          S25  s25_invalid_list_params — fixture product create failed: 404 {"timestamp":"2026-10-10T06:34:10.106+00:00","status":404,"error":"Not Found","path":"/api/products"}
+
+0/33 passed, failed: ['K1', 'K2', 'K3', 'K4', 'K5', 'K6', 'K7', 'K8', 'K9', 'K10', 'S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'S11', 'S14', 'S15', 'S16', 'S17', 'S18', 'S19', 'S20', 'S21', 'S22', 'S23', 'S24', 'S25']

@@ -1,0 +1,35 @@
+PASS                   K1   k1_product
+PASS                   K2   k2_coupon
+PASS                   K3   k3_order_create
+PASS                   K4   k4_discount
+PASS                   K5   k5_pay
+PASS                   K6   k6_cancel_pending
+PASS                   K7   k7_cancel_paid
+PASS                   K8   k8_ship_deliver
+PASS                   K9   k9_list
+PASS                   K10  k10_problem_details
+PASS                   S1   s1_product_validation
+PASS                   S2   s2_order_items_validation
+PASS                   S3   s3_coupon_validation
+PASS                   S4   s4_malformed_json
+PASS                   S5   s5_amount_overflow
+PASS                   S6   s6_insufficient_stock_atomic
+PASS                   S7   s7_discount_over_subtotal
+PASS                   S8   s8_coupon_conditions
+PASS                   S9   s9_coupon_once_per_user
+PASS                   S10  s10_restore_on_cancel_refund
+PASS                   S11  s11_invalid_transitions
+PASS                   S14  s14_create_replay
+PASS                   S15  s15_create_key_mismatch
+PASS                   S16  s16_pay_replay
+PASS                   S17  s17_gateway_failure
+PASS                   S18  s18_declined
+PASS                   S19  s19_refund_failure
+PASS                   S20  s20_stock_race
+PASS                   S21  s21_coupon_quantity_race
+PASS                   S22  s22_concurrent_pay
+PASS                   S23  s23_cross_order_deadlock
+PASS                   S24  s24_cursor_stable
+PASS                   S25  s25_invalid_list_params
+
+33/33 passed, failed: []
