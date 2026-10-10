@@ -1,0 +1,327 @@
+{
+  "verdict": {
+    "R1.1": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#createProduct"
+      ]
+    },
+    "R1.2": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#rejectsInvalid",
+        "ProductApiTest#acceptsBoundaries"
+      ]
+    },
+    "R1.3": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#createProduct",
+        "ProductApiTest#productNotFound"
+      ]
+    },
+    "R1.4": {
+      "covered": true,
+      "tests": [
+        "ProductApiTest#availableReflectsReservations"
+      ]
+    },
+    "R2.1": {
+      "covered": true,
+      "tests": [
+        "CouponApiTest.RegisterAndGet#create"
+      ]
+    },
+    "R2.2": {
+      "covered": true,
+      "tests": [
+        "CouponApiTest.RegisterAndGet#invalid",
+        "CouponApiTest.RegisterAndGet#duplicateCode",
+        "CouponApiTest.RegisterAndGet#defaults"
+      ]
+    },
+    "R2.3": {
+      "covered": true,
+      "tests": [
+        "CouponApiTest.RegisterAndGet#create",
+        "CouponApiTest.RegisterAndGet#notFound"
+      ]
+    },
+    "R2.4": {
+      "covered": true,
+      "tests": [
+        "CouponApiTest.Discount#rateCappedByMax",
+        "CouponApiTest.Discount#cappedBySubtotal",
+        "DiscountCalculatorTest#discount"
+      ]
+    },
+    "R2.5": {
+      "covered": true,
+      "tests": [
+        "CouponApiTest.Applicability#minOrderAmount",
+        "CouponApiTest.Applicability#sameUserAlreadyUsing",
+        "CouponApiTest.Applicability#exhausted"
+      ]
+    },
+    "R2.6": {
+      "covered": true,
+      "tests": [
+        "CouponApiTest.Restore#restoredOnCancel",
+        "CouponApiTest.Restore#restoredOnDeclineAndRefund"
+      ]
+    },
+    "R3.1": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#createOrder",
+        "OrderCreateApiTest#invalidHeaders"
+      ]
+    },
+    "R3.2": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#invalidBodies",
+        "OrderCreateApiTest#invalidHeaders"
+      ]
+    },
+    "R3.3": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#notFound",
+        "OrderCreateApiTest#insufficientStock"
+      ]
+    },
+    "R3.4": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#reservesStockAndCoupon",
+        "OrderCreateApiTest#allOrNothing"
+      ]
+    },
+    "R3.5": {
+      "covered": true,
+      "tests": [
+        "OrderCreateApiTest#createOrder",
+        "OrderCreateApiTest#withoutCoupon",
+        "OrderCreateApiTest#orderNotFound"
+      ]
+    },
+    "R4.1": {
+      "covered": true,
+      "tests": [
+        "IdempotencyApiTest#keyRequired",
+        "IdempotencyApiTest#independentKeySpaces"
+      ]
+    },
+    "R4.2": {
+      "covered": true,
+      "tests": [
+        "IdempotencyApiTest#replayCreate",
+        "IdempotencyApiTest#replayPay"
+      ]
+    },
+    "R4.3": {
+      "covered": true,
+      "tests": [
+        "IdempotencyApiTest#mismatch"
+      ]
+    },
+    "R4.4": {
+      "covered": true,
+      "tests": [
+        "IdempotencyApiTest#errorsAreNotStored",
+        "IdempotencyApiTest#failedPaymentKeyCanBeRetried"
+      ]
+    },
+    "R4.5": {
+      "covered": true,
+      "tests": [
+        "IdempotencyApiTest#concurrentSameKey",
+        "IdempotencyApiTest#concurrentSamePayKey"
+      ]
+    },
+    "R5.1": {
+      "covered": true,
+      "tests": [
+        "PaymentApiTest#approved",
+        "PaymentApiTest#invalidCardToken"
+      ]
+    },
+    "R5.2": {
+      "covered": true,
+      "tests": [
+        "PaymentApiTest#invalidState",
+        "PaymentExpiryTest#payAfterExpiry"
+      ]
+    },
+    "R5.3": {
+      "covered": true,
+      "tests": [
+        "PaymentApiTest#gatewayRequest"
+      ]
+    },
+    "R5.4": {
+      "covered": true,
+      "tests": [
+        "PaymentApiTest#approved"
+      ]
+    },
+    "R5.5": {
+      "covered": true,
+      "tests": [
+        "PaymentApiTest#declined"
+      ]
+    },
+    "R5.6": {
+      "covered": true,
+      "tests": [
+        "PaymentApiTest#gatewayError",
+        "PaymentApiTest#gatewayTimeout",
+        "PaymentGatewayConnectionFailureTest#paymentConnectionFailure"
+      ]
+    },
+    "R5.7": {
+      "covered": true,
+      "tests": [
+        "PaymentApiTest#zeroTotalSkipsGateway"
+      ]
+    },
+    "R6.1": {
+      "covered": true,
+      "tests": [
+        "PaymentExpiryTest#expires",
+        "PaymentExpiryTest#paidOrderDoesNotExpire"
+      ]
+    },
+    "R6.2": {
+      "covered": true,
+      "tests": [
+        "PaymentExpiryTest#expires"
+      ]
+    },
+    "R7.1": {
+      "covered": true,
+      "tests": [
+        "CancelRefundApiTest#cancelPending",
+        "CancelRefundApiTest#notFound"
+      ]
+    },
+    "R7.2": {
+      "covered": true,
+      "tests": [
+        "CancelRefundApiTest#cancelPending"
+      ]
+    },
+    "R7.3": {
+      "covered": true,
+      "tests": [
+        "CancelRefundApiTest#refundPaid",
+        "CancelRefundApiTest#refundGatewayError",
+        "CancelRefundApiTest#refundGatewayTimeout"
+      ]
+    },
+    "R7.4": {
+      "covered": true,
+      "tests": [
+        "CancelRefundApiTest#invalidStates"
+      ]
+    },
+    "R8.1": {
+      "covered": true,
+      "tests": [
+        "ShippingApiTest#shipAndDeliver"
+      ]
+    },
+    "R8.2": {
+      "covered": true,
+      "tests": [
+        "ShippingApiTest#invalidStates",
+        "ShippingApiTest#notFound"
+      ]
+    },
+    "R9.1": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#shape"
+      ]
+    },
+    "R9.2": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#filters",
+        "OrderListApiTest#invalidQuery"
+      ]
+    },
+    "R9.3": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#pageSize",
+        "OrderListApiTest#invalidQuery"
+      ]
+    },
+    "R9.4": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#ordering"
+      ]
+    },
+    "R9.5": {
+      "covered": true,
+      "tests": [
+        "OrderListApiTest#stableCursor",
+        "OrderListApiTest#stableCursorWithoutFilter"
+      ]
+    },
+    "R10.1": {
+      "covered": true,
+      "tests": [
+        "ConcurrencyTest#stock"
+      ]
+    },
+    "R10.2": {
+      "covered": true,
+      "tests": [
+        "ConcurrencyTest#couponQuantity"
+      ]
+    },
+    "R10.3": {
+      "covered": true,
+      "tests": [
+        "ConcurrencyTest#couponPerUser"
+      ]
+    },
+    "R10.4": {
+      "covered": true,
+      "tests": [
+        "ConcurrencyTest#noDeadlock"
+      ]
+    },
+    "R10.5": {
+      "covered": true,
+      "tests": [
+        "ConcurrencyTest#concurrentPayments"
+      ]
+    },
+    "R11.1": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#allErrorCodes",
+        "ErrorFormatTest#validationSources"
+      ]
+    },
+    "R11.2": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#allErrorCodes"
+      ]
+    },
+    "R11.3": {
+      "covered": true,
+      "tests": [
+        "ErrorFormatTest#allErrorCodes",
+        "ErrorFormatTest#validationSources"
+      ]
+    }
+  },
+  "cost_usd": 0.49536559999999996
+}
