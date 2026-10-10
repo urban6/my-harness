@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    # 사용자명·비밀번호는 SPRING_DATASOURCE_USERNAME / SPRING_DATASOURCE_PASSWORD 환경변수로만 주입한다.
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/orders}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  jackson:
+    deserialization:
+      accept-float-as-int: false   # 금액·수량에 소수가 오면 잘라내지 않고 400
+
+server:
+  port: ${SERVER_PORT:8080}
+
+payment:
+  gateway:
+    url: ${PAYMENT_GATEWAY_URL:http://localhost:8081}
+
+order:
+  payment-ttl: ${ORDER_PAYMENT_TTL:PT15M}

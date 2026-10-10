@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # run 하나를 실행한다 (3차 실험 — 짧은 명세, Sonnet, PRD §8).
-# 사용법: run.sh <A|C> <회차> [--name NAME] [--effort LEVEL] [--feature FILE] [--prompt TEXT] [--budget USD] [--timeout DUR] [--dry-run]
+# 사용법: run.sh <A|B|C> <회차> [--name NAME] [--effort LEVEL] [--feature FILE] [--prompt TEXT] [--budget USD] [--timeout DUR] [--dry-run]
 #   기본: runs/<군>-<회차>/ 에 starter + feature-short.md를 복사하고 prompt.txt로 헤드리스 실행
 set -uo pipefail
 
@@ -35,8 +35,9 @@ COMMON=(-p "$PROMPT" --output-format stream-json --verbose
         --permission-mode bypassPermissions --max-budget-usd "$BUDGET" --strict-mcp-config)
 case "$GROUP" in
     A) GROUP_FLAGS=(--disable-slash-commands --disallowedTools Agent Workflow) ;;
+    B) GROUP_FLAGS=(--disallowedTools Agent Workflow --append-system-prompt "Spring Boot 코드는 spring-boot 스킬을 따른다.") ;;  # 2차와 같은 지시 (보충 실험)
     C) GROUP_FLAGS=(--agent feature-pm) ;;
-    *) echo "group must be A|C" >&2; exit 1 ;;
+    *) echo "group must be A|B|C" >&2; exit 1 ;;
 esac
 
 if [[ $DRY_RUN -eq 1 ]]; then

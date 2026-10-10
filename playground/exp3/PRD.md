@@ -16,7 +16,7 @@
 | A 일반 | 하네스 없음, 단일 세션 | `--disable-slash-commands --disallowedTools Agent Workflow` |
 | C 오케스트레이션 | `feature-pm` + 워커 4종 + 스킬 | `--agent feature-pm` |
 
-- B(스킬만)는 1·2차에서 A와 차이가 없어 제외.
+- B(스킬만)는 1·2차에서 A와 차이가 없어 제외. 실험 후 보충으로 2회 추가했다(REPORT §9).
 - 모델: 두 군 모두 `claude-sonnet-5-5`, effort high. C 워커도 `ANTHROPIC_DEFAULT_OPUS_MODEL=claude-sonnet-5-5`로 Sonnet 고정, 세션 로그에 Sonnet 외 모델이 있으면 폐기(4차 방식).
 - 공통 옵션·격리·`CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0`·하네스 자산은 4차와 동일.
 - 프롬프트: `feature-short.md의 기능을 개발해줘. 완료되면 테스트 명령 결과를 그대로 보여줘.`

@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: order-service
+  # 접속 정보는 환경변수 SPRING_DATASOURCE_URL / _USERNAME / _PASSWORD 로 주입한다(relaxed binding).
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  mvc:
+    problem-details:
+      enabled: true
+  jackson:
+    deserialization:
+      accept-float-as-int: false   # 금액·수량에 1000.5 같은 소수가 조용히 잘리지 않도록
+
+server:
+  port: ${SERVER_PORT:8080}
+
+order:
+  payment-ttl: ${ORDER_PAYMENT_TTL:PT15M}
+  # PG 호출 중 표시가 이 시간을 넘으면 비정상 종료로 보고 다시 시도할 수 있게 한다.
+  gateway-lock-timeout: PT1M
+  expiry-sweep-interval: PT1S
+
+payment:
+  gateway-url: ${PAYMENT_GATEWAY_URL:http://localhost:9090}
+  connect-timeout: PT2S
+  read-timeout: PT5S
