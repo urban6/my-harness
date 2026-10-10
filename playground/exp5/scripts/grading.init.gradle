@@ -1,0 +1,18 @@
+// 채점 측에서 주입하는 init script — 에이전트가 만든 빌드 파일은 고치지 않는다.
+// JaCoCo 분기 커버리지를 XML로 남기고, 테스트가 실패해도 리포트가 나오게 한다.
+allprojects { p ->
+    p.plugins.withId('java') {
+        p.apply plugin: 'jacoco'
+        p.jacoco.toolVersion = '0.8.13'
+        p.tasks.withType(Test).configureEach {
+            ignoreFailures = true
+            finalizedBy 'jacocoTestReport'
+        }
+        p.tasks.matching { it.name == 'jacocoTestReport' }.configureEach {
+            reports {
+                xml.required = true
+                html.required = false
+            }
+        }
+    }
+}

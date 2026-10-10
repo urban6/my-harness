@@ -1,0 +1,82 @@
+{
+  "task": "t4",
+  "requirement_mean": 0.1111,
+  "requirement_rates": {
+    "M1": null,
+    "M2": null,
+    "M3": null,
+    "M4": null,
+    "M5": null,
+    "M6": null,
+    "M7": null,
+    "M8": null,
+    "REG": 1.0
+  },
+  "spec_passed": 4,
+  "spec_total": 4,
+  "new_passed": 0,
+  "new_total": 0,
+  "regression_passed": 4,
+  "regression_total": 4,
+  "regression_rates": {
+    "R6": 1.0
+  },
+  "interp_passed": 0,
+  "interp_total": 0,
+  "failed": [],
+  "failure_categories": {},
+  "regression_excluded": {
+    "r5_approve": "PG Idempotency-Key가 클라이언트 키 그대로라고 단언 — M6.1이 `{tenantId}:{key}`로 대체 (m6_pg_key_prefixed가 대신 검증)",
+    "r5_retry_same_pg_key": "같은 이유 — m6_retry_same_pg_key가 대신 검증"
+  },
+  "cases": [
+    {
+      "id": "r6_expires_releases",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R6",
+      "rules": [
+        "R6.1",
+        "R6.2"
+      ],
+      "passed": true,
+      "seconds": 5.67
+    },
+    {
+      "id": "r6_expires_at_ttl",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R6",
+      "rules": [
+        "R3.5",
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r6_pay_after_expiry_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R6",
+      "rules": [
+        "R5.2",
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 3.24
+    },
+    {
+      "id": "r6_paid_not_expired",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R6",
+      "rules": [
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 5.52
+    }
+  ],
+  "phase": "ttl"
+}

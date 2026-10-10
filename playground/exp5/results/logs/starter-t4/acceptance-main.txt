@@ -1,0 +1,109 @@
+PASS                   REG/R1   r1_create_201
+PASS                   REG/R1   r1_location_resolves
+PASS                   REG/R1   r1_invalid_400
+PASS                   REG/R1   r1_bounds_201
+PASS                   REG/R1   r1_get_404
+PASS                   REG/R1   r1_reserved_available
+PASS                   REG/R2   r2_create_201
+PASS                   REG/R2   r2_code_rules
+PASS                   REG/R2   r2_value_rules
+PASS                   REG/R2   r2_window_rules
+PASS                   REG/R2   r2_duplicate_409
+PASS                   REG/R2   r2_get_404
+PASS                   REG/R2   r2_fixed_discount
+PASS                   REG/R2   r2_rate_floor
+PASS                   REG/R2   r2_rate_max_cap
+PASS                   REG/R2   r2_fixed_max_cap
+PASS                   REG/R2   r2_capped_by_subtotal
+PASS                   REG/R2   r2_validity_window_409
+PASS                   REG/R2   r2_min_order_amount
+PASS                   REG/R2   r2_one_per_user
+PASS                   REG/R2   r2_exhausted_409
+PASS                   REG/R2   r2_used_count
+PASS                   REG/R2   r2_restore_and_reuse
+PASS                   REG/R3   r3_create_201
+PASS                   REG/R3   r3_location_get
+PASS                   REG/R3   r3_headers_400
+PASS                   REG/R3   r3_items_400
+PASS                   REG/R3   r3_items_bounds_201
+PASS                   REG/R3   r3_large_amount
+PASS                   REG/R3   r3_unknown_product_404
+PASS                   REG/R3   r3_unknown_coupon_404
+PASS                   REG/R3   r3_insufficient_available_409
+PASS                   REG/R3   r3_atomic_stock
+PASS                   REG/R3   r3_atomic_coupon
+PASS                   REG/R3   r3_get_404
+PASS                   REG/R3   r3_precedence_400_404
+PASS                   REG/R3   r3_precedence_404_409
+PASS                   REG/R3   r3_precedence_coupon404_stock409
+PASS                   REG/R3   r3_precedence_stock_coupon
+PASS                   REG/R4   r4_replay_create
+PASS                   REG/R4   r4_replay_original_snapshot
+PASS                   REG/R4   r4_mismatch_body_422
+PASS                   REG/R4   r4_mismatch_user_422
+PASS                   REG/R4   r4_key_spaces_independent
+PASS                   REG/R4   r4_failed_retry_409
+PASS                   REG/R4   r4_failed_retry_404
+PASS                   REG/R4   r4_concurrent_same_key
+PASS                   REG/R4   r4_pay_replay
+PASS                   REG/R4   r4_pay_mismatch_422
+PASS                   REG/R4   r4_precedence_400_422
+PASS                   REG/R5   r5_decline_402
+PASS                   REG/R5   r5_pg_error_503
+PASS                   REG/R5   r5_pg_timeout_503
+PASS                   REG/R5   r5_invalid_state_409
+PASS                   REG/R5   r5_not_found_404
+PASS                   REG/R5   r5_card_token_400
+PASS                   REG/R5   r5_zero_total_no_pg
+PASS                   REG/R7   r7_cancel_pending
+PASS                   REG/R7   r7_refund_paid
+PASS                   REG/R7   r7_refund_fail_503
+PASS                   REG/R7   r7_invalid_states_409
+PASS                   REG/R7   r7_not_found_404
+PASS                   REG/R8   r8_ship_deliver
+PASS                   REG/R8   r8_invalid_transitions_409
+PASS                   REG/R8   r8_not_found_404
+PASS                   REG/R9   r9_shape_user_filter
+PASS                   REG/R9   r9_sorted_desc
+PASS                   REG/R9   r9_status_filter
+PASS                   REG/R9   r9_cursor_paging
+PASS                   REG/R9   r9_last_page_null
+PASS                   REG/R9   r9_stable_under_insert
+PASS                   REG/R9   r9_default_size
+PASS                   REG/R9   r9_invalid_params_400
+PASS                   REG/R10  r10_stock_race
+PASS                   REG/R10  r10_coupon_quantity_race
+PASS                   REG/R10  r10_same_user_coupon_race
+PASS                   REG/R10  r10_cross_order_no_deadlock
+PASS                   REG/R10  r10_concurrent_pay
+PASS                   REG/R11  r11_validation_problem
+PASS                   REG/R11  r11_malformed_json
+PASS                   REG/R11  r11_header_problem
+PASS                   REG/R11  r11_query_problem
+PASS                   REG/R11  r11_not_found_codes
+PASS                   REG/R11  r11_conflict_codes
+PASS                   REG/R11  r11_payment_codes
+PASS                   REG/R11  r11_idempotency_code
+FAIL[status]           M1       m1_missing_header_400 — POST products without tenant: expected 400, got 201 body={"id":136,"name":"x","price":100,"stock":1,"reserved":0,"available":1}
+FAIL[status]           M1       m1_invalid_format_400 — tenant 'ACME': expected 400, got 201 body={"id":137,"name":"x","price":100,"stock":1,"reserved":0,"available":1}
+FAIL[status]           M1       m1_precedence — missing tenant before 404: expected 400, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"product 987654321 not found","instance":"/api/orders","code":"PRODUCT_NOT_FOUND"}
+FAIL[status]           M2       m2_get_cross_tenant_404 — product via other tenant: expected 404, got 200 body={"id":138,"name":"p-f50ad411","price":1000,"stock":100,"reserved":1,"available":99}
+FAIL[status]           M2       m2_actions_cross_tenant_404 — pay other tenant: expected 404, got 200 body={"id":220,"userId":"u-237328becf","status":"PAID","items":[{"productId":139,"quantity":2,"unitPrice":1000}],"couponCode":null,"subtotal":2000,"discount":0,
+FAIL[status]           M2       m2_order_with_foreign_refs_404 — foreign product: expected 404, got 201 body={"id":221,"userId":"u-3f05d3d7dd","status":"PENDING_PAYMENT","items":[{"productId":140,"quantity":1,"unitPrice":1000}],"couponCode":null,"subtotal":1000,"di
+PASS                   M2       m2_location_resolves
+FAIL[status]           M3       m3_same_code_two_tenants — tenant b same code: expected 201, got 409 body={"type":"about:blank","title":"Conflict","status":409,"detail":"coupon CBG40356TFXX3 already exists","instance":"/api/coupons","code":"DUPLICATE_COUPON_C
+FAIL[status]           M3       m3_independent_counters — fixture coupon create failed: 409 {"type":"about:blank","title":"Conflict","status":409,"detail":"coupon C9Q9RM8WA39AL already exists","instance":"/api/coupons","code":"DUPLICATE_COUPON_CODE"}
+FAIL[status]           M4       m4_one_per_user_per_tenant — fixture coupon create failed: 409 {"type":"about:blank","title":"Conflict","status":409,"detail":"coupon CSWINAB9O4MFD already exists","instance":"/api/coupons","code":"DUPLICATE_COUPON_CODE"}
+FAIL[status]           M5       m5_same_key_two_tenants — tenant b with same key: expected 201, got 422 body={"type":"about:blank","title":"Unprocessable Entity","status":422,"detail":"Idempotency-Key was already used for a different request","instance":"/ap
+PASS                   M5       m5_replay_within_tenant
+FAIL[pg]               M6       m6_pg_key_prefixed — PG request: expected [(3000, 't-a13b26c19a30:1b658ea7-93d0-48ea-a6b5-e9fde342d1db')], got [(3000, '1b658ea7-93d0-48ea-a6b5-e9fde342d1db')]
+FAIL[pg]               M6       m6_retry_same_pg_key — PG key across retries: expected {'t-ab8bffa7b9d8:b3af4b9a-ce4c-44e3-958a-3ab8969c557e'}, got {'b3af4b9a-ce4c-44e3-958a-3ab8969c557e'}
+FAIL[status]           M6       m6_same_key_charged_separately — pay b: expected 200, got 422 body={"type":"about:blank","title":"Unprocessable Entity","status":422,"detail":"Idempotency-Key was already used for a different request","instance":"/api/orders/228/pay"
+FAIL[field]            M7       m7_list_isolation — a user filter: expected {'231', '229', '230'}, got {'233', '230', '229', '231', '232'}
+FAIL[field]            M7       m7_paging_within_tenant — paged ids: expected ['242', '240', '238', '236', '234'], got ['243', '242', '241', '240', '239', '238', '237', '236', '235', '234']
+FAIL[status]           M8       m8_coupon_race_two_tenants — fixture coupon create failed: 409 {"type":"about:blank","title":"Conflict","status":409,"detail":"coupon CBNL3QMJ0IWL4 already exists","instance":"/api/coupons","code":"DUPLICATE_COUPON_CODE"}
+FAIL[concurrency]      M8       m8_same_key_concurrent_two_tenants — rep 0: statuses: expected [201, 201], got [201, 422]
+PASS                   M8       m8_stock_race_in_tenant
+FAIL[field]            I        i_cursor_cross_tenant — tenant a orders via tenant b cursor: expected set(), got {'256', '255'}
+
+spec 89/106 (new 3/20, regression 86/86), interp 0/1, requirement_mean=0.2315 rates={'M1': 0.0, 'M2': 0.25, 'M3': 0.0, 'M4': 0.0, 'M5': 0.5, 'M6': 0.0, 'M7': 0.0, 'M8': 0.3333, 'REG': 1.0}

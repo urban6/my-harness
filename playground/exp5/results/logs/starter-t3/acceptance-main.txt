@@ -1,0 +1,123 @@
+PASS                   REG/R1   r1_create_201
+PASS                   REG/R1   r1_location_resolves
+PASS                   REG/R1   r1_invalid_400
+PASS                   REG/R1   r1_bounds_201
+PASS                   REG/R1   r1_get_404
+PASS                   REG/R1   r1_reserved_available
+PASS                   REG/R2   r2_create_201
+PASS                   REG/R2   r2_code_rules
+PASS                   REG/R2   r2_value_rules
+PASS                   REG/R2   r2_window_rules
+PASS                   REG/R2   r2_duplicate_409
+PASS                   REG/R2   r2_get_404
+PASS                   REG/R2   r2_fixed_discount
+PASS                   REG/R2   r2_rate_floor
+PASS                   REG/R2   r2_rate_max_cap
+PASS                   REG/R2   r2_fixed_max_cap
+PASS                   REG/R2   r2_capped_by_subtotal
+PASS                   REG/R2   r2_validity_window_409
+PASS                   REG/R2   r2_min_order_amount
+PASS                   REG/R2   r2_one_per_user
+PASS                   REG/R2   r2_exhausted_409
+PASS                   REG/R2   r2_used_count
+PASS                   REG/R2   r2_restore_and_reuse
+PASS                   REG/R3   r3_create_201
+PASS                   REG/R3   r3_location_get
+PASS                   REG/R3   r3_headers_400
+PASS                   REG/R3   r3_items_400
+PASS                   REG/R3   r3_items_bounds_201
+PASS                   REG/R3   r3_large_amount
+PASS                   REG/R3   r3_unknown_product_404
+PASS                   REG/R3   r3_unknown_coupon_404
+PASS                   REG/R3   r3_insufficient_available_409
+PASS                   REG/R3   r3_atomic_stock
+PASS                   REG/R3   r3_atomic_coupon
+PASS                   REG/R3   r3_get_404
+PASS                   REG/R3   r3_precedence_400_404
+PASS                   REG/R3   r3_precedence_404_409
+PASS                   REG/R3   r3_precedence_coupon404_stock409
+PASS                   REG/R3   r3_precedence_stock_coupon
+PASS                   REG/R4   r4_replay_create
+PASS                   REG/R4   r4_replay_original_snapshot
+PASS                   REG/R4   r4_mismatch_body_422
+PASS                   REG/R4   r4_mismatch_user_422
+PASS                   REG/R4   r4_key_spaces_independent
+PASS                   REG/R4   r4_failed_retry_409
+PASS                   REG/R4   r4_failed_retry_404
+PASS                   REG/R4   r4_concurrent_same_key
+PASS                   REG/R4   r4_pay_replay
+PASS                   REG/R4   r4_pay_mismatch_422
+PASS                   REG/R4   r4_precedence_400_422
+PASS                   REG/R5   r5_approve
+PASS                   REG/R5   r5_decline_402
+PASS                   REG/R5   r5_pg_error_503
+PASS                   REG/R5   r5_pg_timeout_503
+PASS                   REG/R5   r5_retry_same_pg_key
+PASS                   REG/R5   r5_invalid_state_409
+PASS                   REG/R5   r5_not_found_404
+PASS                   REG/R5   r5_card_token_400
+PASS                   REG/R5   r5_zero_total_no_pg
+PASS                   REG/R7   r7_cancel_pending
+PASS                   REG/R7   r7_refund_paid
+PASS                   REG/R7   r7_refund_fail_503
+PASS                   REG/R7   r7_invalid_states_409
+PASS                   REG/R7   r7_not_found_404
+PASS                   REG/R8   r8_ship_deliver
+PASS                   REG/R8   r8_invalid_transitions_409
+PASS                   REG/R8   r8_not_found_404
+PASS                   REG/R9   r9_shape_user_filter
+PASS                   REG/R9   r9_sorted_desc
+PASS                   REG/R9   r9_status_filter
+PASS                   REG/R9   r9_cursor_paging
+PASS                   REG/R9   r9_last_page_null
+PASS                   REG/R9   r9_stable_under_insert
+PASS                   REG/R9   r9_default_size
+PASS                   REG/R9   r9_invalid_params_400
+PASS                   REG/R10  r10_stock_race
+PASS                   REG/R10  r10_coupon_quantity_race
+PASS                   REG/R10  r10_same_user_coupon_race
+PASS                   REG/R10  r10_cross_order_no_deadlock
+PASS                   REG/R10  r10_concurrent_pay
+PASS                   REG/R11  r11_validation_problem
+PASS                   REG/R11  r11_malformed_json
+PASS                   REG/R11  r11_header_problem
+PASS                   REG/R11  r11_query_problem
+PASS                   REG/R11  r11_not_found_codes
+PASS                   REG/R11  r11_conflict_codes
+PASS                   REG/R11  r11_payment_codes
+PASS                   REG/R11  r11_idempotency_code
+FAIL[status]           P1       p1_grant_and_get — never granted: expected 200, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-39eb646d9e.","instance":"/api/points/u-39eb646d9e","code":"NO
+FAIL[status]           P1       p1_grant_invalid_400 — amount 0: expected 400, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-72390f2dcf/grants.","instance":"/api/points/u-72390f2dcf/grants","
+FAIL[status]           P1       p1_balance_excludes_used — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-775dcf05c2/grants.","instance":"/api/points/u-775dcf05c2/grants","code":"NOT_
+FAIL[status]           P2       p2_order_fields — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-5c9a285849/grants.","instance":"/api/points/u-5c9a285849/grants","code":"NOT_
+FAIL[status]           P2       p2_use_points_invalid_400 — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-f2fd2226a3/grants.","instance":"/api/points/u-f2fd2226a3/grants","code":"NOT_
+FAIL[status]           P2       p2_exceed_total_409 — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-64c6a9a7c7/grants.","instance":"/api/points/u-64c6a9a7c7/grants","code":"NOT_
+FAIL[status]           P2       p2_insufficient_409 — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-a9b4c293fd/grants.","instance":"/api/points/u-a9b4c293fd/grants","code":"NOT_
+FAIL[status]           P2       p2_precedence — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-8966daa118/grants.","instance":"/api/points/u-8966daa118/grants","code":"NOT_
+FAIL[status]           P2       p2_restore_on_cancel — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-83a5dd6287/grants.","instance":"/api/points/u-83a5dd6287/grants","code":"NOT_
+FAIL[status]           P2       p2_restore_on_decline — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-51b1a3247e/grants.","instance":"/api/points/u-51b1a3247e/grants","code":"NOT_
+FAIL[status]           P2       p2_idempotency_points — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-2a8631deef/grants.","instance":"/api/points/u-2a8631deef/grants","code":"NOT_
+FAIL[status]           P3       p3_pg_amount_is_card — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-d4328f1054/grants.","instance":"/api/points/u-d4328f1054/grants","code":"NOT_
+FAIL[status]           P3       p3_zero_card_no_pg — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-110fa078a3/grants.","instance":"/api/points/u-110fa078a3/grants","code":"NOT_
+FAIL[status]           P3       p3_pg_error_keeps_points — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-88cec15512/grants.","instance":"/api/points/u-88cec15512/grants","code":"NOT_
+FAIL[error]            P4       p4_partial_refund_basic — KeyError: 'cardAmount'
+FAIL[status]           P4       p4_full_refund_sums_total — refund step 0: expected 200, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/221/refunds.","instance":"/api/orders/221/refunds","code":"NOT_
+FAIL[status]           P4       p4_card_first_then_points — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-88e14fbfe8/grants.","instance":"/api/points/u-88e14fbfe8/grants","code":"NOT_
+FAIL[status]           P4       p4_points_only_no_pg — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-11e7bec0c1/grants.","instance":"/api/points/u-11e7bec0c1/grants","code":"NOT_
+FAIL[status]           P4       p4_validation_400 — no key: expected 400, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/222/refunds.","instance":"/api/orders/222/refunds","code":"NOT_FOUND"}
+FAIL[format]           P4       p4_not_found_404 — missing order: problem.code expected ORDER_NOT_FOUND, got 'NOT_FOUND'
+FAIL[status]           P4       p4_invalid_state_409 — PENDING_PAYMENT: expected 409, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/223/refunds.","instance":"/api/orders/223/refunds","code":"NO
+FAIL[status]           P4       p4_quantity_exceeded_409 — more than ordered: expected 409, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/224/refunds.","instance":"/api/orders/224/refunds","code":"
+FAIL[status]           P4       p4_pg_failure_503 — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-13f1a66e56/grants.","instance":"/api/points/u-13f1a66e56/grants","code":"NOT_
+FAIL[status]           P4       p4_pg_timeout_then_retry — PG refund slow: expected 503, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/225/refunds.","instance":"/api/orders/225/refunds","code":"NOT
+FAIL[status]           P4       p4_idempotent_replay — first refund: expected 200, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/226/refunds.","instance":"/api/orders/226/refunds","code":"NOT_F
+FAIL[status]           P5       p5_cancel_partially_refunded — partial refund: expected 200, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/227/refunds.","instance":"/api/orders/227/refunds","code":"NOT
+FAIL[status]           P5       p5_cancel_paid_with_points — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-6868580f07/grants.","instance":"/api/points/u-6868580f07/grants","code":"NOT_
+FAIL[status]           P5       p5_ship_from_partial — partial refund: expected 200, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/228/refunds.","instance":"/api/orders/228/refunds","code":"NOT
+FAIL[status]           P5       p5_list_filter_partial — partial refund: expected 200, got 404 body={"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/orders/229/refunds.","instance":"/api/orders/229/refunds","code":"NOT
+FAIL[status]           P6       p6_points_race — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-202b3c4a97/grants.","instance":"/api/points/u-202b3c4a97/grants","code":"NOT_
+FAIL[concurrency]      P6       p6_refund_race — rep 0: statuses: expected [200, 200, 200, 409, 409], got [404, 404, 404, 404, 404]
+FAIL[error]            P6       p6_cancel_vs_refund — KeyError: 'refundedAmount'
+FAIL[concurrency]      I        i_grant_race — statuses [404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404, 404]
+
+spec 88/120 (new 0/32, regression 88/88), interp 0/1, requirement_mean=0.1429 rates={'P1': 0.0, 'P2': 0.0, 'P3': 0.0, 'P4': 0.0, 'P5': 0.0, 'P6': 0.0, 'REG': 1.0}

@@ -1,0 +1,1282 @@
+{
+  "task": "t4",
+  "requirement_mean": 0.8889,
+  "requirement_rates": {
+    "M1": 1.0,
+    "M2": 1.0,
+    "M3": 1.0,
+    "M4": 1.0,
+    "M5": 1.0,
+    "M6": 1.0,
+    "M7": 0.0,
+    "M8": 1.0,
+    "REG": 1.0
+  },
+  "spec_passed": 104,
+  "spec_total": 106,
+  "new_passed": 18,
+  "new_total": 20,
+  "regression_passed": 86,
+  "regression_total": 86,
+  "regression_rates": {
+    "R1": 1.0,
+    "R2": 1.0,
+    "R3": 1.0,
+    "R4": 1.0,
+    "R5": 1.0,
+    "R7": 1.0,
+    "R8": 1.0,
+    "R9": 1.0,
+    "R10": 1.0,
+    "R11": 1.0
+  },
+  "interp_passed": 0,
+  "interp_total": 1,
+  "failed": [
+    "m7_list_isolation",
+    "m7_paging_within_tenant",
+    "i_cursor_cross_tenant"
+  ],
+  "failure_categories": {
+    "field": 3
+  },
+  "regression_excluded": {
+    "r5_approve": "PG Idempotency-Key가 클라이언트 키 그대로라고 단언 — M6.1이 `{tenantId}:{key}`로 대체 (m6_pg_key_prefixed가 대신 검증)",
+    "r5_retry_same_pg_key": "같은 이유 — m6_retry_same_pg_key가 대신 검증"
+  },
+  "cases": [
+    {
+      "id": "r1_create_201",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R1",
+      "rules": [
+        "R1.1",
+        "R1.3"
+      ],
+      "passed": true,
+      "seconds": 0.07
+    },
+    {
+      "id": "r1_location_resolves",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R1",
+      "rules": [
+        "R1.1",
+        "R1.3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r1_invalid_400",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R1",
+      "rules": [
+        "R1.2"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r1_bounds_201",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R1",
+      "rules": [
+        "R1.2"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r1_get_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R1",
+      "rules": [
+        "R1.3"
+      ],
+      "passed": true,
+      "seconds": 0.05
+    },
+    {
+      "id": "r1_reserved_available",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R1",
+      "rules": [
+        "R1.4",
+        "R3.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_create_201",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.1",
+        "R2.3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_code_rules",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.2"
+      ],
+      "passed": true,
+      "seconds": 0.04
+    },
+    {
+      "id": "r2_value_rules",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.2"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r2_window_rules",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.2"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r2_duplicate_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.2"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r2_get_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_fixed_discount",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_rate_floor",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.4"
+      ],
+      "passed": true,
+      "seconds": 0.04
+    },
+    {
+      "id": "r2_rate_max_cap",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_fixed_max_cap",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_capped_by_subtotal",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_validity_window_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.5"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_min_order_amount",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.5"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r2_one_per_user",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.5"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r2_exhausted_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.5"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r2_used_count",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.6"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r2_restore_and_reuse",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R2",
+      "rules": [
+        "R2.6"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r3_create_201",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.1",
+        "R3.5"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r3_location_get",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.1",
+        "R3.5"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r3_headers_400",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.1",
+        "R3.2"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r3_items_400",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.2"
+      ],
+      "passed": true,
+      "seconds": 0.06
+    },
+    {
+      "id": "r3_items_bounds_201",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.2"
+      ],
+      "passed": true,
+      "seconds": 0.09
+    },
+    {
+      "id": "r3_large_amount",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "C1",
+        "R2.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r3_unknown_product_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r3_unknown_coupon_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r3_insufficient_available_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.3",
+        "R1.4"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r3_atomic_stock",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.4"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r3_atomic_coupon",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r3_get_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "R3.5"
+      ],
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r3_precedence_400_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "C3"
+      ],
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r3_precedence_404_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "C3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r3_precedence_coupon404_stock409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "C3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r3_precedence_stock_coupon",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R3",
+      "rules": [
+        "C3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_replay_create",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.2"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_replay_original_snapshot",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.2"
+      ],
+      "passed": true,
+      "seconds": 0.05
+    },
+    {
+      "id": "r4_mismatch_body_422",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r4_mismatch_user_422",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_key_spaces_independent",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.1"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_failed_retry_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.4"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r4_failed_retry_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r4_concurrent_same_key",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.5"
+      ],
+      "passed": true,
+      "seconds": 5.02
+    },
+    {
+      "id": "r4_pay_replay",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.2",
+        "R5.3"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r4_pay_mismatch_422",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r4_precedence_400_422",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R4",
+      "rules": [
+        "C3",
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r5_decline_402",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R5",
+      "rules": [
+        "R5.5"
+      ],
+      "passed": true,
+      "seconds": 0.04
+    },
+    {
+      "id": "r5_pg_error_503",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R5",
+      "rules": [
+        "R5.6"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r5_pg_timeout_503",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R5",
+      "rules": [
+        "R5.6"
+      ],
+      "passed": true,
+      "seconds": 2.03
+    },
+    {
+      "id": "r5_invalid_state_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R5",
+      "rules": [
+        "R5.2"
+      ],
+      "passed": true,
+      "seconds": 0.05
+    },
+    {
+      "id": "r5_not_found_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R5",
+      "rules": [
+        "R5.2"
+      ],
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r5_card_token_400",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R5",
+      "rules": [
+        "R5.1"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r5_zero_total_no_pg",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R5",
+      "rules": [
+        "R5.7"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r7_cancel_pending",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R7",
+      "rules": [
+        "R7.1",
+        "R7.2"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r7_refund_paid",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R7",
+      "rules": [
+        "R7.3"
+      ],
+      "passed": true,
+      "seconds": 0.04
+    },
+    {
+      "id": "r7_refund_fail_503",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R7",
+      "rules": [
+        "R7.3"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r7_invalid_states_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R7",
+      "rules": [
+        "R7.4"
+      ],
+      "passed": true,
+      "seconds": 0.05
+    },
+    {
+      "id": "r7_not_found_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R7",
+      "rules": [
+        "R7.1"
+      ],
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r8_ship_deliver",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R8",
+      "rules": [
+        "R8.1"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r8_invalid_transitions_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R8",
+      "rules": [
+        "R8.2"
+      ],
+      "passed": true,
+      "seconds": 0.05
+    },
+    {
+      "id": "r8_not_found_404",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R8",
+      "rules": [
+        "R8.2"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r9_shape_user_filter",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R9",
+      "rules": [
+        "R9.1",
+        "R9.2"
+      ],
+      "passed": true,
+      "seconds": 0.08
+    },
+    {
+      "id": "r9_sorted_desc",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R9",
+      "rules": [
+        "R9.4"
+      ],
+      "passed": true,
+      "seconds": 0.08
+    },
+    {
+      "id": "r9_status_filter",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R9",
+      "rules": [
+        "R9.2"
+      ],
+      "passed": true,
+      "seconds": 0.04
+    },
+    {
+      "id": "r9_cursor_paging",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R9",
+      "rules": [
+        "R9.1",
+        "R9.3"
+      ],
+      "passed": true,
+      "seconds": 0.11
+    },
+    {
+      "id": "r9_last_page_null",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R9",
+      "rules": [
+        "R9.1"
+      ],
+      "passed": true,
+      "seconds": 0.1
+    },
+    {
+      "id": "r9_stable_under_insert",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R9",
+      "rules": [
+        "R9.5"
+      ],
+      "passed": true,
+      "seconds": 0.15
+    },
+    {
+      "id": "r9_default_size",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R9",
+      "rules": [
+        "R9.3"
+      ],
+      "passed": true,
+      "seconds": 0.46
+    },
+    {
+      "id": "r9_invalid_params_400",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R9",
+      "rules": [
+        "R9.2",
+        "R9.3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r10_stock_race",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R10",
+      "rules": [
+        "R10.1"
+      ],
+      "passed": true,
+      "seconds": 0.21
+    },
+    {
+      "id": "r10_coupon_quantity_race",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R10",
+      "rules": [
+        "R10.2"
+      ],
+      "passed": true,
+      "seconds": 0.19
+    },
+    {
+      "id": "r10_same_user_coupon_race",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R10",
+      "rules": [
+        "R10.3"
+      ],
+      "passed": true,
+      "seconds": 0.12
+    },
+    {
+      "id": "r10_cross_order_no_deadlock",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R10",
+      "rules": [
+        "R10.4"
+      ],
+      "passed": true,
+      "seconds": 0.35
+    },
+    {
+      "id": "r10_concurrent_pay",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R10",
+      "rules": [
+        "R10.5"
+      ],
+      "passed": true,
+      "seconds": 0.08
+    },
+    {
+      "id": "r11_validation_problem",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R11",
+      "rules": [
+        "R11.1",
+        "R11.2",
+        "R11.3"
+      ],
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r11_malformed_json",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R11",
+      "rules": [
+        "R11.1",
+        "R11.3"
+      ],
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r11_header_problem",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R11",
+      "rules": [
+        "R11.1",
+        "R11.3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "r11_query_problem",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R11",
+      "rules": [
+        "R11.1",
+        "R11.3"
+      ],
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "r11_not_found_codes",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R11",
+      "rules": [
+        "R11.3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r11_conflict_codes",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R11",
+      "rules": [
+        "R11.3"
+      ],
+      "passed": true,
+      "seconds": 0.06
+    },
+    {
+      "id": "r11_payment_codes",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R11",
+      "rules": [
+        "R11.3"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "r11_idempotency_code",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R11",
+      "rules": [
+        "R11.3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "m1_missing_header_400",
+      "req": "M1",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M1.1",
+        "M1.2"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "m1_invalid_format_400",
+      "req": "M1",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M1.1",
+        "M1.2"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "m1_precedence",
+      "req": "M1",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M1.2",
+        "C3"
+      ],
+      "passed": true,
+      "seconds": 0.0
+    },
+    {
+      "id": "m2_get_cross_tenant_404",
+      "req": "M2",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M2.1",
+        "M2.2"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "m2_actions_cross_tenant_404",
+      "req": "M2",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M2.2"
+      ],
+      "passed": true,
+      "seconds": 0.07
+    },
+    {
+      "id": "m2_order_with_foreign_refs_404",
+      "req": "M2",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M2.3"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "m2_location_resolves",
+      "req": "M2",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M2.4"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "m3_same_code_two_tenants",
+      "req": "M3",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M3.1",
+        "M3.2"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "m3_independent_counters",
+      "req": "M3",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M3.2"
+      ],
+      "passed": true,
+      "seconds": 0.05
+    },
+    {
+      "id": "m4_one_per_user_per_tenant",
+      "req": "M4",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M4.1",
+        "M4.2"
+      ],
+      "passed": true,
+      "seconds": 0.04
+    },
+    {
+      "id": "m5_same_key_two_tenants",
+      "req": "M5",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M5.1"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "m5_replay_within_tenant",
+      "req": "M5",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M5.1",
+        "R4.2",
+        "R4.3"
+      ],
+      "passed": true,
+      "seconds": 0.01
+    },
+    {
+      "id": "m6_pg_key_prefixed",
+      "req": "M6",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M6.1",
+        "R5.3"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "m6_retry_same_pg_key",
+      "req": "M6",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M6.1",
+        "R5.3",
+        "R4.4"
+      ],
+      "passed": true,
+      "seconds": 5.83
+    },
+    {
+      "id": "m6_same_key_charged_separately",
+      "req": "M6",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M6.1",
+        "M5.1"
+      ],
+      "passed": true,
+      "seconds": 0.04
+    },
+    {
+      "id": "m7_list_isolation",
+      "req": "M7",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M7.1"
+      ],
+      "passed": false,
+      "category": "field",
+      "message": "a user filter: expected {'234', '235', '236'}, got {'235', '234', '237', '236', '238'}",
+      "seconds": 0.05
+    },
+    {
+      "id": "m7_paging_within_tenant",
+      "req": "M7",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M7.1",
+        "R9.5"
+      ],
+      "passed": false,
+      "category": "field",
+      "message": "paged ids: expected ['247', '245', '243', '241', '239'], got ['248', '247', '246', '245', '244', '243', '242', '241', '240', '239']",
+      "seconds": 0.16
+    },
+    {
+      "id": "m8_coupon_race_two_tenants",
+      "req": "M8",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M8.2"
+      ],
+      "passed": true,
+      "seconds": 0.23
+    },
+    {
+      "id": "m8_same_key_concurrent_two_tenants",
+      "req": "M8",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M8.3"
+      ],
+      "passed": true,
+      "seconds": 0.03
+    },
+    {
+      "id": "m8_stock_race_in_tenant",
+      "req": "M8",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "M8.1",
+        "R10.1"
+      ],
+      "passed": true,
+      "seconds": 0.05
+    },
+    {
+      "id": "i_cursor_cross_tenant",
+      "req": "I",
+      "layer": "interp",
+      "reg_req": null,
+      "rules": [
+        "해석:",
+        "다른",
+        "테넌트에서",
+        "받은",
+        "cursor를",
+        "써도",
+        "그",
+        "테넌트의",
+        "주문이",
+        "노출되지",
+        "않는다",
+        "(cursor의",
+        "테넌트",
+        "귀속은",
+        "명세에",
+        "없음)"
+      ],
+      "passed": false,
+      "category": "field",
+      "message": "tenant a orders via tenant b cursor: expected set(), got {'296', '295'}",
+      "seconds": 0.03
+    }
+  ],
+  "phase": "main"
+}

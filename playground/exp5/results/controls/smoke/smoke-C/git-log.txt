@@ -1,0 +1,54 @@
+commit ffb78b10afa83b63e82e6e19112c0bef39b8ce48
+Author: harness-eval <harness-eval@localhost>
+Date:   Sun Oct 11 01:16:39 2026 +0900
+
+    starter
+
+ .claude/agents/backend-designer.md                 |  49 +++
+ .claude/agents/backend-impl.md                     |  47 +++
+ .claude/agents/boundary-verifier.md                |  48 +++
+ .claude/agents/feature-pm.md                       |  90 ++++++
+ .claude/agents/test-writer.md                      |  75 +++++
+ .claude/skills/spring-boot/SKILL.md                |  69 +++++
+ .../skills/spring-boot/references/configuration.md |  84 +++++
+ .../spring-boot/references/exception-handling.md   |  93 ++++++
+ .../spring-boot/references/persistence-layer.md    |  94 ++++++
+ .../spring-boot/references/project-layout.md       |  94 ++++++
+ .claude/skills/spring-boot/references/security.md  |  89 ++++++
+ .../skills/spring-boot/references/service-layer.md |  84 +++++
+ .claude/skills/spring-boot/references/testing.md   | 105 +++++++
+ .claude/skills/spring-boot/references/web-layer.md | 101 ++++++
+ .gitignore                                         |   7 +
+ build.gradle                                       |  37 +++
+ change-request.md                                  |  81 +++++
+ feature.md                                         | 131 ++++++++
+ gradle/wrapper/gradle-wrapper.jar                  | Bin 0 -> 48966 bytes
+ gradle/wrapper/gradle-wrapper.properties           |   7 +
+ gradlew                                            | 248 +++++++++++++++
+ gradlew.bat                                        |  93 ++++++
+ settings.gradle                                    |   1 +
+ .../java/com/example/order/OrderApplication.java   |  14 +
+ .../com/example/order/common/ApiException.java     |  43 +++
+ .../order/common/GlobalExceptionHandler.java       |  72 +++++
+ src/main/java/com/example/order/common/Times.java  |  30 ++
+ src/main/java/com/example/order/coupon/Coupon.java |  21 ++
+ .../com/example/order/coupon/CouponController.java |  76 +++++
+ .../com/example/order/coupon/CouponRepository.java |  49 +++
+ .../order/idempotency/IdempotencyService.java      |  88 ++++++
+ .../com/example/order/order/ExpiryService.java     |  63 ++++
+ src/main/java/com/example/order/order/Order.java   |  17 +
+ .../com/example/order/order/OrderController.java   | 188 +++++++++++
+ .../java/com/example/order/order/OrderCursor.java  |  31 ++
+ .../com/example/order/order/OrderRepository.java   | 131 ++++++++
+ .../com/example/order/order/OrderResponse.java     |  20 ++
+ .../java/com/example/order/order/OrderService.java | 265 ++++++++++++++++
+ .../java/com/example/order/order/OrderStatus.java  |   5 +
+ .../example/order/order/ReservationReleaser.java   |  48 +++
+ .../order/payment/PaymentGatewayClient.java        | 116 +++++++
+ .../java/com/example/order/product/Product.java    |   8 +
+ .../example/order/product/ProductController.java   |  56 ++++
+ .../example/order/product/ProductRepository.java   |  57 ++++
+ src/main/resources/application.yml                 |  29 ++
+ src/main/resources/db/migration/V1__init.sql       |  63 ++++
+ .../com/example/order/OrderPaymentFlowTest.java    | 344 +++++++++++++++++++++
+ 47 files changed, 3561 insertions(+)

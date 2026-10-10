@@ -1,0 +1,1531 @@
+{
+  "run": "t3-m3",
+  "task": "t3",
+  "assemble_ok": true,
+  "tests": {
+    "tests": 8,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "gradle_exit": 0,
+    "ok": false
+  },
+  "test_rerun": true,
+  "coverage": {
+    "branch_covered": 191,
+    "branch_total": 239,
+    "branch_coverage": 0.7992
+  },
+  "boot_ok": true,
+  "boot_ttl_ok": true,
+  "acceptance": {
+    "task": "t3",
+    "requirement_mean": 0.9026,
+    "requirement_rates": {
+      "P1": 1.0,
+      "P2": 1.0,
+      "P3": 1.0,
+      "P4": 0.8182,
+      "P5": 0.5,
+      "P6": 1.0,
+      "REG": 1.0
+    },
+    "spec_passed": 121,
+    "spec_total": 125,
+    "new_passed": 29,
+    "new_total": 33,
+    "regression_passed": 92,
+    "regression_total": 92,
+    "regression_rates": {
+      "R1": 1.0,
+      "R2": 1.0,
+      "R3": 1.0,
+      "R4": 1.0,
+      "R5": 1.0,
+      "R6": 1.0,
+      "R7": 1.0,
+      "R8": 1.0,
+      "R9": 1.0,
+      "R10": 1.0,
+      "R11": 1.0
+    },
+    "interp_passed": 1,
+    "interp_total": 1,
+    "failed": [
+      "p4_partial_refund_basic",
+      "p4_pg_timeout_then_retry",
+      "p5_cancel_partially_refunded",
+      "p5_cancel_paid_with_points"
+    ],
+    "failure_categories": {
+      "pg": 3,
+      "status": 1
+    },
+    "regression_excluded": {},
+    "cases": [
+      {
+        "id": "r1_create_201",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R1",
+        "rules": [
+          "R1.1",
+          "R1.3"
+        ],
+        "passed": true,
+        "seconds": 0.08
+      },
+      {
+        "id": "r1_location_resolves",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R1",
+        "rules": [
+          "R1.1",
+          "R1.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r1_invalid_400",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R1",
+        "rules": [
+          "R1.2"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r1_bounds_201",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R1",
+        "rules": [
+          "R1.2"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r1_get_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R1",
+        "rules": [
+          "R1.3"
+        ],
+        "passed": true,
+        "seconds": 0.06
+      },
+      {
+        "id": "r1_reserved_available",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R1",
+        "rules": [
+          "R1.4",
+          "R3.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_create_201",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.1",
+          "R2.3"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_code_rules",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.2"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r2_value_rules",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.2"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r2_window_rules",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.2"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r2_duplicate_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.2"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r2_get_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.3"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_fixed_discount",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.4"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r2_rate_floor",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_rate_max_cap",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_fixed_max_cap",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_capped_by_subtotal",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_validity_window_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.5"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_min_order_amount",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.5"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_one_per_user",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.5"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r2_exhausted_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.5"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r2_used_count",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.6"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r2_restore_and_reuse",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R2",
+        "rules": [
+          "R2.6"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r3_create_201",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.1",
+          "R3.5"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_location_get",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.1",
+          "R3.5"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r3_headers_400",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.1",
+          "R3.2"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r3_items_400",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.2"
+        ],
+        "passed": true,
+        "seconds": 0.07
+      },
+      {
+        "id": "r3_items_bounds_201",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.2"
+        ],
+        "passed": true,
+        "seconds": 0.09
+      },
+      {
+        "id": "r3_large_amount",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "C1",
+          "R2.4"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_unknown_product_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.3"
+        ],
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_unknown_coupon_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_insufficient_available_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.3",
+          "R1.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r3_atomic_stock",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.4"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_atomic_coupon",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r3_get_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "R3.5"
+        ],
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_precedence_400_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "C3"
+        ],
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r3_precedence_404_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "C3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_precedence_coupon404_stock409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "C3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r3_precedence_stock_coupon",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R3",
+        "rules": [
+          "C3"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r4_replay_create",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.2"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r4_replay_original_snapshot",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.2"
+        ],
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "r4_mismatch_body_422",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r4_mismatch_user_422",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r4_key_spaces_independent",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.1"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r4_failed_retry_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.4"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r4_failed_retry_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r4_concurrent_same_key",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.5"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r4_pay_replay",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.2",
+          "R5.3"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r4_pay_mismatch_422",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "R4.3"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r4_precedence_400_422",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R4",
+        "rules": [
+          "C3",
+          "R4.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r5_approve",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.3",
+          "R5.4"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r5_decline_402",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.5"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r5_pg_error_503",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.6"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r5_pg_timeout_503",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.6"
+        ],
+        "passed": true,
+        "seconds": 2.03
+      },
+      {
+        "id": "r5_retry_same_pg_key",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.3",
+          "R4.4"
+        ],
+        "passed": true,
+        "seconds": 5.83
+      },
+      {
+        "id": "r5_invalid_state_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.2"
+        ],
+        "passed": true,
+        "seconds": 0.06
+      },
+      {
+        "id": "r5_not_found_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.2"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r5_card_token_400",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.1"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r5_zero_total_no_pg",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R5",
+        "rules": [
+          "R5.7"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r7_cancel_pending",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R7",
+        "rules": [
+          "R7.1",
+          "R7.2"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "r7_refund_paid",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R7",
+        "rules": [
+          "R7.3"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r7_refund_fail_503",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R7",
+        "rules": [
+          "R7.3"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r7_invalid_states_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R7",
+        "rules": [
+          "R7.4"
+        ],
+        "passed": true,
+        "seconds": 0.07
+      },
+      {
+        "id": "r7_not_found_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R7",
+        "rules": [
+          "R7.1"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r8_ship_deliver",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R8",
+        "rules": [
+          "R8.1"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r8_invalid_transitions_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R8",
+        "rules": [
+          "R8.2"
+        ],
+        "passed": true,
+        "seconds": 0.09
+      },
+      {
+        "id": "r8_not_found_404",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R8",
+        "rules": [
+          "R8.2"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r9_shape_user_filter",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R9",
+        "rules": [
+          "R9.1",
+          "R9.2"
+        ],
+        "passed": true,
+        "seconds": 0.09
+      },
+      {
+        "id": "r9_sorted_desc",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R9",
+        "rules": [
+          "R9.4"
+        ],
+        "passed": true,
+        "seconds": 0.11
+      },
+      {
+        "id": "r9_status_filter",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R9",
+        "rules": [
+          "R9.2"
+        ],
+        "passed": true,
+        "seconds": 0.08
+      },
+      {
+        "id": "r9_cursor_paging",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R9",
+        "rules": [
+          "R9.1",
+          "R9.3"
+        ],
+        "passed": true,
+        "seconds": 0.13
+      },
+      {
+        "id": "r9_last_page_null",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R9",
+        "rules": [
+          "R9.1"
+        ],
+        "passed": true,
+        "seconds": 0.11
+      },
+      {
+        "id": "r9_stable_under_insert",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R9",
+        "rules": [
+          "R9.5"
+        ],
+        "passed": true,
+        "seconds": 0.17
+      },
+      {
+        "id": "r9_default_size",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R9",
+        "rules": [
+          "R9.3"
+        ],
+        "passed": true,
+        "seconds": 0.5
+      },
+      {
+        "id": "r9_invalid_params_400",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R9",
+        "rules": [
+          "R9.2",
+          "R9.3"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r10_stock_race",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R10",
+        "rules": [
+          "R10.1"
+        ],
+        "passed": true,
+        "seconds": 0.19
+      },
+      {
+        "id": "r10_coupon_quantity_race",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R10",
+        "rules": [
+          "R10.2"
+        ],
+        "passed": true,
+        "seconds": 0.18
+      },
+      {
+        "id": "r10_same_user_coupon_race",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R10",
+        "rules": [
+          "R10.3"
+        ],
+        "passed": true,
+        "seconds": 0.07
+      },
+      {
+        "id": "r10_cross_order_no_deadlock",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R10",
+        "rules": [
+          "R10.4"
+        ],
+        "passed": true,
+        "seconds": 0.38
+      },
+      {
+        "id": "r10_concurrent_pay",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R10",
+        "rules": [
+          "R10.5"
+        ],
+        "passed": true,
+        "seconds": 0.08
+      },
+      {
+        "id": "r11_validation_problem",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R11",
+        "rules": [
+          "R11.1",
+          "R11.2",
+          "R11.3"
+        ],
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r11_malformed_json",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R11",
+        "rules": [
+          "R11.1",
+          "R11.3"
+        ],
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r11_header_problem",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R11",
+        "rules": [
+          "R11.1",
+          "R11.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r11_query_problem",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R11",
+        "rules": [
+          "R11.1",
+          "R11.3"
+        ],
+        "passed": true,
+        "seconds": 0.0
+      },
+      {
+        "id": "r11_not_found_codes",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R11",
+        "rules": [
+          "R11.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r11_conflict_codes",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R11",
+        "rules": [
+          "R11.3"
+        ],
+        "passed": true,
+        "seconds": 0.06
+      },
+      {
+        "id": "r11_payment_codes",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R11",
+        "rules": [
+          "R11.3"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "r11_idempotency_code",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R11",
+        "rules": [
+          "R11.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "p1_grant_and_get",
+        "req": "P1",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P1.1",
+          "P1.3"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "p1_grant_invalid_400",
+        "req": "P1",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P1.2"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "p1_balance_excludes_used",
+        "req": "P1",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P1.4",
+          "P2.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "p2_order_fields",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.1",
+          "P2.5",
+          "R2.4"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p2_use_points_invalid_400",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.1",
+          "R3.4"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p2_exceed_total_409",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.2",
+          "P5.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "p2_insufficient_409",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.2",
+          "P2.4",
+          "P5.4"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "p2_precedence",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.3",
+          "C3"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p2_restore_on_cancel",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.6"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "p2_restore_on_decline",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.6",
+          "P3.3"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p2_idempotency_points",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.7",
+          "R4.2",
+          "R4.3"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p3_pg_amount_is_card",
+        "req": "P3",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P3.1"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "p3_zero_card_no_pg",
+        "req": "P3",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P3.2"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "p3_pg_error_keeps_points",
+        "req": "P3",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P3.3",
+          "R5.6"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "p4_partial_refund_basic",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.1",
+          "P4.5",
+          "P4.7",
+          "P4.9"
+        ],
+        "passed": false,
+        "category": "pg",
+        "message": "PG refund request: expected [(800, '19db5410-6a18-447f-9466-4b5e4ec4b5d0')], got [(800, '23bdd15d-c9f0-492c-b482-be20c88a2db2')]",
+        "seconds": 0.06
+      },
+      {
+        "id": "p4_full_refund_sums_total",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.5",
+          "P4.9",
+          "R2.6"
+        ],
+        "passed": true,
+        "seconds": 0.07
+      },
+      {
+        "id": "p4_card_first_then_points",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.6",
+          "P4.7"
+        ],
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "p4_points_only_no_pg",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.6",
+          "P4.7",
+          "P3.2"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p4_validation_400",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.2"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p4_not_found_404",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.2"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "p4_invalid_state_409",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.3",
+          "P5.2"
+        ],
+        "passed": true,
+        "seconds": 0.09
+      },
+      {
+        "id": "p4_quantity_exceeded_409",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.4"
+        ],
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "p4_pg_failure_503",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.8"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "p4_pg_timeout_then_retry",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.8",
+          "P4.10",
+          "R4.4",
+          "P4.7"
+        ],
+        "passed": false,
+        "category": "status",
+        "message": "retry with same key: expected 200, got 503 body={\"type\":\"about:blank\",\"title\":\"Service Unavailable\",\"status\":503,\"detail\":\"payment gateway is unavailable\",\"instance\":\"/api/orders/241/refunds\",\"code\":\"PAYMENT_GATEWAY_UNAVAILABLE\"}",
+        "seconds": 8.04
+      },
+      {
+        "id": "p4_idempotent_replay",
+        "req": "P4",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P4.10",
+          "R4.2",
+          "R4.3",
+          "R4.1"
+        ],
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "p5_cancel_partially_refunded",
+        "req": "P5",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P5.1",
+          "P4.5",
+          "P4.9"
+        ],
+        "passed": false,
+        "category": "pg",
+        "message": "cancel PG refund: expected (3200, 'cancel-243'), got (3200, 'f06a590c-28ad-4536-89a9-f146fdd06c0b')",
+        "seconds": 0.04
+      },
+      {
+        "id": "p5_cancel_paid_with_points",
+        "req": "P5",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P5.1",
+          "P4.6"
+        ],
+        "passed": false,
+        "category": "pg",
+        "message": "PG refund card part: expected [(1500, 'cancel-244')], got [(1500, 'f30c5228-0395-415c-9a8b-6a28b6a04ef5')]",
+        "seconds": 0.02
+      },
+      {
+        "id": "p5_ship_from_partial",
+        "req": "P5",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P5.2"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p5_list_filter_partial",
+        "req": "P5",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P5.3"
+        ],
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "p6_points_race",
+        "req": "P6",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P6.1"
+        ],
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "p6_refund_race",
+        "req": "P6",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P6.2"
+        ],
+        "passed": true,
+        "seconds": 0.14
+      },
+      {
+        "id": "p6_cancel_vs_refund",
+        "req": "P6",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P6.3"
+        ],
+        "passed": true,
+        "seconds": 0.1
+      },
+      {
+        "id": "i_grant_race",
+        "req": "I",
+        "layer": "interp",
+        "reg_req": null,
+        "rules": [
+          "해석:",
+          "포인트",
+          "적립",
+          "동시",
+          "호출에도",
+          "잔액이",
+          "정확하다",
+          "(동시",
+          "적립은",
+          "명세에",
+          "없음)"
+        ],
+        "passed": true,
+        "seconds": 0.01
+      },
+      {
+        "id": "r6_expires_releases",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R6",
+        "rules": [
+          "R6.1",
+          "R6.2"
+        ],
+        "passed": true,
+        "seconds": 5.65
+      },
+      {
+        "id": "r6_expires_at_ttl",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R6",
+        "rules": [
+          "R3.5",
+          "R6.1"
+        ],
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "r6_pay_after_expiry_409",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R6",
+        "rules": [
+          "R5.2",
+          "R6.1"
+        ],
+        "passed": true,
+        "seconds": 3.23
+      },
+      {
+        "id": "r6_paid_not_expired",
+        "req": "REG",
+        "layer": "spec",
+        "reg_req": "R6",
+        "rules": [
+          "R6.1"
+        ],
+        "passed": true,
+        "seconds": 5.52
+      },
+      {
+        "id": "p2_restore_on_expiry",
+        "req": "P2",
+        "layer": "spec",
+        "reg_req": null,
+        "rules": [
+          "P2.6",
+          "R6.2",
+          "(ttl",
+          "단계)"
+        ],
+        "passed": true,
+        "seconds": 5.53
+      }
+    ]
+  }
+}

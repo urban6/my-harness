@@ -1,0 +1,6 @@
+PASS                   REG/R6   r6_expires_releases
+PASS                   REG/R6   r6_expires_at_ttl
+PASS                   REG/R6   r6_pay_after_expiry_409
+PASS                   REG/R6   r6_paid_not_expired
+
+spec 4/4 (new 0/0, regression 4/4), interp 0/0, requirement_mean=0.1111 rates={'M1': None, 'M2': None, 'M3': None, 'M4': None, 'M5': None, 'M6': None, 'M7': None, 'M8': None, 'REG': 1.0}
