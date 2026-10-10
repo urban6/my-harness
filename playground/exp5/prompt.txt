@@ -1,0 +1,1 @@
+change-request.md의 변경을 구현해줘. 기존 명세는 feature.md다. 완료되면 테스트 명령 결과를 그대로 보여줘.
