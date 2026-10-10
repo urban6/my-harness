@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/orders/OrderService.java OrderService.create — 상품조회·쿠폰조회·금액계산·재고예약·쿠폰검증·저장·멱등완료를 한 메서드에 담아 약 80줄"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "OrderService.toJson과 PaymentService.toJson 동일 복사; NUL 검사+COUPON_NOT_FOUND가 CouponService.get과 OrderService.create에 중복; PaymentService.pay가 OrderService.notFound와 같은 ORDER_NOT_FOUND 예외를 재작성"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "OrderService.create(2회)·GlobalExceptionHandler.handleDataIntegrity에 \"이미 이 쿠폰을 사용 중인 주문이 있습니다.\" 리터럴 반복; 응답상태 201/200 리터럴(OrderService.create, PaymentService.pay); \"Idempotency-Key\"가 OrderController·PaymentGatewayClient에 흩어짐"
+    },
+    "G4": {
+      "verdict": "violation",
+      "evidence": "DiscountCalculator.discount의 d, OrderService.list의 c, PaymentGatewayConfig의 u·rf, GlobalExceptionHandler.handleExceptionInternal의 h, OrderQueryRepositoryImpl.findPage의 q 등 한 글자/약어 변수 다수"
+    },
+    "G5": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/common/error/ErrorCode.java httpStatus() 미사용; OrderProperties.expirySweepIntervalMs 미사용(스케줄러는 프로퍼티 문자열을 직접 참조)"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayClient.pay/refund는 cause를 보존해 래핑, OrderFacade.releaseQuietly·OrderExpirySweeper.sweep은 로깅; 빈 catch 없음"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "OrderService.create의 Math.addExact/multiplyExact, DiscountCalculator.discount의 Math.multiplyExact, 금액은 long 사용"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "ClockConfig의 Clock 빈을 OrderService·PaymentService·OrderExpirySweeper가 주입받아 Times.now(clock) 사용"
+    },
+    "G9": {
+      "verdict": "violation",
+      "evidence": "Order.cancel/refund/ship/deliver/markPaid는 검사 없이 대입; 전이 검사는 OrderService.cancel(switch)·ship·deliver(if)·PaymentService.pay(if)에 흩어짐"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/common/config/PaymentGatewayConfig.pgRestClient — connectTimeout 및 setReadTimeout(props.timeout())"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderQueryRepositoryImpl.findPage는 고정 조각만 append하고 setParameter로 바인딩; Repository @Query·IdempotencyStore SQL 모두 파라미터 바인딩"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "최대 클래스 OrderService 약 280줄(400줄 미만), 상품·쿠폰·결제는 각각 ProductService/CouponService/PaymentService로 분리"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "OrderInventory·ProductRepository·CouponRepository 등의 주석이 실제 동작과 일치, TODO/FIXME 없음"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order/Coupon/Product/OrderItem에 public setter 없음, 상태 변경은 Order.markPaid/cancel 등 의도 메서드로 수행"
+    }
+  },
+  "cost_usd": 0.1336052
+}

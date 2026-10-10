@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 메서드인 orders/OrderService.create도 약 40줄로, 50줄을 넘는 메서드가 없음"
+    },
+    "G2": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderInventory.lockProducts·restoreCoupon, OrderLifecycleService.lockOrder, Order.subtotalOf처럼 공통 로직을 한 곳에 두고 재사용함"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyRepository.tryAcquire·release('IN_PROGRESS'), find·complete('COMPLETED')에 상태 이름이 문자열 리터럴로 반복됨"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler의 pd·fe·ge 같은 짧은 지역 변수 몇 개 말고는 이름이 의도를 드러냄 (OrderInventory.releaseReservation, Order.ensurePayable 등)"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드나 쓰이지 않는 import·메서드·클래스가 없음 (전체 파일 확인)"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleUnexpected와 OrderExpiryScheduler.expireOverdueOrders는 로그를 남기고, PaymentGatewayClient.call은 원인(cause)을 연결해 다시 던짐. CouponService.create·OrderCursor.decode는 특정 예외를 도메인 예외로 바꾸면서 원인을 연결하지 않지만, 넓게 잡은 것이 아니라서 위반으로 보지 않음"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderLine.amount(multiplyExact), Order.subtotalOf(addExact), coupon/Coupon.calculateDiscount(multiplyExact)를 쓰고 금액은 long, 입력 범위는 검증함"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "서비스 전체가 주입받은 Clock으로 Times.now(clock)를 호출함 (common/Times, common/config/ClockConfig)"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "전이 규칙이 orders/Order.transition과 markPaid·cancel·refund·ship·deliver·expire 메서드에 모여 있음"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayClient 생성자에서 connectTimeout과 setReadTimeout(properties.timeout())을 설정함"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderQueryRepositoryImpl.findPage는 고정된 조각만 붙이고 값은 setParameter로 바인딩함. IdempotencyRepository는 ? 바인딩을 씀"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스가 없고, 도메인별로 나뉘어 있음 (OrderService, OrderLifecycleService, OrderInventory, CouponService, ProductService)"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "방치된 TODO/FIXME가 없고, OrderLifecycleService·IdempotencyService·OrderInventory의 문서 주석이 실제 동작과 맞음"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "orders/Order, product/Product, coupon/Coupon에 public setter가 없고, 값은 reserve·use·markPaid 같은 의도를 드러내는 메서드로만 바뀜"
+    }
+  },
+  "cost_usd": 0.09795880000000001
+}

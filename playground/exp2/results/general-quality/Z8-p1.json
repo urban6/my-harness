@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 메서드 src/main/java/com/example/order/order/OrderService.java create()가 약 43줄로 50줄을 넘는 메서드가 없음"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/payment/PaymentService.java pay()의 findByIdForUpdate+ORDER_NOT_FOUND가 OrderService.lock()/notFound()와 중복; PRODUCT_NOT_FOUND·COUPON_NOT_FOUND 예외 생성도 OrderService.create와 ProductService.get/CouponService.get에 복사됨"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/idempotency/IdempotencyService.java acquire()/complete()/release()에 상태 리터럴 'IN_PROGRESS'·'COMPLETED'가 흩어져 있음; 헤더 \"X-User-Id\"·\"Idempotency-Key\"가 OrderController와 PaymentGatewayClient에 반복됨"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "전 파일에서 메서드·필드 이름이 의도를 드러냄(releaseReservation, sellReserved, checkCouponApplicable 등). 짧은 이름은 람다 파라미터(c, o, p)와 관용적 필드명(tx, em, jdbc)뿐"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "전 파일에 주석 처리된 코드, 쓰이지 않는 import·메서드·클래스가 보이지 않음"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "빈 catch가 없음. OrderExpiryJob.expireDueOrders는 예외를 로그로 남기고, PaymentGatewayClient.call과 OrderCursor.decode는 의미 있는 ApiException으로 변환함(decode는 입력 파싱 실패를 400으로 바꾸는 의도)"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액을 long으로 다루고 OrderService.create의 Math.addExact/multiplyExact, DiscountCalculator.discount의 Math.multiplyExact로 오버플로를 막음"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "common/ClockConfig의 Clock 빈을 주입받아 Times.now(clock)로 현재 시각을 얻음(OrderService, PaymentService, CouponService, ProductService)"
+    },
+    "G9": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/order/OrderService.java ship()/deliver()가 if로, cancel()이 switch로 출발 상태를 다시 검사해 Order.requireStatus의 전이 규칙이 서비스에도 중복됨"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java 생성자에서 HttpClient.connectTimeout과 JdkClientHttpRequestFactory.setReadTimeout을 설정함"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list는 고정 JPQL 조각만 이어 붙이고 값은 setParameter로 바인딩함. expireIfDue 네이티브 쿼리와 IdempotencyService의 JdbcTemplate 쿼리도 ? 바인딩만 사용함"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "가장 큰 OrderService.java가 약 260줄이고 상품·쿠폰·결제는 각각 별도 서비스·컴포넌트(ProductService, CouponService, PaymentService, OrderInventory)로 나뉨"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "OrderService.create의 검사 순서 주석, PaymentGatewayClient의 타임아웃 2초 주석, OrderExpiryJob의 주기 주석 등이 실제 동작과 맞고 TODO/FIXME가 없음"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order/Product/Coupon 엔티티에 public setter가 없고 값 변경은 markPaid, reserve, use/restore 같은 의도를 드러내는 메서드로만 이뤄짐"
+    }
+  },
+  "cost_usd": 0.3645
+}

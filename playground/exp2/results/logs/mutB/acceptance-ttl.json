@@ -1,0 +1,55 @@
+{
+  "passed": 4,
+  "total": 4,
+  "pass_rate": 1.0,
+  "requirement_rates": {
+    "R6": 1.0
+  },
+  "requirement_mean": 0.0909,
+  "requirements_met": [
+    "R6"
+  ],
+  "failure_categories": {},
+  "cases": [
+    {
+      "id": "r6_expires_releases",
+      "req": "R6",
+      "rules": [
+        "R6.1",
+        "R6.2"
+      ],
+      "passed": true,
+      "seconds": 5.67
+    },
+    {
+      "id": "r6_expires_at_ttl",
+      "req": "R6",
+      "rules": [
+        "R3.5",
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r6_pay_after_expiry_409",
+      "req": "R6",
+      "rules": [
+        "R5.2",
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 3.24
+    },
+    {
+      "id": "r6_paid_not_expired",
+      "req": "R6",
+      "rules": [
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 5.52
+    }
+  ],
+  "phase": "ttl"
+}

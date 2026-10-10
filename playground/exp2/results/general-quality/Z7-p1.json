@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/orders/OrderService.java OrderService.create — 상품조회·쿠폰조회·금액계산·재고예약·쿠폰검증·저장·멱등완료 7단계를 한 메서드에 담아 약 90줄"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "OrderService.toJson과 PaymentService.toJson 동일 복사; PaymentService.pay의 ORDER_NOT_FOUND 예외 생성이 OrderService.notFound와 중복; 쿠폰 NUL 검사·COUPON_NOT_FOUND 처리가 CouponService.get과 OrderService.create에 중복"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "\"/api/orders\" 경로가 OrderFacade.create/pay와 OrderService.create에 리터럴로 중복, \"Idempotency-Key\"가 OrderController·PaymentGatewayClient에 중복, 응답 코드 201/200이 OrderService.create·PaymentService.pay에 숫자 리터럴, 상태 'PENDING_PAYMENT'·\"COMPLETED\"가 OrderRepository·IdempotencyStore에 문자열로 산재"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "대부분 의도가 드러나는 이름; DiscountCalculator.discount의 d, OrderQueryRepositoryImpl.findPage의 q 등 짧은 범위 지역변수 몇 개만 축약됨"
+    },
+    "G5": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/common/error/ErrorCode.java httpStatus() 미사용; OrderProperties.expirySweepIntervalMs 필드 미사용(OrderExpirySweeper는 설정 키 ${order.expiry-sweep-interval-ms:500}를 직접 읽음)"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "OrderFacade.releaseQuietly·OrderExpirySweeper.sweep은 로그를 남기고, PaymentGatewayClient는 원인을 담아 재던짐, GlobalExceptionHandler.handleAny는 로그 후 500 응답 — 빈 catch 없음"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "OrderService.create의 Math.addExact/multiplyExact, DiscountCalculator.discount의 Math.multiplyExact, 금액은 long 정수"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "ClockConfig의 Clock 빈을 OrderService·PaymentService·OrderExpirySweeper가 주입받아 Times.now(clock)로 사용"
+    },
+    "G9": {
+      "verdict": "violation",
+      "evidence": "Order.markPaid/cancel/ship/deliver 등은 검사 없이 상태만 대입하고, 전이 가능 여부는 OrderService.cancel(switch)·ship·deliver와 PaymentService.pay에서 각각 if로 검사"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/common/config/PaymentGatewayConfig.java pgRestClient — connectTimeout과 setReadTimeout을 props.timeout()으로 설정"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderQueryRepositoryImpl.findPage는 고정 JPQL 조각과 setParameter만 사용; IdempotencyStore·Repository 네이티브 쿼리도 ?/:param 바인딩"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "최대 클래스 OrderService가 약 300줄로 400줄 미만; 상품·쿠폰·결제는 ProductService·CouponService·PaymentService로 분리됨"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "OrderInventory·ProductRepository·CouponRepository 등의 주석이 실제 동작과 일치하고, TODO/FIXME 없음"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order·Coupon·Product·OrderItem에 public setter 없음; 변경은 생성자와 Order.markPaid/cancel/ship 같은 의도 메서드로만 이뤄짐"
+    }
+  },
+  "cost_usd": 0.41438400000000003
+}

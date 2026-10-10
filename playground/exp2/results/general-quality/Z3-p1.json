@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "50줄을 넘는 메서드가 없음 — 가장 긴 OrderService.create, CouponService.create, OrderQueryService.list도 약 40줄 이내"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "상품/쿠폰 '조회 후 없으면 예외'가 복사됨 — ProductService.get과 OrderService.create의 PRODUCT_NOT_FOUND, CouponService.get과 OrderService.create의 COUPON_NOT_FOUND 생성 코드"
+    },
+    "G3": {
+      "verdict": "compliant",
+      "evidence": "오류 코드는 ErrorCode enum, 상태는 OrderStatus enum과 OrderStatus.USING_COUPON, 멱등성 상태는 IdempotencyService.IN_PROGRESS/COMPLETED 상수, 헤더 이름은 OrderController 상수로 정의됨"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "모호한 이름이 거의 없음 — 한 글자 이름은 짧은 람다 매개변수(o, p, c, i)와 루프의 Map.Entry e 정도뿐"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드나 쓰이지 않는 import·메서드가 보이지 않음 (OrderService, GlobalExceptionHandler, IdempotencyService 등)"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "빈 catch 없음 — OrderExpirationJob.expireOverdueOrders는 로그를 남기고, CouponService.create와 OrderQueryService.Cursor.decode는 검증 오류로 바꿔 다시 던짐(의도된 400 변환), GlobalExceptionHandler.handleOther는 log.error를 남김"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액을 long으로 다루고 Order.addItem은 Math.addExact/multiplyExact, Coupon.discountFor는 Math.multiplyExact를 씀, double 금액 계산 없음"
+    },
+    "G8": {
+      "verdict": "violation",
+      "evidence": "Instant.now()를 직접 호출 — CouponService.create, ProductService.create, OrderService.now(), OrderExpirationJob.expireOverdueOrders (Clock 주입 없음)"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "전이 규칙과 상태 대입이 Order.transition과 markPaid/markShipped 등 도메인 메서드에 모여 있음. OrderService는 상태를 직접 대입하지 않음 (단, pay/ship/deliver에서 같은 상태를 if로 한 번 더 검사함)"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayClient 생성자에서 HttpClient connectTimeout을, post에서 HttpRequest timeout을, send에서 future.get 시간 제한을 설정함"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderQueryService.list는 고정된 JPQL 조각만 이어 붙이고 setParameter로 바인딩함. IdempotencyService는 ? 바인딩, OrderRepository는 :param 바인딩"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스가 없고 상품·쿠폰·결제는 각 패키지 서비스로 나뉨. OrderService가 주문 흐름 안에서 재고·쿠폰을 조율함"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "OrderService 잠금 순서 주석, IdempotencyService 클래스 주석, OrderService.pay 주석이 실제 동작과 일치하고 TODO/FIXME가 없음"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order, Product, Coupon, OrderItem에 public setter가 없고 markPaid/reserve/use/restore 같은 의도를 드러내는 메서드로만 값을 바꿈"
+    }
+  },
+  "cost_usd": 0.36653600000000003
+}

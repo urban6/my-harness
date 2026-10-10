@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/ordering/OrderCommandService.java doCreate() — 락·검증·합계·쿠폰검증·반영·저장·멱등완료를 한 메서드에 담아 약 65줄"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "OrderCommandService.doPay/cancel의 OrderNotFoundException(\"주문 ...을(를) 찾을 수 없습니다\") 생성이 OrderService.notFound와 중복, 재고 부족 검사·메시지가 OrderCommandService.doCreate와 Product.reserve에 중복"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "IdempotencyRepository(tryInsert/complete/deleteInProgress)에 'IN_PROGRESS'/'COMPLETED' 리터럴 반복, PaymentGatewayClient.pay의 \"Idempotency-Key\" 리터럴(RequestHeaders.IDEMPOTENCY_KEY 상수 미사용), OrderController.list의 길이 한도 50 리터럴"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "전반적으로 의도가 드러나는 이름(lockProducts, releaseReservation, expireOverdueOrders 등). 예외적으로 IdempotencyRepository.mapRow의 rs0 정도"
+    },
+    "G5": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/ordering/OrderCommandService.java — productRepository 필드를 주입받지만 어디서도 사용하지 않음"
+    },
+    "G6": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java parse()의 catch(Exception), pay/refund의 catch(RuntimeException) → unavailable()이 cause를 연결하지 않고 toString만 로그해 원인 스택 소실"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "OrderCommandService.doCreate의 Math.addExact/multiplyExact, Coupon.calculateDiscount의 Math.multiplyExact, 금액은 모두 long"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "ClockConfig.clock() 빈을 OrderCommandService/OrderService/CouponService/ProductService/IdempotencyService/OrderExpirationScheduler가 주입받아 clock.instant() 사용"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/ordering/Order.java markPaid/markPaymentFailed/expire/cancel/refund/ship/deliver + require()에 전이 규칙 집중, 서비스는 상태를 직접 대입하지 않음"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java 생성자 — HttpClient.connectTimeout + JdkClientHttpRequestFactory.setReadTimeout (PaymentGatewayProperties)"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderQueryRepository.findPage는 고정 조각만 append하고 setParameter로 바인딩, IdempotencyRepository는 ? 바인딩, OrderRepository 쿼리는 @Param 사용"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "최대 클래스 OrderCommandService(약 300줄)는 주문 쓰기 흐름 전담, 재고/쿠폰 부수효과는 OrderEffects로 분리, 상품/쿠폰은 각 Service로 분리"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "OrderEffects·IdempotencyService·PaymentGatewayClient 등의 주석이 실제 동작과 일치, TODO/FIXME 없음"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order/Product/Coupon에 setter 없음, 변경은 markPaid·reserve·confirmSale·use·release 등 의도 메서드로만"
+    }
+  },
+  "cost_usd": 0.1283286
+}

@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/ordering/OrderCommandService.java doCreate() — 락·재고검증·소계계산·쿠폰검증·반영·멱등완료를 한 메서드에 담아 약 65줄"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "OrderCommandService.doPay()/cancel()의 OrderNotFoundException 생성이 OrderService.notFound()와 중복, 쿠폰 미존재 예외가 doCreate() 2곳과 CouponService.get()에 복사, 재고 부족 검사가 doCreate()와 Product.reserve()에 중복"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "PaymentGatewayClient.pay()의 \"Idempotency-Key\" 리터럴(RequestHeaders.IDEMPOTENCY_KEY 있음), IdempotencyRepository의 'IN_PROGRESS'/'COMPLETED' 문자열 반복, OrderController.list()의 userId 길이 50이 RequestHeaders.requireUserId의 50과 별도 리터럴"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "대부분 의도가 드러나는 이름. 예외는 IdempotencyRepository.mapRow()의 rs0과 짧은 루프·람다 변수(p, l, o) 정도로 '거의 없다' 기준 안"
+    },
+    "G5": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/ordering/OrderCommandService.java — productRepository 필드를 생성자에서 대입만 하고 어디서도 쓰지 않음"
+    },
+    "G6": {
+      "verdict": "violation",
+      "evidence": "GlobalExceptionHandler.problem()의 catch (IllegalArgumentException ignored) {} 빈 catch, PaymentGatewayClient.parse()의 catch(Exception) 후 unavailable()이 cause를 새 예외에 연결하지 않아 원인 유실"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "OrderCommandService.doCreate()의 Math.addExact/multiplyExact, Coupon.calculateDiscount()의 Math.multiplyExact, 금액은 모두 long"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "ClockConfig의 Clock 빈을 주입받아 OrderCommandService.now(), OrderService, CouponService, ProductService, IdempotencyService, OrderExpirationScheduler 모두 clock.instant() 사용"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "상태 대입은 Order.markPaid/markPaymentFailed/expire/cancel/refund/ship/deliver의 require() 가드에서만 일어남. 다만 OrderCommandService.doPay()/cancel()이 상태를 먼저 검사함"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayClient 생성자에서 HttpClient.connectTimeout과 JdkClientHttpRequestFactory.setReadTimeout을 PaymentGatewayProperties 값으로 명시 설정"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "IdempotencyRepository는 ? 바인딩, OrderQueryRepository.findPage()는 고정 JPQL 조각에 setParameter만 쓰고, OrderRepository @Query는 :param 바인딩"
+    },
+    "G12": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/ordering/OrderCommandService.java — 주문 생성·결제·취소에 더해 쿠폰 적용 규칙, 재고 검증, PG 호출, 멱등 처리까지 의존성 10개로 여러 도메인을 함께 처리"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "TODO/FIXME 없음. Coupon.calculateDiscount, OrderEffects, PaymentGatewayClient 등의 주석이 실제 동작과 일치"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order/Coupon/Product에 public setter가 없고 markPaid, use, reserve 같은 의도 메서드로만 변경. 다만 Order.getItems()가 가변 리스트를 그대로 노출함"
+    }
+  },
+  "cost_usd": 0.462628
+}

@@ -1,0 +1,58 @@
+[general] Z1 p1 done ($0.35)
+[general] Z1 p2 done ($0.36)
+[general] Z1 p3 done ($0.34)
+[general] Z2 p1 done ($0.38)
+[general] Z2 p2 done ($0.10)
+[general] Z2 p3 done ($0.09)
+[general] Z3 p1 done ($0.37)
+[general] Z3 p2 done ($0.11)
+[general] Z3 p3 done ($0.13)
+[general] Z4 p1 done ($0.37)
+[general] Z4 p2 done ($0.11)
+[general] Z4 p3 done ($0.12)
+[general] Z5 p1 done ($0.35)
+[general] Z5 p2 done ($0.12)
+[general] Z5 p3 done ($0.13)
+[general] Z6 p1 done ($0.46)
+[general] Z6 p2 done ($0.13)
+[general] Z6 p3 done ($0.15)
+[general] Z7 p1 done ($0.41)
+[general] Z7 p2 done ($0.13)
+[general] Z7 p3 done ($0.12)
+[general] Z8 p1 done ($0.36)
+[general] Z8 p2 done ($0.13)
+[general] Z8 p3 done ($0.13)
+[general] Z9 p1 done ($0.39)
+[general] Z9 p2 done ($0.12)
+[general] Z9 p3 done ($0.15)
+| run | 준수 | 위반 | 준수율 | 위반 항목 |
+|---|---|---|---|---|
+| A-1 | 12 | 2 | 86% | G2 G3 |
+| A-2 | 9 | 5 | 64% | G2 G3 G8 G9 G14 |
+| A-3 | 12 | 2 | 86% | G2 G8 |
+| B-1 | 13 | 1 | 93% | G3 |
+| B-2 | 10 | 4 | 71% | G2 G3 G6 G8 |
+| B-3 | 12 | 2 | 86% | G3 G6 |
+| C-1 | 10 | 4 | 71% | G1 G2 G3 G6 |
+| C-2 | 8 | 6 | 57% | G1 G2 G3 G5 G6 G12 |
+| C-3 | 9 | 5 | 64% | G1 G2 G3 G5 G9 |
+
+| 군 | 준수율 평균 (최소~최대) |
+|---|---|
+| A | 79% (64%~86%) |
+| B | 83% (71%~93%) |
+| C | 64% (57%~71%) |
+
+| 항목 | A 위반 | B 위반 | C 위반 |
+|---|---|---|---|
+| G1 | 0/3 | 0/3 | 3/3 |
+| G2 | 3/3 | 1/3 | 3/3 |
+| G3 | 2/3 | 3/3 | 3/3 |
+| G5 | 0/3 | 0/3 | 2/3 |
+| G6 | 0/3 | 2/3 | 2/3 |
+| G8 | 2/3 | 1/3 | 0/3 |
+| G9 | 1/3 | 0/3 | 1/3 |
+| G12 | 0/3 | 0/3 | 1/3 |
+| G14 | 1/3 | 0/3 | 0/3 |
+
+총 비용 $6.12

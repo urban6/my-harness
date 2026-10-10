@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 메서드인 OrderService.create도 약 40줄로 50줄을 넘지 않음 (src/main/java/com/example/order/order/OrderService.java)"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "쿠폰을 조회해 없으면 COUPON_NOT_FOUND 예외를 던지는 코드가 CouponService.get과 OrderService.create에 따로 있음. 상품 잠금 조회 후 Map으로 만드는 코드(findAllByIdForUpdate + toMap)도 OrderService.create와 OrderInventory.apply에 중복됨"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "IdempotencyRepository의 tryAcquire/find/complete/release에 'IN_PROGRESS'·'COMPLETED'가 문자열로 반복됨. OrderRepository의 findExpiredPendingIds/lockIfExpiredPending에도 'PENDING_PAYMENT'가 리터럴로 들어 있음"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "클래스·메서드·변수 이름이 의도를 드러냄. 한 글자 이름은 람다 파라미터(e, rs, cb, q) 정도뿐임 (예: OrderInventory.releaseReservations, IdempotencyExecutor.runAndRecord)"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드나 쓰이지 않는 import·메서드가 없음. 예: OrderInventory.restock은 OrderPaymentService.cancel에서 쓰이고, Coupon 게터는 CouponResponse.from에서 쓰임"
+    },
+    "G6": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/order/OrderCursor.java decode: catch(RuntimeException)로 넓게 잡은 뒤 새 BusinessException에 cause를 넘기지 않아 원래 원인이 사라짐"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액을 long으로 계산하고 OrderItem.lineTotal은 Math.multiplyExact, Order.addItem은 Math.addExact, Coupon.discountFor는 Math.multiplyExact를 씀. 입력 범위도 검증함(CreateProductRequest, OrderItemRequest)"
+    },
+    "G8": {
+      "verdict": "violation",
+      "evidence": "OrderService.create, OrderPaymentService.pay/cancel, OrderExpirationJob.expireOverdueOrders가 정적 메서드 Times.now()(내부에서 Instant.now() 호출)를 바로 호출함. Clock을 주입받지 않음"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/order/Order.java transition(expected, next)과 markPaid/cancel/refund/ship/deliver 등 도메인 메서드에 전이 규칙이 모여 있음. 서비스는 status 필드에 직접 대입하지 않음"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java 생성자에서 HttpClient.connectTimeout과 JdkClientHttpRequestFactory.setReadTimeout을 properties.timeout()(2s)으로 설정함"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "IdempotencyRepository는 JdbcTemplate에 ? 바인딩을 쓰고, OrderRepository 네이티브 쿼리와 ProductRepository JPQL은 :param 바인딩을 씀. 입력값을 문자열로 이어 붙이는 곳이 없음"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스가 없음. ProductService·CouponService·OrderService·OrderPaymentService·PaymentGatewayClient로 도메인별 책임이 나뉘어 있음"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "주석이 실제 동작과 맞고 TODO/FIXME가 없음. 예: OrderService.create의 검사 순서 주석, OrderPaymentService.pay의 noRollbackFor 설명"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order·Coupon·Product·OrderItem에 public setter가 없음. 값 변경은 addItem/applyCoupon/markPaid/use/restore/reserve/confirmSale 같은 의도가 드러나는 메서드로만 이뤄짐"
+    }
+  },
+  "cost_usd": 0.10631739999999999
+}
