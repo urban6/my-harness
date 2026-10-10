@@ -1,0 +1,91 @@
+{
+  "task": "t3",
+  "requirement_mean": 0.2857,
+  "requirement_rates": {
+    "P1": null,
+    "P2": 1.0,
+    "P3": null,
+    "P4": null,
+    "P5": null,
+    "P6": null,
+    "REG": 1.0
+  },
+  "spec_passed": 5,
+  "spec_total": 5,
+  "new_passed": 1,
+  "new_total": 1,
+  "regression_passed": 4,
+  "regression_total": 4,
+  "regression_rates": {
+    "R6": 1.0
+  },
+  "interp_passed": 0,
+  "interp_total": 0,
+  "failed": [],
+  "failure_categories": {},
+  "regression_excluded": {},
+  "cases": [
+    {
+      "id": "r6_expires_releases",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R6",
+      "rules": [
+        "R6.1",
+        "R6.2"
+      ],
+      "passed": true,
+      "seconds": 5.66
+    },
+    {
+      "id": "r6_expires_at_ttl",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R6",
+      "rules": [
+        "R3.5",
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 0.02
+    },
+    {
+      "id": "r6_pay_after_expiry_409",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R6",
+      "rules": [
+        "R5.2",
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 3.23
+    },
+    {
+      "id": "r6_paid_not_expired",
+      "req": "REG",
+      "layer": "spec",
+      "reg_req": "R6",
+      "rules": [
+        "R6.1"
+      ],
+      "passed": true,
+      "seconds": 5.53
+    },
+    {
+      "id": "p2_restore_on_expiry",
+      "req": "P2",
+      "layer": "spec",
+      "reg_req": null,
+      "rules": [
+        "P2.6",
+        "R6.2",
+        "(ttl",
+        "단계)"
+      ],
+      "passed": true,
+      "seconds": 5.55
+    }
+  ],
+  "phase": "ttl"
+}

@@ -1,0 +1,7 @@
+PASS                   REG/R6   r6_expires_releases
+PASS                   REG/R6   r6_expires_at_ttl
+PASS                   REG/R6   r6_pay_after_expiry_409
+PASS                   REG/R6   r6_paid_not_expired
+FAIL[status]           P2       p2_restore_on_expiry — fixture grant failed: 404 {"type":"about:blank","title":"Not Found","status":404,"detail":"No static resource api/points/u-5c6fb6ea63/grants.","instance":"/api/points/u-5c6fb6ea63/grants","code":"NOT_
+
+spec 4/5 (new 0/1, regression 4/4), interp 0/0, requirement_mean=0.1429 rates={'P1': None, 'P2': 0.0, 'P3': None, 'P4': None, 'P5': None, 'P6': None, 'REG': 1.0}
