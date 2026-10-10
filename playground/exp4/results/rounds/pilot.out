@@ -1,0 +1,25 @@
+[run:pilot-A] start 2026-10-10 13:04:46 group=A budget=$60 timeout=240m
+[run:pilot-A] end exit=0 wall=881s
+[meta:pilot-A] status=success cost=$2.0140803000000003 turns=21 isolation_ok=True leaks=0 warnings=0 compactions=0 models=['claude-sonnet-5-5'] discard=False
+[grade:pilot-A] assemble_ok=true
+[grade:pilot-A] tests={"tests": 103, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:pilot-A] coverage={"branch_covered": 242, "branch_total": 276, "branch_coverage": 0.8768}
+[grade:pilot-A] boot_ok=true
+88/88 passed (100%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:pilot-A] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:pilot-A] acceptance 92/92 requirement_mean=1.0 rates={'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R6': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:pilot-A] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp4/results/pilot-A.json
+[run:pilot-C] start 2026-10-10 13:20:53 group=C budget=$60 timeout=240m
+[run:pilot-C] end exit=0 wall=1366s
+[meta:pilot-C] status=success cost=$3.1047277 turns=1 isolation_ok=True leaks=0 warnings=0 compactions=0 models=['claude-sonnet-5-5'] discard=False
+[grade:pilot-C] assemble_ok=true
+[grade:pilot-C] self tests failed, rerunning once
+[grade:pilot-C] tests={"tests": 0, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": false}
+[grade:pilot-C] coverage={"branch_covered": 0, "branch_total": 359, "branch_coverage": 0.0}
+[grade:pilot-C] boot_ok=true
+88/88 passed (100%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:pilot-C] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:pilot-C] acceptance 92/92 requirement_mean=1.0 rates={'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R6': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:pilot-C] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp4/results/pilot-C.json

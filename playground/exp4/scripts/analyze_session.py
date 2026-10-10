@@ -28,7 +28,7 @@ def forbidden_patterns(run_dir):
         (re.compile(re.escape(os.path.join(PLAYGROUND, d))), d)
         for d in ("acceptance", "scripts", "results", "PRD.md")
     ] + [
-        (re.compile(re.escape(os.path.join(PLAYGROUND, "runs")) + r"/(?!" + re.escape(me) + r"(?![\w.-]))[\w.-]+"), "other-run"),
+        (re.compile(re.escape(os.path.join(PLAYGROUND, "runs")) + r"/(?!" + re.escape(me) + r"(?![\w-]|\.[\w-]))[\w.-]+"), "other-run"),  # 자기 경로 뒤 문장 마침표는 허용
         (re.compile(r"my_harness/CLAUDE\.md"), "harness-CLAUDE.md"),
     ] + [
         (re.compile(re.escape(os.path.join(EXP1, d))), f"exp1-{d}")

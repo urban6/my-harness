@@ -64,8 +64,10 @@ PY
 docker ps -aq | sort >"$LOG_DIR/containers.before"
 START=$(date +%s)
 echo "[run:$NAME] start $(date '+%F %T') group=$GROUP budget=\$$BUDGET timeout=$TIMEOUT"
-GROUP_ENV=()
-[[ "$GROUP" == C ]] && GROUP_ENV=(ANTHROPIC_DEFAULT_OPUS_MODEL=claude-sonnet-5-5)  # 워커 정의의 model: opus도 Sonnet으로
+# 헤드리스(-p)는 마지막 턴 뒤 10분이 지나면 백그라운드 워커를 강제 종료한다(4차 C 파일럿에서 발견).
+# 대화형과 같게 끝까지 기다린다. 전체 상한은 timeout이 맡는다.
+GROUP_ENV=(CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0)
+[[ "$GROUP" == C ]] && GROUP_ENV+=(ANTHROPIC_DEFAULT_OPUS_MODEL=claude-sonnet-5-5)  # 워커 정의의 model: opus도 Sonnet으로
 (cd "$RUN_DIR" && env ${GROUP_ENV[@]+"${GROUP_ENV[@]}"} timeout "$TIMEOUT" claude "${COMMON[@]}" "${GROUP_FLAGS[@]}" \
     >"$LOG_DIR/session.jsonl" 2>"$LOG_DIR/stderr.log" </dev/null)
 EXIT=$?

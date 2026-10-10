@@ -1,0 +1,12 @@
+[run:pilot-C] start 2026-10-10 13:45:50 group=C budget=$60 timeout=240m
+[run:pilot-C] end exit=0 wall=3859s
+[meta:pilot-C] status=success cost=$8.338284499999999 turns=4 isolation_ok=True leaks=1 warnings=3 compactions=0 models=['claude-sonnet-5-5'] discard=True
+[grade:pilot-C] assemble_ok=true
+[grade:pilot-C] tests={"tests": 396, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:pilot-C] coverage={"branch_covered": 255, "branch_total": 310, "branch_coverage": 0.8226}
+[grade:pilot-C] boot_ok=true
+88/88 passed (100%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:pilot-C] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:pilot-C] acceptance 92/92 requirement_mean=1.0 rates={'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R6': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:pilot-C] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp4/results/pilot-C.json

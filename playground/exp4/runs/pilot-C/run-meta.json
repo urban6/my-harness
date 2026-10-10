@@ -1,0 +1,144 @@
+{
+  "run": "pilot-C",
+  "group": "C",
+  "status": "success",
+  "exit_code": 0,
+  "wall_seconds": 3859,
+  "cost_usd": 8.338284499999999,
+  "duration_ms": 53007,
+  "num_turns": 4,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 8831,
+    "cache_read_input_tokens": 224718,
+    "output_tokens": 7706,
+    "output_tokens_details": {
+      "thinking_tokens": 290
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 8831,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1846,
+        "cache_read_input_tokens": 113654,
+        "cache_creation_input_tokens": 6241,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 6241
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 248,
+      "outputTokens": 379221,
+      "cacheReadInputTokens": 12728195,
+      "cacheCreationInputTokens": 1242914,
+      "webSearchRequests": 0,
+      "costUSD": 8.338284499999999,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 125977,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "subagent_stats": {
+    "spawned": 5,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 5
+    },
+    "started_in_background": 5,
+    "max_depth": 1,
+    "spawned_by_subagents": 0,
+    "completed": 5,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {
+      "backend-designer": 2,
+      "backend-impl": 1,
+      "boundary-verifier": 1,
+      "test-writer": 1
+    }
+  },
+  "model": "claude-sonnet-5-5",
+  "isolation": {
+    "agent_tool_present": true,
+    "workflow_tool_present": false,
+    "skills_loaded": true,
+    "spring_boot_skill_available": true,
+    "ok": true,
+    "problems": []
+  },
+  "compactions": 0,
+  "subagent_events_in_log": 396,
+  "tool_counts": {
+    "Read": 82,
+    "Bash": 72,
+    "TaskCreate": 11,
+    "Write": 10,
+    "Agent": 5,
+    "Glob": 5,
+    "SendMessage": 4,
+    "Grep": 2,
+    "Edit": 2,
+    "bash": 1
+  },
+  "skill_calls": {
+    "spring-boot (Read)": 2
+  },
+  "agent_calls": {
+    "backend-designer": 2,
+    "backend-impl": 1,
+    "boundary-verifier": 1,
+    "test-writer": 1
+  },
+  "forbidden_access": [],
+  "warnings": [
+    {
+      "tool": "Bash",
+      "match": "escape-../../",
+      "input": "{\"command\": \"cd /Users/jeonseungchul/SideProjects/my_harness/playground/exp4/runs/pilot-C/src/main/java/com/example/order && cat order/OrderCreateRequest.java coupon/CouponCreateRequest.java | head -120; cat ../../../../resources/db/migration/V1__init_schema.sql | head -5\"}"
+    },
+    {
+      "tool": "Bash",
+      "match": "escape-../../",
+      "input": "{\"command\": \"cd /Users/jeonseungchul/SideProjects/my_harness/playground/exp4/runs/pilot-C/src/test/java/com/example/order && cat > order/OrderListTest.java <<'EOF'\\npackage com.example.order.order;\\n\\nimport static org.assertj.core.api.Assertions.assertThat;\\n\\nimport com.example.order.support.Integ"
+    },
+    {
+      "tool": "Bash",
+      "match": "escape-../../",
+      "input": "{\"command\": \"cd /Users/jeonseungchul/SideProjects/my_harness/playground/exp4/runs/pilot-C/build/test-results/test && python3 - <<'EOF'\\nimport glob\\nimport xml.etree.ElementTree as ET\\ntot=[0,0,0,0]\\nprint(\\\"| class | tests | failures | errors | skipped |\\\\n|---|---|---|---|---|\\\")\\nfor f in sorted("
+    }
+  ],
+  "models_used": [
+    "claude-sonnet-5-5"
+  ],
+  "non_sonnet_models": [],
+  "discard": false
+}
