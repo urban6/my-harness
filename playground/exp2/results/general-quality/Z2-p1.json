@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 메서드인 OrderService.create도 약 40줄로 50줄을 넘지 않는다 (src/main/java/com/example/order/orders/OrderService.java)"
+    },
+    "G2": {
+      "verdict": "compliant",
+      "evidence": "주문 잠금 조회는 OrderLifecycleService.lockOrder, 상품 잠금은 OrderInventory.lockProducts/productIdsOf/restoreCoupon, 시각 처리는 Times에서 한 곳에 두고 재사용한다"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "IdempotencyRepository.tryAcquire/find/complete/release에서 'IN_PROGRESS'·'COMPLETED' 상태 문자열이 리터럴로 반복되고, PaymentGatewayClient.pay는 OrderController의 상수 대신 \"Idempotency-Key\" 리터럴을 쓴다"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "메서드·필드 이름이 의도를 드러낸다 (releaseReservation, commitSale, ensurePayable 등). 짧은 이름은 GlobalExceptionHandler의 람다·지역 변수(fe, ge, pd)에 한정된다"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드나 쓰이지 않는 import·메서드·클래스가 없다 (OrderService, OrderLifecycleService, GlobalExceptionHandler 등의 import가 모두 사용됨)"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "IdempotencyService.execute는 다시 던지고, OrderExpiryScheduler.expireOverdueOrders는 예외를 담아 로그를 남기며, GlobalExceptionHandler.handleUnexpected는 log.error를 남긴다. 빈 catch는 없다"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액을 long으로 다루고 OrderLine.amount(Math.multiplyExact), Order.subtotalOf(Math::addExact), Coupon.calculateDiscount(Math.multiplyExact)에 오버플로 대책이 있다. 수량·가격은 요청 DTO에서 범위를 검증한다"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "ClockConfig에서 Clock 빈을 주입하고 Times.now(clock)로만 현재 시각을 얻는다 (OrderService, OrderLifecycleService, CouponService, ProductService)"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "모든 상태 전이가 Order.transition(from, to)를 거치는 도메인 메서드(markPaid, cancel, refund, ship, deliver, expire)에 모여 있다 (src/main/java/com/example/order/orders/Order.java)"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayClient 생성자에서 HttpClient.connectTimeout과 JdkClientHttpRequestFactory.setReadTimeout을 properties.timeout()으로 설정한다"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderQueryRepositoryImpl.findPage는 고정 조건만 이어 붙이고 setParameter로 바인딩한다. IdempotencyRepository는 ? 바인딩을, OrderRepository는 :param 바인딩을 쓴다"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스가 없다. 상품·쿠폰·주문·결제가 패키지와 서비스별로 나뉘어 있다 (ProductService, CouponService, OrderService, OrderLifecycleService, PaymentGatewayClient)"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "OrderLifecycleService, PaymentGatewayClient, OrderInventory의 주석이 실제 동작과 일치하고 TODO/FIXME가 없다"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order, Coupon, Product, OrderLine에 public setter가 없고, 값 변경은 의도를 드러내는 메서드(reserve, use, restore, markPaid 등)로만 한다"
+    }
+  },
+  "cost_usd": 0.37880400000000003
+}

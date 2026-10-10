@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/order/OrderService.java OrderService.create — 상품 락, 쿠폰 락, 재고 검사, 소계, 쿠폰 판정, 반영, 저장, 멱등 완료(주석 4~10단계)를 한 메서드에 담아 약 63줄"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "쿠폰 조회 후 없으면 COUPON_NOT_FOUND 예외를 던지는 로직이 OrderService.create와 OrderResourceSupport.restoreCoupon에 복사됨. 만료 처리 블록(isExpiredAt→releaseReservation→expire→throw)이 OrderLifecycleService.pay와 cancel에 똑같이 들어 있음"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "상태 이름 'PENDING_PAYMENT'가 OrderRepository.findExpirableIds와 lockExpirable의 네이티브 SQL에 문자열로 반복됨(IdempotencyRecordRepository.tryClaim의 'IN_PROGRESS'도 같음). 헤더 이름 \"Idempotency-Key\"는 OrderController.create, pay와 PaymentGatewayClient.pay에 흩어져 있고, 메시지 \"이미 이 쿠폰을 사용 중인 주문이 있습니다.\"는 OrderService에 두 번 나옴"
+    },
+    "G4": {
+      "verdict": "violation",
+      "evidence": "CouponService.create의 매개변수 이름이 r, CouponPolicy.discount의 지역변수가 d이고, Coupon.create(c), Order.create(o), Product.create(p), OrderService.create 루프(p), GlobalExceptionHandler(pd)에서도 한 글자·약어 이름을 반복해서 씀"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드와 안 쓰는 import·클래스·메서드가 없음. OrderProperties.expirySweepDelayMs는 설정 바인딩용이고, 엔티티의 안 쓰는 getter(IdempotencyRecord.getCreatedAt 등)는 접근자 수준이라 위반으로 보지 않음"
+    },
+    "G6": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java pay/refund — RestClientException을 잡은 뒤 cause를 넘기지 않고 로그도 남기지 않은 채 클래스 이름만 담아 PaymentGatewayUnavailableException으로 바꿔 던져 원인을 잃음. CursorCodec.decode도 cause 없이 다시 던짐"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액은 모두 long이고, OrderService.create는 소계를 Math.addExact/multiplyExact로, CouponPolicy.discount는 Math.multiplyExact로 계산함. 수량·단가 상한은 ProductCreateRequest와 CreateOrderRequest의 @Max로 검증함"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/common/time/TimeProvider.java가 Clock 빈(ClockConfig)을 주입받아 Instant.now(clock)를 쓰고, 서비스와 스케줄러는 모두 time.now()로 현재 시각을 얻음"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/order/Order.java — markPaid, markPaymentFailed, cancel, expire, refund, ship, deliver가 require(expected)로 전이 규칙을 한곳에서 검사하고 상태를 바꿈. 서비스에서는 status를 직접 대입하지 않음"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java 생성자 — SimpleClientHttpRequestFactory에 setConnectTimeout과 setReadTimeout을 설정함(application.yml의 connect-timeout, read-timeout은 각각 2s)"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderRepository, CouponRepository, ProductRepository, IdempotencyRecordRepository의 @Query는 모두 :param 바인딩을 쓰고, OrderService.list는 CriteriaBuilder Specification을 써서 입력값을 쿼리 문자열에 이어 붙이지 않음"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스가 없음. 상품(ProductService), 쿠폰(CouponService), 주문(OrderService/OrderLifecycleService), 결제(PaymentGatewayClient), 멱등(IdempotencyService)으로 책임이 나뉘어 있음"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "TODO/FIXME가 없음. OrderExpiryService(SKIP LOCKED), OrderResourceSupport(락 순서), PaymentGatewayClient(실패 매핑), IdempotencyService(트랜잭션 분리) 등의 주석이 실제 동작과 맞음"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order, Coupon, Product, OrderItem, IdempotencyRecord에 public setter가 없음. 값 변경은 Order.markPaid/cancel, Coupon.use/restore, Product.reserve/release/commitSale/restock 같은 의도를 드러내는 메서드나 정적 팩토리로 이뤄짐"
+    }
+  },
+  "cost_usd": 0.12496479999999999
+}

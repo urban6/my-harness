@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "No method exceeds 50 lines; the longest are OrderService.create (about 40 lines) and CouponService.create (about 38 lines)."
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/orders/OrderService.java create(): the 'look up, throw COUPON_NOT_FOUND / PRODUCT_NOT_FOUND if missing' logic and message are copied from CouponService.get and ProductService.get."
+    },
+    "G3": {
+      "verdict": "compliant",
+      "evidence": "Error codes are in the ErrorCode enum, statuses in OrderStatus/CouponType, and headers and idempotency states are constants (OrderController.USER_HEADER, IdempotencyService.IN_PROGRESS/COMPLETED). Remaining literals are local, single-use values."
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "Methods and fields have intent-revealing names (expireIfOverdue, releaseReservation, lockProducts, etc.). One-letter names appear only as lambda parameters (o, p, e)."
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "No commented-out code. All ErrorCode values, getters, and imports are used; no unused classes or methods."
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "No empty catch blocks. OrderExpirationJob logs with log.warn, GlobalExceptionHandler.handleOther logs with log.error, and PaymentGatewayClient.send wraps exceptions with their cause. Note: OrderQueryService.Cursor.decode catches RuntimeException broadly and drops the cause, but it deliberately converts bad input into a 400."
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "Order.addItem uses Math.addExact/multiplyExact and Coupon.discountFor uses Math.multiplyExact. Amounts are long (no double), and ProductService/OrderService.validateCreate check ranges in advance."
+    },
+    "G8": {
+      "verdict": "violation",
+      "evidence": "Instant.now() is called directly in CouponService.create, ProductService.create, OrderExpirationJob.expireOverdueOrders, and OrderService.now(); no Clock is injected."
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/orders/Order.java: transition(from, to) and the markPaid/markShipped/... methods hold the transition rules in one place, and state is only changed through these methods (OrderService repeats the check first only to build the error response)."
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java: HttpClient.connectTimeout(timeout), HttpRequest.timeout(timeout), and future.get(timeout) are all set."
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderQueryService.list appends only fixed JPQL fragments and passes values through setParameter. IdempotencyService uses ? binding and the repository uses :param binding."
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "Every class is under 400 lines. Products, coupons, orders, payment, and idempotency each have their own service/client; OrderService coordinates the order flow (about 300 lines)."
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "No TODO/FIXME. Comments in OrderService (lock order, R5 rollback), IdempotencyService (only 2xx stored), and Coupon.discountFor (R2.4) match the actual behavior."
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order, Product, Coupon, and OrderItem have no public setters; values change only through intent-revealing methods such as markPaid, reserve, confirmSale, use/restore, and applyCoupon."
+    }
+  },
+  "cost_usd": 0.1147134
+}

@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "50줄을 넘는 메서드 없음. 가장 긴 메서드도 약 30줄 (IdempotencyService.claim, IdempotentRequestExecutor.execute, OrderLifecycleService.pay)"
+    },
+    "G2": {
+      "verdict": "compliant",
+      "evidence": "'조회 후 없으면 예외'는 ProductService/CouponService/OrderService의 notFound를, 상태 전이는 Order.transition을, 응답 변환은 *Response.from을 공통으로 재사용"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.claim/complete/release — 레코드 상태 'IN_PROGRESS'·'COMPLETED'가 상수·enum 없이 문자열로 여러 번 쓰임. payment/PaymentGatewayClient.pay의 \"Idempotency-Key\"도 OrderController.IDEMPOTENCY_KEY 상수와 별도로 리터럴로 중복"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "변수·메서드 이름이 의도를 드러냄(lockProducts, releaseReservation, isPaymentExpiredAt 등). 짧은 이름은 람다 인자 rs, 지역 변수 pd 정도뿐"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드나 안 쓰는 import·메서드·필드가 없음. 엔티티 getter는 모두 *Response.from과 서비스에서 사용됨"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "빈 catch 없음. OrderExpirationScheduler는 예외를 로그(e 포함)로 남기고, GlobalExceptionHandler.handleUnexpected도 log.error로 기록. CouponService.create와 OrderCursor.decode는 원인을 넘기지 않지만 정해진 BusinessException으로 의도적으로 변환"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액은 long. OrderItem.lineTotal은 Math.multiplyExact, Order.addItem은 Math.addExact, Coupon.discountFor는 Math.multiplyExact 사용. 요청 DTO에서 가격·수량 상한 검증"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "OrderService, OrderLifecycleService가 ClockConfig로 주입받은 Clock의 clock.instant()로 현재 시각을 얻음. 서비스·도메인 코드에 Instant.now() 직접 호출 없음"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "order/Order의 transition/requireStatus와 markPaid·cancel·refund·ship·deliver·expire에 전이 규칙이 모여 있고, 서비스는 상태를 직접 대입하지 않음. OrderLifecycleService의 pay·cancel·expire가 결제 대기·만료 여부를 따로 미리 검사하는 점은 판정이 갈릴 수 있음"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayClient 생성자 — HttpClient.connectTimeout과 JdkClientHttpRequestFactory.setReadTimeout에 properties.timeout()(기본값 PT2S) 지정"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderRepositoryImpl.findPage는 고정된 JPQL 조각만 이어 붙이고 값은 setParameter로 바인딩. IdempotencyService는 JdbcClient의 이름 있는 파라미터(.param) 사용"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스 없음. 상품·쿠폰·주문·결제가 패키지와 서비스로 나뉘어 있고, ReservationService는 재고 예약과 쿠폰 사용의 반영·복원만 담당"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "TODO/FIXME 없음. OrderService.create의 검사 순서 주석, PaymentGatewayClient의 '타임아웃(기본 2초)', IdempotencyService.claim의 422/409 설명이 실제 동작과 일치"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order, Coupon, Product, OrderItem에 public setter가 없고, 값 변경은 reserve, use, restore, applyDiscount, markPaid 같은 의도를 드러내는 메서드로만 이뤄짐"
+    }
+  },
+  "cost_usd": 0.1164886
+}

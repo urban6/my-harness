@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 메서드인 orders/OrderService.create도 약 40줄로 50줄 이하이고, 검사 단계는 checkApplicable로 분리되어 있음"
+    },
+    "G2": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderInventory가 lockProducts·restoreCoupon·productIdsOf를 공통 사용, 시각 처리는 common/Times로 일원화, 금액 계산은 Order.subtotalOf/OrderLine.amount 한 곳"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyRepository의 tryAcquire·release·find·complete에서 상태 이름 'IN_PROGRESS'·'COMPLETED'를 상수·enum 없이 문자열 리터럴로 반복 사용"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "짧은 이름은 람다·짧은 범위의 rs, fe, ge, pd 정도이고, 메서드·필드 이름(lockProducts, releaseReservation, ensurePayable 등)은 의도를 드러냄"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드 없음, 모든 ErrorCode·getter·import가 사용됨 (예: common/error/GlobalExceptionHandler, orders/OrderController)"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleUnexpected는 최상위에서 log.error로 기록, OrderExpiryScheduler.expireOverdueOrders는 예외를 담아 log.warn, PaymentGatewayClient.call은 cause를 담아 다시 던짐. 단 CouponService.create·OrderCursor.decode는 도메인 예외로 바꿀 때 원래 예외(cause)를 넘기지 않음"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액은 long 사용, orders/OrderLine.amount는 Math.multiplyExact, Order.subtotalOf는 Math::addExact, coupon/Coupon.calculateDiscount는 Math.multiplyExact 사용"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "모든 서비스가 주입받은 Clock으로 common/Times.now(clock)을 호출, Instant.now()를 직접 호출하는 곳 없음"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "orders/Order.transition(from, to, action)과 markPaid/cancel/refund/ship/deliver/expire 도메인 메서드에 전이 규칙이 모여 있음"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayClient 생성자에서 HttpClient.connectTimeout과 JdkClientHttpRequestFactory.setReadTimeout을 properties.timeout()으로 설정"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderQueryRepositoryImpl.findPage는 고정된 조건문만 이어 붙이고 입력값은 setParameter로 바인딩, IdempotencyRepository는 ? 바인딩 사용"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스 없음. 상품·쿠폰·주문·결제가 패키지와 서비스(ProductService, CouponService, OrderService/OrderLifecycleService, PaymentGatewayClient)로 나뉘어 있음"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "TODO/FIXME 없음, OrderLifecycleService·PaymentGatewayClient·IdempotencyService의 주석이 실제 동작(롤백, 기본 2초 타임아웃, 선점 해제)과 일치"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order·Product·Coupon에 public setter가 없고 값 변경은 reserve/commitSale/use/restore/markPaid 같은 의도를 드러내는 메서드로만 이뤄짐"
+    }
+  },
+  "cost_usd": 0.0932588
+}

@@ -1,0 +1,6 @@
+PASS                   R6   r6_expires_releases
+PASS                   R6   r6_expires_at_ttl
+PASS                   R6   r6_pay_after_expiry_409
+PASS                   R6   r6_paid_not_expired
+
+4/4 passed (100%), requirement rates: {'R6': 1.0}

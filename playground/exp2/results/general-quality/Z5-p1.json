@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 메서드도 약 30줄입니다 (IdempotencyService.claim, OrderLifecycleService.pay·cancel). 50줄을 넘는 메서드는 없습니다."
+    },
+    "G2": {
+      "verdict": "compliant",
+      "evidence": "'조회 후 없으면 예외' 로직이 한 곳씩에만 있고 재사용됩니다: ProductService.notFound, CouponService.notFound, OrderService.notFound, OrderLifecycleService.lock. 재고 복원 반복도 ReservationService.forEachItem 하나로 모았습니다."
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/idempotency/IdempotencyService.java claim/complete/release: 'IN_PROGRESS'·'COMPLETED' 상태 이름이 SQL과 \"COMPLETED\".equals(...)에 리터럴로 반복됩니다. PaymentGatewayClient.pay는 \"Idempotency-Key\"를 리터럴로 쓰는데, OrderController에는 같은 값이 IDEMPOTENCY_KEY 상수로 있습니다."
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "전 파일에서 메서드·필드 이름이 의도를 드러냅니다 (lockProducts, releaseReservation, isPaymentExpiredAt 등). 짧은 이름은 람다·패턴 변수(pd, fe, rs, e)에만 관용적으로 쓰였습니다."
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드가 없고, 쓰이지 않는 import·메서드·필드도 없습니다. 예를 들어 Order.getPaymentId는 OrderLifecycleService.cancel에서, Product.getName은 ProductResponse.from에서 쓰입니다."
+    },
+    "G6": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java call: RestClientException을 잡아 메시지만 넘기고 원인 예외(스택)를 버립니다. src/main/java/com/example/order/order/OrderCursor.java decode: RuntimeException을 넓게 잡고 원인 없이 BusinessException을 던집니다."
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액은 long으로 계산하고 오버플로 대책이 있습니다: OrderItem.lineTotal은 Math.multiplyExact, Order.addItem은 Math.addExact, Coupon.discountFor는 Math.multiplyExact를 씁니다. 수량·가격 범위는 DTO 검증으로 제한합니다."
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "현재 시각은 ClockConfig가 등록한 Clock 빈으로만 얻습니다 (OrderService.create, OrderLifecycleService의 pay/cancel/expire/findExpiredPendingOrderIds). Instant.now() 직접 호출은 없습니다."
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/order/Order.java: 상태 전이는 transition/requireStatus와 markPaid·cancel·refund·ship·deliver·expire에 모여 있습니다. 서비스는 이 도메인 메서드만 호출하고 상태를 직접 대입하지 않습니다."
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/payment/PaymentGatewayClient.java 생성자: HttpClient.connectTimeout과 JdkClientHttpRequestFactory.setReadTimeout을 properties.timeout()(기본 PT2S)으로 설정합니다."
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderRepositoryImpl.findPage는 고정 JPQL 조각만 이어 붙이고 값은 setParameter로 바인딩합니다. IdempotencyService와 각 Repository의 @Query도 모두 이름 있는 파라미터(:name)를 씁니다."
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스가 없고, 도메인별로 나뉘어 있습니다 (ProductService, CouponService, OrderService, OrderLifecycleService, PaymentGatewayClient). ReservationService는 예약·복원 책임만 맡습니다."
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "주석이 실제 동작과 맞습니다: OrderService.create의 검사 순서, PaymentGatewayClient의 타임아웃(기본 2초), IdempotencyService.claim의 422/409 설명. TODO/FIXME도 없습니다."
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order·Product·Coupon·OrderItem에는 public setter가 없습니다. 값 변경은 reserve, confirmSale, use, restore, applyDiscount, markPaid처럼 의도를 드러내는 메서드로만 합니다."
+    }
+  },
+  "cost_usd": 0.35391599999999995
+}

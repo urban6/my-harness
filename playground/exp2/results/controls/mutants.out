@@ -1,0 +1,15 @@
+[grade:mutA] assemble_ok=true
+[grade:mutA] boot_ok=true
+85/88 passed (97%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 1.0, 'R5': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 0.4, 'R11': 1.0}
+[grade:mutA] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:mutB] assemble_ok=true
+[grade:mutB] boot_ok=true
+84/88 passed (95%), requirement rates: {'R1': 1.0, 'R2': 1.0, 'R3': 1.0, 'R4': 0.7273, 'R5': 1.0, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 0.875}
+[grade:mutB] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}
+[grade:mutC] assemble_ok=true
+[grade:mutC] boot_ok=true
+84/88 passed (95%), requirement rates: {'R1': 1.0, 'R2': 0.8824, 'R3': 1.0, 'R4': 1.0, 'R5': 0.7778, 'R7': 1.0, 'R8': 1.0, 'R9': 1.0, 'R10': 1.0, 'R11': 1.0}
+[grade:mutC] boot_ttl_ok=true
+4/4 passed (100%), requirement rates: {'R6': 1.0}

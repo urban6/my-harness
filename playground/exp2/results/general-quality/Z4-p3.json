@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 OrderService.create도 약 40줄로, 50줄을 넘는 메서드가 없음"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "쿠폰·상품 조회 후 없으면 예외: CouponService.get↔OrderService.create(COUPON_NOT_FOUND), ProductService.get↔OrderService.create(PRODUCT_NOT_FOUND) / 상품 잠금 조회 후 Map 변환: OrderService.create↔OrderInventory.apply"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "common/idempotency/IdempotencyRepository: 'IN_PROGRESS'(tryAcquire·release), 'COMPLETED'(find·complete) 상태 이름이 상수 없이 SQL 문자열 리터럴로 반복됨"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "전반적으로 의도가 드러나는 이름(예: OrderInventory.releaseReservations, Coupon.discountFor). 짧은 이름은 람다·패턴 변수(e, fe, cb)뿐"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드와 안 쓰는 import·클래스가 없음. OrderProperties.expirationInterval은 Java에서 안 쓰이지만 설정 바인딩용으로 봄"
+    },
+    "G6": {
+      "verdict": "violation",
+      "evidence": "order/OrderCursor.decode: catch(RuntimeException)로 넓게 잡은 뒤 cause 없이 BusinessException을 던져 원인 예외를 잃음"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액은 모두 long. OrderItem.lineTotal(multiplyExact), Order.addItem(addExact), Coupon.discountFor(multiplyExact)로 오버플로를 막고, 요청 DTO에서 범위를 검증함"
+    },
+    "G8": {
+      "verdict": "violation",
+      "evidence": "common/Times.now()가 Instant.now()를 직접 부르는 static 메서드이고, OrderService.create·OrderPaymentService.pay/cancel·OrderExpirationJob에서 직접 호출함(Clock 주입 없음)"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "order/Order.transition과 markPaid/cancel/refund/ship/deliver 등에 상태 전이 규칙과 대입이 모여 있음. 서비스는 이 도메인 메서드만 호출함"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayClient 생성자: HttpClient.connectTimeout과 JdkClientHttpRequestFactory.setReadTimeout을 properties.timeout()으로 명시 설정함"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderRepository·ProductRepository는 :param 바인딩, IdempotencyRepository는 JdbcTemplate ? 바인딩만 씀"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스가 없고 도메인별로 서비스가 나뉨(ProductService, CouponService, OrderService, OrderPaymentService, PaymentGatewayClient)"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "주석(예: OrderService.create 검사 순서, OrderPaymentService 타임아웃 2초)이 코드·설정과 일치하고 TODO/FIXME가 없음"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order·Coupon·Product·OrderItem에 public setter가 없고 값은 reserve/use/markPaid 등 의도를 드러내는 메서드로만 바뀜"
+    }
+  },
+  "cost_usd": 0.11749739999999999
+}

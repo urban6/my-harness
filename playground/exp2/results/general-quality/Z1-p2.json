@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 메서드인 OrderService.create, pay, cancel이 모두 약 45줄 이하이고 CouponController.validate도 약 35줄이다"
+    },
+    "G2": {
+      "verdict": "violation",
+      "evidence": "쿠폰 조회 후 없으면 COUPON_NOT_FOUND 예외를 만드는 코드가 CouponController.get과 OrderService.create에, PRODUCT_NOT_FOUND 생성이 ProductController.get과 OrderService.create에 복사됨. PG 장애 시 finishOperation 후 gatewayUnavailable 처리도 OrderService.pay와 cancel에 중복됨"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "에러 코드 \"PRODUCT_NOT_FOUND\"(ProductController, OrderService), \"COUPON_NOT_FOUND\"(CouponController, OrderService), \"ORDER_NOT_FOUND\"(OrderController, OrderService), \"VALIDATION_ERROR\"(ApiException, GlobalExceptionHandler)가 리터럴로 흩어져 있음. IdempotencyService의 'IN_PROGRESS'/\"COMPLETED\", OrderService의 \"PAYING\"/\"REFUNDING\"도 문자열"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "짧은 이름은 람다 파라미터(l, c, p, o)와 관용적 이름(tx, em, req)뿐이고, 메서드·필드 이름(lockProducts, releaseReservation, completeRefund 등)은 의도를 드러냄"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "전 파일에서 주석 처리된 코드나 쓰이지 않는 import·메서드·필드를 찾지 못함 (Coupon·Product의 getter는 각 Response.of에서 사용)"
+    },
+    "G6": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayClient.post는 cause를 담아 다시 던지고, OrderExpiryScheduler.expire와 GlobalExceptionHandler.handleUnexpected는 로그를 남기며, CouponController.validate는 받은 예외를 검증 오류로 바꿔 던짐. 빈 catch 없음"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액은 long이고 OrderService.create의 소계 계산에 Math.multiplyExact/addExact, Coupon.discountFor에 Math.multiplyExact를 씀. 수량·가격 범위도 Controller에서 미리 검증"
+    },
+    "G8": {
+      "verdict": "violation",
+      "evidence": "common/Times.now()가 Instant.now()를 직접 호출하는 정적 메서드이고, OrderService(create, pay, cancel, transition, expireDueOrders)와 ProductController.create가 Clock 주입 없이 이를 직접 사용함"
+    },
+    "G9": {
+      "verdict": "violation",
+      "evidence": "OrderService.pay(PENDING_PAYMENT 검사), cancel(switch), transition(from 검사), expireDueOrders(if 검사)가 상태를 각자 검사한 뒤 Order.changeStatus로 대입함. 전이 규칙을 모아 둔 곳이 없음"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayClient: HttpClient.connectTimeout(timeout), HttpRequest.timeout(timeout), future.get(timeout)으로 연결·응답 타임아웃을 명시함"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list는 고정된 JPQL 조각만 이어 붙이고 값은 setParameter로 바인딩함. IdempotencyService의 JdbcTemplate 쿼리는 ? 바인딩, Repository @Query는 :param 바인딩"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "가장 큰 OrderService도 400줄 미만이고, 상품·쿠폰 쪽 계산은 Product·Coupon 도메인 메서드에 맡기고 주문 흐름 조정만 함. 나머지 클래스도 도메인별로 나뉘어 있음"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayClient의 '기본 2초'(application.yml PT2S), OrderService의 잠금 순서, IdempotencyService의 동작 설명 등 주석이 코드와 맞고 TODO/FIXME 없음"
+    },
+    "G14": {
+      "verdict": "violation",
+      "evidence": "Order.changeStatus(OrderStatus)가 어떤 상태든 검증 없이 대입하는 사실상의 public setter이고, OrderService 여러 곳에서 호출됨"
+    }
+  },
+  "cost_usd": 0.356076
+}

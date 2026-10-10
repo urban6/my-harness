@@ -1,0 +1,61 @@
+{
+  "verdict": {
+    "G1": {
+      "verdict": "compliant",
+      "evidence": "가장 긴 메서드인 IdempotencyService.claim, OrderLifecycleService.pay도 약 30줄 이하이고, 50줄을 넘는 메서드가 없다"
+    },
+    "G2": {
+      "verdict": "compliant",
+      "evidence": "조회 후 예외는 ProductService/CouponService/OrderService.notFound로 한 곳에 모아 재사용하고, 응답 매핑은 *Response.from, 락 조회는 ReservationService.lockProducts/lockCoupon, OrderLifecycleService.lock에서 재사용한다"
+    },
+    "G3": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.java claim/complete/release — 멱등 레코드 상태 'IN_PROGRESS'·'COMPLETED'가 상수/enum 없이 SQL 문자열과 \"COMPLETED\".equals(...)에 리터럴로 여러 번 반복된다"
+    },
+    "G4": {
+      "verdict": "compliant",
+      "evidence": "메서드·필드 이름(lockProducts, releaseReservation, isPaymentExpiredAt 등)이 의도를 드러낸다. pd/fe/e 같은 짧은 이름은 좁은 범위의 패턴 변수·catch 변수에만 쓰였다"
+    },
+    "G5": {
+      "verdict": "compliant",
+      "evidence": "주석 처리된 코드나 쓰이지 않는 import·메서드·클래스가 없다(엔티티 기본 getter 정도만 남아 있다)"
+    },
+    "G6": {
+      "verdict": "violation",
+      "evidence": "order/OrderCursor.java decode — catch (RuntimeException e)로 넓게 잡은 뒤 원인 e를 연결하지 않고 BusinessException으로 바꿔 원인을 잃는다"
+    },
+    "G7": {
+      "verdict": "compliant",
+      "evidence": "금액은 long이고 OrderItem.lineTotal은 Math.multiplyExact, Order.addItem은 Math.addExact, Coupon.discountFor는 Math.multiplyExact를 쓴다. 수량·가격은 요청 DTO의 @Max와 DB check 제약으로 범위가 검증된다"
+    },
+    "G8": {
+      "verdict": "compliant",
+      "evidence": "ClockConfig가 Clock 빈을 등록하고, OrderService/OrderLifecycleService는 주입받은 clock.instant()로 현재 시각을 얻는다. Instant.now() 직접 호출이 없다"
+    },
+    "G9": {
+      "verdict": "compliant",
+      "evidence": "order/Order.java transition/requireStatus와 markPaid/cancel/refund/ship/deliver/expire에 전이 규칙이 모여 있고, 서비스는 상태를 직접 대입하지 않는다(다만 OrderLifecycleService.pay/cancel/expire에 결제 기한 만료 검사가 if로 반복된다)"
+    },
+    "G10": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayClient.java 생성자 — HttpClient.connectTimeout(properties.timeout())과 requestFactory.setReadTimeout(properties.timeout())을 설정한다(기본 PT2S)"
+    },
+    "G11": {
+      "verdict": "compliant",
+      "evidence": "order/OrderRepositoryImpl.findPage는 고정된 JPQL 조각만 이어 붙이고 값은 setParameter로 바인딩한다. IdempotencyService의 SQL도 모두 .param 바인딩을 쓴다"
+    },
+    "G12": {
+      "verdict": "compliant",
+      "evidence": "400줄을 넘는 클래스가 없고 product/coupon/order/payment/idempotency 패키지별로 책임이 나뉘어 있다. ReservationService는 주문용 재고·쿠폰 예약 조정만 맡는다"
+    },
+    "G13": {
+      "verdict": "compliant",
+      "evidence": "주석(OrderService.create의 검사 순서, PaymentGatewayClient의 기본 2초 타임아웃, ReservationService의 락 순서 등)이 실제 동작과 맞고 TODO/FIXME가 없다"
+    },
+    "G14": {
+      "verdict": "compliant",
+      "evidence": "Order/Product/Coupon/OrderItem에 public setter가 없고, 값 변경은 reserve/confirmSale/use/restore/applyDiscount/markPaid 같은 의도를 드러내는 메서드로만 이뤄진다"
+    }
+  },
+  "cost_usd": 0.1272366
+}
