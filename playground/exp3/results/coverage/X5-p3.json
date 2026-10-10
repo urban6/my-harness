@@ -1,0 +1,148 @@
+{
+  "verdict": {
+    "S1": {
+      "covered": true,
+      "tests": [
+        "ProductAndCouponApiTest#createProduct_returns400ProblemJson_whenInvalid"
+      ]
+    },
+    "S2": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#createOrder_validatesRequest"
+      ]
+    },
+    "S3": {
+      "covered": true,
+      "tests": [
+        "ProductAndCouponApiTest#createCoupon_returns400_whenRateOver100OrPeriodReversed"
+      ]
+    },
+    "S4": {
+      "covered": false,
+      "tests": []
+    },
+    "S5": {
+      "covered": false,
+      "tests": []
+    },
+    "S6": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#createOrder_isAtomicAcrossItems_whenOneItemLacksStock"
+      ]
+    },
+    "S7": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#createOrder_appliesFixedAndRateCoupons",
+        "CouponTest#discountFor_fixed_cappedBySubtotal"
+      ]
+    },
+    "S8": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#createOrder_rejectsInapplicableCoupons_andRollsBackReservation"
+      ]
+    },
+    "S9": {
+      "covered": false,
+      "tests": []
+    },
+    "S10": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#cancel_pending_releasesStockAndCoupon",
+        "OrderFlowTest#pay_declined_marksFailedAndReleasesStockAndCoupon",
+        "OrderExpirationTest#getOrder_expiresLazily_andReleasesStockAndCoupon"
+      ]
+    },
+    "S11": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#shipAndDeliver_followStateMachine",
+        "OrderFlowTest#cancel_pending_releasesStockAndCoupon"
+      ]
+    },
+    "S12": {
+      "covered": true,
+      "tests": [
+        "OrderExpirationTest#pay_onExpiredOrder_returns409_andDoesNotCallGateway"
+      ]
+    },
+    "S13": {
+      "covered": false,
+      "tests": []
+    },
+    "S14": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#createOrder_isIdempotentPerUserAndKey",
+        "OrderConcurrencyTest#concurrentOrders_withSameIdempotencyKey_createOneOrder"
+      ]
+    },
+    "S15": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#createOrder_isIdempotentPerUserAndKey"
+      ]
+    },
+    "S16": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#pay_sameKeyReplay_doesNotChargeTwice_andOtherKeyConflicts"
+      ]
+    },
+    "S17": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#pay_gatewayFailure_returns502AndKeepsOrderPayable"
+      ]
+    },
+    "S18": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#pay_declined_marksFailedAndReleasesStockAndCoupon"
+      ]
+    },
+    "S19": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#cancel_paid_whenRefundFails_keepsPaid"
+      ]
+    },
+    "S20": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversellStock"
+      ]
+    },
+    "S21": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverExceedCouponQuantity"
+      ]
+    },
+    "S22": {
+      "covered": true,
+      "tests": [
+        "OrderConcurrencyTest#concurrentPaymentsOnSameOrder_chargeOnce"
+      ]
+    },
+    "S23": {
+      "covered": false,
+      "tests": []
+    },
+    "S24": {
+      "covered": false,
+      "tests": []
+    },
+    "S25": {
+      "covered": true,
+      "tests": [
+        "OrderFlowTest#listOrders_paginatesByCursor_andFilters"
+      ]
+    }
+  },
+  "cost_usd": 0.253936
+}

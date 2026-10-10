@@ -8,7 +8,7 @@
 출력
   results/runs.csv, results/summary.csv, 표준 출력에 Markdown 표
 
-사용법: aggregate.py [--runs A-1 A-2 ...]   (생략 시 runs/ 아래 [AC]-숫자 디렉터리 전부)
+사용법: aggregate.py [--runs A-1 A-2 ...]   (생략 시 runs/ 아래 [ABC]-숫자 디렉터리 전부)
 """
 import argparse
 import csv
@@ -20,7 +20,7 @@ from statistics import mean
 PLAYGROUND = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESULTS = os.path.join(PLAYGROUND, "results")
 RULES = re.findall(r"^- (S\d+)\.", open(os.path.join(PLAYGROUND, "PRD.md")).read(), re.M)
-GROUP_NAMES = {"A": "A 일반", "C": "C 오케스트레이션"}
+GROUP_NAMES = {"A": "A 일반", "B": "B 스킬", "C": "C 오케스트레이션"}
 
 
 def load(path, default=None):
@@ -77,7 +77,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--runs", nargs="*")
     a = ap.parse_args()
-    runs = a.runs or sorted(d for d in os.listdir(os.path.join(PLAYGROUND, "runs")) if re.fullmatch(r"[AC]-\d+", d))
+    runs = a.runs or sorted(d for d in os.listdir(os.path.join(PLAYGROUND, "runs")) if re.fullmatch(r"[ABC]-\d+", d))
     coverage_map = load(os.path.join(RESULTS, "coverage-map.json"), {})
     rows = [score(r, coverage_map) for r in runs]
     kept = [r for r in rows if not r["discard"]]
@@ -88,7 +88,7 @@ def main():
         w.writerows(rows)
 
     summary = []
-    for g in "AC":
+    for g in "ABC":
         rs = [r for r in kept if r["group"] == g]
         if not rs:
             continue

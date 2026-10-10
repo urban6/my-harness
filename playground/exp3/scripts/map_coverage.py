@@ -30,7 +30,7 @@ REQS = re.findall(r"^- (S\d+)\.", open(PRD).read(), re.M)
 REDACT = [(re.compile(p, re.I), r) for p, r in [
     (r"test-writer", "후속 작업"), (r"Phase\s*\d", "후속 단계"),
     (r"feature-pm|backend-(designer|impl)|boundary-verifier", "작업자"),
-    (r"_workspace", "docs"), (r"orchestrat\w*|harness", "-"),
+    (r"_workspace", "docs"), (r"orchestrat\w*|harness", "-"), (r"spring-boot\s*스킬|스킬|skill", "-"),
 ]]
 
 SYSTEM = (
@@ -117,10 +117,16 @@ def main():
     a = ap.parse_args()
     os.makedirs(OUT, exist_ok=True)
 
-    runs = sorted(d for d in os.listdir(os.path.join(PLAYGROUND, "runs")) if re.fullmatch(r"[AC]-\d+", d))
+    runs = sorted(d for d in os.listdir(os.path.join(PLAYGROUND, "runs")) if re.fullmatch(r"[ABC]-\d+", d))
     key_path = os.path.join(OUT, "blind-key.json")
     if os.path.exists(key_path):
         key = json.load(open(key_path))
+        # 나중에 추가된 run(보충 B 군)은 기존 라벨을 유지한 채 새 라벨로 덧붙인다 — 기존 판정 재사용
+        new = [r for r in runs if r not in key.values()]
+        random.Random(a.seed).shuffle(new)
+        for r in new:
+            key[f"X{len(key) + 1}"] = r
+        json.dump(key, open(key_path, "w"), indent=2)
     else:
         shuffled = runs[:]
         random.Random(a.seed).shuffle(shuffled)

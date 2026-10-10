@@ -778,5 +778,354 @@
         "OrderLifecycleTest#listsOrdersWithCursorPaginationAndFilters"
       ]
     }
+  },
+  "B-2": {
+    "label": "X5",
+    "S1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductAndCouponApiTest#createProduct_returns400ProblemJson_whenInvalid"
+      ]
+    },
+    "S2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#createOrder_validatesRequest"
+      ]
+    },
+    "S3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductAndCouponApiTest#createCoupon_returns400_whenRateOver100OrPeriodReversed"
+      ]
+    },
+    "S4": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S5": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#createOrder_isAtomicAcrossItems_whenOneItemLacksStock"
+      ]
+    },
+    "S7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CouponTest#discountFor_fixed_cappedBySubtotal",
+        "OrderFlowTest#createOrder_appliesFixedAndRateCoupons"
+      ]
+    },
+    "S8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#createOrder_rejectsInapplicableCoupons_andRollsBackReservation"
+      ]
+    },
+    "S9": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S10": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpirationTest#getOrder_expiresLazily_andReleasesStockAndCoupon",
+        "OrderFlowTest#cancel_pending_releasesStockAndCoupon",
+        "OrderFlowTest#pay_declined_marksFailedAndReleasesStockAndCoupon"
+      ]
+    },
+    "S11": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#cancel_pending_releasesStockAndCoupon",
+        "OrderFlowTest#shipAndDeliver_followStateMachine"
+      ]
+    },
+    "S12": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpirationTest#pay_onExpiredOrder_returns409_andDoesNotCallGateway"
+      ]
+    },
+    "S13": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S14": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_withSameIdempotencyKey_createOneOrder",
+        "OrderFlowTest#createOrder_isIdempotentPerUserAndKey"
+      ]
+    },
+    "S15": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#createOrder_isIdempotentPerUserAndKey"
+      ]
+    },
+    "S16": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#pay_sameKeyReplay_doesNotChargeTwice_andOtherKeyConflicts"
+      ]
+    },
+    "S17": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#pay_gatewayFailure_returns502AndKeepsOrderPayable"
+      ]
+    },
+    "S18": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#pay_declined_marksFailedAndReleasesStockAndCoupon"
+      ]
+    },
+    "S19": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#cancel_paid_whenRefundFails_keepsPaid"
+      ]
+    },
+    "S20": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversellStock"
+      ]
+    },
+    "S21": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverExceedCouponQuantity"
+      ]
+    },
+    "S22": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentPaymentsOnSameOrder_chargeOnce"
+      ]
+    },
+    "S23": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S24": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S25": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderFlowTest#listOrders_paginatesByCursor_andFilters"
+      ]
+    }
+  },
+  "B-1": {
+    "label": "X6",
+    "S1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductAndCouponApiTest#createProduct_returns400_problemDetail_whenInvalid"
+      ]
+    },
+    "S2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#create_mergesDuplicateProductLines",
+        "OrderCreateTest#create_returns400_whenHeadersMissingOrBodyInvalid"
+      ]
+    },
+    "S3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductAndCouponApiTest#createCoupon_returns400_whenRateOver100_orPeriodReversed"
+      ]
+    },
+    "S4": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S5": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#create_returns409_andLeavesNoReservation_whenOutOfStock"
+      ]
+    },
+    "S7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#create_fixedCoupon_neverExceedsSubtotal"
+      ]
+    },
+    "S8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#create_returns404_whenCouponMissing",
+        "OrderCreateTest#create_returns422_whenCouponExhausted",
+        "OrderCreateTest#create_returns422_whenCouponOutsidePeriod",
+        "OrderCreateTest#create_returns422_whenMinOrderAmountNotMet_andNoSideEffects"
+      ]
+    },
+    "S9": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S10": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#cancel_paid_refundsThroughGateway_andRestoresStockAndCoupon",
+        "OrderLifecycleTest#cancel_pending_releasesStockAndCoupon_withoutCallingGateway",
+        "OrderLifecycleTest#get_afterTtl_showsExpired_andReleasesStockAndCoupon",
+        "OrderLifecycleTest#pay_declined_marksPaymentFailed_andReleasesStockAndCoupon"
+      ]
+    },
+    "S11": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#cancel_returns409_afterShipped_orFailedOrExpired",
+        "OrderLifecycleTest#pay_declined_marksPaymentFailed_andReleasesStockAndCoupon",
+        "OrderLifecycleTest#ship_andDeliver_followThePaidShippedDeliveredOrder"
+      ]
+    },
+    "S12": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#pay_returns409_whenExpired_andReleasesReservation"
+      ]
+    },
+    "S13": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#scheduler_expiresDueOrders_withoutAnyRequest"
+      ]
+    },
+    "S14": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentSameIdempotencyKey_createsExactlyOneOrder",
+        "OrderCreateTest#create_sameIdempotencyKey_returnsSameOrder_withoutReservingTwice"
+      ]
+    },
+    "S15": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#create_sameKeyDifferentPayload_returns409"
+      ]
+    },
+    "S16": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#pay_sameIdempotencyKey_doesNotChargeTwice"
+      ]
+    },
+    "S17": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#pay_gatewayError_returns502_keepsOrderPending_andAllowsRetry"
+      ]
+    },
+    "S18": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#pay_declined_marksPaymentFailed_andReleasesStockAndCoupon"
+      ]
+    },
+    "S19": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#cancel_paid_whenRefundFails_returns502_andStaysPaid"
+      ]
+    },
+    "S20": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverOversellStock"
+      ]
+    },
+    "S21": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentOrders_neverExceedCouponQuantity"
+      ]
+    },
+    "S22": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderConcurrencyTest#concurrentPayments_withDifferentKeys_chargeOnlyOnce"
+      ]
+    },
+    "S23": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S24": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S25": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#list_returns400_onBadSizeCursorOrStatus"
+      ]
+    }
   }
 }
