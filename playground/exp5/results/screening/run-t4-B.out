@@ -1,0 +1,3 @@
+[run:screen-t4-B] start 2026-10-11 01:34:02 group=B task=t4 harness=12366af port=8092 budget=$40 timeout=180m
+[run:screen-t4-B] end exit=0 wall=387s
+[meta:screen-t4-B] status=success cost=$1.172516 turns=45 isolation_ok=True leaks=0 warnings=0 compactions=0 models=['claude-sonnet-5-5'] discard=False

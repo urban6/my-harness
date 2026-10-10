@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/app
+    username: app
+    password: app
+    hikari:
+      maximum-pool-size: 30
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  mvc:
+    problemdetails:
+      enabled: true
+  jackson:
+    deserialization:
+      accept-float-as-int: false
+      fail-on-trailing-tokens: true
+    mapper:
+      allow-coercion-of-scalars: false
+
+server:
+  port: 8080
+
+app:
+  payment-gateway-url: ${PAYMENT_GATEWAY_URL:http://localhost:9090}
+  order-payment-ttl: ${ORDER_PAYMENT_TTL:PT15M}

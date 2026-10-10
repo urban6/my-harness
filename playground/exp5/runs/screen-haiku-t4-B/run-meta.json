@@ -1,0 +1,153 @@
+{
+  "run": "screen-haiku-t4-B",
+  "group": "B",
+  "task": "t4",
+  "harness_sha": "12366af471c3990f37bbbb235fe12b4a6e1898d5",
+  "status": "success",
+  "exit_code": 0,
+  "wall_seconds": 489,
+  "cost_usd": 0.47923794,
+  "duration_ms": 488357,
+  "num_turns": 56,
+  "usage": {
+    "input_tokens": 56,
+    "cache_creation_input_tokens": 189547,
+    "cache_read_input_tokens": 3524430,
+    "output_tokens": 100538,
+    "output_tokens_details": {
+      "thinking_tokens": 55711
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 189547,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1882,
+        "cache_read_input_tokens": 206968,
+        "cache_creation_input_tokens": 1373,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1373
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-haiku-5-5": {
+      "inputTokens": 56,
+      "outputTokens": 100538,
+      "cacheReadInputTokens": 3524430,
+      "cacheCreationInputTokens": 189547,
+      "webSearchRequests": 0,
+      "costUSD": 0.47923794,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 55711,
+      "canonicalModel": "claude-haiku-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "model": "claude-haiku-5-5",
+  "isolation": {
+    "agent_tool_present": false,
+    "workflow_tool_present": false,
+    "skills_loaded": true,
+    "spring_boot_skill_available": true,
+    "plugins": [
+      "cc-plugin-agents-md",
+      "cc-plugin-telemetry",
+      "cc-plugin-plugin-authoring"
+    ],
+    "agents": [
+      "Explore",
+      "Plan",
+      "claude",
+      "claude-code-guide",
+      "general-purpose",
+      "statusline-setup"
+    ],
+    "skills": [
+      "spring-boot",
+      "deep-research",
+      "design",
+      "slides",
+      "design-sync",
+      "dataviz",
+      "artifact-diagramming",
+      "artifact-capabilities",
+      "update-config",
+      "verify",
+      "debug",
+      "code-review",
+      "simplify",
+      "batch",
+      "fewer-permission-prompts",
+      "doctor",
+      "loop",
+      "schedule",
+      "claude-api",
+      "workflow-authoring",
+      "run",
+      "run-skill-generator",
+      "plugin-authoring"
+    ],
+    "ok": true,
+    "problems": []
+  },
+  "compactions": 0,
+  "subagent_events_in_log": 0,
+  "tool_counts": {
+    "Bash": 17,
+    "Read": 14,
+    "Write": 13,
+    "Edit": 11
+  },
+  "skill_calls": {
+    "spring-boot (Read)": 1
+  },
+  "agent_calls": {},
+  "forbidden_access": [],
+  "warnings": [],
+  "models_used": [
+    "claude-haiku-5-5"
+  ],
+  "expected_model": "claude-haiku-5-5",
+  "other_models": [],
+  "discard": false
+}

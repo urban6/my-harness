@@ -1,0 +1,15 @@
+CREATE TABLE point_accounts (
+    user_id TEXT   PRIMARY KEY,
+    balance BIGINT NOT NULL,
+    CONSTRAINT point_accounts_balance_nonneg CHECK (balance >= 0)
+);
+
+ALTER TABLE orders
+    ADD COLUMN point_amount    BIGINT NOT NULL DEFAULT 0,
+    ADD COLUMN refunded_amount BIGINT NOT NULL DEFAULT 0,
+    ADD CONSTRAINT orders_point_range CHECK (point_amount >= 0 AND point_amount <= total_price),
+    ADD CONSTRAINT orders_refunded_range CHECK (refunded_amount >= 0 AND refunded_amount <= total_price);
+
+ALTER TABLE order_items
+    ADD COLUMN refunded_quantity BIGINT NOT NULL DEFAULT 0,
+    ADD CONSTRAINT order_items_refunded_range CHECK (refunded_quantity >= 0 AND refunded_quantity <= quantity);

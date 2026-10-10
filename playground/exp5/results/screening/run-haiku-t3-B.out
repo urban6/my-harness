@@ -1,0 +1,3 @@
+[run:screen-haiku-t3-B] start 2026-10-11 01:50:26 group=B task=t3 model=claude-haiku-5-5 harness=12366af port=8082 budget=$40 timeout=180m
+[run:screen-haiku-t3-B] end exit=0 wall=855s
+[meta:screen-haiku-t3-B] status=success cost=$0.7372195900000001 turns=49 isolation_ok=True leaks=0 warnings=0 compactions=0 models=['claude-haiku-5-5'] discard=False
