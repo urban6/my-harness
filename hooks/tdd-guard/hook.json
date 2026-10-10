@@ -1,0 +1,10 @@
+{
+  "PreToolUse": [
+    {
+      "matcher": "Edit|Write|MultiEdit",
+      "hooks": [
+        { "type": "command", "command": "__HOOK_DIR__/run.sh" }
+      ]
+    }
+  ]
+}

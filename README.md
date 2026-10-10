@@ -12,7 +12,7 @@ my-harness/
 ├── skills/      # 스택별 구현 패턴
 ├── commands/    # 슬래시 커맨드
 ├── rules/       # 규칙 (경로별 지침)
-├── hooks/       # 훅 스크립트 (settings.json에 등록, 설치 대상 아님)
+├── hooks/       # 훅 (폴더 하나 = 훅 하나, install.sh가 settings에 병합)
 ├── prompts/     # 복사해 쓰는 프롬프트 (설치 대상 아님)
 ├── docs/        # 외부 플러그인 사용법 (설치 대상 아님)
 ├── playground/  # 방식별 비교 실험 (설치 대상 아님)
@@ -95,6 +95,7 @@ my-harness/
 ./install.sh install debugger nestjs commit   # 개별 구성요소만 (확장자 없이)
 ./install.sh install --dry-run                # 변경 없이 수행 예정만 출력
 ./install.sh install --force                  # 기존 파일은 .bak으로 백업하고 교체
+./install.sh install --type hooks tdd-guard   # 훅을 settings.json에 병합 (프로젝트는 settings.local.json)
 ./install.sh list                             # 무엇이 링크됐는지 확인
 ./install.sh uninstall                        # 우리 심링크만 제거 (남의 파일 안 건드림)
 ```

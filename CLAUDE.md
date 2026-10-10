@@ -11,7 +11,7 @@
 - **네이밍**: 모든 자산 이름은 kebab-case.
 - **frontmatter**: `agents/`, `skills/`의 파일은 `name`, `description`을 반드시 채운다. `description`에는 "언제 쓰는지(트리거)"를 명확히 적는다.
 - **최소 권한**: 에이전트의 `tools`는 실제 필요한 것만 나열한다.
-- **배치**: 자산은 유형에 맞는 디렉터리에 둔다 — `agents/`, `skills/`, `commands/`, `rules/`, `hooks/`. `install.sh`는 `agents/`·`commands/`·`rules/`·`skills/`를 심링크한다. `hooks/`는 `settings.json`에 등록해야 동작하므로 설치 대상이 아니다.
+- **배치**: 자산은 유형에 맞는 디렉터리에 둔다 — `agents/`, `skills/`, `commands/`, `rules/`, `hooks/`. `install.sh`는 `agents/`·`commands/`·`rules/`·`skills/`를 심링크하고, `hooks/`는 훅 폴더(`hooks/<이름>/run.sh`·`hook.json`)의 `hook.json`을 `settings.json`(프로젝트는 `settings.local.json`)에 병합한다.
 - **실험**: 방식별 비교 실험은 `playground/`에 둔다. 설치 대상이 아니다.
 - **프롬프트 템플릿**: 사람이 복사해 쓰는 프롬프트는 `prompts/`에 개발 단계별 파일 하나로 둔다. 특정 프로젝트·스택은 `{빈칸}`이나 "채워 넣은 예시"로만 적는다. 설치 대상이 아니다.
 - **참고 문서**: 외부 플러그인 사용법 등 자산이 아닌 참고 문서는 `docs/`에 주제별 파일 하나로 둔다. 설치 대상이 아니다.
