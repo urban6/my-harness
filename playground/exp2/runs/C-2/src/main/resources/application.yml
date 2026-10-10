@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    # SPRING_DATASOURCE_URL / _USERNAME / _PASSWORD 환경 변수는 Boot relaxed binding으로 자동 우선 적용된다.
+    url: jdbc:postgresql://localhost:5432/orders   # 로컬 기본값(임의)
+    username: order                                 # 로컬 기본값(임의)
+    # password: 기본값 없음 - SPRING_DATASOURCE_PASSWORD로만 주입 (비밀값 하드코딩 금지)
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 2
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+        default_batch_fetch_size: 100
+  flyway:
+    enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      accept-float-as-int: false
+      fail-on-trailing-tokens: true
+      fail-on-null-for-primitives: true
+    mapper:
+      allow-coercion-of-scalars: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+order:
+  payment-ttl: ${ORDER_PAYMENT_TTL:PT15M}   # relaxed binding으로는 order.payment.ttl이 되므로 명시 placeholder 필수
+  expiration:
+    enabled: true
+    scan-interval-ms: 500
+    batch-size: 100
+
+payment:
+  gateway:
+    url: ${PAYMENT_GATEWAY_URL:http://localhost:9090}
+    connect-timeout: PT2S
+    read-timeout: PT2S

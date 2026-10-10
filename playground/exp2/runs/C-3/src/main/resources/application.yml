@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orders     # SPRING_DATASOURCE_URL 로 덮어씀 (relaxed binding)
+    username: orders                                  # SPRING_DATASOURCE_USERNAME
+    # password: 기본값 없음 — SPRING_DATASOURCE_PASSWORD 로 주입 (시크릿 하드코딩 금지)
+    hikari:
+      maximum-pool-size: 20
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    deserialization:
+      accept-float-as-int: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+payment:
+  gateway:
+    url: ${PAYMENT_GATEWAY_URL:http://localhost:9090}
+    timeout: PT2S
+
+order:
+  payment-ttl: ${ORDER_PAYMENT_TTL:PT15M}
+  expiry-sweep-interval-ms: 500

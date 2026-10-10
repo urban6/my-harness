@@ -1,0 +1,6 @@
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <root level="WARN"/>
+    <logger name="org.testcontainers" level="WARN"/>
+    <logger name="com.example.order" level="INFO"/>
+</configuration>

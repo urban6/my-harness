@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/order}
+    username: ${SPRING_DATASOURCE_USERNAME:order}
+    # 비밀번호는 기본값 없이 SPRING_DATASOURCE_PASSWORD 환경 변수로 주입한다.
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+        default_batch_fetch_size: 100
+
+server:
+  port: ${SERVER_PORT:8080}
+
+order:
+  payment-ttl: ${ORDER_PAYMENT_TTL:PT15M}
+
+payment-gateway:
+  url: ${PAYMENT_GATEWAY_URL:http://localhost:9090}
+  timeout: PT2S

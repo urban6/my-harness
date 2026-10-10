@@ -1,0 +1,18 @@
+commit b8187cd77d07f64e343994c61a24e7d2db6f6501
+Author: harness-eval <harness-eval@localhost>
+Date:   Sat Oct 10 04:32:58 2026 +0900
+
+    starter
+
+ .gitignore                                         |   7 +
+ build.gradle                                       |  37 +++
+ feature.md                                         | 131 +++++++++++
+ gradle/wrapper/gradle-wrapper.jar                  | Bin 0 -> 48966 bytes
+ gradle/wrapper/gradle-wrapper.properties           |   7 +
+ gradlew                                            | 248 +++++++++++++++++++++
+ gradlew.bat                                        |  93 ++++++++
+ settings.gradle                                    |   1 +
+ .../java/com/example/order/OrderApplication.java   |  12 +
+ src/main/resources/application.yml                 |   3 +
+ src/main/resources/db/migration/.gitkeep           |   0
+ 11 files changed, 539 insertions(+)
