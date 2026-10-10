@@ -1,0 +1,131 @@
+{
+  "run": "C-1",
+  "group": "C",
+  "status": "success",
+  "exit_code": 0,
+  "wall_seconds": 2824,
+  "cost_usd": 8.323101299999998,
+  "duration_ms": 41351,
+  "num_turns": 3,
+  "usage": {
+    "input_tokens": 4,
+    "cache_creation_input_tokens": 6386,
+    "cache_read_input_tokens": 207474,
+    "output_tokens": 5536,
+    "output_tokens_details": {
+      "thinking_tokens": 47
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 6386,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1938,
+        "cache_read_input_tokens": 104996,
+        "cache_creation_input_tokens": 3868,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 3868
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 262,
+      "outputTokens": 387108,
+      "cacheReadInputTokens": 14518203,
+      "cacheCreationInputTokens": 1140115,
+      "webSearchRequests": 0,
+      "costUSD": 8.323101299999998,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 131836,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "subagent_stats": {
+    "spawned": 5,
+    "requested": {
+      "background": 5,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 5,
+    "max_depth": 1,
+    "spawned_by_subagents": 0,
+    "completed": 5,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {
+      "backend-designer": 2,
+      "backend-impl": 1,
+      "boundary-verifier": 1,
+      "test-writer": 1
+    }
+  },
+  "model": "claude-sonnet-5-5",
+  "isolation": {
+    "agent_tool_present": true,
+    "workflow_tool_present": false,
+    "skills_loaded": true,
+    "spring_boot_skill_available": true,
+    "ok": true,
+    "problems": []
+  },
+  "compactions": 0,
+  "subagent_events_in_log": 418,
+  "tool_counts": {
+    "Read": 84,
+    "Bash": 69,
+    "Write": 14,
+    "Grep": 6,
+    "Agent": 5,
+    "SendMessage": 5,
+    "Glob": 4
+  },
+  "skill_calls": {
+    "spring-boot (Read)": 2
+  },
+  "agent_calls": {
+    "backend-designer": 2,
+    "backend-impl": 1,
+    "boundary-verifier": 1,
+    "test-writer": 1
+  },
+  "forbidden_access": [],
+  "warnings": [
+    {
+      "tool": "Bash",
+      "match": "escape-../../",
+      "input": "{\"command\": \"cd /Users/jeonseungchul/SideProjects/my_harness/playground/exp3/runs/C-1/src/main/java/com/example/order/payment && \\ncat > PaymentTxService.java <<'EOF'\\npackage com.example.order.payment;\\n\\nimport com.example.order.common.ApiException;\\nimport com.example.order.common.Problems;\\nimpo"
+    }
+  ],
+  "models_used": [
+    "claude-sonnet-5-5"
+  ],
+  "non_sonnet_models": [],
+  "discard": false
+}

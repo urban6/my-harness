@@ -1,0 +1,143 @@
+{
+  "feature": "order-payment",
+  "source": "feature-short.md",
+  "stack": {
+    "language": "Java 21",
+    "framework": "Spring Boot 3.5.16 (build.gradle 기준 3.x)",
+    "persistence": "Spring Data JPA + Hibernate + PostgreSQL",
+    "migration": "Flyway (flyway-core + flyway-database-postgresql)",
+    "test": "JUnit 5 + Testcontainers(PostgreSQL) + spring-boot-starter-test",
+    "testCommand": "./gradlew test",
+    "skill": null
+  },
+  "env": {
+    "SPRING_DATASOURCE_URL": "required",
+    "SPRING_DATASOURCE_USERNAME": "required",
+    "SPRING_DATASOURCE_PASSWORD": "required",
+    "SERVER_PORT": "default 8080",
+    "PAYMENT_GATEWAY_URL": "required (외부 PG base URL)",
+    "ORDER_PAYMENT_TTL": "ISO-8601 Duration, default PT15M"
+  },
+  "assumptions": [
+    "A1: available = stock - reserved. 주문 생성 시 reserved 증가, 배송(ship) 시 stock·reserved 동시 차감(재고 확정), 취소/만료/환불 시 reserved 반환.",
+    "A2: 사용자 식별은 X-User-Id 헤더뿐이며 인증은 없다. 목록 조회의 userId 쿼리는 필터.",
+    "A3: PAYMENT_FAILED 이후 재결제 허용 여부, PAID 이후 cancel 의 환불 처리, ship 시점의 재고 확정 여부는 backend-designer 가 설계 단계에서 확정하고 01_api_design.md 에 명시한다(PM 이 검토).",
+    "A4: 테스트에서 외부 PG 는 실제 호출하지 않고 스텁(WireMock 류 또는 테스트용 HTTP 서버/MockRestServiceServer)으로 대체한다. 새 의존성 추가 시 build.gradle 변경 사유를 기록."
+  ],
+  "requirements": [
+    {
+      "id": "R01",
+      "title": "상품 등록",
+      "desc": "POST /api/products {name, price, stock} → 201 + Location + 상품. name 공백/price<0/stock<0 → 400 Problem Details.",
+      "passes": false
+    },
+    {
+      "id": "R02",
+      "title": "상품 조회",
+      "desc": "GET /api/products/{id} → {id,name,price,stock,reserved,available}. available=stock-reserved. 없으면 404.",
+      "passes": false
+    },
+    {
+      "id": "R03",
+      "title": "쿠폰 등록",
+      "desc": "POST /api/coupons {code,type(FIXED|RATE),value,minOrderAmount,maxDiscountAmount,totalQuantity,validFrom,validUntil} → 201 + Location + 쿠폰. 검증(RATE 는 1~100, validFrom<validUntil, 음수 금지, 알 수 없는 type 400), code 중복 409.",
+      "passes": false
+    },
+    {
+      "id": "R04",
+      "title": "쿠폰 조회",
+      "desc": "GET /api/coupons/{code} → 요청 필드 + usedCount. 없으면 404.",
+      "passes": false
+    },
+    {
+      "id": "R05",
+      "title": "주문 생성 + 재고 예약",
+      "desc": "POST /api/orders (X-User-Id, Idempotency-Key 필수, items 1개 이상, quantity>=1) → 201 + Location + 주문(status=PENDING_PAYMENT, expiresAt=createdAt+ORDER_PAYMENT_TTL). 각 상품 reserved 를 증가시켜 재고 예약. available 부족 시 409(주문·예약 전체 롤백). 없는 상품 404. subtotal=Σ(unitPrice*quantity), unitPrice 는 주문 시점 가격 스냅샷. 동시 주문에서도 초과 예약(oversell) 금지.",
+      "passes": false
+    },
+    {
+      "id": "R06",
+      "title": "쿠폰 적용/할인 계산",
+      "desc": "couponCode 지정 시 유효기간(validFrom<=now<=validUntil)·minOrderAmount·잔여수량(totalQuantity-usedCount>0) 검증 후 discount 계산: FIXED=value, RATE=subtotal*value/100 이며 maxDiscountAmount 로 상한, subtotal 초과 불가. totalPrice=subtotal-discount. 주문 생성 시 usedCount 증가(동시성 안전, 초과 사용 금지). 없는 쿠폰 404, 사용 불가 쿠폰(기간·최소금액·소진) 422 또는 409(designer 확정). 주문 취소/만료 시 사용 수량 반환.",
+      "passes": false
+    },
+    {
+      "id": "R07",
+      "title": "주문 생성 멱등성",
+      "desc": "같은 X-User-Id + Idempotency-Key 로 같은 본문 재요청 → 최초 주문을 그대로 반환(재고·쿠폰 이중 차감 없음). 같은 키에 다른 본문 → 오류(409 또는 422). Idempotency-Key 누락 400. 동시 동일 키 요청에서도 주문 1건만 생성.",
+      "passes": false
+    },
+    {
+      "id": "R08",
+      "title": "주문 단건 조회",
+      "desc": "GET /api/orders/{id} → 주문 {id,userId,status,items[{productId,quantity,unitPrice}],couponCode,subtotal,discount,totalPrice,createdAt,expiresAt,paidAt}. 없으면 404. 조회 시점에 TTL 이 지난 PENDING_PAYMENT 는 EXPIRED 로 보여야 한다.",
+      "passes": false
+    },
+    {
+      "id": "R09",
+      "title": "주문 목록 커서 페이지네이션",
+      "desc": "GET /api/orders?userId&status&size&cursor → {content[], nextCursor}. userId/status 필터, size 기본값·최대값 제한(범위 밖 400), 안정적 정렬(예: id 내림차순) 기반 커서, 마지막 페이지 nextCursor=null, 잘못된 cursor/status 400.",
+      "passes": false
+    },
+    {
+      "id": "R10",
+      "title": "결제(PG 승인/거절)",
+      "desc": "POST /api/orders/{id}/pay (Idempotency-Key, {cardToken}) → PG POST /v1/payments {orderId,amount=totalPrice,cardToken} 호출(Idempotency-Key 전달). APPROVED → PAID + paidAt + paymentId 저장. DECLINED → PAYMENT_FAILED(재고·쿠폰 처리는 designer 확정). PENDING_PAYMENT 가 아니거나 만료된 주문은 409. 같은 Idempotency-Key 재요청은 PG 를 다시 호출하지 않고 동일 결과 반환. cardToken 누락 400.",
+      "passes": false
+    },
+    {
+      "id": "R11",
+      "title": "PG 장애 처리",
+      "desc": "PG 타임아웃/5xx/연결 실패 시 502 또는 504 Problem Details. 주문 상태가 불명확하게 PAID 로 남지 않도록 일관성 유지(PENDING_PAYMENT 유지 + 동일 Idempotency-Key 재시도 가능). PG 호출 중 DB 트랜잭션·행 잠금을 길게 잡지 않는다. 연결·읽기 타임아웃 설정.",
+      "passes": false
+    },
+    {
+      "id": "R12",
+      "title": "결제 대기 만료",
+      "desc": "ORDER_PAYMENT_TTL(기본 PT15M) 초과 PENDING_PAYMENT 주문은 EXPIRED 로 전이, 예약 재고(reserved)·쿠폰 사용 수량 반환. 스케줄러 및/또는 조회·결제 시점 lazy 만료로 구현하되 중복 해제 금지(멱등). 만료 주문의 pay/cancel 은 409.",
+      "passes": false
+    },
+    {
+      "id": "R13",
+      "title": "주문 취소/환불",
+      "desc": "POST /api/orders/{id}/cancel: PENDING_PAYMENT → CANCELLED(재고·쿠폰 반환). PAID → PG POST /v1/payments/{paymentId}/refund 호출 후 REFUNDED(재고·쿠폰 반환). 그 외 상태(SHIPPED·DELIVERED·EXPIRED·CANCELLED·REFUNDED·PAYMENT_FAILED) 409. 환불 PG 실패 시 상태 유지 + 502/504. 중복 취소 요청이 이중 반환·이중 환불을 일으키지 않는다.",
+      "passes": false
+    },
+    {
+      "id": "R14",
+      "title": "배송 상태 관리",
+      "desc": "POST /api/orders/{id}/ship: PAID → SHIPPED(재고 확정 차감 정책은 A1/designer 확정). POST /api/orders/{id}/deliver: SHIPPED → DELIVERED. 그 외 상태에서 호출 시 409. 없는 주문 404.",
+      "passes": false
+    },
+    {
+      "id": "R15",
+      "title": "상태 전이 규칙 일관성",
+      "desc": "허용 전이: PENDING_PAYMENT→{PAID,PAYMENT_FAILED,EXPIRED,CANCELLED}, PAID→{SHIPPED,REFUNDED}, SHIPPED→DELIVERED. 그 외 모두 거부(409). 전이 규칙이 한 곳(도메인)에 모여 있고 동시 요청(예: 결제 vs 만료 vs 취소)에서 낙관적/비관적 락으로 경쟁 상태가 막힌다.",
+      "passes": false
+    },
+    {
+      "id": "R16",
+      "title": "RFC 9457 오류 응답",
+      "desc": "모든 오류는 application/problem+json {type,title,status,detail,instance} (+ 필요 시 errors 확장). 검증 실패 400, 미존재 404, 상태 충돌/재고 부족/중복 409, 비즈니스 규칙 위반 422(designer 가 상태코드 매핑표 확정), PG 오류 502/504, 예상치 못한 오류 500(내부 정보 비노출). 헤더 누락·본문 파싱 오류·타입 불일치도 Problem Details.",
+      "passes": false
+    },
+    {
+      "id": "R17",
+      "title": "설정/환경 변수",
+      "desc": "SPRING_DATASOURCE_URL/USERNAME/PASSWORD, SERVER_PORT(기본 8080), PAYMENT_GATEWAY_URL, ORDER_PAYMENT_TTL(ISO-8601, 기본 PT15M)을 application.yml 에서 바인딩(@ConfigurationProperties). 잘못된 ORDER_PAYMENT_TTL 은 기동 실패.",
+      "passes": false
+    },
+    {
+      "id": "R18",
+      "title": "스키마/마이그레이션",
+      "desc": "Flyway 마이그레이션(src/main/resources/db/migration)으로 products, coupons, orders, order_items(및 멱등키·결제 정보 저장 구조) 생성. JPA ddl-auto 는 validate/none. 금액은 정수(원) 또는 NUMERIC, 제약(CHECK stock>=0, reserved<=stock, UNIQUE coupon.code, UNIQUE(user_id,idempotency_key) 등)과 조회용 인덱스(user_id,status,id 커서) 포함.",
+      "passes": false
+    },
+    {
+      "id": "R19",
+      "title": "동시성 안전성",
+      "desc": "동시 주문 시 재고 oversell 0, 쿠폰 totalQuantity 초과 사용 0, 같은 주문에 대한 동시 pay/cancel/expire 에서 최종 상태 단일·부수효과(재고 반환, 환불) 정확히 1회. Testcontainers(PostgreSQL) 기반 동시성 테스트로 증명.",
+      "passes": false
+    }
+  ]
+}

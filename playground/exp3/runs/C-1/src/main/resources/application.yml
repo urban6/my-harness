@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: order-service
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+  jackson:
+    deserialization:
+      accept-float-as-int: false
+      fail-on-numbers-for-enums: true
+  mvc:
+    problemdetails:
+      enabled: true
+  web:
+    resources:
+      add-mappings: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+order-payment:
+  ttl: ${ORDER_PAYMENT_TTL:PT15M}
+  gateway:
+    url: ${PAYMENT_GATEWAY_URL:http://localhost:8081}

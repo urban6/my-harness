@@ -1,0 +1,36 @@
+{
+  "contract_rate": 0.0,
+  "robustness_rate": 0.0952,
+  "category_rates": {
+    "입력 검증": 0.0,
+    "재고·쿠폰 정합성": 0.0,
+    "상태 전이": 0.6667,
+    "멱등성": 0.0,
+    "외부 PG 장애": 0.0,
+    "동시성": 0.0,
+    "목록": 0.0
+  },
+  "passed_items": [
+    "S12",
+    "S13"
+  ],
+  "failed_items": [],
+  "failure_categories": {},
+  "cases": [
+    {
+      "id": "S12",
+      "case": "s12_pay_after_expiry",
+      "title": "만료 시각이 지난 주문 결제 → 거절, PG 호출 없음",
+      "passed": true,
+      "seconds": 3.45
+    },
+    {
+      "id": "S13",
+      "case": "s13_expiry_releases",
+      "title": "TTL 경과 후 수 초 안에 EXPIRED + 예약·쿠폰 복원 (주문을 조회하지 않아도 상품·쿠폰에 반영)",
+      "passed": true,
+      "seconds": 6.42
+    }
+  ],
+  "phase": "ttl"
+}

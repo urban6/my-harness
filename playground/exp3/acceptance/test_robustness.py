@@ -311,6 +311,12 @@ def stock(pid):
     return num(product(pid).get("stock"))
 
 
+def available(pid):
+    """재고 차감 시점(결제·출고)은 명세가 정하지 않았다 — 결제 뒤에는 가용 재고만 본다."""
+    b = product(pid)
+    return num(b.get("stock")) - num(b.get("reserved"))
+
+
 def concurrently(fn, n):
     barrier = threading.Barrier(n)
 
@@ -418,16 +424,14 @@ def k4_discount():
 
 
 def k5_pay():
-    """결제 승인 — PAID, paidAt, 재고 차감 확정, PG 호출"""
+    """결제 승인 — PAID, paidAt, 가용 재고 유지, PG 호출"""
     p = new_product(price=2000, stock=10)
     o = new_order(items_of((p, 3)))
     r = pay(o["id"])
     expect_status(r, 200, "pay")
     g = get_order(o["id"])
     check(g["status"] == "PAID" and g.get("paidAt"), "field", f"after pay {g.get('status')} paidAt={g.get('paidAt')}")
-    pb = product(p)
-    expect_num(pb["stock"], 7, "stock after pay", "invariant")
-    expect_num(pb["reserved"], 0, "reserved after pay", "invariant")
+    expect_num(available(p), 7, "available after pay", "invariant")
     calls = pg_calls(o["id"])
     check(len(calls) == 1, "pg", f"PG payment calls {len(calls)}")
     check(calls[0].get("idempotencyKey") and num(calls[0].get("amount")) == 6000 and calls[0].get("cardToken") == "tok_ok",
@@ -760,8 +764,7 @@ def s17_gateway_failure():
     r = pay(o["id"], token="tok_slow", timeout=60)
     expect_no_500(r, "tok_slow")
     if get_order(o["id"])["status"] == "PAID":  # 끝까지 기다려 승인받는 것도 인정
-        expect_num(stock(p), 98, "tok_slow PAID: stock", "invariant")
-        expect_num(reserved(p), 0, "tok_slow PAID: reserved", "invariant")
+        expect_num(available(p), 98, "tok_slow PAID: available", "invariant")
     else:
         _consistent_after_failure(o["id"], p, 2, Decimal(2), "tok_slow")
 
@@ -830,7 +833,7 @@ def s21_coupon_quantity_race():
 
 
 def s22_concurrent_pay():
-    """같은 주문 동시 결제(키 다름) → 청구 1회, PAID"""
+    """같은 주문 동시 결제(키 다름) → 청구 1회, PAID, 가용 재고 1회만 감소"""
     for _ in range(REPEAT):
         p = new_product(stock=100)
         o = new_order(items_of((p, 1)))
@@ -839,7 +842,7 @@ def s22_concurrent_pay():
         check(any(r.ok for r in results), "concurrency", "no payment succeeded")
         check(len(charges(o["id"])) == 1, "concurrency", f"charged {len(charges(o['id']))} times")
         check(get_order(o["id"])["status"] == "PAID", "concurrency", "status not PAID")
-        expect_num(stock(p), 99, "stock", "concurrency")
+        expect_num(available(p), 99, "available", "concurrency")
 
 
 def s23_cross_order_deadlock():

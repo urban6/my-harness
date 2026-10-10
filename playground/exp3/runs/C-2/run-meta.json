@@ -1,0 +1,141 @@
+{
+  "run": "C-2",
+  "group": "C",
+  "status": "success",
+  "exit_code": 0,
+  "wall_seconds": 2232,
+  "cost_usd": 5.880554600000003,
+  "duration_ms": 43615,
+  "num_turns": 4,
+  "usage": {
+    "input_tokens": 6,
+    "cache_creation_input_tokens": 9929,
+    "cache_read_input_tokens": 241077,
+    "output_tokens": 6256,
+    "output_tokens_details": {
+      "thinking_tokens": 270
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 9929,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 1943,
+        "cache_read_input_tokens": 83727,
+        "cache_creation_input_tokens": 2275,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 2275
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 182,
+      "outputTokens": 307545,
+      "cacheReadInputTokens": 6710541,
+      "cacheCreationInputTokens": 807436,
+      "webSearchRequests": 0,
+      "costUSD": 5.880554600000003,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 98923,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "subagent_stats": {
+    "spawned": 5,
+    "requested": {
+      "background": 0,
+      "foreground": 1,
+      "unset": 4
+    },
+    "started_in_background": 4,
+    "max_depth": 1,
+    "spawned_by_subagents": 0,
+    "completed": 5,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {
+      "backend-designer": 2,
+      "backend-impl": 1,
+      "boundary-verifier": 1,
+      "test-writer": 1
+    }
+  },
+  "model": "claude-sonnet-5-5",
+  "isolation": {
+    "agent_tool_present": true,
+    "workflow_tool_present": false,
+    "skills_loaded": true,
+    "spring_boot_skill_available": true,
+    "ok": true,
+    "problems": []
+  },
+  "compactions": 0,
+  "subagent_events_in_log": 310,
+  "tool_counts": {
+    "Read": 72,
+    "Bash": 36,
+    "Write": 17,
+    "Agent": 5,
+    "Glob": 4,
+    "SendMessage": 4,
+    "Grep": 2
+  },
+  "skill_calls": {
+    "spring-boot (Read)": 2
+  },
+  "agent_calls": {
+    "backend-designer": 2,
+    "backend-impl": 1,
+    "boundary-verifier": 1,
+    "test-writer": 1
+  },
+  "forbidden_access": [],
+  "warnings": [
+    {
+      "tool": "Bash",
+      "match": "escape-../../",
+      "input": "{\"command\": \"cd /Users/jeonseungchul/SideProjects/my_harness/playground/exp3/runs/C-2/src/main/java/com/example/order && cat order/OrderController.java order/OrderDtos.java common/GlobalExceptionHandler.java common/Problems.java common/RequestHeaders.java config/*.java order/OrderExpiryService.java "
+    },
+    {
+      "tool": "Bash",
+      "match": "escape-../../",
+      "input": "{\"command\": \"cd /Users/jeonseungchul/SideProjects/my_harness/playground/exp3/runs/C-2/src/test/java/com/example/order && cat > support/TestClock.java <<'EOF'\\npackage com.example.order.support;\\n\\nimport java.time.Clock;\\nimport java.time.Duration;\\nimport java.time.Instant;\\nimport java.time.ZoneId"
+    },
+    {
+      "tool": "Bash",
+      "match": "escape-../../",
+      "input": "{\"command\": \"cd /Users/jeonseungchul/SideProjects/my_harness/playground/exp3/runs/C-2/src/test/java/com/example/order && cat > api/ProblemDetailsTest.java <<'EOF'\\npackage com.example.order.api;\\n\\nimport static com.example.order.api.ProblemAssertions.assertProblem;\\nimport static org.assertj.core.a"
+    }
+  ],
+  "models_used": [
+    "claude-sonnet-5-5"
+  ],
+  "non_sonnet_models": [],
+  "discard": false
+}

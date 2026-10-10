@@ -22,14 +22,14 @@
       "case": "s12_pay_after_expiry",
       "title": "만료 시각이 지난 주문 결제 → 거절, PG 호출 없음",
       "passed": true,
-      "seconds": 3.44
+      "seconds": 3.42
     },
     {
       "id": "S13",
       "case": "s13_expiry_releases",
       "title": "TTL 경과 후 수 초 안에 EXPIRED + 예약·쿠폰 복원 (주문을 조회하지 않아도 상품·쿠폰에 반영)",
       "passed": true,
-      "seconds": 3.21
+      "seconds": 3.22
     }
   ],
   "phase": "ttl"

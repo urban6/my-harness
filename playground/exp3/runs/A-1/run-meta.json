@@ -1,0 +1,108 @@
+{
+  "run": "A-1",
+  "group": "A",
+  "status": "success",
+  "exit_code": 0,
+  "wall_seconds": 458,
+  "cost_usd": 1.0802866,
+  "duration_ms": 456571,
+  "num_turns": 14,
+  "usage": {
+    "input_tokens": 28,
+    "cache_creation_input_tokens": 92687,
+    "cache_read_input_tokens": 787526,
+    "output_tokens": 63073,
+    "output_tokens_details": {
+      "thinking_tokens": 20028
+    },
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 92687,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "global",
+    "iterations": [
+      {
+        "input_tokens": 2,
+        "output_tokens": 2453,
+        "cache_read_input_tokens": 91522,
+        "cache_creation_input_tokens": 1165,
+        "cache_creation": {
+          "ephemeral_5m_input_tokens": 0,
+          "ephemeral_1h_input_tokens": 1165
+        },
+        "type": "message"
+      }
+    ],
+    "speed": "standard",
+    "fallback_credit": null
+  },
+  "model_usage": {
+    "claude-sonnet-5-5": {
+      "inputTokens": 28,
+      "outputTokens": 63073,
+      "cacheReadInputTokens": 787526,
+      "cacheCreationInputTokens": 92687,
+      "webSearchRequests": 0,
+      "costUSD": 1.0802866,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 128000,
+      "thinkingTokens": 20028,
+      "canonicalModel": "claude-sonnet-5-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "subagent_stats": {
+    "spawned": 0,
+    "requested": {
+      "background": 0,
+      "foreground": 0,
+      "unset": 0
+    },
+    "started_in_background": 0,
+    "max_depth": 0,
+    "spawned_by_subagents": 0,
+    "completed": 0,
+    "failed": 0,
+    "killed": {
+      "parent": 0,
+      "user": 0,
+      "system": 0
+    },
+    "refused": {
+      "depth_limit": 0,
+      "concurrency_limit": 0,
+      "budget": 0
+    },
+    "by_type": {}
+  },
+  "model": "claude-sonnet-5-5",
+  "isolation": {
+    "agent_tool_present": false,
+    "workflow_tool_present": false,
+    "skills_loaded": false,
+    "spring_boot_skill_available": false,
+    "ok": true,
+    "problems": []
+  },
+  "compactions": 0,
+  "subagent_events_in_log": 0,
+  "tool_counts": {
+    "Bash": 12,
+    "Edit": 1
+  },
+  "skill_calls": {},
+  "agent_calls": {},
+  "forbidden_access": [],
+  "warnings": [],
+  "models_used": [
+    "claude-sonnet-5-5"
+  ],
+  "non_sonnet_models": [],
+  "discard": false
+}

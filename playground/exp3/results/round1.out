@@ -1,0 +1,25 @@
+[run:C-1] start 2026-10-10 15:44:38 group=C budget=$15 timeout=180m
+[run:C-1] end exit=0 wall=2824s
+[meta:C-1] status=success cost=$8.323101299999998 turns=3 isolation_ok=True leaks=0 warnings=1 compactions=0 models=['claude-sonnet-5-5'] discard=False
+[grade:C-1] assemble_ok=true
+[grade:C-1] tests={"tests": 228, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:C-1] coverage={"branch_covered": 321, "branch_total": 378, "branch_coverage": 0.8492}
+[grade:C-1] boot_ok=true
+28/33 passed, failed: ['K5', 'S1', 'S9', 'S17', 'S22']
+[grade:C-1] boot_ttl_ok=true
+2/2 passed, failed: []
+[grade:C-1] contract=0.9 robustness=0.8595 failed=['K5', 'S1', 'S9', 'S17', 'S22']
+[grade:C-1] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp3/results/C-1.json
+[run:A-1] start 2026-10-10 16:32:42 group=A budget=$15 timeout=180m
+[run:A-1] end exit=0 wall=458s
+[meta:A-1] status=success cost=$1.0802866 turns=14 isolation_ok=True leaks=0 warnings=0 compactions=0 models=['claude-sonnet-5-5'] discard=False
+[grade:A-1] assemble_ok=true
+[grade:A-1] tests={"tests": 35, "failures": 0, "errors": 0, "skipped": 0, "gradle_exit": 0, "ok": true}
+[grade:A-1] coverage={"branch_covered": 121, "branch_total": 146, "branch_coverage": 0.8288}
+[grade:A-1] boot_ok=true
+31/33 passed, failed: ['S1', 'S9']
+[grade:A-1] boot_ttl_ok=true
+2/2 passed, failed: []
+[grade:A-1] contract=1.0 robustness=0.9429 failed=['S1', 'S9']
+[grade:A-1] written /Users/jeonseungchul/SideProjects/my_harness/playground/exp3/results/A-1.json
+[round] done: C-1 A-1

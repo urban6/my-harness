@@ -1,0 +1,49 @@
+{
+  "feature": "order-payment",
+  "source": "feature-short.md",
+  "stack": {
+    "language": "Java 21",
+    "framework": "Spring Boot 3.5.x (build.gradle: org.springframework.boot 3.5.16)",
+    "persistence": "Spring Data JPA + Hibernate + PostgreSQL",
+    "migration": "Flyway",
+    "test": "JUnit 5 + Testcontainers(PostgreSQL)",
+    "testCommand": "./gradlew test",
+    "skill": null
+  },
+  "config": {
+    "env": {
+      "SPRING_DATASOURCE_URL": "required",
+      "SPRING_DATASOURCE_USERNAME": "required",
+      "SPRING_DATASOURCE_PASSWORD": "required",
+      "SERVER_PORT": "default 8080",
+      "PAYMENT_GATEWAY_URL": "base URL of external PG",
+      "ORDER_PAYMENT_TTL": "ISO-8601 duration, default PT15M"
+    }
+  },
+  "verification": "./gradlew cleanTest test -> BUILD SUCCESSFUL, tests=235 skipped=0 failures=0 errors=0",
+  "requirements": [
+    { "id": "REQ-01", "title": "상품 등록", "desc": "POST /api/products {name, price, stock} -> 201 + Location + 상품. 입력 검증.", "passes": true },
+    { "id": "REQ-02", "title": "상품 조회", "desc": "GET /api/products/{id} -> {id,name,price,stock,reserved,available}. 없으면 404.", "passes": true },
+    { "id": "REQ-03", "title": "쿠폰 등록", "desc": "POST /api/coupons -> 201 + Location + 쿠폰. code 중복 409. 입력 검증.", "passes": true },
+    { "id": "REQ-04", "title": "쿠폰 조회", "desc": "GET /api/coupons/{code} -> 요청 필드 + usedCount. 없으면 404.", "passes": true },
+    { "id": "REQ-05", "title": "주문 생성 + 재고 예약", "desc": "POST /api/orders -> 201 + Location + 주문(PENDING_PAYMENT). 재고 예약, 부족 시 409, 오버셀 금지.", "passes": true },
+    { "id": "REQ-06", "title": "쿠폰 적용/할인 계산", "desc": "유효기간·최소금액·잔여수량 검증, FIXED/RATE 할인, 상한, clamp.", "passes": true },
+    { "id": "REQ-07", "title": "주문 생성 멱등성", "desc": "같은 Idempotency-Key 재생, 다른 본문 409, X-User-Id 누락 400.", "passes": true },
+    { "id": "REQ-08", "title": "주문 단건 조회", "desc": "GET /api/orders/{id}, expiresAt = createdAt + ORDER_PAYMENT_TTL.", "passes": true },
+    { "id": "REQ-09", "title": "주문 목록 커서 페이지네이션", "desc": "GET /api/orders?userId&status&size&cursor -> {content[], nextCursor}.", "passes": true },
+    { "id": "REQ-10", "title": "결제 (외부 PG 승인)", "desc": "POST /api/orders/{id}/pay. APPROVED -> PAID, DECLINED -> PAYMENT_FAILED.", "passes": true },
+    { "id": "REQ-11", "title": "결제 멱등성 및 PG 장애 처리", "desc": "같은 키 재요청 시 PG 중복 호출 없음. PG 장애 시 롤백, 502/504, 재시도 가능.", "passes": true },
+    { "id": "REQ-12", "title": "주문 취소 및 환불", "desc": "PENDING_PAYMENT -> CANCELLED, PAID -> PG 환불 -> REFUNDED, 환불 실패 시 PAID 유지.", "passes": true },
+    { "id": "REQ-13", "title": "결제 대기 만료", "desc": "TTL 경과 시 EXPIRED, 재고·쿠폰 해제. 스케줄러 + lazy.", "passes": true },
+    { "id": "REQ-14", "title": "배송 상태 관리", "desc": "ship: PAID -> SHIPPED, deliver: SHIPPED -> DELIVERED, 그 외 409.", "passes": true },
+    { "id": "REQ-15", "title": "오류 응답 Problem Details", "desc": "RFC 9457 application/problem+json.", "passes": true },
+    { "id": "REQ-16", "title": "스키마 및 설정", "desc": "Flyway 마이그레이션, 환경 변수 바인딩, BIGINT 금액.", "passes": true },
+    { "id": "REQ-17", "title": "동시성 안전성", "desc": "오버셀 없음, 쿠폰 초과 없음, 같은 키 동시 요청 단일 주문, pay/cancel 경합 일관.", "passes": true }
+  ],
+  "phases": {
+    "0": "요구 분해 (PM)",
+    "1": "설계 (backend-designer)",
+    "2": "구현·검증 (backend-impl + boundary-verifier + backend-designer 대기)",
+    "3": "테스트·통합 (test-writer, 03_integration_summary.md)"
+  }
+}

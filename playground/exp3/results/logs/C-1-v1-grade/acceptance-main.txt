@@ -1,0 +1,35 @@
+PASS                   K1   k1_product
+PASS                   K2   k2_coupon
+PASS                   K3   k3_order_create
+PASS                   K4   k4_discount
+FAIL[invariant]        K5   k5_pay — stock after pay: expected 7, got 10
+PASS                   K6   k6_cancel_pending
+PASS                   K7   k7_cancel_paid
+PASS                   K8   k8_ship_deliver
+PASS                   K9   k9_list
+PASS                   K10  k10_problem_details
+FAIL[reject]           S1   s1_product_validation — product {'name': 'x', 'price': 0, 'stock': 1}: expected 4xx, got 201 {"id":12,"name":"x","price":0,"stock":1,"reserved":0,"available":1}
+PASS                   S2   s2_order_items_validation
+PASS                   S3   s3_coupon_validation
+PASS                   S4   s4_malformed_json
+PASS                   S5   s5_amount_overflow
+PASS                   S6   s6_insufficient_stock_atomic
+PASS                   S7   s7_discount_over_subtotal
+PASS                   S8   s8_coupon_conditions
+FAIL[reject]           S9   s9_coupon_once_per_user — second use: expected 4xx, got 201 {"id":29,"userId":"890015745","status":"PENDING_PAYMENT","items":[{"productId":23,"quantity":1,"unitPrice":1000}],"couponCode":"CI4T0RGZX7K4","subtotal":1000,"d
+PASS                   S10  s10_restore_on_cancel_refund
+PASS                   S11  s11_invalid_transitions
+PASS                   S14  s14_create_replay
+PASS                   S15  s15_create_key_mismatch
+PASS                   S16  s16_pay_replay
+FAIL[status]           S17  s17_gateway_failure — tok_error: retry after gateway failure: expected 2xx, got 409 {"type":"urn:problem:order-payment:idempotency-key-conflict","title":"Idempotency key conflict","status":409,"detail":"This order already has a payment attemp
+PASS                   S18  s18_declined
+PASS                   S19  s19_refund_failure
+PASS                   S20  s20_stock_race
+PASS                   S21  s21_coupon_quantity_race
+FAIL[concurrency]      S22  s22_concurrent_pay — stock: expected 99, got Decimal('100')
+PASS                   S23  s23_cross_order_deadlock
+PASS                   S24  s24_cursor_stable
+PASS                   S25  s25_invalid_list_params
+
+28/33 passed, failed: ['K5', 'S1', 'S9', 'S17', 'S22']

@@ -74,12 +74,12 @@
       "case": "k4_discount",
       "title": "쿠폰 할인 — 정액, 정률, 최대 할인액",
       "passed": true,
-      "seconds": 0.04
+      "seconds": 0.05
     },
     {
       "id": "K5",
       "case": "k5_pay",
-      "title": "결제 승인 — PAID, paidAt, 재고 차감 확정, PG 호출",
+      "title": "결제 승인 — PAID, paidAt, 가용 재고 유지, PG 호출",
       "passed": true,
       "seconds": 0.07
     },
@@ -88,7 +88,7 @@
       "case": "k6_cancel_pending",
       "title": "미결제 취소 — CANCELLED",
       "passed": true,
-      "seconds": 0.03
+      "seconds": 0.02
     },
     {
       "id": "K7",
@@ -130,7 +130,7 @@
       "case": "s2_order_items_validation",
       "title": "수량 0·음수, 빈 items → 거절 + 불변 / 같은 상품 중복 → 거절 또는 정확히 합산",
       "passed": true,
-      "seconds": 0.03
+      "seconds": 0.04
     },
     {
       "id": "S3",
@@ -165,7 +165,7 @@
       "case": "s7_discount_over_subtotal",
       "title": "할인 > 소계 → totalPrice 음수 아님",
       "passed": true,
-      "seconds": 0.02
+      "seconds": 0.01
     },
     {
       "id": "S8",
@@ -179,21 +179,21 @@
       "case": "s9_coupon_once_per_user",
       "title": "같은 사용자가 같은 쿠폰을 다시 사용 → 거절",
       "passed": true,
-      "seconds": 0.05
+      "seconds": 0.04
     },
     {
       "id": "S10",
       "case": "s10_restore_on_cancel_refund",
       "title": "취소·환불 → 예약·쿠폰 사용 복원",
       "passed": true,
-      "seconds": 0.07
+      "seconds": 0.06
     },
     {
       "id": "S11",
       "case": "s11_invalid_transitions",
       "title": "허용되지 않은 전이 → 거절 + 불변",
       "passed": true,
-      "seconds": 0.21
+      "seconds": 0.22
     },
     {
       "id": "S14",
@@ -214,7 +214,7 @@
       "case": "s16_pay_replay",
       "title": "같은 결제 재시도 → PG 결제 1회",
       "passed": true,
-      "seconds": 0.03
+      "seconds": 0.02
     },
     {
       "id": "S17",
@@ -228,7 +228,7 @@
       "case": "s18_declined",
       "title": "PG 거절 → PAID 아님 + 실패 처리면 예약·쿠폰 복원",
       "passed": true,
-      "seconds": 0.06
+      "seconds": 0.04
     },
     {
       "id": "S19",
@@ -242,21 +242,21 @@
       "case": "s20_stock_race",
       "title": "available 10에 동시 주문 20건 → 성공 정확히 10",
       "passed": true,
-      "seconds": 0.35
+      "seconds": 0.29
     },
     {
       "id": "S21",
       "case": "s21_coupon_quantity_race",
       "title": "수량 5 쿠폰에 15명 동시 주문·결제 → 쿠폰 적용 결제 정확히 5",
       "passed": true,
-      "seconds": 0.42
+      "seconds": 0.37
     },
     {
       "id": "S22",
       "case": "s22_concurrent_pay",
-      "title": "같은 주문 동시 결제(키 다름) → 청구 1회, PAID",
+      "title": "같은 주문 동시 결제(키 다름) → 청구 1회, PAID, 가용 재고 1회만 감소",
       "passed": true,
-      "seconds": 0.13
+      "seconds": 0.12
     },
     {
       "id": "S23",
@@ -270,7 +270,7 @@
       "case": "s24_cursor_stable",
       "title": "페이지 순회 중 새 주문 생성 → 처음 있던 주문이 중복·누락 없음",
       "passed": true,
-      "seconds": 0.05
+      "seconds": 0.04
     },
     {
       "id": "S25",

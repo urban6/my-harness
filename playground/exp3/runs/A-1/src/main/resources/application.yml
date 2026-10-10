@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/order}
+    username: ${SPRING_DATASOURCE_USERNAME:order}
+    password: ${SPRING_DATASOURCE_PASSWORD:order}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+server:
+  port: ${SERVER_PORT:8080}
+
+order:
+  payment-ttl: ${ORDER_PAYMENT_TTL:PT15M}
+  expiration-sweep-interval: PT1S
+
+payment:
+  gateway:
+    url: ${PAYMENT_GATEWAY_URL:http://localhost:9090}
+    connect-timeout: PT2S
+    read-timeout: PT5S

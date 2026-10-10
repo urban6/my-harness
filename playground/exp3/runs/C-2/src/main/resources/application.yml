@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: order-service
+  datasource:
+    # Required environment variables. Empty defaults let Testcontainers (@ServiceConnection / @DynamicPropertySource) override them.
+    url: ${SPRING_DATASOURCE_URL:}
+    username: ${SPRING_DATASOURCE_USERNAME:}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+  web:
+    locale: en                        # deterministic validation messages
+    locale-resolver: fixed
+  mvc:
+    problemdetails:
+      enabled: true
+  jackson:
+    deserialization:
+      accept-float-as-int: false      # price 10.5 -> long truncation must be a 400
+
+server:
+  port: ${SERVER_PORT:8080}
+
+order:
+  payment-ttl: ${ORDER_PAYMENT_TTL:PT15M}     # java.time.Duration, must be positive
+  expiry-sweep-enabled: true
+  expiry-sweep-interval: PT10S
+
+payment:
+  gateway:
+    url: ${PAYMENT_GATEWAY_URL:http://localhost:9090}
+    connect-timeout: PT2S
+    read-timeout: PT5S
