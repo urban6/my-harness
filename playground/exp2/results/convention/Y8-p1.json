@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "모든 파일이 jakarta.persistence/jakarta.validation/jakarta.servlet을 import한다. 예: OrderItem.java, OrderController.java"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication이 com.example.order에 있고, 모든 컴포넌트가 com.example.order.* 하위 패키지에 있다."
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: 스타터 web/validation/data-jpa를 쓰고, flyway-core·flyway-database-postgresql·postgresql·testcontainers만 추가했다. 모두 스타터에 포함되지 않는 필요한 의존성이다."
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "CouponService.create(CreateCouponRequest)와 OrderService.create(CreateOrderRequest)가 웹 요청 DTO(검증·@JsonIgnore 애노테이션 포함)에 의존한다."
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 컴포넌트(OrderService, OrderController, PaymentGatewayClient, OrderRepositoryImpl 등)가 final 필드에 생성자 주입을 쓰고, @Autowired는 없다."
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "요청·응답이 record DTO다(CreateOrderRequest, OrderResponse, CouponResponse, ProductResponse 등). 엔티티는 from() 팩토리로 변환한다."
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "CreateOrderRequest/OrderItemRequest/PayOrderRequest/CreateCouponRequest/CreateProductRequest에 제약 애노테이션이 있고, 각 컨트롤러의 @RequestBody에 @Valid가 붙어 있다."
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "OrderController/CouponController/ProductController는 서비스·IdempotentRequestExecutor에 위임하고 Location URI만 만든다. @Transactional과 리포지토리 접근이 없다."
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "OrderService/CouponService/ProductService는 클래스에 @Transactional(readOnly = true)를 두고 쓰기 메서드만 @Transactional로 지정한다. OrderLifecycleService.findExpiredPendingOrderIds는 readOnly = true다. 컨트롤러·리포지토리에는 @Transactional이 없다."
+    },
+    "Q10": {
+      "verdict": "compliant",
+      "evidence": "서비스(OrderService, OrderLifecycleService, CouponService, ProductService, IdempotencyService)는 BusinessException(ErrorCode)만 던지고 HttpStatus/ResponseEntity를 쓰지 않는다."
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler(@RestControllerAdvice)의 statusOf(ErrorCode)에서 상태 매핑을 한 곳에 모아 처리한다."
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.problem()/handleExceptionInternal이 ProblemDetail을 만들고 contentType을 APPLICATION_PROBLEM_JSON으로 지정한다."
+    },
+    "Q13": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleMethodArgumentNotValid가 FieldError마다 'field: message'를 detail에 담는다."
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleUnexpected는 로그만 남기고, 응답에는 고정 문구 '예상치 못한 오류가 발생했습니다.'만 담는다."
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "OrderItem.order가 @ManyToOne(fetch = FetchType.LAZY)이다."
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list는 readOnly 트랜잭션 안에서 OrderResponse.from으로 items에 접근하고, application.yml의 default_batch_fetch_size: 100으로 일괄 조회한다. open-in-view는 false다."
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml: datasource url/username과 PAYMENT_GATEWAY_URL을 환경 변수로 주입하고, 비밀번호는 SPRING_DATASOURCE_PASSWORD 환경 변수로만 주입한다."
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayProperties(url, timeout)와 OrderProperties(paymentTtl)가 @ConfigurationProperties record로 묶여 있고, @ConfigurationPropertiesScan으로 바인딩된다."
+    }
+  },
+  "cost_usd": 0.3377534
+}

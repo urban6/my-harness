@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "모든 소스가 jakarta.persistence.*, jakarta.validation.*을 import하고 javax.*는 없음 (예: orders/Order.java, coupon/dto/CreateCouponRequest.java)"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication은 com.example.order에 있고 모든 컴포넌트가 com.example.order.* 하위 패키지(common, coupon, idempotency, orders, payment, product)에 있음"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle의 의존성은 web/validation/data-jpa 스타터, Flyway(core·postgresql), postgresql 드라이버, 테스트용 testcontainers뿐이며, 스타터로 대체할 수 있는 것을 개별 추가한 곳이 없음"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.execute()·replay()가 서비스 계층에서 ResponseEntity·HttpHeaders·MediaType(웹 응답 타입)에 의존함. OrderService.create(CreateOrderRequest)와 CouponService.create(CreateCouponRequest)도 웹 요청 DTO를 직접 받음"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 컴포넌트(OrderService, OrderLifecycleService, PaymentGatewayClient, IdempotencyRepository 등)가 생성자 주입을 쓰고 주입 필드가 private final이며, @Autowired 필드 주입이 없음"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "요청·응답이 모두 record DTO(CreateOrderRequest, OrderResponse, CouponResponse, ProductResponse 등)이고, 엔티티는 각 DTO의 from()으로 변환됨"
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "CreateOrderRequest, OrderItemRequest, PayOrderRequest, CreateCouponRequest, CreateProductRequest에 @NotNull/@Size/@Min 등의 제약이 있고, OrderController·CouponController·ProductController의 @RequestBody 파라미터에 @Valid가 있음"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "OrderController, CouponController, ProductController는 서비스에 위임하고 Location URI만 만듦. @Transactional이나 리포지토리 직접 접근이 없음"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional은 OrderService·CouponService·ProductService(클래스 레벨 readOnly=true, 쓰기 메서드만 @Transactional)와 OrderLifecycleService(findExpiredOrderIds는 readOnly=true)에만 있고, 컨트롤러·리포지토리에는 없음"
+    },
+    "Q10": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService(@Service)의 execute()와 replay()가 ResponseEntity.status(...)·HttpHeaders.LOCATION·MediaType으로 HTTP 응답을 직접 만들고 다룸"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler(@RestControllerAdvice)의 statusOf(ErrorCode)에서 예외를 HTTP 상태로 한곳에서 매핑함"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler의 problem()·handleExceptionInternal()이 ProblemDetail을 MediaType.APPLICATION_PROBLEM_JSON으로 반환함"
+    },
+    "Q13": {
+      "verdict": "violation",
+      "evidence": "GlobalExceptionHandler는 handleMethodArgumentNotValid에서만 errors 맵을 채움. OrderController의 @RequestHeader @Size, @RequestParam @Min/@Max 검증 실패(HandlerMethodValidationException)는 handleExceptionInternal로 가서 필드별 오류 없이 400이 됨"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleUnexpected는 예외를 로그로만 남기고 고정 문구 '예상치 못한 오류가 발생했습니다.'만 응답함"
+    },
+    "Q15": {
+      "verdict": "not_applicable",
+      "evidence": "@ManyToOne·@OneToOne 매핑이 없음. Order.lines는 @ElementCollection이고 couponCode·productId는 단순 컬럼임"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list(readOnly 트랜잭션 안)에서 OrderResponse.from이 lines 컬렉션에 접근하며, application.yml의 hibernate.default_batch_fetch_size: 100으로 일괄 로딩함"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml이 datasource url/username, PAYMENT_GATEWAY_URL을 ${ENV:default}로 받고, 비밀번호는 환경 변수로만 주입함. 코드에 하드코딩된 값이 없음"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayProperties(url, timeout)와 orders/OrderProperties(paymentTtl)가 @ConfigurationProperties 레코드이고 @ConfigurationPropertiesScan으로 바인딩됨. 흩어진 @Value 사용은 없음"
+    }
+  },
+  "cost_usd": 0.12113239999999997
+}

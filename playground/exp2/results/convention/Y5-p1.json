@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "모든 소스가 jakarta.persistence.*, jakarta.validation.*를 import함 (예: orders/Order.java, orders/dto/CreateOrderRequest.java), javax.* 없음"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication(com.example.order) 아래에 모든 클래스가 com.example.order.* 패키지에 있음"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web/validation/data-jpa 스타터, flyway-core·flyway-database-postgresql(스타터 없음), postgresql 드라이버, 테스트용 testcontainers만 있음"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "coupon/CouponService.create(CreateCouponRequest)→CouponResponse, orders/OrderService.create(CreateOrderRequest)·get/list→OrderResponse/OrderPageResponse 등 서비스가 웹 요청·응답 DTO(coupon.dto, orders.dto)에 의존"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 컴포넌트(OrderService, OrderFacade, IdempotencyStore, 컨트롤러 등)가 생성자 주입 + private final 필드, @Autowired 없음"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "요청은 record(CreateOrderRequest, PayRequest, CreateCouponRequest, CreateProductRequest), 응답은 record(OrderResponse, CouponResponse, ProductResponse) 또는 그 JSON 직렬화 문자열(OrderController.toResponse). 엔티티를 직접 노출하지 않음"
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "요청 DTO에 @NotNull/@Pattern/@Min/@NotBlank 등이 있고, OrderController.create/pay, CouponController.create, ProductController.create의 @RequestBody에 @Valid가 있음"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "컨트롤러들은 서비스/파사드에 위임만 하고 @Transactional·리포지토리 접근이 없음 (OrderController.list는 파라미터 enum 변환·정규화만 함)"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional은 OrderService/PaymentService/CouponService/ProductService에만 있음. get/list 메서드는 @Transactional(readOnly = true)"
+    },
+    "Q10": {
+      "verdict": "compliant",
+      "evidence": "서비스는 BusinessException(ErrorCode)·PaymentGatewayUnavailableException을 던지고, HttpStatus·ResponseEntity·ResponseStatusException을 쓰지 않음 (OrderService, PaymentService, CouponService, ProductService)"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler(@RestControllerAdvice)에서 BusinessException·DataIntegrityViolation·Exception을 모두 HTTP 상태로 매핑함"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.build/handleExceptionInternal이 ProblemDetail을 만들고 Content-Type을 MediaType.APPLICATION_PROBLEM_JSON으로 설정함"
+    },
+    "Q13": {
+      "verdict": "violation",
+      "evidence": "GlobalExceptionHandler: handleMethodArgumentNotValid만 errors를 넣음. OrderController 헤더·파라미터 제약(@NotBlank/@Size/@Min/@Max) 실패(HandlerMethodValidationException)는 handleExceptionInternal 기본 ProblemDetail로 나가고, handleConstraintViolation도 필드 정보 없이 응답함"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleAny/handleDataIntegrity는 고정 문구 \"Internal server error\"만 응답하고 로그에만 예외를 남김. handleExceptionInternal도 5xx면 고정 문구 사용"
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderItem.order: @ManyToOne(fetch = FetchType.LAZY, optional = false)"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list(readOnly 트랜잭션 안)에서 OrderResponse.from이 items에 접근하고, application.yml의 hibernate.default_batch_fetch_size: 100으로 일괄 조회함. open-in-view false지만 트랜잭션 안에서만 접근"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml: datasource 비밀번호는 SPRING_DATASOURCE_PASSWORD 환경변수, PG URL은 ${PAYMENT_GATEWAY_URL}. PaymentGatewayConfig는 PaymentGatewayProperties에서 주입받음"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayProperties(url, timeout), orders/OrderProperties(paymentTtl, expirySweepIntervalMs)를 @ConfigurationProperties record로 바인딩함 (@ConfigurationPropertiesScan)"
+    }
+  },
+  "cost_usd": 0.4168774
+}

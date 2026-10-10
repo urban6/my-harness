@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "Coupon.java, Order.java, OrderItem.java, Product.java, OrderQueryService.java, *Repository.java 모두 jakarta.persistence.* 사용, javax.* import 없음"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication(com.example.order) 아래 common/coupon/idempotency/orders/payment/product 하위 패키지에 모든 컴포넌트 위치"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web/validation/data-jpa 스타터 + flyway-core·flyway-database-postgresql·postgresql 드라이버·testcontainers만 사용, 스타터와 중복되는 개별 의존성 없음"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.execute()·StoredRecord.toResponse()가 ResponseEntity·HttpHeaders 사용, common/ErrorCode(HttpStatus 보유)·ApiException에 서비스(OrderService, CouponService, ProductService)가 의존"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 @Service/@Component/@RestController가 생성자 주입, 주입 필드 final, @Autowired 필드 주입 없음 (예: OrderService, OrderController, PaymentGatewayClient)"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "CouponDtos/OrderDtos/ProductDtos의 record 요청·응답 사용, 엔티티는 CouponResponse.from 등으로 변환 후 반환"
+    },
+    "Q7": {
+      "verdict": "violation",
+      "evidence": "CouponDtos.CreateCouponRequest, OrderDtos.CreateOrderRequest/PayRequest, ProductDtos.CreateProductRequest에 제약 애노테이션 없음; CouponController.create·OrderController.create/pay·ProductController.create의 @RequestBody에 @Valid 없음 (수동 Validations 사용)"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "OrderController/CouponController/ProductController에 @Transactional·리포지토리 접근 없음, 도메인 처리는 OrderService/OrderQueryService 등에 위임 (컨트롤러에는 요청 파라미터 파싱·검증과 멱등성 위임만 있음)"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional은 OrderService/ProductService/CouponService/OrderQueryService에만 있음; 조회 메서드 OrderService.get, CouponService.get, ProductService.get, OrderQueryService.list는 readOnly = true"
+    },
+    "Q10": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.execute()가 ResponseEntity<String>을 반환하고 HttpHeaders/MediaType 사용; 서비스가 던지는 ApiException의 ErrorCode가 HttpStatus를 직접 보유(common/ErrorCode)"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/GlobalExceptionHandler(@RestControllerAdvice)에서 ApiException·PaymentGatewayUnavailableException·검증 예외·기타 예외를 HTTP 상태로 일괄 변환"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "common/GlobalExceptionHandler.problem()/handleOther()가 ProblemDetail과 MediaType.APPLICATION_PROBLEM_JSON으로 응답 생성"
+    },
+    "Q13": {
+      "verdict": "violation",
+      "evidence": "common/GlobalExceptionHandler.handleBadRequest()가 MethodArgumentNotValidException 등을 e.getMessage() 단일 문자열로만 반환하고, Validations.require도 단일 detail만 제공해 필드별 오류 목록이 없음"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "common/GlobalExceptionHandler.handleOther(): 예외는 로그만 남기고 응답 detail은 'Unexpected server error' 고정"
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderItem.order: @ManyToOne(fetch = FetchType.LAZY, optional = false)"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderQueryService.list()가 readOnly 트랜잭션 안에서 OrderResponse.from(order)로 items에 접근하고, application.yml의 hibernate.default_batch_fetch_size: 100으로 일괄 조회; open-in-view false"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml datasource url/username/password가 ${SPRING_DATASOURCE_*}, PG url이 ${PAYMENT_GATEWAY_URL}로 주입; PaymentGatewayClient는 PaymentGatewayProperties에서 URL 수신"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayProperties(url, timeout), orders/OrderPaymentProperties(ttl)를 @ConfigurationProperties record로 바인딩, @ConfigurationPropertiesScan 사용; @Value 없음"
+    }
+  },
+  "cost_usd": 0.10371899999999999
+}

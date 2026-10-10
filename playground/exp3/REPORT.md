@@ -81,7 +81,20 @@
 - **동결 후 테스트 수정 1건**: K5·S17·S22가 "결제 시 재고 차감"을 강요하던 편향을 라운드 1 뒤 수정(가용 재고로 판정), 전 run 수정판으로 채점. 수정 전 결과는 `results/*-v1.json`.
 - **설계 판정은 설계 문서만 본다** — 문서와 코드가 다를 때(S17) 분류가 실제 원인과 어긋날 수 있다.
 
-## 8. 원자료
+## 8. 보충 — A effort medium (2026-10-10)
+
+같은 조건(짧은 명세, Sonnet)에서 A만 effort를 high → medium으로 낮춰 2회(`Am-1`·`Am-2`). 테스트 품질 매핑은 하지 않았다.
+
+| 설정 | 견고성 (50) | 실패 항목 | 비용 | 시간 | 자체 테스트 |
+|---|---|---|---|---|---|
+| high (A-1·A-2) | 47.9 | S1 S9 / S9 | $1.12 | 8.2분 | 36 |
+| medium (Am-1·Am-2) | 46.4 | S1 S3 S9 / S1 S9 | $0.70 (−37%) | 5.0분 (−39%) | 17 |
+
+- medium에서 추가로 놓친 항목은 1건(Am-1의 S3: `validFrom == validUntil` 허용). 계약·완료성은 만점.
+- 자체 테스트는 절반 — 테스트 품질은 낮아질 가능성이 크다. 비용 차이 자체가 작아(run당 $0.4) 간단한 기능은 medium, 테스트까지 챙길 땐 high가 무난하다.
+- 원자료: `results/Am-*.json`, `runs/Am-*/`, `results/effort-medium.out`.
+
+## 9. 원자료
 
 - `results/{run}.json` 채점 원본 · `results/runs.csv` · `results/summary.csv` · `results/controls/` 대조군
 - `runs/{run}/run-meta.json` 세션 분석 · `runs/C-*/_workspace/` 설계 산출물 · `results/logs/{run}/`

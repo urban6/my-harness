@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "모든 파일이 jakarta.persistence / jakarta.validation import 사용 (예: orders/Order.java, orders/dto/CreateOrderRequest.java), javax.* 없음"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication이 com.example.order에 있고 모든 컴포넌트가 com.example.order.* 하위 패키지(common, coupon, orders, payment, product, idempotency)에 있음"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web/validation/data-jpa 스타터 + flyway-core·flyway-database-postgresql(Boot 3.5에는 Flyway 스타터 없음) + postgresql 드라이버, 테스트는 testcontainers 관련만 — 중복/불필요 의존성 없음"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "coupon/CouponService.create(CreateCouponRequest)→CouponResponse, orders/OrderService.create(CreateOrderRequest)·get/list→OrderResponse/OrderPageResponse, product/ProductService.create(CreateProductRequest) — 서비스가 웹 요청/응답 DTO(dto 패키지)에 의존"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 빈(CouponController, OrderService, PaymentService, OrderFacade, IdempotencyStore, OrderQueryRepositoryImpl 등)이 생성자 주입 + private final 필드, @Autowired 필드 주입 없음"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "요청은 record DTO(CreateCouponRequest, CreateOrderRequest, PayRequest, CreateProductRequest), 응답은 record DTO(CouponResponse, OrderResponse, ProductResponse; OrderController는 OrderResponse를 직렬화한 JSON 문자열) — 엔티티 직접 노출 없음"
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "요청 DTO에 @NotNull/@Pattern/@Min/@NotBlank 등 제약이 있고 CouponController.create, OrderController.create/pay, ProductController.create의 @RequestBody에 @Valid 적용"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "컨트롤러(CouponController, OrderController, ProductController)는 서비스/파사드 위임과 파라미터 변환만 함; @Transactional·리포지토리 주입 없음"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional은 CouponService/OrderService/PaymentService/ProductService에만 있고, 조회 메서드(CouponService.get, OrderService.get/list, ProductService.get)는 readOnly = true"
+    },
+    "Q10": {
+      "verdict": "violation",
+      "evidence": "orders/OrderService.create가 new StoredResponse(201, json, \"/api/orders/\"+id)로 HTTP 상태코드·Location을 직접 구성, orders/PaymentService.pay가 StoredResponse(200, ...) 구성 — 서비스가 HTTP 응답을 인지"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler(@RestControllerAdvice)가 BusinessException·DataIntegrityViolationException·Exception과 프레임워크 예외를 한 곳에서 매핑"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.build / handleExceptionInternal이 ProblemDetail을 만들고 Content-Type을 MediaType.APPLICATION_PROBLEM_JSON으로 설정"
+    },
+    "Q13": {
+      "verdict": "violation",
+      "evidence": "GlobalExceptionHandler.handleConstraintViolation이 필드 오류 없이 detail만 반환하고, OrderController의 헤더/파라미터 검증(@NotBlank·@Size·@Min) 실패에서 나오는 HandlerMethodValidationException은 오버라이드하지 않아 필드별 errors가 없음 (handleMethodArgumentNotValid만 errors 포함)"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleAny / handleDataIntegrity / handleExceptionInternal(>=500)이 고정 문구 \"Internal server error\"만 반환하고 상세는 log.error로만 기록"
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderItem.order: @ManyToOne(fetch = FetchType.LAZY, optional = false)"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list(@Transactional(readOnly=true))에서 OrderResponse.from이 items에 접근하며, application.yml의 hibernate.default_batch_fetch_size: 100으로 일괄 조회; open-in-view false이고 DTO 변환은 트랜잭션 안에서 수행"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml: password는 SPRING_DATASOURCE_PASSWORD로 주입, payment.gateway.url은 ${PAYMENT_GATEWAY_URL:...}; 코드에는 하드코딩 없이 PaymentGatewayProperties로 주입"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayProperties(url, timeout), orders/OrderProperties(paymentTtl, expirySweepIntervalMs)를 @ConfigurationProperties record로 바인딩(@ConfigurationPropertiesScan); @Value 사용 없음"
+    }
+  },
+  "cost_usd": 0.1241868
+}

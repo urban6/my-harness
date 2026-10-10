@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # run 하나를 실행한다 (3차 실험 — 짧은 명세, Sonnet, PRD §8).
-# 사용법: run.sh <A|C> <회차> [--name NAME] [--feature FILE] [--prompt TEXT] [--budget USD] [--timeout DUR] [--dry-run]
+# 사용법: run.sh <A|C> <회차> [--name NAME] [--effort LEVEL] [--feature FILE] [--prompt TEXT] [--budget USD] [--timeout DUR] [--dry-run]
 #   기본: runs/<군>-<회차>/ 에 starter + feature-short.md를 복사하고 prompt.txt로 헤드리스 실행
 set -uo pipefail
 
@@ -11,6 +11,7 @@ FEATURE="$PLAYGROUND/feature-short.md"
 PROMPT="$(cat "$PLAYGROUND/prompt.txt")"
 BUDGET=15
 TIMEOUT=180m
+EFFORT=high
 DRY_RUN=0
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -18,6 +19,7 @@ while [[ $# -gt 0 ]]; do
         --feature) FEATURE="$(cd "$(dirname "$2")" && pwd)/$(basename "$2")"; shift 2 ;;
         --prompt) PROMPT="$2"; shift 2 ;;
         --budget) BUDGET="$2"; shift 2 ;;
+        --effort) EFFORT="$2"; shift 2 ;;
         --timeout) TIMEOUT="$2"; shift 2 ;;
         --dry-run) DRY_RUN=1; shift ;;
         *) echo "unknown option: $1" >&2; exit 1 ;;
@@ -29,7 +31,7 @@ LOG_DIR="$PLAYGROUND/results/logs/$NAME"
 [[ -e "$RUN_DIR" ]] && { echo "already exists: $RUN_DIR" >&2; exit 1; }
 
 COMMON=(-p "$PROMPT" --output-format stream-json --verbose
-        --model claude-sonnet-5-5 --effort high
+        --model claude-sonnet-5-5 --effort "$EFFORT"
         --permission-mode bypassPermissions --max-budget-usd "$BUDGET" --strict-mcp-config)
 case "$GROUP" in
     A) GROUP_FLAGS=(--disable-slash-commands --disallowedTools Agent Workflow) ;;
@@ -62,7 +64,7 @@ PY
 # 2) 실행 — 로그는 run 디렉터리 밖에 쓴다(에이전트가 보지 않게)
 docker ps -aq | sort >"$LOG_DIR/containers.before"
 START=$(date +%s)
-echo "[run:$NAME] start $(date '+%F %T') group=$GROUP budget=\$$BUDGET timeout=$TIMEOUT"
+echo "[run:$NAME] start $(date '+%F %T') group=$GROUP effort=$EFFORT budget=\$$BUDGET timeout=$TIMEOUT"
 # 헤드리스(-p)는 마지막 턴 뒤 10분이 지나면 백그라운드 워커를 강제 종료한다(4차 C 파일럿에서 발견).
 # 대화형과 같게 끝까지 기다린다. 전체 상한은 timeout이 맡는다.
 GROUP_ENV=(CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS=0)

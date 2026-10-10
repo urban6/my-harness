@@ -1,0 +1,328 @@
+{
+  "run": "Am-1",
+  "assemble_ok": true,
+  "tests": {
+    "tests": 17,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "gradle_exit": 0,
+    "ok": true
+  },
+  "test_rerun": false,
+  "coverage": {
+    "branch_covered": 127,
+    "branch_total": 159,
+    "branch_coverage": 0.7987
+  },
+  "boot_ok": true,
+  "boot_ttl_ok": true,
+  "acceptance": {
+    "contract_rate": 1.0,
+    "robustness_rate": 0.9143,
+    "category_rates": {
+      "입력 검증": 0.6,
+      "재고·쿠폰 정합성": 0.8,
+      "상태 전이": 1.0,
+      "멱등성": 1.0,
+      "외부 PG 장애": 1.0,
+      "동시성": 1.0,
+      "목록": 1.0
+    },
+    "passed_items": [
+      "K1",
+      "K2",
+      "K3",
+      "K4",
+      "K5",
+      "K6",
+      "K7",
+      "K8",
+      "K9",
+      "K10",
+      "S2",
+      "S4",
+      "S5",
+      "S6",
+      "S7",
+      "S8",
+      "S10",
+      "S11",
+      "S14",
+      "S15",
+      "S16",
+      "S17",
+      "S18",
+      "S19",
+      "S20",
+      "S21",
+      "S22",
+      "S23",
+      "S24",
+      "S25",
+      "S12",
+      "S13"
+    ],
+    "failed_items": [
+      "S1",
+      "S3",
+      "S9"
+    ],
+    "failure_categories": {
+      "reject": 3
+    },
+    "cases": [
+      {
+        "id": "K1",
+        "case": "k1_product",
+        "title": "상품 등록·조회",
+        "passed": true,
+        "seconds": 0.1
+      },
+      {
+        "id": "K2",
+        "case": "k2_coupon",
+        "title": "쿠폰 등록·조회",
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "K3",
+        "case": "k3_order_create",
+        "title": "주문 생성 — PENDING_PAYMENT, 금액, 예약, 만료 시각",
+        "passed": true,
+        "seconds": 0.11
+      },
+      {
+        "id": "K4",
+        "case": "k4_discount",
+        "title": "쿠폰 할인 — 정액, 정률, 최대 할인액",
+        "passed": true,
+        "seconds": 0.08
+      },
+      {
+        "id": "K5",
+        "case": "k5_pay",
+        "title": "결제 승인 — PAID, paidAt, 가용 재고 유지, PG 호출",
+        "passed": true,
+        "seconds": 0.07
+      },
+      {
+        "id": "K6",
+        "case": "k6_cancel_pending",
+        "title": "미결제 취소 — CANCELLED",
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "K7",
+        "case": "k7_cancel_paid",
+        "title": "결제 후 취소 — PG 환불, REFUNDED",
+        "passed": true,
+        "seconds": 0.06
+      },
+      {
+        "id": "K8",
+        "case": "k8_ship_deliver",
+        "title": "배송 — SHIPPED, DELIVERED",
+        "passed": true,
+        "seconds": 0.06
+      },
+      {
+        "id": "K9",
+        "case": "k9_list",
+        "title": "목록 — userId·status 필터, size·nextCursor 페이지",
+        "passed": true,
+        "seconds": 0.12
+      },
+      {
+        "id": "K10",
+        "case": "k10_problem_details",
+        "title": "없는 자원 — 404 Problem Details",
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "S1",
+        "case": "s1_product_validation",
+        "title": "음수·0 가격, 음수 재고, 빈 이름 → 거절",
+        "passed": false,
+        "category": "reject",
+        "message": "product {'name': 'x', 'price': 0, 'stock': 1}: expected 4xx, got 201 {\"id\":12,\"name\":\"x\",\"price\":0,\"stock\":1,\"reserved\":0,\"available\":1}",
+        "seconds": 0.02
+      },
+      {
+        "id": "S2",
+        "case": "s2_order_items_validation",
+        "title": "수량 0·음수, 빈 items → 거절 + 불변 / 같은 상품 중복 → 거절 또는 정확히 합산",
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "S3",
+        "case": "s3_coupon_validation",
+        "title": "RATE value > 100, validFrom ≥ validUntil → 거절",
+        "passed": false,
+        "category": "reject",
+        "message": "from == until: expected 4xx, got 201 {\"code\":\"CX837DRH728J\",\"type\":\"FIXED\",\"value\":1000,\"minOrderAmount\":0,\"maxDiscountAmount\":100000,\"totalQuantity\":100,\"validFrom\":\"2026-10-11T09:07:19Z\",\"validUn",
+        "seconds": 0.02
+      },
+      {
+        "id": "S4",
+        "case": "s4_malformed_json",
+        "title": "깨진 JSON, 타입 불일치 → 거절 + Problem Details",
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "S5",
+        "case": "s5_amount_overflow",
+        "title": "큰 금액 → 5xx 아님, 금액이 음수·잘림 아님 (거절도 인정)",
+        "passed": true,
+        "seconds": 0.06
+      },
+      {
+        "id": "S6",
+        "case": "s6_insufficient_stock_atomic",
+        "title": "available 초과 → 거절 + 불변, 부분 예약 없음",
+        "passed": true,
+        "seconds": 0.07
+      },
+      {
+        "id": "S7",
+        "case": "s7_discount_over_subtotal",
+        "title": "할인 > 소계 → totalPrice 음수 아님",
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "S8",
+        "case": "s8_coupon_conditions",
+        "title": "기간 밖·최소 금액 미달·소진·없는 쿠폰 → 거절 + 불변",
+        "passed": true,
+        "seconds": 0.18
+      },
+      {
+        "id": "S9",
+        "case": "s9_coupon_once_per_user",
+        "title": "같은 사용자가 같은 쿠폰을 다시 사용 → 거절",
+        "passed": false,
+        "category": "reject",
+        "message": "second use: expected 4xx, got 201 {\"id\":23,\"userId\":\"507334719\",\"status\":\"PENDING_PAYMENT\",\"items\":[{\"productId\":23,\"quantity\":1,\"unitPrice\":1000}],\"couponCode\":\"CBQ6N5ATMJW6\",\"subtotal\":1000,\"d",
+        "seconds": 0.07
+      },
+      {
+        "id": "S10",
+        "case": "s10_restore_on_cancel_refund",
+        "title": "취소·환불 → 예약·쿠폰 사용 복원",
+        "passed": true,
+        "seconds": 0.11
+      },
+      {
+        "id": "S11",
+        "case": "s11_invalid_transitions",
+        "title": "허용되지 않은 전이 → 거절 + 불변",
+        "passed": true,
+        "seconds": 0.3
+      },
+      {
+        "id": "S14",
+        "case": "s14_create_replay",
+        "title": "같은 키·같은 요청 재시도 → 주문 1건, 같은 응답",
+        "passed": true,
+        "seconds": 0.03
+      },
+      {
+        "id": "S15",
+        "case": "s15_create_key_mismatch",
+        "title": "같은 키·다른 본문 → 거절, 새 처리 없음",
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "S16",
+        "case": "s16_pay_replay",
+        "title": "같은 결제 재시도 → PG 결제 1회",
+        "passed": true,
+        "seconds": 0.04
+      },
+      {
+        "id": "S17",
+        "case": "s17_gateway_failure",
+        "title": "PG 5xx·연결 끊김·지연 → 처리하지 못한 500 아님 + 상태·재고 일관",
+        "passed": true,
+        "seconds": 5.13
+      },
+      {
+        "id": "S18",
+        "case": "s18_declined",
+        "title": "PG 거절 → PAID 아님 + 실패 처리면 예약·쿠폰 복원",
+        "passed": true,
+        "seconds": 0.05
+      },
+      {
+        "id": "S19",
+        "case": "s19_refund_failure",
+        "title": "환불 중 PG 장애 → PAID 유지, 재고 불변",
+        "passed": true,
+        "seconds": 0.06
+      },
+      {
+        "id": "S20",
+        "case": "s20_stock_race",
+        "title": "available 10에 동시 주문 20건 → 성공 정확히 10",
+        "passed": true,
+        "seconds": 0.31
+      },
+      {
+        "id": "S21",
+        "case": "s21_coupon_quantity_race",
+        "title": "수량 5 쿠폰에 15명 동시 주문·결제 → 쿠폰 적용 결제 정확히 5",
+        "passed": true,
+        "seconds": 0.44
+      },
+      {
+        "id": "S22",
+        "case": "s22_concurrent_pay",
+        "title": "같은 주문 동시 결제(키 다름) → 청구 1회, PAID, 가용 재고 1회만 감소",
+        "passed": true,
+        "seconds": 0.13
+      },
+      {
+        "id": "S23",
+        "case": "s23_cross_order_deadlock",
+        "title": "[P,Q]·[Q,P] 교차 동시 주문 → 5xx·교착 없음, 전부 성공, reserved 정확",
+        "passed": true,
+        "seconds": 0.29
+      },
+      {
+        "id": "S24",
+        "case": "s24_cursor_stable",
+        "title": "페이지 순회 중 새 주문 생성 → 처음 있던 주문이 중복·누락 없음",
+        "passed": true,
+        "seconds": 0.07
+      },
+      {
+        "id": "S25",
+        "case": "s25_invalid_list_params",
+        "title": "잘못된 size·cursor·status → 거절",
+        "passed": true,
+        "seconds": 0.02
+      },
+      {
+        "id": "S12",
+        "case": "s12_pay_after_expiry",
+        "title": "만료 시각이 지난 주문 결제 → 거절, PG 호출 없음",
+        "passed": true,
+        "seconds": 3.49
+      },
+      {
+        "id": "S13",
+        "case": "s13_expiry_releases",
+        "title": "TTL 경과 후 수 초 안에 EXPIRED + 예약·쿠폰 복원 (주문을 조회하지 않아도 상품·쿠폰에 반영)",
+        "passed": true,
+        "seconds": 3.77
+      }
+    ]
+  }
+}

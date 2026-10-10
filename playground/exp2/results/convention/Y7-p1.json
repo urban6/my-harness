@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "All JPA/validation imports are jakarta.* (e.g. orders/Order.java, coupon/dto/CreateCouponRequest.java); no javax.* imports"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication is in com.example.order and every component is under com.example.order.* (common, coupon, idempotency, orders, payment, product)"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: only web/validation/data-jpa starters plus flyway-core, flyway-database-postgresql and the postgresql driver, which no starter provides; nothing is added separately when a starter already covers it"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.execute/replay use web types ResponseEntity, HttpHeaders and MediaType; CouponService.create, ProductService.create and OrderService.create take web request DTOs (CreateCouponRequest, CreateProductRequest, CreateOrderRequest)"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "Every component uses constructor injection with final fields (e.g. OrderService, OrderLifecycleService, OrderQueryRepositoryImpl, PaymentGatewayClient); no @Autowired fields"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "Request/response bodies are records (CreateOrderRequest, OrderResponse, CouponResponse, ProductResponse, etc.) built with from(entity); controllers never expose entities directly"
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "Request DTOs carry @NotNull/@Size/@Min/@NotBlank/@AssertTrue; every @RequestBody in OrderController, CouponController and ProductController has @Valid"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "OrderController, CouponController and ProductController only delegate to services and build the Location header; no @Transactional or repository access"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "OrderService, CouponService and ProductService have class-level @Transactional(readOnly = true) with @Transactional on write methods; OrderLifecycleService.findExpiredOrderIds is readOnly = true; controllers and repositories have no @Transactional"
+    },
+    "Q10": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.execute/replay build and return ResponseEntity (status, Location header, contentType)"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler (@RestControllerAdvice) maps every ErrorCode to an HttpStatus in statusOf"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.problem/handleExceptionInternal return a ProblemDetail body with MediaType.APPLICATION_PROBLEM_JSON"
+    },
+    "Q13": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleMethodArgumentNotValid adds a field->message map as the errors property"
+    },
+    "Q14": {
+      "verdict": "violation",
+      "evidence": "GlobalExceptionHandler.handleBusiness returns ex.getMessage() as the 503 detail, and PaymentGatewayClient.pay/refund put the raw PG response status in that message (PaymentGatewayUnavailableException). handleUnexpected itself returns only a generic 500 message and logs the stack trace server-side."
+    },
+    "Q15": {
+      "verdict": "not_applicable",
+      "evidence": "No @ManyToOne/@OneToOne mappings in any entity (Order, Coupon, Product); Order.lines is only an @ElementCollection"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list reads the lines @ElementCollection for each order through OrderResponse.from inside a readOnly transaction; application.yml default_batch_fetch_size: 100 batches those loads, and open-in-view is false"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml: datasource URL/username and PAYMENT_GATEWAY_URL come from env placeholders and the password is injected from the environment; PaymentGatewayClient takes its URL from PaymentGatewayProperties"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayProperties (url, timeout) and orders/OrderProperties (paymentTtl) are bound with @ConfigurationProperties and @ConfigurationPropertiesScan; no @Value"
+    }
+  },
+  "cost_usd": 0.36969739999999995
+}

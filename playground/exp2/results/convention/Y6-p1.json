@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "Coupon.java·Order.java·OrderItem.java·Product.java·*Repository.java·OrderQueryService.java 모두 jakarta.persistence.* import, javax.* 없음"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication(com.example.order) 아래 common·coupon·idempotency·orders·payment·product 하위 패키지에 모든 컴포넌트 위치"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web·validation·data-jpa 스타터 + flyway-core/flyway-database-postgresql·postgresql 드라이버·테스트 의존성뿐, 스타터와 중복되는 개별 추가 없음"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.execute()가 ResponseEntity·HttpHeaders를 받고 반환함(웹 계층 타입에 의존); common/ErrorCode(도메인 예외 코드)가 HttpStatus를 가짐"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 Controller/Service/PaymentGatewayClient/OrderExpirationJob이 생성자 주입을 쓰고 주입 필드가 private final, @Autowired 필드 없음"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "CouponDtos·OrderDtos·ProductDtos의 record 요청/응답 DTO를 쓰고 엔티티는 from()으로 변환함, 컨트롤러가 엔티티를 노출하지 않음"
+    },
+    "Q7": {
+      "verdict": "violation",
+      "evidence": "CouponDtos.CreateCouponRequest·OrderDtos.CreateOrderRequest/PayRequest·ProductDtos.CreateProductRequest에 제약 애노테이션 없음; CouponController.create·OrderController.create/pay·ProductController.create의 @RequestBody에 @Valid 없음(Validations로 수동 검증)"
+    },
+    "Q8": {
+      "verdict": "violation",
+      "evidence": "orders/OrderController.create가 OrderService.validateCreate 호출과 fingerprint 생성을 직접 하고, OrderController.list가 status·size 파싱과 범위 검증 로직을 가짐"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional은 OrderService·ProductService·CouponService·OrderQueryService에만 있음; 조회 메서드 CouponService.get·OrderService.get·ProductService.get·OrderQueryService.list는 readOnly = true"
+    },
+    "Q10": {
+      "verdict": "violation",
+      "evidence": "idempotency/IdempotencyService.execute/toJson/StoredRecord.toResponse가 ResponseEntity·HttpHeaders를 사용함; 서비스가 던지는 ApiException의 ErrorCode가 HttpStatus를 포함함"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/GlobalExceptionHandler(@RestControllerAdvice)가 ApiException·PaymentGatewayUnavailableException·Spring MVC 예외·Exception을 한곳에서 HTTP 응답으로 매핑"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "common/GlobalExceptionHandler.problem()/handleOther()가 ProblemDetail + MediaType.APPLICATION_PROBLEM_JSON으로 응답"
+    },
+    "Q13": {
+      "verdict": "violation",
+      "evidence": "common/GlobalExceptionHandler.handleBadRequest가 MethodArgumentNotValidException 등을 e.getMessage() 문자열 하나로만 응답하고 필드별 오류 목록 속성이 없음"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "common/GlobalExceptionHandler.handleOther가 500일 때 'Unexpected server error' 고정 문구만 내보내고 예외는 log.error로 서버 로그에만 남김"
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderItem.order: @ManyToOne(fetch = FetchType.LAZY, optional = false)"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderQueryService.list(@Transactional(readOnly=true)) 안에서 OrderResponse.from이 items에 접근하며, application.yml의 hibernate.default_batch_fetch_size: 100으로 일괄 조회함; open-in-view false"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml datasource url/username/password·payment.gateway.url이 ${ENV:기본값}으로 주입되고 PaymentGatewayClient는 PaymentGatewayProperties로 URL을 받음"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayProperties(url, timeout)·orders/OrderPaymentProperties(ttl) record를 @ConfigurationProperties + @ConfigurationPropertiesScan으로 바인딩, @Value 사용 없음"
+    }
+  },
+  "cost_usd": 0.35164939999999995
+}

@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "모든 엔티티/리포지토리(Coupon.java, Order.java, OrderItem.java, OrderQueryService.java 등)가 jakarta.persistence.* 사용, javax.* import 없음"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication(com.example.order) 아래 common/coupon/idempotency/orders/payment/product 하위 패키지에 모든 컴포넌트 위치"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web/validation/data-jpa 스타터 + flyway-core/flyway-database-postgresql/postgresql(스타터 미포함) 및 테스트 의존성만 존재"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/idempotency/IdempotencyService.java execute()/toJson()/StoredRecord.toResponse()가 ResponseEntity·HttpHeaders·MediaType(웹 계층 타입)에 의존"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 컨트롤러·서비스·컴포넌트(OrderService, OrderController, PaymentGatewayClient 등)가 생성자 주입 + private final 필드, @Autowired 필드 없음"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "CouponDtos/OrderDtos/ProductDtos의 record 요청·응답 DTO 사용, 엔티티는 from()으로 변환되어 직접 노출되지 않음"
+    },
+    "Q7": {
+      "verdict": "violation",
+      "evidence": "CouponDtos.CreateCouponRequest·OrderDtos.CreateOrderRequest/PayRequest·ProductDtos.CreateProductRequest에 제약 애노테이션 없음, CouponController/OrderController/ProductController의 @RequestBody에 @Valid 없음 (수동 Validations 사용)"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "OrderController/CouponController/ProductController에 @Transactional·리포지토리 접근 없음, 입력 파싱·검증 후 서비스 위임만 수행"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional은 OrderService·ProductService·CouponService·OrderQueryService에만 있음, get/list 조회 메서드는 readOnly = true"
+    },
+    "Q10": {
+      "verdict": "violation",
+      "evidence": "src/main/java/com/example/order/idempotency/IdempotencyService.java execute()가 ResponseEntity를 받고 반환하며 HTTP 상태 코드(is2xxSuccessful)를 직접 다룸"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/common/GlobalExceptionHandler.java(@RestControllerAdvice)에서 ApiException(ErrorCode)·PaymentGatewayUnavailableException·기타 예외를 일괄 매핑"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.problem()/handleOther()가 ProblemDetail + MediaType.APPLICATION_PROBLEM_JSON으로 응답"
+    },
+    "Q13": {
+      "verdict": "violation",
+      "evidence": "GlobalExceptionHandler.handleApi()/handleBadRequest()가 VALIDATION_ERROR를 detail 문자열 하나로만 반환, 필드별 errors 속성 없음 (Validations.require도 단일 메시지)"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleOther()가 500에 고정 메시지 \"Unexpected server error\"만 담고 예외는 로그로만 기록"
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "src/main/java/com/example/order/orders/OrderItem.java order 필드 @ManyToOne(fetch = FetchType.LAZY)"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderQueryService.list()가 @Transactional(readOnly = true) 안에서 items에 접근하고, application.yml의 hibernate.default_batch_fetch_size: 100으로 일괄 조회; open-in-view false"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml datasource·PAYMENT_GATEWAY_URL·ORDER_PAYMENT_TTL을 환경 변수 플레이스홀더로 주입, PaymentGatewayClient는 PaymentGatewayProperties로 URL 수신"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayProperties(url, timeout)·OrderPaymentProperties(ttl) record @ConfigurationProperties + @ConfigurationPropertiesScan으로 바인딩, @Value 미사용"
+    }
+  },
+  "cost_usd": 0.10275899999999999
+}

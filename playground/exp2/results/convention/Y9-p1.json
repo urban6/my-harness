@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "전 파일이 jakarta.persistence/jakarta.validation/jakarta.servlet을 import하고 javax.*는 없음 (예: ordering/Order.java, common/error/GlobalExceptionHandler.java)"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication이 com.example.order에 있고 모든 컴포넌트가 com.example.order.* 하위(common, coupon, idempotency, ordering, payment, product)에 있음"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web/validation/data-jpa 스타터와 Flyway(core+postgresql), postgresql 드라이버, 테스트용 의존성뿐이며 스타터와 중복되는 개별 추가 없음"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "coupon/CouponService.create가 웹 DTO CreateCouponRequest/CouponResponse와 common.web.TimeFormats에 의존; ordering/OrderCommandService가 CreateOrderRequest/PayRequest/OrderResponse DTO와 org.springframework.http.HttpStatus에 의존"
+    },
+    "Q5": {
+      "verdict": "violation",
+      "evidence": "ordering/OrderQueryRepository: @PersistenceContext private EntityManager em; (final이 아닌 필드 주입)"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "요청 DTO(CreateCouponRequest, CreateOrderRequest, PayRequest, CreateProductRequest)와 응답 DTO(CouponResponse, OrderResponse, OrderPageResponse, ProductResponse)가 모두 record이고, 컨트롤러는 엔티티를 직접 노출하지 않음"
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "요청 DTO에 @NotNull/@Pattern/@Min/@Size/@NotBlank가 있고, CouponController.create·OrderController.create/pay·ProductController.create에 @Valid @RequestBody가 붙어 있음"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "CouponController/ProductController/OrderController는 @Transactional이나 리포지토리 접근 없이 서비스에 위임함. OrderController.list는 쿼리 파라미터 파싱·검증만 하고, rejectDuplicateProducts는 입력 검증임"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional은 CouponService/OrderService/ProductService에만 있고 읽기 메서드(get, list)는 readOnly = true. OrderCommandService는 TransactionTemplate 사용, 컨트롤러·리포지토리에는 없음"
+    },
+    "Q10": {
+      "verdict": "violation",
+      "evidence": "ordering/OrderCommandService.doCreate/doPay: HttpStatus.CREATED.value(), HttpStatus.OK.value() 사용"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler(@RestControllerAdvice)가 ErrorCode enum의 상태 매핑으로 모든 예외 → HTTP 상태를 처리함"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.problem: ProblemDetail.forStatusAndDetail + MediaType.APPLICATION_PROBLEM_JSON"
+    },
+    "Q13": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleMethodArgumentNotValid/handleHandlerMethodValidationException/handleConstraintViolation이 FieldIssue(field, message) 목록을 errors 속성에 담음"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleUnexpected → internal(): 고정 메시지 \"서버 내부 오류가 발생했습니다\"만 응답하고 예외는 로그로만 남김"
+    },
+    "Q15": {
+      "verdict": "not_applicable",
+      "evidence": "@ManyToOne/@OneToOne 매핑 없음 (Order는 couponCode 문자열과 @ElementCollection만 사용)"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list(@Transactional(readOnly=true)) 안에서 OrderResponse.from이 LAZY items에 접근하고, application.yml의 default_batch_fetch_size: 100으로 일괄 조회함"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml: password는 SPRING_DATASOURCE_PASSWORD 환경 변수로만 주입되고 PG URL은 ${PAYMENT_GATEWAY_URL:...}로 주입됨. 코드에 남은 값은 localhost 기본값뿐"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "common/config/OrderProperties·PaymentGatewayProperties(@ConfigurationProperties record)로 TTL·만료·URL·타임아웃을 묶어 바인딩하고 @Value는 없음"
+    }
+  },
+  "cost_usd": 0.45117739999999995
+}

@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "Every file imports jakarta.persistence / jakarta.validation (e.g. orders/Order.java, coupon/dto/CreateCouponRequest.java); there are no javax.* imports"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication is in com.example.order, and every component is under com.example.order.* (common, coupon, idempotency, orders, payment, product)"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web/validation/data-jpa starters plus flyway-core, flyway-database-postgresql and the postgresql driver; no starter covers these, so none are redundant"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "orders/OrderService.create(CreateOrderRequest) builds and returns an HTTP response (StoredResponse(201, json, \"/api/orders/\"+id)); coupon/CouponService.create(CreateCouponRequest) and product/ProductService take request DTOs and return CouponResponse/ProductResponse; orders/PaymentService.pay builds a StoredResponse(200, ...)"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "All components use constructor injection with final fields (e.g. OrderService, OrderFacade, IdempotencyStore, OrderQueryRepositoryImpl); no @Autowired field injection"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "Request/response bodies are records (CreateOrderRequest, OrderResponse, CouponResponse, ProductResponse, etc.); entities are converted with from(); OrderController returns the record serialized to JSON"
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "Request DTOs carry @NotNull/@Size/@Min/@Pattern etc.; CouponController/ProductController/OrderController use @Valid @RequestBody"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "The controllers only delegate to services/facade; OrderController.list only converts request parameters; no @Transactional and no direct repository access"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional appears only in the service classes (OrderService, PaymentService, CouponService, ProductService); the get/list methods use readOnly = true"
+    },
+    "Q10": {
+      "verdict": "compliant",
+      "evidence": "No service uses HttpStatus/ResponseEntity/ResponseStatusException; they throw the domain exception BusinessException(ErrorCode). Borderline: OrderService/PaymentService still write status numbers 201/200 into StoredResponse (counted under Q4)"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler (@RestControllerAdvice) handles BusinessException, DataIntegrityViolationException, Exception and the framework exceptions in one place"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.build/handleExceptionInternal build a ProblemDetail and set the content type to APPLICATION_PROBLEM_JSON"
+    },
+    "Q13": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleMethodArgumentNotValid adds field/message pairs to the errors property (request-body validation only). Borderline: header/query-parameter validation failures and handleConstraintViolation return 400 without per-field details"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleAny/handleDataIntegrity return the fixed text \"Internal server error\"; handleExceptionInternal also uses fixed text for status >= 500"
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "orders/OrderItem.order: @ManyToOne(fetch = FetchType.LAZY)"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list (readOnly transaction) reads items in OrderResponse.from; application.yml has hibernate.default_batch_fetch_size: 100 for batch loading, and items are accessed inside the transaction"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml: password is injected via an environment variable, PG URL comes from ${PAYMENT_GATEWAY_URL}; PaymentGatewayConfig injects it through PaymentGatewayProperties"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayProperties(url, timeout) and orders/OrderProperties(paymentTtl, expirySweepIntervalMs) are bound with @ConfigurationProperties records (@ConfigurationPropertiesScan)"
+    }
+  },
+  "cost_usd": 0.1180068
+}

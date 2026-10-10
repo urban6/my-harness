@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "모든 파일이 jakarta.persistence/jakarta.validation import 사용, javax.* 없음 (예: Coupon.java, CreateOrderRequest.java, GlobalExceptionHandler.java)"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication이 com.example.order에 있고 모든 컴포넌트가 com.example.order.* 하위(common, coupon, idempotency, order, payment, product)"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web/validation/data-jpa 스타터 + flyway-core/flyway-database-postgresql(Boot 3.5에는 Flyway 스타터 없음), postgresql 드라이버, 테스트 의존성뿐. 불필요한 중복 없음"
+    },
+    "Q4": {
+      "verdict": "violation",
+      "evidence": "CouponService.create(CouponCreateRequest), OrderService.create(CreateOrderRequest), ProductService.create(ProductCreateRequest) — 서비스가 웹 요청 DTO에 직접 의존"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 컴포넌트가 생성자 주입 + private final 필드 사용(OrderService, OrderController, IdempotencyService 등), @Autowired 필드 주입 없음"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "요청 CouponCreateRequest/CreateOrderRequest/PayRequest/ProductCreateRequest, 응답 CouponResponse/OrderResponse/OrderPageResponse/ProductResponse가 모두 record이며 엔티티를 직접 노출하지 않음(OrderController는 OrderResponse를 직렬화한 JSON 문자열 반환)"
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "요청 record에 @NotNull/@Size/@Min/@Pattern/@NotBlank 등이 있고 CouponController.create, OrderController.create/pay, ProductController.create 파라미터에 @Valid가 붙어 있음"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "Coupon/Order/ProductController는 서비스 위임만 하고 @Transactional·리포지토리 접근이 없음. OrderController는 멱등 서비스 호출 조율과 응답 변환만 수행"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "@Transactional은 *Service에만 있음. 읽기 메서드 CouponService.get, OrderService.get/list, ProductService.get이 readOnly = true"
+    },
+    "Q10": {
+      "verdict": "violation",
+      "evidence": "OrderService.create가 idempotency.complete(..., 201, ..., \"/api/orders/\"+id)로 HTTP 상태코드·Location을 직접 결정하고, OrderLifecycleService.pay도 200을 전달함"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler(@RestControllerAdvice)가 ApiException·ConstraintViolationException·Exception과 MVC 표준 예외를 한 곳에서 HTTP 응답으로 변환"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.build가 ProblemDetail.forStatusAndDetail로 응답을 만들고 contentType을 APPLICATION_PROBLEM_JSON으로 지정하며, ResponseEntityExceptionHandler를 상속함"
+    },
+    "Q13": {
+      "verdict": "violation",
+      "evidence": "GlobalExceptionHandler.handleExceptionInternal은 code만 추가하고 MethodArgumentNotValidException의 필드 오류를 넣지 않음. handleConstraintViolation도 일반 메시지만 반환"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleUnexpected가 예외는 로그로만 남기고 응답에는 고정 메시지 \"예상치 못한 오류가 발생했습니다.\"만 반환"
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "order/OrderItem.order가 @ManyToOne(fetch = FetchType.LAZY)이며 다른 ManyToOne/OneToOne 없음"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list(readOnly 트랜잭션 안)에서 OrderResponse.from이 items에 접근하며, application.yml의 default_batch_fetch_size: 100으로 일괄 조회함. open-in-view=false이고 트랜잭션 안에서 DTO로 변환"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml에서 datasource url/username/password와 payment.gateway.url을 ${ENV:default}로 주입하고, PaymentGatewayClient는 PaymentGatewayProperties에서 URL을 받음"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "payment/PaymentGatewayProperties(url, connectTimeout, readTimeout)와 order/OrderProperties(paymentTtl, expirySweepDelayMs)가 @ConfigurationProperties record로 바인딩되고 @ConfigurationPropertiesScan이 있음"
+    }
+  },
+  "cost_usd": 0.37493740000000003
+}

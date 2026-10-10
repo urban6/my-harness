@@ -1,0 +1,85 @@
+{
+  "verdict": {
+    "Q1": {
+      "verdict": "compliant",
+      "evidence": "Coupon.java, Order.java, OrderController.java 등 전체가 jakarta.persistence/jakarta.validation/jakarta.servlet만 import하고 javax.*는 없음"
+    },
+    "Q2": {
+      "verdict": "compliant",
+      "evidence": "OrderApplication(com.example.order) 아래 common/coupon/idempotency/order/payment/product 하위 패키지에 모든 컴포넌트가 있음"
+    },
+    "Q3": {
+      "verdict": "compliant",
+      "evidence": "build.gradle: web/validation/data-jpa 스타터에 flyway-core·flyway-database-postgresql(Boot 3.5엔 flyway 스타터 없음), postgresql 드라이버, 테스트 의존성만 있고 스타터와 겹치는 개별 의존성은 없음"
+    },
+    "Q4": {
+      "verdict": "compliant",
+      "evidence": "조건부 판정: CouponService/OrderService가 기능별 dto record(CreateOrderRequest·OrderResponse 등)를 사용함(웹 DTO로 엄격히 보면 위반). 서비스·엔티티·리포지토리가 컨트롤러·HttpServletRequest·ResponseEntity에는 의존하지 않음(HttpServletRequest는 OrderController에서만 사용)"
+    },
+    "Q5": {
+      "verdict": "compliant",
+      "evidence": "모든 Controller/Service/Component/OrderRepositoryImpl이 final 필드에 생성자 주입을 쓰고 @Autowired 필드 주입은 없음"
+    },
+    "Q6": {
+      "verdict": "compliant",
+      "evidence": "CreateCouponRequest/CouponResponse/CreateOrderRequest/OrderResponse/PayOrderRequest/CreateProductRequest/ProductResponse가 모두 record이고 엔티티는 from()으로 변환해서만 반환함"
+    },
+    "Q7": {
+      "verdict": "compliant",
+      "evidence": "요청 DTO에 @NotNull/@NotBlank/@Min/@Size 등이 있고 CouponController.create, ProductController.create, OrderController.create/pay에 @Valid @RequestBody가 붙어 있음"
+    },
+    "Q8": {
+      "verdict": "compliant",
+      "evidence": "Coupon/Product/OrderController는 서비스 호출과 Location 생성만 하고 @Transactional·리포지토리 접근이 없음(멱등 처리는 IdempotentRequestExecutor에 위임)"
+    },
+    "Q9": {
+      "verdict": "compliant",
+      "evidence": "CouponService/ProductService/OrderService는 클래스에 @Transactional(readOnly = true)를 두고 쓰기 메서드에 @Transactional을 붙임. OrderLifecycleService.findExpiredPendingOrderIds는 readOnly. 컨트롤러·리포지토리에는 @Transactional이 없음"
+    },
+    "Q10": {
+      "verdict": "compliant",
+      "evidence": "서비스는 BusinessException(ErrorCode)만 던지고 HttpStatus/ResponseEntity/ResponseStatusException을 쓰지 않음(ResponseEntity는 웹용 IdempotentRequestExecutor에서만 사용)"
+    },
+    "Q11": {
+      "verdict": "compliant",
+      "evidence": "common/error/GlobalExceptionHandler(@RestControllerAdvice)의 statusOf()에서 ErrorCode를 HttpStatus로 한곳에서 매핑함"
+    },
+    "Q12": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.problem()/handleExceptionInternal이 ProblemDetail과 MediaType.APPLICATION_PROBLEM_JSON으로 응답함"
+    },
+    "Q13": {
+      "verdict": "compliant",
+      "evidence": "조건부 판정: GlobalExceptionHandler.handleMethodArgumentNotValid가 바디 검증 실패 시 FieldError별 'field: message'를 detail에 담음. 단 OrderController 헤더·쿼리 파라미터 제약 실패는 handleExceptionInternal 기본 처리라 파라미터별 정보가 없을 수 있음"
+    },
+    "Q14": {
+      "verdict": "compliant",
+      "evidence": "GlobalExceptionHandler.handleUnexpected가 로그만 남기고 응답은 고정 메시지 '예상치 못한 오류가 발생했습니다.'만 반환함"
+    },
+    "Q15": {
+      "verdict": "compliant",
+      "evidence": "OrderItem.order가 @ManyToOne(fetch = FetchType.LAZY)임"
+    },
+    "Q16": {
+      "verdict": "compliant",
+      "evidence": "OrderService.list(readOnly 트랜잭션 안)에서 OrderResponse.from이 items에 접근하고 application.yml의 hibernate.default_batch_fetch_size: 100으로 일괄 조회함. open-in-view false지만 변환이 트랜잭션 안에서 이뤄짐"
+    },
+    "Q17": {
+      "verdict": "compliant",
+      "evidence": "application.yml의 datasource url/username/password, payment-gateway.url이 환경 변수로 주입됨. PaymentGatewayClient는 PaymentGatewayProperties를 사용함(GlobalExceptionHandler.TYPE_BASE는 고정된 문제 유형 식별자로 판단)"
+    },
+    "Q18": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.hibernate.ddl-auto: validate"
+    },
+    "Q19": {
+      "verdict": "compliant",
+      "evidence": "application.yml: spring.jpa.open-in-view: false"
+    },
+    "Q20": {
+      "verdict": "compliant",
+      "evidence": "PaymentGatewayProperties(url, timeout)와 OrderProperties(paymentTtl)를 @ConfigurationProperties record로 묶고 @ConfigurationPropertiesScan으로 바인딩함. @Value는 쓰지 않음"
+    }
+  },
+  "cost_usd": 0.1192222
+}
