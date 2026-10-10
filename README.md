@@ -14,7 +14,7 @@ my-harness/
 ├── rules/       # 규칙 (경로별 지침)
 ├── hooks/       # 훅 (폴더 하나 = 훅 하나, install.sh가 settings에 병합)
 ├── prompts/     # 복사해 쓰는 프롬프트 (설치 대상 아님)
-├── docs/        # 외부 플러그인 사용법 (설치 대상 아님)
+├── docs/        # 외부 플러그인 사용법, guide/ AI 사용 가이드 (설치 대상 아님)
 ├── playground/  # 방식별 비교 실험 (설치 대상 아님)
 ├── install.sh
 └── CLAUDE.md
@@ -85,6 +85,10 @@ my-harness/
 
 - [superpowers](docs/superpowers.md)
 - [ponytail](docs/ponytail.md)
+
+## AI 사용 가이드
+
+- [검증까지 요청에 넣기](docs/guide/verify-in-prompt.md)
 
 ## 설치
 
