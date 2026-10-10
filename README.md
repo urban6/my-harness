@@ -89,6 +89,7 @@ my-harness/
 ## AI 사용 가이드
 
 - [검증까지 요청에 넣기](docs/guide/verify-in-prompt.md)
+- [계획 세션과 구현 세션 나누기](docs/guide/plan-session-interview.md)
 
 ## 설치
 
