@@ -1,0 +1,174 @@
+{
+  "verdict": {
+    "S1": {
+      "covered": true,
+      "tests": [
+        "ProductCouponSmokeTest#createProduct_withInvalidFields_returns400ValidationFailed",
+        "ProductCouponSmokeTest#createProduct_outOfRangeValues_return400"
+      ]
+    },
+    "S2": {
+      "covered": true,
+      "tests": [
+        "OrderCreationSmokeTest#createOrder_missingHeadersOrBadBody_return400",
+        "OrderCreationSmokeTest#createOrder_bodyValidation",
+        "OrderCreationSmokeTest#createOrder_nullElements_return400"
+      ]
+    },
+    "S3": {
+      "covered": true,
+      "tests": [
+        "ProductCouponSmokeTest#createCoupon_rateAbove100_periodReversedOrUnknownType_return400",
+        "ProductCouponSmokeTest#createCoupon_negativeAndDegenerateFields_return400"
+      ]
+    },
+    "S4": {
+      "covered": true,
+      "tests": [
+        "ProblemFormatSmokeTest#malformedBodyOrTypes_return400MalformedRequest"
+      ]
+    },
+    "S5": {
+      "covered": true,
+      "tests": [
+        "CouponDiscountSmokeTest#createOrder_largeAmounts_doNotOverflow"
+      ]
+    },
+    "S6": {
+      "covered": true,
+      "tests": [
+        "OrderCreationSmokeTest#createOrder_insufficientStock_returns409AndRollsBackEarlierReservations",
+        "OrderCreationSmokeTest#createOrder_exactAvailableBoundary"
+      ]
+    },
+    "S7": {
+      "covered": true,
+      "tests": [
+        "CouponDiscountSmokeTest#createOrder_fixedDiscountCannotExceedSubtotal"
+      ]
+    },
+    "S8": {
+      "covered": true,
+      "tests": [
+        "CouponDiscountSmokeTest#createOrder_couponRuleViolations_return422AndLeaveNoSideEffects",
+        "CouponDiscountSmokeTest#createOrder_exhaustedCoupon_returns422",
+        "CouponDiscountSmokeTest#createOrder_minOrderAmountBoundary"
+      ]
+    },
+    "S9": {
+      "covered": false,
+      "tests": []
+    },
+    "S10": {
+      "covered": true,
+      "tests": [
+        "CouponDiscountSmokeTest#couponQuantity_isReturnedByEveryReleasePath",
+        "CancelRefundShipSmokeTest#cancel_paidMultiItemOrderWithCoupon_releasesEverythingOnce",
+        "OrderExpirySmokeTest#getOrder_afterTtl_showsExpiredAndReleasesStockAndCouponExactlyOnce"
+      ]
+    },
+    "S11": {
+      "covered": true,
+      "tests": [
+        "OrderStateMatrixTest#everyStatusAndAction_matchesTheDesignedTable",
+        "CancelRefundShipSmokeTest#deliver_wrongStateOrUnknown"
+      ]
+    },
+    "S12": {
+      "covered": true,
+      "tests": [
+        "OrderExpirySmokeTest#payAndCancel_onExpiredOrder_return409OrderExpired",
+        "OrderExpirySmokeTest#expiredOrder_isTerminalAndNeverReleasedTwice"
+      ]
+    },
+    "S13": {
+      "covered": true,
+      "tests": [
+        "OrderExpirySchedulerTest#scheduler_expiresOverdueOrderInBackground"
+      ]
+    },
+    "S14": {
+      "covered": true,
+      "tests": [
+        "OrderCreationSmokeTest#createOrder_sameKeySameBody_replaysFirstOrderWithoutDoubleReservation",
+        "ConcurrencySafetyTest#concurrentSameKeySameBody_createsOneOrder"
+      ]
+    },
+    "S15": {
+      "covered": true,
+      "tests": [
+        "OrderCreationSmokeTest#createOrder_sameKeyDifferentBody_returns409",
+        "OrderCreationSmokeTest#idempotencyKey_requestHashNormalisation"
+      ]
+    },
+    "S16": {
+      "covered": true,
+      "tests": [
+        "PaymentSmokeTest#pay_sameKeyAgain_replaysWithoutCallingGatewayAgain",
+        "ConcurrencySafetyTest#concurrentPaySameKey_chargesOnce"
+      ]
+    },
+    "S17": {
+      "covered": true,
+      "tests": [
+        "PaymentGatewayFailureTest#charge_gatewayFailureModes_return502AndKeepPending",
+        "PaymentGatewayFailureTest#charge_timeout_returns504AndKeepsPending",
+        "PaymentGatewayFailureTest#charge_connectionRefused_returns502"
+      ]
+    },
+    "S18": {
+      "covered": true,
+      "tests": [
+        "PaymentSmokeTest#pay_declined_marksPaymentFailedAndReleasesStockAndCoupon",
+        "PaymentGatewayFailureTest#charge_failureThenDecline_releasesOnce"
+      ]
+    },
+    "S19": {
+      "covered": true,
+      "tests": [
+        "PaymentGatewayFailureTest#refund_gatewayFailureModes_return502AndKeepPaid",
+        "PaymentGatewayFailureTest#refund_timeout_returns504KeepsPaidAndRetrySucceeds",
+        "CancelRefundShipSmokeTest#cancel_paidOrder_gatewayFailure_returns502KeepsPaidAndRetryRefunds"
+      ]
+    },
+    "S20": {
+      "covered": true,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentOrders_neverOversell"
+      ]
+    },
+    "S21": {
+      "covered": true,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentOrders_neverExceedCouponQuantity"
+      ]
+    },
+    "S22": {
+      "covered": true,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentPayDifferentKeys_chargesOnce"
+      ]
+    },
+    "S23": {
+      "covered": true,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentOrdersWithOppositeItemOrder_doNotDeadlock"
+      ]
+    },
+    "S24": {
+      "covered": true,
+      "tests": [
+        "OrderListCursorSmokeTest#list_cursorIsStableWhileNewOrdersArrive"
+      ]
+    },
+    "S25": {
+      "covered": true,
+      "tests": [
+        "OrderListCursorSmokeTest#list_invalidParameters_return400",
+        "OrderListCursorSmokeTest#list_sizeBounds",
+        "OrderListCursorSmokeTest#list_malformedCursors_return400InvalidCursor"
+      ]
+    }
+  },
+  "cost_usd": 0.919268
+}

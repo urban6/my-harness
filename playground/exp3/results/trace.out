@@ -1,0 +1,35 @@
+[trace] C-1 p1 done ($0.42)
+[trace] C-1 p2 done ($0.40)
+[trace] C-1 p3 done ($0.42)
+[trace] C-2 p1 done ($0.37)
+[trace] C-2 p2 done ($0.11)
+[trace] C-2 p3 done ($0.11)
+| 항목 | C-1 | C-2 |
+|---|---|---|
+| S1 | 설계 결정 상이 (contradicts, 실패, 테스트 O) | 설계 결정 상이 (contradicts, 실패, 테스트 O) |
+| S2 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S3 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S4 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S5 | 정상 (matches, 통과, 테스트 O) | 테스트 누락 (matches, 통과, 테스트 X) |
+| S6 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S7 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S8 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S9 | 설계 결정 상이 (contradicts, 실패, 테스트 X) | 설계 결정 상이 (contradicts, 실패, 테스트 X) |
+| S10 | 정상 (matches, 통과, 테스트 O) | 설계 결정 상이 (contradicts, 실패, 테스트 O) |
+| S11 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S12 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S13 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S14 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S15 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S16 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S17 | 구현 누락 (matches, 실패, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S18 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S19 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S20 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S21 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S22 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S23 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S24 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+| S25 | 정상 (matches, 통과, 테스트 O) | 정상 (matches, 통과, 테스트 O) |
+
+총 비용 $1.83

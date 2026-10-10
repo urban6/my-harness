@@ -1,0 +1,656 @@
+{
+  "C-1": {
+    "S1": {
+      "passed": false,
+      "tested": true,
+      "decision": "contradicts",
+      "votes": [
+        "contradicts",
+        "contradicts",
+        "contradicts"
+      ],
+      "evidence": "`price` | long | Y | 0 ≤ price ≤ 1,000,000,000",
+      "note": "음수 가격·음수 재고·빈 이름은 400으로 거절하지만, 가격 0은 허용한다.",
+      "class": "설계 결정 상이"
+    },
+    "S2": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "validation-failed 400 ... items 비어있음, quantity<1, productId 중복 ... / 실패한 요청은 키를 소비하지 않는다(404/409/422/400로 롤백되면 주문 행이 없으므로)",
+      "note": "",
+      "class": "정상"
+    },
+    "S3": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "FIXED: 1 ≤ value ≤ 1,000,000,000 / RATE: 1 ≤ value ≤ 100 (정수 %) ... `validFrom` | instant | Y | `validFrom < validUntil`",
+      "note": "",
+      "class": "정상"
+    },
+    "S4": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "`malformed-request` | 400 | JSON 파싱 오류, 타입 불일치(`price:\"abc\"`, 소수) ...",
+      "note": "",
+      "class": "정상"
+    },
+    "S5": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "`subtotal×value` 최대 ≈ 10^15×100 = 10^17 < Long.MAX 로 오버플로 없음(items ≤100, quantity ≤10,000, price ≤10^9).",
+      "note": "",
+      "class": "정상"
+    },
+    "S6": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "`insufficient-stock` | 409 | 주문 시 `available < quantity` (주문·예약 전체 롤백)",
+      "note": "",
+      "class": "정상"
+    },
+    "S7": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "3. `discount = min(raw, subtotal)` (subtotal 초과 불가). 4. `totalPrice = subtotal − discount` (≥ 0).",
+      "note": "",
+      "class": "정상"
+    },
+    "S8": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "검증(순서): 존재(404) → 기간 ...(422 `coupon-not-in-period`) → `subtotal ≥ minOrderAmount`(422 ...) → 잔여 `usedCount < totalQuantity`(422 `coupon-exhausted`).",
+      "note": "",
+      "class": "정상"
+    },
+    "S9": {
+      "passed": false,
+      "tested": false,
+      "decision": "contradicts",
+      "votes": [
+        "contradicts",
+        "contradicts",
+        "contradicts"
+      ],
+      "evidence": "사용자당 사용 횟수 제한은 요구 없음 → 결정: 제한하지 않음(같은 사용자가 여러 주문에 같은 쿠폰 사용 가능, 총량만 제한).",
+      "note": "같은 사용자가 같은 쿠폰을 두 번째로 써도 거절하지 않고 허용한다.",
+      "class": "설계 결정 상이"
+    },
+    "S10": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "결제 거절(→PAYMENT_FAILED)/취소/만료/환불 행: reserved −= qty, usedCount −1",
+      "note": "",
+      "class": "정상"
+    },
+    "S11": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "전이 위반 응답: 409 `invalid-order-state` ... 0이면 부수효과 없이 현재 상태 재조회 후 ... 409 매핑.",
+      "note": "",
+      "class": "정상"
+    },
+    "S12": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "TX-A(짧음): ... 만료 경과면 expire 처리 후 409 `order-expired` → 리스 claim ... (PG 호출은 이후 단계)",
+      "note": "",
+      "class": "정상"
+    },
+    "S13": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "스케줄러(주 경로): `@Scheduled(fixedDelayString=...)` 기본 PT10S ... 각 id를 별도 트랜잭션으로 `expireIfDue`",
+      "note": "직전 실행이 끝난 뒤 10초를 쉬는 fixedDelay 방식이라 최악의 경우 처리 시간만큼 10초를 조금 넘을 수 있다(경계 사례).",
+      "class": "정상"
+    },
+    "S14": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "동시 동일 키: unique 인덱스가 직렬화하고 주문은 1건만 생성, 나머지는 재생 응답.",
+      "note": "",
+      "class": "정상"
+    },
+    "S15": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "같은 key + 다른 본문 해시 → 409 `idempotency-key-conflict`.",
+      "note": "",
+      "class": "정상"
+    },
+    "S16": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "결과 확정(APPROVED/DECLINED/REFUNDED) → PG 재호출 없이 200 재생. 미확정 ... 진행 중이면 409 `operation-in-progress`",
+      "note": "",
+      "class": "정상"
+    },
+    "S17": {
+      "passed": false,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "502/504: 리스만 해제(`lease_token=NULL`), `payments.last_error` 기록, 주문 PENDING_PAYMENT 유지 → 같은 키로 재시도 가능.",
+      "note": "",
+      "class": "구현 누락"
+    },
+    "S18": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "PG `DECLINED` | **200** | Order(`status=PAYMENT_FAILED`) / 결제 거절(→PAYMENT_FAILED) | 불변 | −= qty | +qty | −1",
+      "note": "",
+      "class": "정상"
+    },
+    "S19": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "환불 PG 실패: 502/504 problem, 주문은 PAID 유지(재시도 가능).",
+      "note": "",
+      "class": "정상"
+    },
+    "S20": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "재고 예약: `UPDATE products SET reserved = reserved + :q WHERE id=:id AND stock - reserved >= :q` → 0행이면 409 `insufficient-stock`.",
+      "note": "",
+      "class": "정상"
+    },
+    "S21": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "쿠폰 사용: `UPDATE coupons SET used_count = used_count + 1 WHERE id=:id AND used_count < total_quantity ...` → 0행이면 사유 재조회 후 422.",
+      "note": "",
+      "class": "정상"
+    },
+    "S22": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "한 주문에는 결제 키가 하나만 묶인다(첫 pay 요청의 키) ... 다른 키: 주문이 아직 PENDING이고 결제 행이 있으면 409 `idempotency-key-conflict`",
+      "note": "",
+      "class": "정상"
+    },
+    "S23": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "락 순서(데드락 회피): 전역 순서 `orders 행 → products(id 오름차순) → coupons`.",
+      "note": "",
+      "class": "정상"
+    },
+    "S24": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "정렬: **`id` 내림차순**(= 생성 역순; id는 단조 증가) ... 다음 페이지 = `WHERE id < lastId`.",
+      "note": "",
+      "class": "정상"
+    },
+    "S25": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "`size` | int | N | 기본 **20**, 최소 1, 최대 **100**. 범위 밖/비숫자 400 / 실패 시 400 `invalid-cursor` / 그 외 400 `validation-failed`",
+      "note": "",
+      "class": "정상"
+    }
+  },
+  "C-2": {
+    "S1": {
+      "passed": false,
+      "tested": true,
+      "decision": "contradicts",
+      "votes": [
+        "contradicts",
+        "contradicts",
+        "contradicts"
+      ],
+      "evidence": "price: 필수, 0 ≤ price ≤ 1,000,000,000 (정수)",
+      "note": "가격 0을 허용함(음수 가격·음수 재고·빈 이름은 400으로 거절)",
+      "class": "설계 결정 상이"
+    },
+    "S2": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "items 1~50개, productId ≥1 중복 불가, quantity 1~100000 / D-16: items에서 같은 productId 중복은 400",
+      "note": "",
+      "class": "정상"
+    },
+    "S3": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "value: 필수, ≥1; type=RATE이면 1~100 ... `validFrom < validUntil` (위반 시 `errors[].field=\"validUntil\"`)",
+      "note": "",
+      "class": "정상"
+    },
+    "S4": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "malformed-request (MALFORMED_REQUEST) | 400 | JSON 파싱 오류, enum/타입 불일치",
+      "note": "",
+      "class": "정상"
+    },
+    "S5": {
+      "passed": true,
+      "tested": false,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "상한(API 검증): price ≤ 1e9, quantity ≤ 1e5, items ≤ 50 → subtotal ≤ 5e15, RATE 중간값 `subtotal*100` ≤ 5e17 < 2^63 (long 오버플로 없음)",
+      "note": "",
+      "class": "테스트 누락"
+    },
+    "S6": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "0행이면 409 `insufficient-stock` ... 예외로 롤백되어 이전 항목 예약도 취소된다.",
+      "note": "",
+      "class": "정상"
+    },
+    "S7": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "FIXED = `min(value, subtotal)`, RATE = `min(floor(subtotal*value/100), maxDiscountAmount(있으면), subtotal)`",
+      "note": "",
+      "class": "정상"
+    },
+    "S8": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "D-15: 쿠폰 없음 404, 유효기간 밖·최소금액 미달·소진 → 409 `coupon-not-applicable` / 처리 순서(단일 트랜잭션, 하나라도 실패하면 전체 롤백)",
+      "note": "",
+      "class": "정상"
+    },
+    "S9": {
+      "passed": false,
+      "tested": false,
+      "decision": "contradicts",
+      "votes": [
+        "contradicts",
+        "contradicts",
+        "contradicts"
+      ],
+      "evidence": "D-20: 쿠폰은 사용자당 1회 제한이 없다.",
+      "note": "같은 사용자의 같은 쿠폰 중복 사용을 허용함",
+      "class": "설계 결정 상이"
+    },
+    "S10": {
+      "passed": false,
+      "tested": true,
+      "decision": "contradicts",
+      "votes": [
+        "contradicts",
+        "contradicts",
+        "contradicts"
+      ],
+      "evidence": "D-02: 환불(REFUNDED)은 재고(stock)만 복구, 쿠폰은 복구하지 않는다.",
+      "note": "취소·만료·결제실패는 복원하지만 환불 시 쿠폰 사용은 복원하지 않음",
+      "class": "설계 결정 상이"
+    },
+    "S11": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "위 표에 없는 모든 (상태, 이벤트) 조합은 409 `invalid-order-state` ... 전이는 항상 주문 행 락 아래에서 현재 상태를 재확인한 뒤 수행한다.",
+      "note": "",
+      "class": "정상"
+    },
+    "S12": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "4. 만료 검사: `expiresAt ≤ now`이면 EXPIRED 전환·복구를 커밋한 뒤 409 `order-expired` (PG 호출은 6단계)",
+      "note": "",
+      "class": "정상"
+    },
+    "S13": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "스케줄러: `@Scheduled(fixedDelayString=\"${order.expiry-sweep-interval:PT10S}\")` ... 전이: `EXPIRED` + 재고 예약 해제 + 쿠폰 복구(D-01).",
+      "note": "fixedDelay라 실제 간격이 처리 시간만큼 10초를 약간 넘을 수 있음(경계)",
+      "class": "정상"
+    },
+    "S14": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "request_hash 같음 → 해당 주문을 201 + Location + `Idempotent-Replayed: true`로 반환(재고·쿠폰 불변)",
+      "note": "",
+      "class": "정상"
+    },
+    "S15": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "D-03: 멱등 키 충돌(같은 키 + 다른 본문)은 409 `idempotency-key-reused`.",
+      "note": "",
+      "class": "정상"
+    },
+    "S16": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "존재 + request_hash 일치 → 저장된 결과 리플레이: 200 + 주문 현재 상태 + `Idempotent-Replayed: true`, PG 호출 없음.",
+      "note": "",
+      "class": "정상"
+    },
+    "S17": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "PG 호출(§5). 실패(타임아웃/5xx 등)는 예외 → 트랜잭션 롤백: 주문·재고·멱등 키 모두 변경 없음, 클라이언트는 같은 키로 재시도.",
+      "note": "",
+      "class": "정상"
+    },
+    "S18": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "`DECLINED` → `status=PAYMENT_FAILED`, payments(DECLINED) INSERT, 재고 예약 해제(`reserved -= q`), 쿠폰 `used_count -= 1`(D-01).",
+      "note": "",
+      "class": "정상"
+    },
+    "S19": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "D-06: 환불 PG 호출 실패(502/504) 시 주문은 PAID 유지, 재고·결제 기록 불변",
+      "note": "",
+      "class": "정상"
+    },
+    "S20": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "UPDATE products SET reserved = reserved + :q WHERE id = :id AND stock - reserved >= :q; -- 0행 → 409 insufficient-stock",
+      "note": "",
+      "class": "정상"
+    },
+    "S21": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "UPDATE coupons SET used_count = used_count + 1 WHERE code = :code AND used_count < total_quantity ... -- 0행 → 409 coupon-not-applicable",
+      "note": "",
+      "class": "정상"
+    },
+    "S22": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "결제·취소·출고·배송·만료의 모든 전이는 `orders` 행을 `PESSIMISTIC_WRITE`(`@Lock`)로 잠그고 현재 상태를 재확인한 뒤 수행.",
+      "note": "",
+      "class": "정상"
+    },
+    "S23": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "락 순서: products(id 오름차순) → coupons. 모든 변경 경로가 같은 순서라 교착이 없다",
+      "note": "",
+      "class": "정상"
+    },
+    "S24": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "정렬키: `orders.id DESC`(단조 증가 PK → 중복/누락 없는 안정 정렬; 동시 INSERT에도 이미 본 구간이 흔들리지 않음)",
+      "note": "",
+      "class": "정상"
+    },
+    "S25": {
+      "passed": true,
+      "tested": true,
+      "decision": "matches",
+      "votes": [
+        "matches",
+        "matches",
+        "matches"
+      ],
+      "evidence": "잘못된 `size`(0, 음수, 101 이상, 비숫자)·잘못된 `status` → 400 `invalid-parameter` / 디코딩 실패·접두사 불일치·id ≤ 0이면 400",
+      "note": "",
+      "class": "정상"
+    }
+  }
+}

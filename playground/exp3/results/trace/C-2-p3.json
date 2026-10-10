@@ -1,0 +1,130 @@
+{
+  "verdict": {
+    "S1": {
+      "decision": "contradicts",
+      "evidence": "price: 필수, 0 ≤ price ≤ 1,000,000,000 (정수)",
+      "note": "음수 가격·음수 재고·빈 이름은 거절하지만, 가격 0은 허용한다."
+    },
+    "S2": {
+      "decision": "matches",
+      "evidence": "items 1~50개, productId ≥1 중복 불가, quantity 1~100000 ... 처리 순서(단일 트랜잭션, 하나라도 실패하면 전체 롤백): 1. 헤더/본문 검증 → 400.",
+      "note": ""
+    },
+    "S3": {
+      "decision": "matches",
+      "evidence": "value: 필수, ≥1; type=RATE이면 1~100 ... `validFrom < validUntil` (위반 시 `errors[].field=\"validUntil\"`)",
+      "note": ""
+    },
+    "S4": {
+      "decision": "matches",
+      "evidence": "malformed-request (MALFORMED_REQUEST) | 400 | JSON 파싱 오류, enum/타입 불일치",
+      "note": ""
+    },
+    "S5": {
+      "decision": "matches",
+      "evidence": "상한(API 검증): price ≤ 1e9, quantity ≤ 1e5, items ≤ 50 → subtotal ≤ 5e15 ... (long 오버플로 없음, `Math.multiplyExact` 권장)",
+      "note": ""
+    },
+    "S6": {
+      "decision": "matches",
+      "evidence": "0행이면 409 `insufficient-stock`(...). 예외로 롤백되어 이전 항목 예약도 취소된다.",
+      "note": ""
+    },
+    "S7": {
+      "decision": "matches",
+      "evidence": "FIXED = `min(value, subtotal)`, RATE = `min(floor(subtotal*value/100), maxDiscountAmount(있으면), subtotal)`",
+      "note": ""
+    },
+    "S8": {
+      "decision": "matches",
+      "evidence": "쿠폰 오류: 쿠폰 없음 404, 유효기간 밖·최소금액 미달·소진 → **409** `coupon-not-applicable`(`reason` 확장).",
+      "note": ""
+    },
+    "S9": {
+      "decision": "contradicts",
+      "evidence": "D-20 | 쿠폰은 사용자당 1회 제한이 없다.",
+      "note": "같은 사용자가 같은 쿠폰을 다시 써도 거절하지 않는다."
+    },
+    "S10": {
+      "decision": "contradicts",
+      "evidence": "D-02 | 환불(REFUNDED)은 **재고(stock)만 복구, 쿠폰은 복구하지 않는다**.",
+      "note": "취소·만료·결제 실패는 복원하지만, 환불 시에는 쿠폰 usedCount를 복원하지 않는다."
+    },
+    "S11": {
+      "decision": "matches",
+      "evidence": "**위 표에 없는 모든 (상태, 이벤트) 조합은 409 `invalid-order-state`** ... 전이는 항상 주문 행 락 아래에서 현재 상태를 재확인한 뒤 수행한다.",
+      "note": ""
+    },
+    "S12": {
+      "decision": "matches",
+      "evidence": "4. 만료 검사: `expiresAt ≤ now`이면 **EXPIRED 전환·복구를 커밋한 뒤** 409 `order-expired` (PG 호출은 6단계)",
+      "note": ""
+    },
+    "S13": {
+      "decision": "matches",
+      "evidence": "만료는 **스케줄러 + lazy 병행**. 스케줄러(기본 10초 주기)가 일괄 처리",
+      "note": "fixedDelay 10초라서 최악의 경우 반영까지 10초를 조금 넘을 수 있다."
+    },
+    "S14": {
+      "decision": "matches",
+      "evidence": "`request_hash` 같음 → 해당 주문을 **201 + Location + `Idempotent-Replayed: true`**로 반환(재고·쿠폰 불변).",
+      "note": ""
+    },
+    "S15": {
+      "decision": "matches",
+      "evidence": "D-03 | 멱등 키 충돌(같은 키 + 다른 본문)은 **409** `idempotency-key-reused`.",
+      "note": ""
+    },
+    "S16": {
+      "decision": "matches",
+      "evidence": "존재 + `request_hash` 일치 → 저장된 결과 리플레이: **200 + 주문 현재 상태 + `Idempotent-Replayed: true`**, **PG 호출 없음**.",
+      "note": ""
+    },
+    "S17": {
+      "decision": "matches",
+      "evidence": "PG 호출(§5). 실패(타임아웃/5xx 등)는 예외 → **트랜잭션 롤백**: 주문·재고·멱등 키 모두 변경 없음, 클라이언트는 같은 키로 재시도.",
+      "note": ""
+    },
+    "S18": {
+      "decision": "matches",
+      "evidence": "`DECLINED` → `status=PAYMENT_FAILED`, payments(DECLINED) INSERT, 재고 예약 해제(`reserved -= q`), 쿠폰 `used_count -= 1`(D-01).",
+      "note": ""
+    },
+    "S19": {
+      "decision": "matches",
+      "evidence": "D-06 | 환불 PG 호출 실패(502/504) 시 **주문은 PAID 유지**, 재고·결제 기록 불변",
+      "note": ""
+    },
+    "S20": {
+      "decision": "matches",
+      "evidence": "UPDATE products SET reserved = reserved + :q WHERE id = :id AND stock - reserved >= :q;      -- 0행 → 409 insufficient-stock",
+      "note": ""
+    },
+    "S21": {
+      "decision": "matches",
+      "evidence": "UPDATE coupons SET used_count = used_count + 1 WHERE code = :code AND used_count < total_quantity ... -- 0행 → 409 coupon-not-applicable",
+      "note": ""
+    },
+    "S22": {
+      "decision": "matches",
+      "evidence": "결제·취소·출고·배송·만료의 모든 전이는 `orders` 행을 `PESSIMISTIC_WRITE`(`@Lock`)로 잠그고 **현재 상태를 재확인**한 뒤 수행.",
+      "note": ""
+    },
+    "S23": {
+      "decision": "matches",
+      "evidence": "락 순서: **products(id 오름차순) → coupons**. 모든 변경 경로가 같은 순서라 교착이 없다(02 §3).",
+      "note": ""
+    },
+    "S24": {
+      "decision": "matches",
+      "evidence": "**정렬키**: `orders.id DESC`(단조 증가 PK → 중복/누락 없는 안정 정렬; 동시 INSERT에도 이미 본 구간이 흔들리지 않음).",
+      "note": ""
+    },
+    "S25": {
+      "decision": "matches",
+      "evidence": "잘못된 `size`(0, 음수, 101 이상, 비숫자)·잘못된 `status` → 400 `invalid-parameter`(`parameter`). 디코딩 실패·접두사 불일치·id ≤ 0이면 400",
+      "note": ""
+    }
+  },
+  "cost_usd": 0.1075216
+}

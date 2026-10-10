@@ -1,0 +1,782 @@
+{
+  "C-1": {
+    "label": "X1",
+    "S1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductCouponSmokeTest#createProduct_outOfRangeValues_return400",
+        "ProductCouponSmokeTest#createProduct_withInvalidFields_returns400ValidationFailed"
+      ]
+    },
+    "S2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationSmokeTest#createOrder_bodyValidation",
+        "OrderCreationSmokeTest#createOrder_missingHeadersOrBadBody_return400",
+        "OrderCreationSmokeTest#createOrder_nullElements_return400"
+      ]
+    },
+    "S3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductCouponSmokeTest#createCoupon_negativeAndDegenerateFields_return400",
+        "ProductCouponSmokeTest#createCoupon_rateAbove100_periodReversedOrUnknownType_return400",
+        "ProductCouponSmokeTest#createCoupon_valueBoundaries"
+      ]
+    },
+    "S4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProblemFormatSmokeTest#malformedBodyOrTypes_return400MalformedRequest"
+      ]
+    },
+    "S5": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CouponDiscountSmokeTest#createOrder_largeAmounts_doNotOverflow"
+      ]
+    },
+    "S6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationSmokeTest#createOrder_exactAvailableBoundary",
+        "OrderCreationSmokeTest#createOrder_insufficientStock_returns409AndRollsBackEarlierReservations"
+      ]
+    },
+    "S7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CouponDiscountSmokeTest#createOrder_fixedDiscountCannotExceedSubtotal"
+      ]
+    },
+    "S8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CouponDiscountSmokeTest#createOrder_couponRuleViolations_return422AndLeaveNoSideEffects",
+        "CouponDiscountSmokeTest#createOrder_exhaustedCoupon_returns422",
+        "CouponDiscountSmokeTest#createOrder_minOrderAmountBoundary"
+      ]
+    },
+    "S9": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S10": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CancelRefundShipSmokeTest#cancel_paidMultiItemOrderWithCoupon_releasesEverythingOnce",
+        "CouponDiscountSmokeTest#couponQuantity_isReturnedByEveryReleasePath",
+        "OrderExpirySmokeTest#getOrder_afterTtl_showsExpiredAndReleasesStockAndCouponExactlyOnce",
+        "PaymentSmokeTest#pay_declined_marksPaymentFailedAndReleasesStockAndCoupon"
+      ]
+    },
+    "S11": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CancelRefundShipSmokeTest#deliver_wrongStateOrUnknown",
+        "OrderStateMatrixTest#everyStatusAndAction_matchesTheDesignedTable",
+        "PaymentSmokeTest#pay_cancelledOrder_returns409WithoutGatewayCall"
+      ]
+    },
+    "S12": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpirySmokeTest#expiredOrder_isTerminalAndNeverReleasedTwice",
+        "OrderExpirySmokeTest#payAndCancel_onExpiredOrder_return409OrderExpired"
+      ]
+    },
+    "S13": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpirySchedulerTest#scheduler_expiresOverdueOrderInBackground"
+      ]
+    },
+    "S14": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentSameKeySameBody_createsOneOrder",
+        "OrderCreationSmokeTest#createOrder_sameKeySameBody_replaysFirstOrderWithoutDoubleReservation"
+      ]
+    },
+    "S15": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentSameKeyDifferentBodies_oneWinsOthersConflict",
+        "OrderCreationSmokeTest#createOrder_sameKeyDifferentBody_returns409",
+        "OrderCreationSmokeTest#idempotencyKey_requestHashNormalisation"
+      ]
+    },
+    "S16": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentPaySameKey_chargesOnce",
+        "PaymentSmokeTest#pay_sameKeyAgain_replaysWithoutCallingGatewayAgain"
+      ]
+    },
+    "S17": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "PaymentGatewayFailureTest#charge_connectionRefused_returns502",
+        "PaymentGatewayFailureTest#charge_gatewayFailureModes_return502AndKeepPending",
+        "PaymentGatewayFailureTest#charge_timeout_returns504AndKeepsPending"
+      ]
+    },
+    "S18": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "PaymentGatewayFailureTest#charge_failureThenDecline_releasesOnce",
+        "PaymentSmokeTest#pay_declined_marksPaymentFailedAndReleasesStockAndCoupon"
+      ]
+    },
+    "S19": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CancelRefundShipSmokeTest#cancel_paidOrder_gatewayFailure_returns502KeepsPaidAndRetryRefunds",
+        "PaymentGatewayFailureTest#refund_gatewayFailureModes_return502AndKeepPaid",
+        "PaymentGatewayFailureTest#refund_timeout_returns504KeepsPaidAndRetrySucceeds"
+      ]
+    },
+    "S20": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentOrders_neverOversell"
+      ]
+    },
+    "S21": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentOrders_neverExceedCouponQuantity"
+      ]
+    },
+    "S22": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentPayDifferentKeys_chargesOnce"
+      ]
+    },
+    "S23": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencySafetyTest#concurrentOrdersWithOppositeItemOrder_doNotDeadlock"
+      ]
+    },
+    "S24": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListCursorSmokeTest#list_cursorIsStableWhileNewOrdersArrive"
+      ]
+    },
+    "S25": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListCursorSmokeTest#list_invalidParameters_return400",
+        "OrderListCursorSmokeTest#list_malformedCursors_return400InvalidCursor",
+        "OrderListCursorSmokeTest#list_sizeBounds"
+      ]
+    }
+  },
+  "A-1": {
+    "label": "X2",
+    "S1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CatalogApiTest#invalidProductIsRejectedWithProblemDetails"
+      ]
+    },
+    "S2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#duplicateProductLinesAreMerged",
+        "OrderCreationTest#validatesRequest"
+      ]
+    },
+    "S3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CatalogApiTest#rejectsInvalidCoupons"
+      ]
+    },
+    "S4": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S5": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#insufficientStockIsConflictAndLeavesNothingReserved"
+      ]
+    },
+    "S7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#fixedCouponDiscountIsCappedAtSubtotal"
+      ]
+    },
+    "S8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#couponRulesAreEnforcedAndFailedOrdersLeaveNoTrace"
+      ]
+    },
+    "S9": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S10": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpirationTest#unpaidOrderExpiresAndReleasesStockAndCoupon",
+        "OrderLifecycleTest#cancellingPaidOrderRefundsAndRestocks",
+        "OrderLifecycleTest#cancellingPendingOrderReleasesReservationAndCoupon",
+        "OrderLifecycleTest#declinedPaymentFailsOrderAndReleasesReservationAndCoupon"
+      ]
+    },
+    "S11": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#cancellingPendingOrderReleasesReservationAndCoupon",
+        "OrderLifecycleTest#shipAndDeliverFollowTheStateMachine"
+      ]
+    },
+    "S12": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpirationTest#payingAfterTheDeadlineIsRejectedEvenBeforeTheSweeperRuns"
+      ]
+    },
+    "S13": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpirationTest#unpaidOrderExpiresAndReleasesStockAndCoupon"
+      ]
+    },
+    "S14": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#concurrentRequestsWithTheSameKeyCreateOneOrder",
+        "OrderCreationTest#sameIdempotencyKeyReturnsTheSameOrderWithoutReservingTwice"
+      ]
+    },
+    "S15": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#sameIdempotencyKeyReturnsTheSameOrderWithoutReservingTwice"
+      ]
+    },
+    "S16": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#paymentWithoutKeyUsesAStableKeyPerOrder",
+        "OrderLifecycleTest#retryWithTheSamePaymentKeyIsIdempotentButAnotherKeyConflicts"
+      ]
+    },
+    "S17": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#gatewayFailureKeepsOrderPayableAndRetryWithSameKeyWorks"
+      ]
+    },
+    "S18": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#declinedPaymentFailsOrderAndReleasesReservationAndCoupon"
+      ]
+    },
+    "S19": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#refundFailureLeavesOrderPaid"
+      ]
+    },
+    "S20": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#concurrentOrdersNeverOversellStock"
+      ]
+    },
+    "S21": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#concurrentOrdersNeverExceedCouponQuantity"
+      ]
+    },
+    "S22": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#concurrentPaymentsOnOneOrderChargeOnce"
+      ]
+    },
+    "S23": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S24": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S25": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#listRejectsBadParameters"
+      ]
+    }
+  },
+  "C-2": {
+    "label": "X3",
+    "S1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductApiTest#createWithBlankNameIsValidationFailed",
+        "ProductApiTest#createWithNegativePriceIsValidationFailed",
+        "ProductApiTest#createWithNegativeStockIsValidationFailed"
+      ]
+    },
+    "S2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#duplicateProductIsValidationFailed",
+        "OrderCreateTest#emptyOrMissingItemsIsValidationFailed",
+        "OrderCreateTest#quantityOutOfRangeIsValidationFailed",
+        "OrderCreateTest$Create#duplicateProductIsValidationFailed",
+        "OrderCreateTest$Create#emptyOrMissingItemsIsValidationFailed",
+        "OrderCreateTest$Create#quantityOutOfRangeIsValidationFailed"
+      ]
+    },
+    "S3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "CouponApiTest#equalValidityBoundsIsValidationFailed",
+        "CouponApiTest#inverseValidityPeriodIsValidationFailed",
+        "CouponApiTest#rateAbove100IsValidationFailed"
+      ]
+    },
+    "S4": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#brokenBodyIsMalformed",
+        "OrderCreateTest$Create#brokenBodyIsMalformed",
+        "ProductApiTest#createWithBrokenJsonIsMalformed",
+        "ProductApiTest#createWithWrongTypeIsMalformed"
+      ]
+    },
+    "S5": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#insufficientStockIsConflict",
+        "OrderCreateTest#multiItemFailureRollsBackEverything",
+        "OrderCreateTest$Create#insufficientStockIsConflict",
+        "OrderCreateTest$Create#multiItemFailureRollsBackEverything"
+      ]
+    },
+    "S7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#fixedCouponIsClampedToSubtotal",
+        "OrderCreateTest$Coupons#fixedCouponIsClampedToSubtotal"
+      ]
+    },
+    "S8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#couponNotYetValid",
+        "OrderCreateTest#exhaustedCouponIsRejectedWithExhaustedReason",
+        "OrderCreateTest#unknownCouponIs404",
+        "OrderCreateTest$Coupons#couponNotYetValid",
+        "OrderCreateTest$Coupons#exhaustedCouponIsRejectedWithExhaustedReason",
+        "OrderCreateTest$Coupons#unknownCouponIs404"
+      ]
+    },
+    "S9": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S10": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCancelAndFulfillmentTest#cancelPendingReleasesStockAndCoupon",
+        "OrderCancelAndFulfillmentTest$Cancel#cancelPendingReleasesStockAndCoupon",
+        "OrderExpiryTest#lazyExpiryOnGetReleasesStockAndCoupon",
+        "OrderPaymentTest#declinedMarksPaymentFailedAndReleasesResources",
+        "OrderPaymentTest$Approval#declinedMarksPaymentFailedAndReleasesResources"
+      ]
+    },
+    "S11": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCancelAndFulfillmentTest#disallowedTransitionIsConflictAndKeepsState",
+        "OrderCancelAndFulfillmentTest#shipPendingIsConflict",
+        "OrderCancelAndFulfillmentTest$Fulfillment#shipPendingIsConflict",
+        "OrderCancelAndFulfillmentTest$TransitionTable#disallowedTransitionIsConflictAndKeepsState",
+        "OrderPaymentTest#payingCancelledOrderIsInvalidState",
+        "OrderPaymentTest$Approval#payingCancelledOrderIsInvalidState"
+      ]
+    },
+    "S12": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpiryTest#payAfterExpiryIsOrderExpiredAndCommitsTheTransition",
+        "OrderExpiryTest#payOnAlreadyExpiredOrderStaysOrderExpired"
+      ]
+    },
+    "S13": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpirySchedulerTest#schedulerExpiresDueOrdersAndSkipsPaid"
+      ]
+    },
+    "S14": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencyTest#sameIdempotencyKeyConcurrentlyCreatesSingleOrder",
+        "OrderCreateTest#sameKeySameBodyReplaysExistingOrder",
+        "OrderCreateTest$Idempotency#sameKeySameBodyReplaysExistingOrder"
+      ]
+    },
+    "S15": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreateTest#sameKeyDifferentCouponIsConflict",
+        "OrderCreateTest#sameKeyDifferentQuantityIsConflict",
+        "OrderCreateTest$Idempotency#sameKeyDifferentCouponIsConflict",
+        "OrderCreateTest$Idempotency#sameKeyDifferentQuantityIsConflict",
+        "OrderPaymentTest#sameKeyDifferentTokenIsConflict",
+        "OrderPaymentTest$PayIdempotency#sameKeyDifferentTokenIsConflict"
+      ]
+    },
+    "S16": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencyTest#samePayKeyConcurrentlyCallsGatewayOnce",
+        "OrderPaymentTest#sameKeyReplaysWithoutCallingGatewayAgain",
+        "OrderPaymentTest$PayIdempotency#sameKeyReplaysWithoutCallingGatewayAgain"
+      ]
+    },
+    "S17": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderPaymentTest#droppedConnectionIs502Unavailable",
+        "OrderPaymentTest#gatewayServerErrorIs502AndRollsBack",
+        "OrderPaymentTest#gatewayTimeoutIs504AndRollsBack",
+        "OrderPaymentTest$GatewayFailures#droppedConnectionIs502Unavailable",
+        "OrderPaymentTest$GatewayFailures#gatewayServerErrorIs502AndRollsBack",
+        "OrderPaymentTest$GatewayFailures#gatewayTimeoutIs504AndRollsBack"
+      ]
+    },
+    "S18": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderPaymentTest#declinedMarksPaymentFailedAndReleasesResources",
+        "OrderPaymentTest$Approval#declinedMarksPaymentFailedAndReleasesResources"
+      ]
+    },
+    "S19": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCancelAndFulfillmentTest#refundServerErrorKeepsOrderPaid",
+        "OrderCancelAndFulfillmentTest#refundTimeoutKeepsOrderPaid",
+        "OrderCancelAndFulfillmentTest$Cancel#refundServerErrorKeepsOrderPaid",
+        "OrderCancelAndFulfillmentTest$Cancel#refundTimeoutKeepsOrderPaid"
+      ]
+    },
+    "S20": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencyTest#concurrentMultiQuantityOrdersRespectAvailable",
+        "ConcurrencyTest#concurrentOrdersNeverOversell"
+      ]
+    },
+    "S21": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencyTest#concurrentOrdersNeverExceedCouponQuantity"
+      ]
+    },
+    "S22": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencyTest#differentPayKeysOnSameOrderChargeOnce"
+      ]
+    },
+    "S23": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ConcurrencyTest#oppositeProductOrderDoesNotDeadlock"
+      ]
+    },
+    "S24": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListTest#newOrdersBetweenPagesDoNotShiftTheCursor"
+      ]
+    },
+    "S25": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderListTest#invalidCursorIsRejected",
+        "OrderListTest#invalidSizeIsRejected",
+        "OrderListTest#invalidStatusIsRejected"
+      ]
+    }
+  },
+  "A-2": {
+    "label": "X4",
+    "S1": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductCouponApiTest#invalidProductIsProblemDetail"
+      ]
+    },
+    "S2": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#mergesDuplicateLines",
+        "OrderCreationTest#validatesRequest"
+      ]
+    },
+    "S3": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "ProductCouponApiTest#rejectsInvalidCoupons"
+      ]
+    },
+    "S4": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S5": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S6": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#insufficientStockIsConflictAndReservesNothing"
+      ]
+    },
+    "S7": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#fixedCouponNeverExceedsSubtotal"
+      ]
+    },
+    "S8": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#couponRulesAreEnforced"
+      ]
+    },
+    "S9": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S10": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#cancelPaidOrderRefundsAndRestocks",
+        "OrderLifecycleTest#cancelPendingOrderReleasesStockAndCoupon",
+        "OrderPaymentTest#declinedPaymentFailsOrderAndReleasesStockAndCoupon"
+      ]
+    },
+    "S11": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#cancelPendingOrderReleasesStockAndCoupon",
+        "OrderLifecycleTest#shipAndDeliverFollowTheStateMachine"
+      ]
+    },
+    "S12": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpiryTest#payingJustAfterDeadlineExpiresInsteadOfCharging",
+        "OrderExpiryTest#unpaidOrderExpiresAndReleasesStockAndCoupon"
+      ]
+    },
+    "S13": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderExpiryTest#unpaidOrderExpiresAndReleasesStockAndCoupon"
+      ]
+    },
+    "S14": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#concurrentRequestsWithSameKeyCreateOneOrder",
+        "OrderCreationTest#sameIdempotencyKeyReplaysTheSameOrder"
+      ]
+    },
+    "S15": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#reusingKeyWithDifferentBodyIsRejected",
+        "OrderPaymentTest#sameIdempotencyKeyDoesNotChargeTwice"
+      ]
+    },
+    "S16": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderPaymentTest#concurrentPaymentsWithSameKeyAreAllServed",
+        "OrderPaymentTest#sameIdempotencyKeyDoesNotChargeTwice"
+      ]
+    },
+    "S17": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderPaymentTest#gatewayFailureKeepsOrderPayableAndRetryWithSameKeyWorks"
+      ]
+    },
+    "S18": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderPaymentTest#declinedPaymentFailsOrderAndReleasesStockAndCoupon"
+      ]
+    },
+    "S19": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#refundFailureKeepsOrderPaid"
+      ]
+    },
+    "S20": {
+      "yes": 2,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#concurrentOrdersNeverOversellStock"
+      ]
+    },
+    "S21": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#concurrentOrdersNeverOveruseCoupon"
+      ]
+    },
+    "S22": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderPaymentTest#concurrentPaymentsReachTheGatewayOnce"
+      ]
+    },
+    "S23": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderCreationTest#concurrentMultiProductOrdersDoNotDeadlock"
+      ]
+    },
+    "S24": {
+      "yes": 0,
+      "of": 3,
+      "tests": []
+    },
+    "S25": {
+      "yes": 3,
+      "of": 3,
+      "tests": [
+        "OrderLifecycleTest#listsOrdersWithCursorPaginationAndFilters"
+      ]
+    }
+  }
+}
