@@ -106,7 +106,7 @@ export const register: Register = on => {
     const chosen = await read($, picked)
 
     return (
-      <Box flexDirection="column">
+      <Box flexDirection="column" gap={1}>
         <Text dimColor>다음 스텝 — 숫자로 고르고 0으로 입력창에 채우기</Text>
         {list.map((step, i) => (
           <Button
@@ -115,8 +115,10 @@ export const register: Register = on => {
             hotkey={String(i + 1)}
             onPress={() => update($, picked, list => toggle(list, i))}
           >
-            {chosen.includes(i) ? '[x] ' : '[ ] '}
-            {step}
+            <Text bold>
+              {chosen.includes(i) ? '[x] ' : '[ ] '}
+              {step}
+            </Text>
           </Button>
         ))}
         <Box flexDirection="row">
