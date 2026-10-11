@@ -1,7 +1,7 @@
 import { expect, mock, test } from 'claude-code/testing'
-import type { On, TurnCompleteInput } from 'claude-code'
+import type { ModelCompleteResult, On, TurnCompleteInput } from 'claude-code'
 
-import { composePrompt, parseSteps } from '../hooks/steps'
+import { compactUsage, composePrompt, parseSteps, recentTranscript } from '../hooks/steps'
 
 const USAGE = {
   input_tokens: 0,
@@ -39,6 +39,13 @@ function engineBand(on: On) {
   })
 }
 
+// 기본(haiku)과 fork 어느 쪽으로 만들어도 같은 답을 준다.
+function answerWith(on: On, reply: () => { value: ModelCompleteResult } | Promise<{ value: ModelCompleteResult }>) {
+  on('model.fork', () => reply())
+  on('model.complete', () => reply())
+  on('session.messages', () => ({ value: [{ role: 'user' as const, text: '회원가입 API 만들어 줘', toolUses: [] }] }))
+}
+
 function answered(text: string) {
   return { value: { isAnswered: true as const, text, usage: USAGE } }
 }
@@ -58,7 +65,7 @@ test('턴이 끝나면 제안을 띄우고, 고른 항목을 입력창에 채운
   let filled = ''
   engineBand(on)
   on('turn.complete', () => ({ text: '' }))
-  on('model.fork', () => answered('["테스트 추가", "에러 응답 정리", "문서화"]'))
+  answerWith(on, () => answered('["테스트 추가", "에러 응답 정리", "문서화"]'))
   on('prompt.fill', ($, e) => {
     filled = e.text
     return { isFilled: true, text: e.text, cursor: e.text.length }
@@ -88,7 +95,7 @@ test('서브에이전트 턴과 중단된 턴에는 제안하지 않는다', asy
   const clock = mock.clock(on)
   let forks = 0
   on('turn.complete', () => ({ text: '' }))
-  on('model.fork', () => {
+  answerWith(on, () => {
     forks += 1
     return answered('["x"]')
   })
@@ -104,7 +111,7 @@ test('새 프롬프트가 나가면 늦게 도착한 제안은 버린다', async
   const clock = mock.clock(on)
   engineBand(on)
   on('turn.complete', () => ({ text: '' }))
-  on('model.fork', async () => {
+  answerWith(on, async () => {
     await clock.sleep(1000)
     return answered('["늦은 제안"]')
   })
@@ -134,7 +141,7 @@ test('제안을 기다리는 동안 "정리 중"을 띄운다', async ($, on) =>
   const clock = mock.clock(on)
   engineBand(on)
   on('turn.complete', () => ({ text: '' }))
-  on('model.fork', async () => {
+  answerWith(on, async () => {
     await clock.sleep(1000)
     return answered('["테스트 추가"]')
   })
@@ -153,7 +160,7 @@ test('턴이 돌고 있거나 설문이 떠 있으면 목록을 숨긴다', asyn
   const clock = mock.clock(on)
   engineBand(on)
   on('turn.complete', () => ({ text: '' }))
-  on('model.fork', () => answered('["테스트 추가"]'))
+  answerWith(on, () => answered('["테스트 추가"]'))
 
   await $.turn.complete(TURN)
   await clock.settle()
@@ -169,7 +176,7 @@ test('제안을 못 받으면 목록 없이 엔진 밴드로 돌아간다', asyn
   const clock = mock.clock(on)
   engineBand(on)
   on('turn.complete', () => ({ text: '' }))
-  on('model.fork', () => answered('지금은 제안할 게 없어요'))
+  answerWith(on, () => answered('지금은 제안할 게 없어요'))
 
   await $.turn.complete(TURN)
   await clock.settle()
@@ -184,7 +191,7 @@ test('/next-steps는 바로 목록을 띄우고, off면 턴이 끝나도 제안�
   engineBand(on)
   let forks = 0
   on('turn.complete', () => ({ text: '' }))
-  on('model.fork', () => {
+  answerWith(on, () => {
     forks += 1
     return answered('["테스트 추가", "문서화"]')
   })
@@ -209,7 +216,7 @@ test('모드가 다시 로드돼 제안이 끊겨도 session.start에서 이어�
   on('turn.complete', () => ({ text: '' }))
   on('command.register', ($, e) => ({ value: { command: e.name } }))
   on('session.start', ($, e) => ({ cwd: e.cwd }))
-  on('model.fork', async () => {
+  answerWith(on, async () => {
     forks += 1
     // 첫 요청은 다시 로드되며 끊긴 것처럼 돌아오지 않는다.
     if (forks === 1) await clock.sleep(60_000)
@@ -229,7 +236,7 @@ test('모드가 다시 로드돼 제안이 끊겨도 session.start에서 이어�
 test('/next-steps usage는 마지막 호출과 세션 누적 토큰을 보여 준다', async ($, on) => {
   const clock = mock.clock(on)
   on('turn.complete', () => ({ text: '' }))
-  on('model.fork', () => ({
+  answerWith(on, () => ({
     value: {
       isAnswered: true as const,
       text: '["x"]',
@@ -246,4 +253,122 @@ test('/next-steps usage는 마지막 호출과 세션 누적 토큰을 보여 �
   const { text } = await $.command.run(runCommand('usage'))
   expect(text).toContain('마지막 호출: 입력 300 · 캐시 읽기 40,000 · 캐시 쓰기 1,200 · 출력 80')
   expect(text).toContain('이 세션 누적 (2회): 입력 600 · 캐시 읽기 80,000 · 캐시 쓰기 2,400 · 출력 160')
+})
+
+function contextOf(tokens: number) {
+  return { value: { startedAt: 0, context: { tokens, window: 200_000 }, rateLimits: [] } }
+}
+
+test('Haiku에 보낼 대화는 최근 것부터 잘라 길이를 묶는다', async () => {
+  const long = 'a'.repeat(5_000)
+  const messages = Array.from({ length: 30 }, (_, i) => ({ role: i % 2 ? 'assistant' as const : 'user' as const, text: `<msg-${i}> ${long}` }))
+  const transcript = recentTranscript(messages)
+
+  expect(transcript.length).toBeLessThanOrEqual(24_000 + 20)
+  expect(transcript).toContain('<msg-29>')
+  expect(transcript).not.toContain('<msg-0>')
+  expect(recentTranscript([{ role: 'user', text: '  ' }])).toBe('')
+})
+
+test('기본은 Haiku에 최근 대화만 보내고 fork는 쓰지 않는다', async ($, on) => {
+  const clock = mock.clock(on)
+  engineBand(on)
+  let forks = 0
+  let asked = { model: '', prompt: '' }
+  on('turn.complete', () => ({ text: '' }))
+  on('session.messages', () => ({ value: [{ role: 'user' as const, text: '회원가입 API 만들어 줘', toolUses: [] }] }))
+  on('model.fork', () => {
+    forks += 1
+    return answered('["x"]')
+  })
+  on('model.complete', ($, e) => {
+    asked = { model: e.model, prompt: e.prompt }
+    return answered('["테스트 추가"]')
+  })
+
+  await $.turn.complete(TURN)
+  await clock.settle()
+
+  expect(forks).toBe(0)
+  expect(asked.model).toBe('haiku')
+  expect(asked.prompt).toContain('사용자: 회원가입 API 만들어 줘')
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.find({ key: 'step-0' })).toBeDefined()
+})
+
+test('fork 모드에서 대화가 기준보다 길면 자동 제안을 건너뛰고, 직접 요청은 만든다', async ($, on) => {
+  const clock = mock.clock(on)
+  mock.store(on)
+  engineBand(on)
+  let forks = 0
+  on('turn.complete', () => ({ text: '' }))
+  on('session.usage', () => contextOf(150_000))
+  answerWith(on, () => {
+    forks += 1
+    return answered('["테스트 추가"]')
+  })
+
+  await $.command.run(runCommand('model fork'))
+  await $.turn.complete(TURN)
+  await clock.settle()
+
+  expect(forks).toBe(0)
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.find({ type: 'Text', text: '150k 토큰' })).toBeDefined()
+
+  await $.command.run(runCommand(''))
+  await clock.settle()
+  expect(forks).toBe(1)
+  expect(await ui.find({ key: 'step-0' })).toBeDefined()
+})
+
+test('기준 안이거나 limit 0이면 fork 모드에서도 자동 제안한다', async ($, on) => {
+  const clock = mock.clock(on)
+  mock.store(on)
+  let forks = 0
+  let tokens = 50_000
+  on('turn.complete', () => ({ text: '' }))
+  on('session.usage', () => contextOf(tokens))
+  answerWith(on, () => {
+    forks += 1
+    return answered('["x"]')
+  })
+
+  await $.command.run(runCommand('model fork'))
+  await $.turn.complete(TURN)
+  await clock.settle()
+  expect(forks).toBe(1)
+
+  tokens = 500_000
+  await $.command.run(runCommand('limit 0'))
+  await $.turn.complete({ ...TURN, turnId: 'turn-2' })
+  await clock.settle()
+  expect(forks).toBe(2)
+})
+
+test('목록 아래에 이번 제안에 쓴 토큰을 보여 준다', async ($, on) => {
+  const clock = mock.clock(on)
+  on('turn.complete', () => ({ text: '' }))
+  answerWith(on, () => ({
+    value: {
+      isAnswered: true as const,
+      text: '["x"]',
+      usage: { input_tokens: 2_300, output_tokens: 80, cache_read_input_tokens: 40_000, cache_creation_input_tokens: 0 },
+    },
+  }))
+
+  await $.turn.complete(TURN)
+  await clock.settle()
+
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.find({ type: 'Text', text: '토큰 입력 42k (캐시 40k) · 출력 80 · haiku' })).toBeDefined()
+  expect(compactUsage({ input_tokens: 900, output_tokens: 1_234, cache_read_input_tokens: 0, cache_creation_input_tokens: 0 }))
+    .toBe('입력 900 · 출력 1.2k')
+})
+
+test('잘못된 model·limit 값은 사용법을 알려 준다', async ($, on) => {
+  mock.store(on)
+  for (const args of ['model opus', 'limit -1', 'limit abc', 'limit']) {
+    expect((await $.command.run(runCommand(args))).text).toContain('사용법')
+  }
 })

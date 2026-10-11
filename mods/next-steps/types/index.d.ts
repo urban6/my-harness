@@ -1,4 +1,7 @@
-export type Phase = 'idle' | 'loading' | 'ready'
+export type Phase = 'idle' | 'loading' | 'ready' | 'skipped'
+
+// haiku: 최근 대화만 잘라 Haiku에 보낸다(싸고 비용이 일정). fork: 대화 전체를 세션 모델로(정확하지만 길수록 비쌈).
+export type Mode = 'haiku' | 'fork'
 
 export type Usage = {
   input_tokens: number
@@ -18,6 +21,9 @@ declare module 'claude-code' {
       lastUsage: Usage | null
       totalUsage: Usage
       calls: number
+      mode: Mode
+      limit: number
+      contextTokens: number
     }
   }
 }

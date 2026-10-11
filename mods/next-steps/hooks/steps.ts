@@ -57,3 +57,37 @@ export function formatUsage(u: Usage): string {
   const n = (v: number) => v.toLocaleString('en-US')
   return `입력 ${n(u.input_tokens)} · 캐시 읽기 ${n(u.cache_read_input_tokens)} · 캐시 쓰기 ${n(u.cache_creation_input_tokens)} · 출력 ${n(u.output_tokens)}`
 }
+
+// fork 모드에서 컨텍스트가 이보다 크면 자동 제안을 건너뛴다. 0이면 건너뛰지 않는다.
+export const DEFAULT_LIMIT = 100_000
+
+const PER_MESSAGE_CHARS = 2_000
+const TRANSCRIPT_CHARS = 24_000
+
+// Haiku에 보낼 최근 대화. 뒤에서부터 메시지당·전체 글자 수를 잘라 비용을 일정하게 둔다.
+export function recentTranscript(messages: readonly { role: 'user' | 'assistant'; text: string }[]): string {
+  const lines: string[] = []
+  let size = 0
+  for (const message of [...messages].reverse()) {
+    const text = message.text.trim()
+    if (text === '') continue
+    const cut = text.length > PER_MESSAGE_CHARS ? `${text.slice(0, PER_MESSAGE_CHARS)}…` : text
+    const line = `${message.role === 'user' ? '사용자' : 'AI'}: ${cut}`
+    if (size + line.length > TRANSCRIPT_CHARS) break
+    lines.unshift(line)
+    size += line.length
+  }
+  return lines.join('\n\n')
+}
+
+export function formatTokens(n: number): string {
+  if (n < 1_000) return String(n)
+  return `${(n / 1_000).toFixed(n < 10_000 ? 1 : 0)}k`
+}
+
+// 밴드 한 줄용: 보낸 토큰 전체(그중 캐시 읽기)와 받은 토큰.
+export function compactUsage(u: Usage): string {
+  const sent = u.input_tokens + u.cache_read_input_tokens + u.cache_creation_input_tokens
+  const cached = u.cache_read_input_tokens > 0 ? ` (캐시 ${formatTokens(u.cache_read_input_tokens)})` : ''
+  return `입력 ${formatTokens(sent)}${cached} · 출력 ${formatTokens(u.output_tokens)}`
+}
