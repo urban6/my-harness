@@ -66,6 +66,7 @@ my-harness/
 | --- | --- |
 | `next-steps` | 턴이 끝나면 다음 할 일을 최대 4개 제안, 체크박스로 골라 입력창에 채움 ([mods/README.md](mods/README.md)) |
 | `context-bar` | 입력창 위에 컨텍스트 창 사용량을 카테고리별 색 막대와 비율로 표시 ([mods/README.md](mods/README.md)) |
+| `agent-monitor` | 서브에이전트의 상태·경과 시간·도구 호출 수·토큰을 사이드 패널에 실시간 표시 ([mods/README.md](mods/README.md)) |
 
 ## 프롬프트 예시
 

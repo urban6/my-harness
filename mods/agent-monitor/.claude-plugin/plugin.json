@@ -1,0 +1,6 @@
+{
+  "name": "agent-monitor",
+  "version": "0.1.0",
+  "description": "서브에이전트의 상태·경과 시간·도구 호출 수·토큰을 사이드 패널에 실시간으로 보여준다",
+  "types": "./types/index.d.ts"
+}
