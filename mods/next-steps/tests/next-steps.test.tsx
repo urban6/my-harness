@@ -225,3 +225,25 @@ test('모드가 다시 로드돼 제안이 끊겨도 session.start에서 이어�
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
   expect(await ui.find({ key: 'step-0' })).toBeDefined()
 })
+
+test('/next-steps usage는 마지막 호출과 세션 누적 토큰을 보여 준다', async ($, on) => {
+  const clock = mock.clock(on)
+  on('turn.complete', () => ({ text: '' }))
+  on('model.fork', () => ({
+    value: {
+      isAnswered: true as const,
+      text: '["x"]',
+      usage: { input_tokens: 300, output_tokens: 80, cache_read_input_tokens: 40000, cache_creation_input_tokens: 1200 },
+    },
+  }))
+
+  expect((await $.command.run(runCommand('usage'))).text).toContain('아직')
+
+  await $.turn.complete(TURN)
+  await $.turn.complete({ ...TURN, turnId: 'turn-2' })
+  await clock.settle()
+
+  const { text } = await $.command.run(runCommand('usage'))
+  expect(text).toContain('마지막 호출: 입력 300 · 캐시 읽기 40,000 · 캐시 쓰기 1,200 · 출력 80')
+  expect(text).toContain('이 세션 누적 (2회): 입력 600 · 캐시 읽기 80,000 · 캐시 쓰기 2,400 · 출력 160')
+})

@@ -1,8 +1,8 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register } from 'claude-code'
 
-import type { Phase } from '../types'
-import { ASK, composePrompt, parseSteps, toggle } from './steps'
+import type { Phase, Usage } from '../types'
+import { ASK, addUsage, composePrompt, formatUsage, NO_USAGE, parseSteps, toggle } from './steps'
 
 const phase = atom({ plugin: 'next-steps', key: 'phase' } as const, 'idle' as Phase)
 const steps = atom({ plugin: 'next-steps', key: 'steps' } as const, [] as string[])
@@ -10,6 +10,10 @@ const picked = atom({ plugin: 'next-steps', key: 'picked' } as const, [] as numb
 // 제안을 요청한 턴. 새 프롬프트가 들어오면 비워서 늦게 도착한 제안을 버린다.
 const turnId = atom({ plugin: 'next-steps', key: 'turnId' } as const, '')
 const isOn = atom({ plugin: 'next-steps', key: 'isOn' } as const, true)
+// 제안 생성(fork) 호출의 토큰 사용량. 이 세션 동안만 모은다.
+const lastUsage = atom({ plugin: 'next-steps', key: 'lastUsage' } as const, null as Usage | null)
+const totalUsage = atom({ plugin: 'next-steps', key: 'totalUsage' } as const, NO_USAGE)
+const calls = atom({ plugin: 'next-steps', key: 'calls' } as const, 0)
 
 const STORE_IS_ON = 'isOn'
 
@@ -27,6 +31,12 @@ async function suggest($: EngineInterface, id: string) {
   await update($, phase, () => 'loading' as Phase)
 
   const reply = await $.model.fork({ prompt: ASK })
+  if ('usage' in reply) {
+    const usage = reply.usage
+    await update($, lastUsage, () => usage)
+    await update($, totalUsage, total => addUsage(total, usage))
+    await update($, calls, n => n + 1)
+  }
   if ((await read($, turnId)) !== id) return
 
   const found = reply.isAnswered ? parseSteps(reply.text) : []
@@ -53,8 +63,8 @@ export const register: Register = on => {
     await update($, isOn, () => stored !== false)
     await $.command.register({
       name: 'next-steps',
-      description: '다음 스텝 제안: 인자 없으면 지금 제안, on/off로 자동 제안 켜고 끄기',
-      argumentHint: '[on|off]',
+      description: '다음 스텝 제안: 인자 없으면 지금 제안, on/off로 자동 제안 켜고 끄기, usage로 토큰 사용량',
+      argumentHint: '[on|off|usage]',
     })
 
     // 모드가 다시 로드되면 진행 중이던 fork는 끊기지만 $.state는 남는다.
@@ -77,7 +87,18 @@ export const register: Register = on => {
       if (!value) await clear($)
       return { text: `다음 스텝 자동 제안을 ${value ? '켰어요' : '껐어요'}.` }
     }
-    if (arg !== '') return { text: '사용법: /next-steps [on|off]' }
+    if (arg === 'usage') {
+      const last = await read($, lastUsage)
+      if (last === null) return { text: '이 세션에서는 아직 다음 스텝을 만든 적이 없어요.' }
+      return {
+        text: [
+          '다음 스텝 생성 토큰 사용량',
+          `마지막 호출: ${formatUsage(last)}`,
+          `이 세션 누적 (${await read($, calls)}회): ${formatUsage(await read($, totalUsage))}`,
+        ].join('\n'),
+      }
+    }
+    if (arg !== '') return { text: '사용법: /next-steps [on|off|usage]' }
 
     void suggest($, `manual-${await $.clock.now()}`)
     return { text: '다음 스텝을 정리하고 있어요.' }

@@ -1,3 +1,5 @@
+import type { Usage } from '../types'
+
 export const MAX_STEPS = 4
 
 export const ASK = `지금까지의 대화를 바탕으로, 사용자가 바로 이어서 요청할 만한 다음 작업을 최대 ${MAX_STEPS}개 제안해.
@@ -33,4 +35,25 @@ export function toggle(picked: number[], index: number): number[] {
   return picked.includes(index)
     ? picked.filter(i => i !== index)
     : [...picked, index].sort((a, b) => a - b)
+}
+
+export const NO_USAGE: Usage = {
+  input_tokens: 0,
+  output_tokens: 0,
+  cache_read_input_tokens: 0,
+  cache_creation_input_tokens: 0,
+}
+
+export function addUsage(a: Usage, b: Usage): Usage {
+  return {
+    input_tokens: a.input_tokens + b.input_tokens,
+    output_tokens: a.output_tokens + b.output_tokens,
+    cache_read_input_tokens: a.cache_read_input_tokens + b.cache_read_input_tokens,
+    cache_creation_input_tokens: a.cache_creation_input_tokens + b.cache_creation_input_tokens,
+  }
+}
+
+export function formatUsage(u: Usage): string {
+  const n = (v: number) => v.toLocaleString('en-US')
+  return `입력 ${n(u.input_tokens)} · 캐시 읽기 ${n(u.cache_read_input_tokens)} · 캐시 쓰기 ${n(u.cache_creation_input_tokens)} · 출력 ${n(u.output_tokens)}`
 }
