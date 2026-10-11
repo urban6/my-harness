@@ -1,0 +1,6 @@
+{
+  "name": "next-steps",
+  "version": "0.1.0",
+  "description": "턴이 끝나면 다음에 할 일을 최대 4개 제안하고, 체크박스로 골라 입력창에 채운다",
+  "types": "./types/index.d.ts"
+}

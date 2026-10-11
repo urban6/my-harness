@@ -13,6 +13,7 @@ my-harness/
 ├── commands/    # 슬래시 커맨드
 ├── rules/       # 규칙 (경로별 지침)
 ├── hooks/       # 훅 (폴더 하나 = 훅 하나, install.sh가 settings에 병합)
+├── mods/        # Claude Code 모드 (폴더 하나 = 모드 하나, install.sh가 전역 settings에 등록)
 ├── prompts/     # 복사해 쓰는 프롬프트 (설치 대상 아님)
 ├── docs/        # 외부 플러그인 사용법, guide/ AI 사용 가이드 (설치 대상 아님)
 ├── playground/  # 방식별 비교 실험 (설치 대상 아님)
@@ -58,6 +59,12 @@ my-harness/
 | `/push` | 보호 브랜치와 강제 푸시를 확인하고 푸시 |
 | `/pre-pr` | PR 올리기 전 코드 리뷰 (테스트·린트·진단 후 BLOCK/READY 판정) |
 | `/post-pr` | PR의 CI 결과와 리뷰 코멘트 대응, 머지 후 브랜치 정리 |
+
+## 모드
+
+| 이름 | 하는 일 |
+| --- | --- |
+| `next-steps` | 턴이 끝나면 다음 할 일을 최대 4개 제안, 체크박스로 골라 입력창에 채움 ([mods/README.md](mods/README.md)) |
 
 ## 프롬프트 예시
 
