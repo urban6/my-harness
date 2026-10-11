@@ -1,16 +1,20 @@
 import { atom, read, update } from 'claude-code'
 import type { EngineInterface, ModelForkResult, Register } from 'claude-code'
 
-import type { Mode, Phase, Usage } from '../types'
+import type { Mode, Phase, UiSettings, Usage } from '../types'
 import {
   addUsage,
-  ASK,
+  applyUi,
+  askFor,
   compactUsage,
   composePrompt,
   DEFAULT_LIMIT,
+  DEFAULT_UI,
   formatTokens,
+  formatUi,
   formatUsage,
   NO_USAGE,
+  normalizeUi,
   parseSteps,
   recentTranscript,
   toggle,
@@ -30,11 +34,13 @@ const contextTokens = atom({ plugin: 'next-steps', key: 'contextTokens' } as con
 const lastUsage = atom({ plugin: 'next-steps', key: 'lastUsage' } as const, null as Usage | null)
 const totalUsage = atom({ plugin: 'next-steps', key: 'totalUsage' } as const, NO_USAGE)
 const calls = atom({ plugin: 'next-steps', key: 'calls' } as const, 0)
+const ui = atom({ plugin: 'next-steps', key: 'ui' } as const, DEFAULT_UI as UiSettings)
 
 const STORE_IS_ON = 'isOn'
 const STORE_MODE = 'mode'
 const STORE_LIMIT = 'limit'
-const HELP = '사용법: /next-steps [on|off|usage|model haiku|fork|limit <토큰, 0은 끔>]'
+const STORE_UI = 'ui'
+const HELP = '사용법: /next-steps [on|off|usage|model haiku|fork|limit <토큰, 0은 끔>|ui [count|bold|gap|tokens <값>]]'
 
 async function clear($: EngineInterface) {
   await update($, turnId, () => '')
@@ -44,13 +50,14 @@ async function clear($: EngineInterface) {
 }
 
 async function ask($: EngineInterface): Promise<ModelForkResult> {
-  if ((await read($, mode)) === 'fork') return $.model.fork({ prompt: ASK })
+  const prompt = askFor((await read($, ui)).count)
+  if ((await read($, mode)) === 'fork') return $.model.fork({ prompt })
 
   const transcript = recentTranscript(await $.session.messages())
   if (transcript === '') return { isAnswered: false, reason: 'nothing-to-fork' }
   return $.model.complete({
     model: 'haiku',
-    prompt: `<대화>\n${transcript}\n</대화>\n\n${ASK}`,
+    prompt: `<대화>\n${transcript}\n</대화>\n\n${prompt}`,
     maxTokens: 500,
   })
 }
@@ -75,7 +82,7 @@ async function suggest($: EngineInterface, id: string) {
     const usage = reply.usage
     await update($, lastUsage, () => usage)
   }
-  const found = reply.isAnswered ? parseSteps(reply.text) : []
+  const found = reply.isAnswered ? parseSteps(reply.text, (await read($, ui)).count) : []
   await update($, steps, () => found)
   await update($, phase, () => (found.length > 0 ? 'ready' : 'idle') as Phase)
 }
@@ -115,10 +122,12 @@ export const register: Register = on => {
     await update($, isOn, () => storedIsOn !== false)
     await update($, mode, () => (storedMode === 'fork' ? 'fork' : 'haiku') as Mode)
     await update($, limit, () => (typeof storedLimit === 'number' ? storedLimit : DEFAULT_LIMIT))
+    const storedUi = normalizeUi(await $.store.get(STORE_UI))
+    await update($, ui, () => storedUi)
     await $.command.register({
       name: 'next-steps',
-      description: '다음 스텝 제안: 인자 없으면 지금 제안, on/off, usage, model haiku|fork, limit <토큰>',
-      argumentHint: '[on|off|usage|model|limit]',
+      description: '다음 스텝 제안: 인자 없으면 지금 제안, on/off, usage, model haiku|fork, limit <토큰>, ui <항목> <값>',
+      argumentHint: '[on|off|usage|model|limit|ui]',
     })
 
     // 모드가 다시 로드되면 진행 중이던 호출은 끊기지만 $.state는 남는다.
@@ -161,6 +170,16 @@ export const register: Register = on => {
           ? '대화 길이와 상관없이 자동 제안해요.'
           : `fork 모드에서 컨텍스트가 ${formatTokens(max)} 토큰을 넘으면 자동 제안을 건너뛰어요.`,
       }
+    }
+    if (sub === 'ui') {
+      const [, key = '', value = ''] = e.args.trim().toLowerCase().split(/\s+/)
+      const current = await read($, ui)
+      if (key === '') return { text: `다음 스텝 화면: ${formatUi(current)}\n바꾸기: /next-steps ui count 1~9 · bold on|off · gap 0~2 · tokens on|off` }
+      const changed = applyUi(current, key, value)
+      if (typeof changed === 'string') return { text: changed }
+      await update($, ui, () => changed)
+      await $.store.set(STORE_UI, changed)
+      return { text: `다음 스텝 화면: ${formatUi(changed)}${key === 'count' ? ' (항목 수는 다음 제안부터)' : ''}` }
     }
     if (sub === 'usage') {
       const max = await read($, limit)
@@ -220,9 +239,10 @@ export const register: Register = on => {
     const chosen = await read($, picked)
     const usage = await read($, lastUsage)
     const current = await read($, mode)
+    const look = await read($, ui)
 
     return (
-      <Box flexDirection="column" gap={1}>
+      <Box flexDirection="column" gap={look.gap}>
         <Text dimColor>다음 스텝 — 숫자로 고르고 0으로 입력창에 채우기</Text>
         {list.map((step, i) => (
           <Button
@@ -231,7 +251,7 @@ export const register: Register = on => {
             hotkey={String(i + 1)}
             onPress={() => update($, picked, list => toggle(list, i))}
           >
-            <Text bold>
+            <Text bold={look.bold}>
               {chosen.includes(i) ? '[x] ' : '[ ] '}
               {step}
             </Text>
@@ -248,7 +268,7 @@ export const register: Register = on => {
           <Text> </Text>
           <Button key="dismiss" role="dismiss" label="닫기" onPress={() => clear($)} />
         </Box>
-        {usage !== null && (
+        {look.tokens && usage !== null && (
           <Text dimColor>
             토큰 {compactUsage(usage)} · {current}
           </Text>

@@ -1,7 +1,7 @@
 import { expect, mock, test } from 'claude-code/testing'
 import type { ModelCompleteResult, On, TurnCompleteInput } from 'claude-code'
 
-import { compactUsage, composePrompt, parseSteps, recentTranscript } from '../hooks/steps'
+import { applyUi, compactUsage, composePrompt, DEFAULT_UI, normalizeUi, parseSteps, recentTranscript } from '../hooks/steps'
 
 const USAGE = {
   input_tokens: 0,
@@ -371,4 +371,44 @@ test('잘못된 model·limit 값은 사용법을 알려 준다', async ($, on) =
   for (const args of ['model opus', 'limit -1', 'limit abc', 'limit']) {
     expect((await $.command.run(runCommand(args))).text).toContain('사용법')
   }
+})
+
+test('UI 설정은 범위를 벗어난 값을 받지 않는다', async () => {
+  expect(applyUi(DEFAULT_UI, 'count', '6')).toEqual({ ...DEFAULT_UI, count: 6 })
+  expect(applyUi(DEFAULT_UI, 'bold', 'off')).toEqual({ ...DEFAULT_UI, bold: false })
+  expect(applyUi(DEFAULT_UI, 'gap', '0')).toEqual({ ...DEFAULT_UI, gap: 0 })
+  for (const [key, value] of [['count', '0'], ['count', '10'], ['count', '2.5'], ['gap', '3'], ['bold', 'yes'], ['tokens', '']]) {
+    expect(typeof applyUi(DEFAULT_UI, key ?? '', value ?? '')).toBe('string')
+  }
+  expect(applyUi(DEFAULT_UI, 'size', '20')).toContain('글자 크기')
+  expect(normalizeUi({ count: 99, bold: 'x', gap: 1, tokens: false })).toEqual({ ...DEFAULT_UI, tokens: false })
+  expect(normalizeUi(undefined)).toEqual(DEFAULT_UI)
+})
+
+test('ui 설정을 바꾸면 항목 수·굵기·간격·토큰 줄에 반영된다', async ($, on) => {
+  const clock = mock.clock(on)
+  mock.store(on)
+  let prompt = ''
+  on('turn.complete', () => ({ text: '' }))
+  on('session.messages', () => ({ value: [{ role: 'user' as const, text: '회원가입 API 만들어 줘', toolUses: [] }] }))
+  on('model.complete', ($, e) => {
+    prompt = e.prompt
+    return answered('["a", "b", "c", "d", "e", "f", "g"]')
+  })
+
+  for (const args of ['ui count 6', 'ui bold off', 'ui gap 0', 'ui tokens off']) {
+    expect((await $.command.run(runCommand(args))).text).toContain('다음 스텝 화면')
+  }
+  expect((await $.command.run(runCommand('ui'))).text).toContain('항목 수 6 · 굵게 off · 간격 0 · 토큰 줄 off')
+
+  await $.turn.complete(TURN)
+  await clock.settle()
+
+  expect(prompt).toContain('최대 6개')
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.findAll({ type: 'Button', text: /^\[ \]/ })).toHaveLength(6)
+  expect(await ui.find({ type: 'Text', text: '토큰' })).toBeUndefined()
+  const drawn = JSON.stringify(await ui.drawn())
+  expect(drawn).toContain('"gap":0')
+  expect(drawn).not.toContain('"bold":true')
 })
