@@ -10,6 +10,10 @@
 *.swo
 *~
 
+# 모드 로드 시 엔진이 생성하는 타입·tsconfig
+mods/*/.claude-plugin/types/
+mods/*/tsconfig.json
+
 # 로그·임시파일
 *.log
 tmp/

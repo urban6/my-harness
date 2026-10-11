@@ -6,21 +6,23 @@
 # 레포만 고쳐도 연결된 모든 곳에 즉시 반영된다.
 # hooks는 심링크 대신 hooks/<이름>/hook.json을 settings.json의 "hooks"에 병합한다
 # (__HOOK_DIR__ → 레포 안 훅 폴더 절대 경로). run.sh 수정은 즉시 반영, hook.json 수정은 재설치 필요.
+# mods는 mods/<이름> 경로를 ~/.claude/settings.json의 env.CLAUDE_CODE_PLUGIN_DIRS에 등록한다
+# (전역 전용 — 프로젝트 settings의 env는 읽히지 않는다). 새 세션부터 로드된다.
 #
 # 사용법:
-#   ./install.sh install   [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks] [NAME...] [--dry-run] [--force]
-#   ./install.sh uninstall [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks] [NAME...] [--dry-run]
+#   ./install.sh install   [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks|mods] [NAME...] [--dry-run] [--force]
+#   ./install.sh uninstall [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks|mods] [NAME...] [--dry-run]
 #   ./install.sh list      [--global | --project [PATH]]
 #
 #   --global            대상 = ~/.claude (기본값). hooks → ~/.claude/settings.json
 #   --project [PATH]    대상 = PATH/.claude (PATH 생략 시 현재 디렉터리). hooks → settings.local.json
 #                       (개인 레포 절대 경로가 커밋되지 않도록)
-#   --type TYPE         유형 한정(agents|skills|commands|rules|hooks). 반복 지정 가능
+#   --type TYPE         유형 한정(agents|skills|commands|rules|hooks|mods). 반복 지정 가능
 #   NAME...             개별 자산 이름(확장자 없이). 예: debugger nestjs commit
 #   --dry-run           실제 변경 없이 수행 예정 작업만 출력
 #   --force             기존 파일/타 심링크를 백업(.bak) 후 교체 (install 한정, hooks 무관)
 #
-# hooks 설치·제거 시 settings 파일은 실행당 한 번 .bak로 백업한다. 의존: jq
+# hooks·mods 설치·제거 시 settings 파일은 실행당 한 번 .bak로 백업한다. 의존: jq
 #
 set -euo pipefail
 
@@ -28,7 +30,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # 링크 대상이 되는 자산 유형
-ASSET_TYPES=(agents commands rules skills hooks)
+ASSET_TYPES=(agents commands rules skills hooks mods)
 
 # --- 인자 파싱 --------------------------------------------------------------
 CMD="${1:-}"
@@ -223,6 +225,67 @@ do_uninstall_hook() {
   echo "  removed  $label"; N_REMOVED=$((N_REMOVED+1))
 }
 
+# --- mods: env.CLAUDE_CODE_PLUGIN_DIRS 등록 ---------------------------------
+# 값은 ':'로 이은 절대 경로 목록. 우리 경로만 더하고 빼며 다른 항목은 건드리지 않는다.
+mod_strip() {
+  jq --arg p "$1" '
+    if (.env.CLAUDE_CODE_PLUGIN_DIRS // "") == "" then . else
+      (.env.CLAUDE_CODE_PLUGIN_DIRS | split(":") | map(select(. != $p and . != ""))) as $rest
+      | if ($rest | length) == 0 then del(.env.CLAUDE_CODE_PLUGIN_DIRS) else .env.CLAUDE_CODE_PLUGIN_DIRS = ($rest | join(":")) end
+      | if (.env | length) == 0 then del(.env) else . end
+    end'
+}
+
+mod_add() {
+  jq --arg p "$1" '
+    .env = (.env // {})
+    | .env.CLAUDE_CODE_PLUGIN_DIRS = ([(.env.CLAUDE_CODE_PLUGIN_DIRS // "") | split(":")[] | select(. != "")] + [$p] | join(":"))'
+}
+
+mod_installed() {
+  require_jq
+  settings_read | jq -e --arg p "$1" '(.env.CLAUDE_CODE_PLUGIN_DIRS // "") | split(":") | index([$p]) != null' >/dev/null
+}
+
+# 전역이 아니면 mods는 건너뛴다 (CLAUDE_CODE_PLUGIN_DIRS는 ~/.claude/settings.json에서만 읽힘)
+mod_global_only() {
+  [[ "$TARGET_BASE" == "$HOME/.claude" && "$SETTINGS_NAME" == "settings.json" ]] && return 0
+  echo "  skip     $1 — mods는 전역(--global) 설치만 지원"; N_SKIPPED=$((N_SKIPPED+1))
+  return 1
+}
+
+do_install_mod() {
+  local src="$1" label="$2" cur new
+  mod_global_only "$label" || return 0
+  require_jq
+  cur=$(settings_read)
+  if mod_installed "$src"; then
+    echo "  already  $label"; N_ALREADY=$((N_ALREADY+1)); return
+  fi
+  new=$(mod_strip "$src" <<<"$cur" | mod_add "$src")
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "  [dry-run] register $label -> $SETTINGS_FILE (env.CLAUDE_CODE_PLUGIN_DIRS)"
+  else
+    settings_write "$new"
+  fi
+  echo "  registered $label (새 세션부터 로드)"; N_LINKED=$((N_LINKED+1))
+}
+
+do_uninstall_mod() {
+  local src="$1" label="$2" cur new
+  mod_global_only "$label" || return 0
+  require_jq
+  [[ -f "$SETTINGS_FILE" ]] && mod_installed "$src" || { N_MISSING=$((N_MISSING+1)); return; }
+  cur=$(settings_read)
+  new=$(mod_strip "$src" <<<"$cur")
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "  [dry-run] unregister $label from $SETTINGS_FILE"
+  else
+    settings_write "$new"
+  fi
+  echo "  removed  $label"; N_REMOVED=$((N_REMOVED+1))
+}
+
 # hook.json의 command가 settings에 모두 있으면 설치됨
 hook_installed() {
   local src="$1"
@@ -235,16 +298,18 @@ hook_installed() {
 
 # 유형별 소스 항목 순회 → (src, base, label) 로 콜백 실행
 #   agents/commands/rules: *.md 파일 / skills: 하위 디렉터리 / hooks: hook.json이 있는 하위 디렉터리
+#   mods: .claude-plugin/plugin.json이 있는 하위 디렉터리
 for_each_asset() {
   local cb="$1" type src_dir base src
   for type in "${SEL_TYPES[@]}"; do
     src_dir="$REPO_ROOT/$type"
     [[ -d "$src_dir" ]] || continue
-    if [[ "$type" == "skills" || "$type" == "hooks" ]]; then
+    if [[ "$type" == "skills" || "$type" == "hooks" || "$type" == "mods" ]]; then
       for src in "$src_dir"/*/; do
         [[ -d "$src" ]] || continue
         src="${src%/}"; base="$(basename "$src")"
         [[ "$type" == "hooks" && ! -f "$src/hook.json" ]] && continue
+        [[ "$type" == "mods" && ! -f "$src/.claude-plugin/plugin.json" ]] && continue
         is_excluded "$base" && continue
         name_selected "$base" || continue
         "$cb" "$type" "$src" "$base"
@@ -265,6 +330,7 @@ for_each_asset() {
 do_install() {
   local type="$1" src="$2" base="$3"
   [[ "$type" == "hooks" ]] && { do_install_hook "$src" "$type/$base"; return; }
+  [[ "$type" == "mods" ]] && { do_install_mod "$src" "$type/$base"; return; }
   local tdir="$TARGET_BASE/$type"
   ensure_dir "$tdir"
   link_one "$src" "$tdir/$base" "$type/$base"
@@ -273,6 +339,7 @@ do_install() {
 do_uninstall() {
   local type="$1" src="$2" base="$3"
   [[ "$type" == "hooks" ]] && { do_uninstall_hook "$src" "$type/$base"; return; }
+  [[ "$type" == "mods" ]] && { do_uninstall_mod "$src" "$type/$base"; return; }
   unlink_one "$src" "$TARGET_BASE/$type/$base" "$type/$base"
 }
 
@@ -282,6 +349,11 @@ do_list() {
   if [[ "$type" == "hooks" ]]; then
     if hook_installed "$src"; then mark="✓ merged"; else mark="· 미설치"; fi
     printf "  %-9s %s/%s (%s)\n" "$mark" "$type" "$base" "$SETTINGS_NAME"
+    return
+  fi
+  if [[ "$type" == "mods" ]]; then
+    if [[ "$SETTINGS_NAME" == "settings.json" ]] && mod_installed "$src"; then mark="✓ registered"; else mark="· 미설치"; fi
+    printf "  %-9s %s/%s (CLAUDE_CODE_PLUGIN_DIRS)\n" "$mark" "$type" "$base"
     return
   fi
   if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
