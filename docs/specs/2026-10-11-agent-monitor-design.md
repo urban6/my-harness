@@ -54,6 +54,7 @@ export type AgentRecord = {
   toolCalls: number
   tokens: number
   parentId?: string     // 범위 밖(트리)이지만 나중을 위해 남긴다
+  isUnlisted?: true     // 워크플로 에이전트(spawn 입력에 workflow가 있음). $.agent.list()에 나오지 않는다
 }
 ```
 
@@ -76,11 +77,14 @@ export type AgentRecord = {
 
 **보정(틱마다)**
 - 목록에 있고 끝난 상태(`completed`·`failed`·`killed`)인데 기록이 `running`이면 그 상태로 바꾸고 `endedAt = now`.
-- 기록이 `running`인데 목록에 없으면 엔진이 정리한 것이다. `completed`로 바꾸고 `endedAt = now`.
+- 기록이 `running`인데 목록에 없으면 엔진이 정리한 것이다. `completed`로 바꾸고 `endedAt = now`. 단, 다음 기록은 제외한다.
+  - 목록을 요청하기 직전 시각(`now`) 이후에 시작한 기록: 목록에 아직 없을 수 있다(목록을 기다리는 사이 뜬 에이전트).
+  - 워크플로 에이전트(`isUnlisted`): 목록에 나오지 않으므로 `turn.complete`로만 끝을 정한다.
 - `turn.complete`가 먼저 정한 상태는 덮어쓰지 않는다(이벤트가 더 정확하다).
 - `$.agent.list()` 호출이 실패하면 이번 틱의 보정만 건너뛴다.
 
 **틱**
+- 실행 중 기록이 없어 틱을 멈춘 직후 기록을 다시 읽어, 그사이 뜬 에이전트가 있으면 다시 시작한다.
 - `$.clock.every(1000, fn)`의 취소 함수를 모듈 변수에 둔다. 이미 돌고 있으면 새로 시작하지 않는다.
 - 다시 로드되면 모듈 변수와 타이머가 사라지므로 `session.start`에서 필요하면 다시 시작한다.
 
