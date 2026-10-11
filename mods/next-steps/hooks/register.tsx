@@ -57,6 +57,13 @@ export const register: Register = on => {
       argumentHint: '[on|off]',
     })
 
+    // 모드가 다시 로드되면 진행 중이던 fork는 끊기지만 $.state는 남는다.
+    // "정리 중"인 채로 남은 턴이 있으면 이어서 다시 요청한다.
+    const pending = await read($, turnId)
+    if (pending !== '' && (await read($, phase)) === 'loading') {
+      void suggest($, pending)
+    }
+
     return next(e)
   })
 

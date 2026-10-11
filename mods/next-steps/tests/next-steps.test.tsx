@@ -120,3 +120,108 @@ test('새 프롬프트가 나가면 늦게 도착한 제안은 버린다', async
 
   expect(await ui.find({ type: 'Text', text: 'engine' })).toBeDefined()
 })
+
+function runCommand(args: string) {
+  return {
+    command: 'next-steps',
+    args,
+    origin: { kind: 'composer' as const },
+    presentation: { isFullscreen: false, columns: 80 },
+  }
+}
+
+test('제안을 기다리는 동안 "정리 중"을 띄운다', async ($, on) => {
+  const clock = mock.clock(on)
+  engineBand(on)
+  on('turn.complete', () => ({ text: '' }))
+  on('model.fork', async () => {
+    await clock.sleep(1000)
+    return answered('["테스트 추가"]')
+  })
+
+  await $.turn.complete(TURN)
+  await clock.settle()
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.find({ type: 'Text', text: '정리 중' })).toBeDefined()
+
+  await clock.advance(1000)
+  expect(await ui.find({ key: 'step-0' })).toBeDefined()
+  expect(await ui.find({ key: 'fill' })).toBeDefined()
+})
+
+test('턴이 돌고 있거나 설문이 떠 있으면 목록을 숨긴다', async ($, on) => {
+  const clock = mock.clock(on)
+  engineBand(on)
+  on('turn.complete', () => ({ text: '' }))
+  on('model.fork', () => answered('["테스트 추가"]'))
+
+  await $.turn.complete(TURN)
+  await clock.settle()
+
+  for (const props of [{ isWorking: true }, { hasSurvey: true }]) {
+    const ui = await $.ui.mount({ ...BAND, surface: 'terminal', props: { ...BAND.props, ...props } })
+    expect(await ui.find({ type: 'Text', text: 'engine' })).toBeDefined()
+    await ui.unmount()
+  }
+})
+
+test('제안을 못 받으면 목록 없이 엔진 밴드로 돌아간다', async ($, on) => {
+  const clock = mock.clock(on)
+  engineBand(on)
+  on('turn.complete', () => ({ text: '' }))
+  on('model.fork', () => answered('지금은 제안할 게 없어요'))
+
+  await $.turn.complete(TURN)
+  await clock.settle()
+
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.find({ type: 'Text', text: 'engine' })).toBeDefined()
+})
+
+test('/next-steps는 바로 목록을 띄우고, off면 턴이 끝나도 제안하지 않는다', async ($, on) => {
+  const clock = mock.clock(on)
+  mock.store(on)
+  engineBand(on)
+  let forks = 0
+  on('turn.complete', () => ({ text: '' }))
+  on('model.fork', () => {
+    forks += 1
+    return answered('["테스트 추가", "문서화"]')
+  })
+
+  await $.command.run(runCommand(''))
+  await clock.settle()
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.find({ key: 'step-1' })).toBeDefined()
+
+  await $.command.run(runCommand('off'))
+  await $.turn.complete(TURN)
+  await clock.settle()
+  expect(forks).toBe(1)
+  expect(await ui.find({ type: 'Text', text: 'engine' })).toBeDefined()
+})
+
+test('모드가 다시 로드돼 제안이 끊겨도 session.start에서 이어서 띄운다', async ($, on) => {
+  const clock = mock.clock(on)
+  mock.store(on)
+  engineBand(on)
+  let forks = 0
+  on('turn.complete', () => ({ text: '' }))
+  on('command.register', ($, e) => ({ value: { command: e.name } }))
+  on('session.start', ($, e) => ({ cwd: e.cwd }))
+  on('model.fork', async () => {
+    forks += 1
+    // 첫 요청은 다시 로드되며 끊긴 것처럼 돌아오지 않는다.
+    if (forks === 1) await clock.sleep(60_000)
+    return answered('["테스트 추가"]')
+  })
+
+  await $.turn.complete(TURN)
+  await clock.settle()
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  await clock.settle()
+
+  expect(forks).toBe(2)
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.find({ key: 'step-0' })).toBeDefined()
+})
