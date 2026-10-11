@@ -128,6 +128,20 @@ test('새 프롬프트가 나가면 늦게 도착한 제안은 버린다', async
   expect(await ui.find({ type: 'Text', text: 'engine' })).toBeDefined()
 })
 
+test('제안이 떠 있어도 다른 모드가 그린 밴드는 아래에 남긴다', async ($, on) => {
+  const clock = mock.clock(on)
+  engineBand(on)
+  on('turn.complete', () => ({ text: '' }))
+  answerWith(on, () => answered('["테스트 추가"]'))
+
+  await $.turn.complete(TURN)
+  await clock.settle()
+
+  const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await ui.find({ key: 'step-0' })).toBeDefined()
+  expect(await ui.find({ type: 'Text', text: 'engine' })).toBeDefined()
+})
+
 function runCommand(args: string) {
   return {
     command: 'next-steps',
@@ -348,6 +362,7 @@ test('기준 안이거나 limit 0이면 fork 모드에서도 자동 제안한다
 
 test('목록 아래에 이번 제안에 쓴 토큰을 보여 준다', async ($, on) => {
   const clock = mock.clock(on)
+  engineBand(on)
   on('turn.complete', () => ({ text: '' }))
   answerWith(on, () => ({
     value: {
@@ -387,6 +402,7 @@ test('UI 설정은 범위를 벗어난 값을 받지 않는다', async () => {
 
 test('ui 설정을 바꾸면 항목 수·굵기·간격·토큰 줄에 반영된다', async ($, on) => {
   const clock = mock.clock(on)
+  engineBand(on)
   mock.store(on)
   let prompt = ''
   on('turn.complete', () => ({ text: '' }))

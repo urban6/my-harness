@@ -1,5 +1,5 @@
 import { atom, read, update } from 'claude-code'
-import type { EngineInterface, ModelForkResult, Register } from 'claude-code'
+import type { EngineInterface, ModelForkResult, Register, RenderElement } from 'claude-code'
 
 import type { Mode, Phase, UiSettings, Usage } from '../types'
 import {
@@ -219,19 +219,28 @@ export const register: Register = on => {
   })
 
   on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
-    if (e.props.hasSurvey || e.props.isWorking) return next(e)
+    // 다른 모드(context-bar 등)가 그린 밴드. 제안이 있으면 그 아래에 쌓는다.
+    const below = await next(e)
+    if (e.props.hasSurvey || e.props.isWorking) return below
 
     const now = await read($, phase)
-    if (now === 'idle') return next(e)
+    if (now === 'idle') return below
 
     const { Box, Button, Text } = $.ui.resolve(e)
-    if (now === 'loading') return <Text dimColor>다음 스텝 정리 중…</Text>
+    const withBelow = (mine: RenderElement) => (
+      <Box flexDirection="column">
+        {mine}
+        {below}
+      </Box>
+    )
+
+    if (now === 'loading') return withBelow(<Text dimColor>다음 스텝 정리 중…</Text>)
     if (now === 'skipped') {
       const tokens = formatTokens(await read($, contextTokens))
-      return (
+      return withBelow(
         <Text dimColor>
           대화가 길어(약 {tokens} 토큰) 자동 제안을 건너뛰었어요 · /next-steps로 직접 요청
-        </Text>
+        </Text>,
       )
     }
 
@@ -241,7 +250,7 @@ export const register: Register = on => {
     const current = await read($, mode)
     const look = await read($, ui)
 
-    return (
+    return withBelow(
       <Box flexDirection="column" gap={look.gap}>
         <Text dimColor>다음 스텝 — 숫자로 고르고 0으로 입력창에 채우기</Text>
         {list.map((step, i) => (
@@ -273,7 +282,7 @@ export const register: Register = on => {
             토큰 {compactUsage(usage)} · {current}
           </Text>
         )}
-      </Box>
+      </Box>,
     )
   })
 }
