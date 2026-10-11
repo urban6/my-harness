@@ -404,7 +404,8 @@ test('ui 설정을 바꾸면 항목 수·굵기·간격·토큰 줄에 반영된
   await $.turn.complete(TURN)
   await clock.settle()
 
-  expect(prompt).toContain('최대 6개')
+  expect(prompt).toContain('많아야 6개')
+  expect(prompt).toContain('개수를 채우려고 만들지 말 것')
   const ui = await $.ui.mount({ ...BAND, surface: 'terminal' })
   expect(await ui.findAll({ type: 'Button', text: /^\[ \]/ })).toHaveLength(6)
   expect(await ui.find({ type: 'Text', text: '토큰' })).toBeUndefined()
