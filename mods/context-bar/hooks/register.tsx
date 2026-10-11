@@ -3,7 +3,21 @@ import type { EngineInterface, Register } from 'claude-code'
 
 import type { Snapshot, Warn } from '../types'
 import type { Cell } from './bar'
-import { barWidth, DEFAULT_WARN, describe, formatTokens, HELP, layout, normalizeWarn, parseWarn, percentColor, toSnapshot } from './bar'
+import {
+  barWidth,
+  capacityLabel,
+  DEFAULT_WARN,
+  describe,
+  extras,
+  formatTokens,
+  HELP,
+  layout,
+  normalizeWarn,
+  parseWarn,
+  percentColor,
+  toSnapshot,
+  warnPercent,
+} from './bar'
 
 const enabled = atom({ plugin: 'context-bar', key: 'enabled' } as const, true)
 const warn = atom({ plugin: 'context-bar', key: 'warn' } as const, DEFAULT_WARN as Warn)
@@ -26,7 +40,7 @@ async function measure($: EngineInterface) {
   try {
     const { context } = await $.session.usage({ breakdown: 'summary' })
     const breakdown = context.breakdown
-    if (breakdown) await update($, snapshot, () => toSnapshot(breakdown))
+    if (breakdown) await update($, snapshot, prev => toSnapshot(breakdown, prev))
   } catch (error) {
     $.ui.log(`context-bar: 컨텍스트 사용량을 읽지 못했어요 (${String(error)})`)
   }
@@ -107,8 +121,10 @@ export const register: Register = on => {
       )
     }
 
-    const cells = layout(snap.segments, barWidth(e.props.bodyColumns))
-    const color = percentColor(snap.percent, await read($, warn))
+    const width = barWidth(e.props.bodyColumns)
+    const cells = layout(snap.segments, width)
+    const color = percentColor(warnPercent(snap), await read($, warn))
+    const { top, delta } = extras(snap, e.props.bodyColumns, width)
     return (
       <Box flexDirection="column">
         {above}
@@ -122,7 +138,11 @@ export const register: Register = on => {
           <Text key="percent" {...(color ? { color } : {})}>
             {`${snap.percent}%`}
           </Text>
-          <Text dimColor>{` · ${formatTokens(snap.totalTokens)} / ${formatTokens(snap.maxTokens)}`}</Text>
+          <Text dimColor>{` · ${capacityLabel(snap)}`}</Text>
+          {top && <Text dimColor> · </Text>}
+          {top && <Text key="top" color={top.color}>{top.name}</Text>}
+          {top && <Text dimColor>{` ${formatTokens(top.tokens)}`}</Text>}
+          {delta && <Text dimColor>{` · ${delta}`}</Text>}
         </Box>
       </Box>
     )
