@@ -1,0 +1,6 @@
+{
+  "name": "context-bar",
+  "version": "0.1.0",
+  "description": "입력창 위에 컨텍스트 창 사용량을 카테고리별 색 막대로 보여준다",
+  "types": "./types/index.d.ts"
+}
