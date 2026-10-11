@@ -108,6 +108,7 @@ my-harness/
 ./install.sh install --dry-run                # 변경 없이 수행 예정만 출력
 ./install.sh install --force                  # 기존 파일은 .bak으로 백업하고 교체
 ./install.sh install --type hooks tdd-guard   # 훅을 settings.json에 병합 (프로젝트는 settings.local.json)
+./install.sh install --type mods next-steps   # 모드를 전역 settings에 등록 (전역 전용, 새 세션부터)
 ./install.sh list                             # 무엇이 링크됐는지 확인
 ./install.sh uninstall                        # 우리 심링크만 제거 (남의 파일 안 건드림)
 ```
