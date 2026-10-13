@@ -14,8 +14,9 @@ my-harness/
 ├── rules/       # 규칙 (경로별 지침)
 ├── hooks/       # 훅 (폴더 하나 = 훅 하나, install.sh가 settings에 병합)
 ├── mods/        # Claude Code 모드 (폴더 하나 = 모드 하나, install.sh가 전역 settings에 등록)
+├── plugins/     # 외부 플러그인 목록 (파일 하나 = 플러그인 하나, install.sh가 claude plugin install로 설치)
 ├── prompts/     # 복사해 쓰는 프롬프트 (설치 대상 아님)
-├── docs/        # 외부 플러그인 사용법, guide/ AI 사용 가이드 (설치 대상 아님)
+├── docs/        # 플러그인 사용법, guide/ AI 사용 가이드 (설치 대상 아님)
 ├── playground/  # 방식별 비교 실험 (설치 대상 아님)
 ├── install.sh
 └── CLAUDE.md
@@ -90,10 +91,14 @@ my-harness/
 셋 다 진단만 하고 코드는 고치지 마. 마지막에 안 A/B/C로 정리해줘.
 ```
 
-## 외부 플러그인
+## 플러그인
+
+`plugins/`에 적힌 외부 플러그인은 `./install.sh install --type plugins`로 한 번에 설치합니다.
 
 - [superpowers](docs/superpowers.md)
 - [ponytail](docs/ponytail.md)
+- [claude-md-management](docs/claude-md-management.md)
+- [codex](docs/codex.md)
 
 ## AI 사용 가이드
 
@@ -111,6 +116,7 @@ my-harness/
 ./install.sh install --force                  # 기존 파일은 .bak으로 백업하고 교체
 ./install.sh install --type hooks tdd-guard   # 훅을 settings.json에 병합 (프로젝트는 settings.local.json)
 ./install.sh install --type mods next-steps   # 모드를 전역 settings에 등록 (전역 전용, 새 세션부터)
+./install.sh install --type plugins           # 외부 플러그인 설치 (전역 user, --project면 local 스코프)
 ./install.sh list                             # 무엇이 링크됐는지 확인
 ./install.sh uninstall                        # 우리 심링크만 제거 (남의 파일 안 건드림)
 ```

@@ -4,13 +4,11 @@
 
 ## 설치
 
-```text
-/plugin marketplace add openai/codex-plugin-cc
+```bash
+./install.sh install --type plugins codex
 ```
 
-```text
-/plugin install codex@openai-codex
-```
+또는 `/plugin marketplace add openai/codex-plugin-cc` 후 `/plugin install codex@openai-codex`.
 
 ```text
 /codex:setup
