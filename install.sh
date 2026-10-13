@@ -12,6 +12,7 @@
 # (전역 → user 스코프, --project → 그 프로젝트의 local 스코프). 마켓플레이스가 없으면 먼저 추가한다.
 #
 # 사용법:
+#   ./install.sh                     (인자 없이 터미널에서) 대화형: 대상·유형·항목을 골라 설치
 #   ./install.sh install   [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks|mods|plugins] [NAME...] [--dry-run] [--force]
 #   ./install.sh uninstall [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks|mods|plugins] [NAME...] [--dry-run]
 #   ./install.sh list      [--global | --project [PATH]]
@@ -36,9 +37,18 @@ ASSET_TYPES=(agents commands rules skills hooks mods plugins)
 
 # --- 인자 파싱 --------------------------------------------------------------
 CMD="${1:-}"
+INTERACTIVE=0
 case "$CMD" in
   install|uninstall|list) shift ;;
-  ""|-h|--help|help)
+  "")
+    # 터미널이면 대화형 설치, 아니면 도움말 (테스트는 HARNESS_INTERACTIVE=1)
+    if [[ -t 0 || "${HARNESS_INTERACTIVE:-}" == 1 ]]; then
+      CMD=install; INTERACTIVE=1
+    else
+      awk 'NR==1{next} /^#/{sub(/^# ?/,""); print; next} {exit}' "${BASH_SOURCE[0]}"
+      exit 0
+    fi ;;
+  -h|--help|help)
     # 상단 연속 주석 블록(shebang 제외)만 도움말로 출력
     awk 'NR==1{next} /^#/{sub(/^# ?/,""); print; next} {exit}' "${BASH_SOURCE[0]}"
     exit 0 ;;
@@ -53,6 +63,7 @@ DRY_RUN=0
 FORCE=0
 SEL_TYPES=()
 SEL_NAMES=()
+IA_PROJECT=""                 # 대화형에서 고른 프로젝트 경로 (전역이면 빈 문자열)
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -80,6 +91,153 @@ done
 if [[ ${#SEL_TYPES[@]} -eq 0 ]]; then
   SEL_TYPES=("${ASSET_TYPES[@]}")
 fi
+
+# --- interactive: 인자 없이 터미널에서 실행하면 대상·유형·항목을 골라 설치 ----
+# 대상은 SETTINGS_FILE·PLUGIN_SCOPE 계산 전에 정하고, 유형·항목은 실행부에서 고른다.
+
+# 한 줄 입력 → REPLY. EOF면 취소
+ask() {
+  printf '%s' "$1"
+  read -r REPLY || { echo; echo "취소했습니다."; exit 1; }
+}
+
+set_project_target() { TARGET_BASE="$1/.claude"; SETTINGS_NAME="settings.local.json"; IA_PROJECT="$1"; }
+
+interactive_target() {
+  local cwd p
+  cwd="$(pwd)"
+  echo "설치 대상"
+  echo "  1) 전역 $HOME/.claude (기본)"
+  echo "  2) 현재 프로젝트 $cwd/.claude"
+  echo "  3) 다른 프로젝트 경로 입력"
+  while :; do
+    ask "선택 [1]: "
+    case "$REPLY" in
+      ""|1) return ;;
+      2) set_project_target "$cwd"; return ;;
+      3)
+        while :; do
+          ask "프로젝트 경로: "
+          p="$REPLY"
+          [[ "$p" == "~" || "$p" == "~/"* ]] && p="$HOME${p:1}"
+          if [[ -n "$p" && -d "$p" ]]; then set_project_target "$(cd "$p" && pwd)"; return; fi
+          echo "존재하지 않는 경로: $REPLY"
+        done ;;
+      *) echo "잘못된 입력: $REPLY" ;;
+    esac
+  done
+}
+
+# TOGGLE_LABELS·TOGGLE_ON(1/0)을 번호로 토글. a=전체, n=없음, Enter=확정
+interactive_toggle() {
+  local title="$1" n=${#TOGGLE_LABELS[@]} i tok toks
+  while :; do
+    echo
+    echo "$title — 번호로 토글, a=전체, n=없음, Enter=확정"
+    for ((i = 0; i < n; i++)); do
+      if [[ ${TOGGLE_ON[$i]} -eq 1 ]]; then printf '  [x] %d %s\n' $((i + 1)) "${TOGGLE_LABELS[$i]}"
+      else printf '  [ ] %d %s\n' $((i + 1)) "${TOGGLE_LABELS[$i]}"; fi
+    done
+    ask "선택: "
+    [[ -z "$REPLY" ]] && return
+    read -r -a toks <<<"$REPLY"
+    for tok in ${toks[@]+"${toks[@]}"}; do
+      case "$tok" in
+        a) for ((i = 0; i < n; i++)); do TOGGLE_ON[$i]=1; done ;;
+        n) for ((i = 0; i < n; i++)); do TOGGLE_ON[$i]=0; done ;;
+        *)
+          if [[ "$tok" =~ ^[0-9]+$ ]] && (( 10#$tok >= 1 && 10#$tok <= n )); then
+            i=$((10#$tok - 1)); TOGGLE_ON[$i]=$((1 - TOGGLE_ON[$i]))
+          else
+            echo "잘못된 입력: $tok"
+          fi ;;
+      esac
+    done
+  done
+}
+
+# 한 유형의 항목 이름 → IA_NAMES (for_each_asset의 제외 규칙을 그대로 따른다)
+IA_NAMES=()
+collect_name() { IA_NAMES+=("${3%.md}"); }   # md 자산은 확장자를 뗀 이름으로 고른다
+list_names() { SEL_TYPES=("$1"); SEL_NAMES=(); IA_NAMES=(); for_each_asset collect_name; }
+
+# 고른 유형마다 SEL_TYPES·SEL_NAMES를 좁혀 설치 (이름 필터가 유형을 구분하지 않으므로 유형별로 돌린다)
+IA_TYPES=(); IA_PICKS=()
+interactive_pass() {
+  local i
+  N_LINKED=0; N_ALREADY=0; N_SKIPPED=0; N_REMOVED=0; N_MISSING=0
+  for ((i = 0; i < ${#IA_TYPES[@]}; i++)); do
+    SEL_TYPES=("${IA_TYPES[$i]}")
+    read -r -a SEL_NAMES <<<"${IA_PICKS[$i]}"
+    for_each_asset do_install
+  done
+}
+
+interactive_run() {
+  local t i note sel cnt all_full=1 line types=() chosen=()
+  # 1) 유형: 항목이 있는 유형만, 프로젝트면 mods 제외, 의존성이 없으면 표시하고 기본 해제
+  TOGGLE_LABELS=(); TOGGLE_ON=()
+  for t in "${ASSET_TYPES[@]}"; do
+    [[ -n "$IA_PROJECT" && "$t" == mods ]] && continue
+    list_names "$t"
+    [[ ${#IA_NAMES[@]} -gt 0 ]] || continue
+    note=""
+    if [[ "$t" == hooks || "$t" == mods || "$t" == plugins ]] && ! command -v jq >/dev/null; then
+      note=" (jq 필요)"
+    elif [[ "$t" == plugins ]] && ! command -v claude >/dev/null; then
+      note=" (claude CLI 필요)"
+    fi
+    types+=("$t"); TOGGLE_LABELS+=("$t (${#IA_NAMES[@]})$note")
+    if [[ -z "$note" ]]; then TOGGLE_ON+=(1); else TOGGLE_ON+=(0); fi
+  done
+  interactive_toggle "설치할 유형"
+  for ((i = 0; i < ${#types[@]}; i++)); do
+    if [[ ${TOGGLE_ON[$i]} -eq 1 ]]; then chosen+=("${types[$i]}"); fi
+  done
+
+  # 2) 항목: 유형마다 토글. 전부 해제한 유형은 건너뛴다
+  for t in ${chosen[@]+"${chosen[@]}"}; do
+    list_names "$t"
+    TOGGLE_LABELS=("${IA_NAMES[@]}"); TOGGLE_ON=()
+    for ((i = 0; i < ${#IA_NAMES[@]}; i++)); do TOGGLE_ON+=(1); done
+    interactive_toggle "── $t ──"
+    sel=""; cnt=0
+    for ((i = 0; i < ${#IA_NAMES[@]}; i++)); do
+      if [[ ${TOGGLE_ON[$i]} -eq 1 ]]; then sel="$sel ${IA_NAMES[$i]}"; cnt=$((cnt + 1)); fi
+    done
+    [[ $cnt -gt 0 ]] || continue
+    [[ $cnt -lt ${#IA_NAMES[@]} ]] && all_full=0
+    IA_TYPES+=("$t"); IA_PICKS+=("${sel# }")
+  done
+  if [[ ${#IA_TYPES[@]} -eq 0 ]]; then echo "선택된 항목이 없습니다."; exit 0; fi
+
+  # 3) 미리보기와 같은 명령
+  echo; echo "── 미리보기 ──"
+  DRY_RUN=1; interactive_pass
+  line="./install.sh install"
+  [[ -n "$IA_PROJECT" ]] && line="$line --project $(printf '%q' "$IA_PROJECT")"
+  for t in "${IA_TYPES[@]}"; do line="$line --type $t"; done
+  if [[ $all_full -eq 0 ]]; then
+    for sel in "${IA_PICKS[@]}"; do line="$line $sel"; done
+  fi
+
+  # 4) 충돌이 있을 때만 교체 여부
+  if [[ $N_SKIPPED -gt 0 ]]; then
+    ask "기존 항목을 .bak으로 백업하고 교체할까요? [y/N]: "
+    case "$REPLY" in [yY]*) FORCE=1; line="$line --force" ;; esac
+  fi
+  echo; echo "같은 명령: $line"
+
+  # 5) 확인 후 설치
+  ask "진행할까요? [Y/n]: "
+  case "$REPLY" in [nN]*) echo "취소했습니다. 변경 없음."; exit 0 ;; esac
+  echo
+  DRY_RUN=0; interactive_pass
+  echo
+  echo "요약: linked=$N_LINKED  already=$N_ALREADY  conflict(skip)=$N_SKIPPED"
+}
+
+if [[ $INTERACTIVE -eq 1 ]]; then interactive_target; fi
 
 # --- 카운터 ------------------------------------------------------------------
 N_LINKED=0; N_ALREADY=0; N_SKIPPED=0; N_REMOVED=0; N_MISSING=0
@@ -447,6 +605,7 @@ echo
 
 case "$CMD" in
   install)
+    if [[ $INTERACTIVE -eq 1 ]]; then interactive_run; exit 0; fi
     for_each_asset do_install
     echo
     echo "요약: linked=$N_LINKED  already=$N_ALREADY  conflict(skip)=$N_SKIPPED" ;;
