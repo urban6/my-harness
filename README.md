@@ -96,7 +96,6 @@ my-harness/
 `plugins/`에 적힌 외부 플러그인은 `./install.sh install --type plugins`로 한 번에 설치합니다.
 
 - [superpowers](docs/superpowers.md)
-- [ponytail](docs/ponytail.md)
 - [claude-md-management](docs/claude-md-management.md)
 - [codex](docs/codex.md)
 
