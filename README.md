@@ -108,15 +108,9 @@ my-harness/
 ## 설치
 
 ```bash
-./install.sh install                          # 전역 (~/.claude, 기본값)
-./install.sh install --project [경로]         # 프로젝트별 (.claude/, 생략 시 현재 디렉터리)
-./install.sh install --type agents            # 유형만
-./install.sh install debugger nestjs commit   # 개별 구성요소만 (확장자 없이)
-./install.sh install --dry-run                # 변경 없이 수행 예정만 출력
-./install.sh install --force                  # 기존 파일은 .bak으로 백업하고 교체
-./install.sh install --type hooks tdd-guard   # 훅을 settings.json에 병합 (프로젝트는 settings.local.json)
-./install.sh install --type mods next-steps   # 모드를 전역 settings에 등록 (전역 전용, 새 세션부터)
-./install.sh install --type plugins           # 외부 플러그인 설치 (전역 user, --project면 local 스코프)
-./install.sh list                             # 무엇이 링크됐는지 확인
-./install.sh uninstall                        # 우리 심링크만 제거 (남의 파일 안 건드림)
+./install.sh            # 대화형: 대상·유형·항목을 골라 설치
+./install.sh list       # 설치 상태 확인
+./install.sh uninstall  # 우리 심링크만 제거
 ```
+
+스크립트에서 쓰거나 세부 옵션(`--type`, `--project`, `--force`, `--dry-run` 등)이 필요하면 `./install.sh -h`를 본다.
