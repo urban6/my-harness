@@ -9,4 +9,3 @@ hooks/<훅 이름>/
 ```
 
 - `hooks/tdd-guard/` → `PreToolUse(Edit|Write|MultiEdit)`에서 대응 테스트 없이 프로덕션 소스 수정 차단
-- `hooks/block-main-push.sh` → `PreToolUse`에서 main 브랜치 직접 푸시 차단 (폴더 구조로 이전 전, install.sh 대상 아님)
