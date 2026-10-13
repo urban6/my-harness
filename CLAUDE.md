@@ -14,11 +14,20 @@
 - **배치**: 자산은 유형에 맞는 디렉터리에 둔다 — `agents/`, `skills/`, `commands/`, `rules/`, `hooks/`, `mods/`. `install.sh`는 `agents/`·`commands/`·`rules/`·`skills/`를 심링크하고, `hooks/`는 훅 폴더(`hooks/<이름>/run.sh`·`hook.json`)의 `hook.json`을 `settings.json`(프로젝트는 `settings.local.json`)에 병합한다. `mods/`는 모드 폴더(`mods/<이름>/.claude-plugin/plugin.json`) 경로를 전역 `settings.json`의 `env.CLAUDE_CODE_PLUGIN_DIRS`에 등록한다(전역 전용).
 - **실험**: 방식별 비교 실험은 `playground/`에 둔다. 설치 대상이 아니다.
 - **프롬프트 템플릿**: 사람이 복사해 쓰는 프롬프트는 `prompts/`에 개발 단계별 파일 하나로 둔다. 특정 프로젝트·스택은 `{빈칸}`이나 "채워 넣은 예시"로만 적는다. 설치 대상이 아니다.
-- **참고 문서**: 외부 플러그인 사용법 등 자산이 아닌 참고 문서는 `docs/`에 주제별 파일 하나로 둔다. AI를 쓰면서 잊기 쉬운 습관·요령은 `docs/guide/`에 둔다. 설치 대상이 아니다.
+- **참고 문서**: 외부 플러그인 사용법 등 자산이 아닌 참고 문서는 `docs/`에 주제별 파일 하나로 둔다. AI를 쓰면서 잊기 쉬운 습관·요령은 `docs/guide/`에, 설계 스펙·구현 계획은 `docs/specs/`·`docs/plans/`에 `YYYY-MM-DD-<주제>.md`로 둔다. 설치 대상이 아니다.
 - **설치 대상 제외**: 자산이 아닌 것은 설치 대상에서 자동 배제된다 — 디렉터리 설명용 `README.md`, 그리고 평가·벤치마크 부산물은 `*-workspace/` 접미 디렉터리에 둔다(`install.sh`가 이 규칙으로 걸러낸다).
 - **프로젝트 비종속(재사용성)**: 자산은 여러 프로젝트에 적용되므로 특정 프로젝트 전용 경로·이름·가정을 넣지 말고 **범용적으로** 작성한다. 한 프로젝트에서만 쓰는 자산은 이 템플릿이 아니라 그 프로젝트의 `.claude/`에 따로 둔다.
 - **스택 비종속**: 백엔드 워커는 특정 프레임워크·ORM·테스트 러너를 전제하지 않는다. 도구 이름은 "예시"로만 적고, 실제 스택은 `feature-pm`이 주입하거나 워커가 매니페스트로 판별한다.
 - **백엔드 범위 확인**: 새 자산을 만들기 전에 백엔드(API·서비스·영속성) 범위인지 먼저 판단한다. 프런트·풀스택 자산은 추가하지 않는다.
+
+## 명령
+```bash
+./install.sh list                                   # 설치 상태 확인
+./install.sh install --type skills nestjs --dry-run # 개별 자산 설치 미리보기 (--project [PATH]로 프로젝트 대상)
+claude plugin validate mods/<이름>                   # mod 매니페스트 검증
+claude plugin test mods/<이름>                       # mod 테스트
+```
+- 반영 시점: 심링크 자산과 훅 `run.sh`는 즉시 반영된다. `hook.json` 수정은 재설치가 필요하다. mod는 전역 전용이고 새 세션부터 로드된다. hooks·mods 설치에는 `jq`가 필요하다.
 
 ## 커밋
 - 자산 하나 = 커밋 하나를 기본으로, 관련 변경은 함께 묶는다.
