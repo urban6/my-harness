@@ -44,7 +44,7 @@ feature.md의 기능을 개발해줘. 완료 조건을 모두 충족시키고, �
 | 반복 | 군당 3회, 총 9 run, 순차 실행. 라운드마다 군 순서 교체: `B→C→A` / `C→A→B` / `A→B→C` |
 | 상한 | run당 $40, 180분(파일럿 후 120분에서 상향). 초과 시 그 시점 결과로 채점 |
 | 사람 개입 | 없음 |
-| 실행 위치 | `playground/runs/{군}-{회차}/` — run마다 독립 git 저장소 + `.claude/settings.local.json`으로 상위 `CLAUDE.md` 차단(사전 확인 완료)·`acceptance/` 읽기 차단 |
+| 실행 위치 | `playground/exp1/runs/{군}-{회차}/` — run마다 독립 git 저장소 + `.claude/settings.local.json`으로 상위 `CLAUDE.md` 차단(사전 확인 완료)·`acceptance/` 읽기 차단 |
 
 ## 4. 채점
 
@@ -100,7 +100,7 @@ feature.md의 기능을 개발해줘. 완료 조건을 모두 충족시키고, �
 ## 6. 디렉터리
 
 ```
-playground/
+playground/exp1/
 ├── PRD.md · feature.md · prompt.txt · REPORT.md
 ├── starter/        # 공통 스타터
 ├── acceptance/     # 숨긴 인수 테스트 + reference/ (run에서 읽기 차단)

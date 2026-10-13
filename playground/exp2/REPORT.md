@@ -1,6 +1,6 @@
 # REPORT — 2차 실험: 어려운 기능에서의 방식별 결과 점수화
 
-> 2026-10-10 · 계획: [`PRD.md`](PRD.md) · 요구사항: [`feature.md`](feature.md) (R1~R11, 규칙 48개) · 1차: [`../REPORT.md`](../REPORT.md) · 9 run 전부 유효(폐기 0)
+> 2026-10-10 · 계획: [`PRD.md`](PRD.md) · 요구사항: [`feature.md`](feature.md) (R1~R11, 규칙 48개) · 1차: [`../exp1/REPORT.md`](../exp1/REPORT.md) · 9 run 전부 유효(폐기 0)
 
 ## 1. 결과
 

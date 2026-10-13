@@ -38,7 +38,7 @@
 
 | 실험 | 기능 · 명세 | 모델 | 비교 | 결과 요약 | 문서 |
 |---|---|---|---|---|---|
-| 1차 | 주문 + 재고 · 상세 (R1~R8) | Opus 5.5 | A·B·C × 3 | 전 run 정확도 만점. 총점 A 97.9 · B 98.9 · C 97.5. C 비용·시간 약 4배 | [PRD](PRD.md) · [REPORT](REPORT.md) |
+| 1차 | 주문 + 재고 · 상세 (R1~R8) | Opus 5.5 | A·B·C × 3 | 전 run 정확도 만점. 총점 A 97.9 · B 98.9 · C 97.5. C 비용·시간 약 4배 | [PRD](exp1/PRD.md) · [REPORT](exp1/REPORT.md) |
 | 2차 | 주문 결제(쿠폰·예약·외부 PG) · 상세 (규칙 48개) | Opus 5.5 | A·B·C × 3 | 전 run 92/92 만점. 총점 A 98.9 · B 98.9 · C 97.8. C 비용 2.6배·시간 2.8배 | [PRD](exp2/PRD.md) · [REPORT](exp2/REPORT.md) |
 | 4차 | 2차와 동일 | Sonnet 5.5 | A·C 파일럿 | 둘 다 92/92 — 모델을 낮춰도 천장. 파일럿으로 종료 | [PRD](exp4/PRD.md) |
 | 3차 | 2차 기능 · **짧은 명세** | Sonnet 5.5 | A·C × 2 (+보충 B × 2) | 천장 처음 깨짐. 총점 A 94.3 · B 93.5 · C 94.0 (명세 밖 4항목 제외 시 견고성 전 run 만점, 총점 A 96.7 · B 95.7 · C 99.5 — 차이는 자체 테스트 커버뿐). B는 A와 실패 항목까지 같음. C가 더 챙긴 항목 0. C 비용 6.3배·시간 5.1배 | [PRD](exp3/PRD.md) · [REPORT](exp3/REPORT.md) |
@@ -100,6 +100,5 @@
 
 | 경로 | 내용 |
 |---|---|
-| `PRD.md` · `REPORT.md` · `feature.md` · `acceptance/` · `scripts/` · `runs/` · `results/` | 1차 실험 |
-| `exp2/` · `exp3/` · `exp4/` · `exp5/` | 2·3·4·5차 실험 (각각 `PRD.md`·`REPORT.md`·`acceptance/`·`scripts/`·`runs/`·`results/`) |
-| `pilot/` | 1차 파일럿 |
+| `exp1/` ~ `exp5/` | 1~5차 실험 (각각 `PRD.md`·`REPORT.md`·`acceptance/`·`scripts/`·`runs/`·`results/`, 4차는 결과를 `PRD.md`에 기록) |
+| `exp1/pilot/` | 1차 파일럿용 축소 명세 |
