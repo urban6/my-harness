@@ -8,21 +8,23 @@
 # (__HOOK_DIR__ → 레포 안 훅 폴더 절대 경로). run.sh 수정은 즉시 반영, hook.json 수정은 재설치 필요.
 # mods는 mods/<이름> 경로를 ~/.claude/settings.json의 env.CLAUDE_CODE_PLUGIN_DIRS에 등록한다
 # (전역 전용 — 프로젝트 settings의 env는 읽히지 않는다). 새 세션부터 로드된다.
+# plugins는 plugins/<이름>.json의 외부 플러그인을 `claude plugin install`로 설치한다
+# (전역 → user 스코프, --project → 그 프로젝트의 local 스코프). 마켓플레이스가 없으면 먼저 추가한다.
 #
 # 사용법:
-#   ./install.sh install   [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks|mods] [NAME...] [--dry-run] [--force]
-#   ./install.sh uninstall [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks|mods] [NAME...] [--dry-run]
+#   ./install.sh install   [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks|mods|plugins] [NAME...] [--dry-run] [--force]
+#   ./install.sh uninstall [--global | --project [PATH]] [--type agents|skills|commands|rules|hooks|mods|plugins] [NAME...] [--dry-run]
 #   ./install.sh list      [--global | --project [PATH]]
 #
 #   --global            대상 = ~/.claude (기본값). hooks → ~/.claude/settings.json
 #   --project [PATH]    대상 = PATH/.claude (PATH 생략 시 현재 디렉터리). hooks → settings.local.json
 #                       (개인 레포 절대 경로가 커밋되지 않도록)
-#   --type TYPE         유형 한정(agents|skills|commands|rules|hooks|mods). 반복 지정 가능
+#   --type TYPE         유형 한정(agents|skills|commands|rules|hooks|mods|plugins). 반복 지정 가능
 #   NAME...             개별 자산 이름(확장자 없이). 예: debugger nestjs commit
 #   --dry-run           실제 변경 없이 수행 예정 작업만 출력
 #   --force             기존 파일/타 심링크를 백업(.bak) 후 교체 (install 한정, hooks 무관)
 #
-# hooks·mods 설치·제거 시 settings 파일은 실행당 한 번 .bak로 백업한다. 의존: jq
+# hooks·mods 설치·제거 시 settings 파일은 실행당 한 번 .bak로 백업한다. 의존: jq (plugins는 claude CLI도)
 #
 set -euo pipefail
 
@@ -30,7 +32,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # 링크 대상이 되는 자산 유형
-ASSET_TYPES=(agents commands rules skills hooks mods)
+ASSET_TYPES=(agents commands rules skills hooks mods plugins)
 
 # --- 인자 파싱 --------------------------------------------------------------
 CMD="${1:-}"
@@ -286,6 +288,62 @@ do_uninstall_mod() {
   echo "  removed  $label"; N_REMOVED=$((N_REMOVED+1))
 }
 
+# --- plugins: claude plugin CLI로 외부 플러그인 설치 -------------------------
+# plugins/<이름>.json = { "id": "<플러그인>@<마켓플레이스>", "marketplace": "<owner/repo>"(선택) }
+# 마켓플레이스는 항상 user 스코프에 추가한다. 플러그인 스코프는 전역 user, --project면 local.
+PLUGIN_SCOPE="user"; PLUGIN_CWD="$HOME"
+if [[ "$SETTINGS_NAME" == "settings.local.json" ]]; then
+  PLUGIN_SCOPE="local"; PLUGIN_CWD="$(dirname "$TARGET_BASE")"
+fi
+
+require_claude() {
+  require_jq
+  command -v claude >/dev/null || { echo "plugins 처리에는 claude CLI가 필요합니다." >&2; exit 1; }
+}
+
+plugin_id() { jq -r '.id' "$1"; }
+
+# 이 스코프(local이면 이 프로젝트)에 설치돼 있으면 0
+plugin_installed() {
+  local id="$1" proj
+  proj="$(cd "$PLUGIN_CWD" 2>/dev/null && pwd -P || echo "$PLUGIN_CWD")"
+  (cd "$PLUGIN_CWD" 2>/dev/null && claude plugin list --json) | jq -e --arg id "$id" --arg s "$PLUGIN_SCOPE" --arg p "$proj" \
+    'any(.[]; .id == $id and .scope == $s and ($s != "local" or .projectPath == $p))' >/dev/null
+}
+
+do_install_plugin() {
+  local src="$1" label="$2" id mkt
+  require_claude
+  id=$(plugin_id "$src"); mkt=$(jq -r '.marketplace // empty' "$src")
+  if plugin_installed "$id"; then
+    echo "  already  $label ($id, $PLUGIN_SCOPE)"; N_ALREADY=$((N_ALREADY+1)); return
+  fi
+  if [[ $DRY_RUN -eq 1 ]]; then
+    [[ -n "$mkt" ]] && echo "  [dry-run] claude plugin marketplace add $mkt"
+    echo "  [dry-run] claude plugin install $id --scope $PLUGIN_SCOPE"
+  else
+    # 이미 추가된 마켓플레이스면 add는 실패해도 무방하다
+    [[ -n "$mkt" ]] && { claude plugin marketplace add "$mkt" >/dev/null 2>&1 || true; }
+    (cd "$PLUGIN_CWD" && claude plugin install "$id" --scope "$PLUGIN_SCOPE" >/dev/null) \
+      || { echo "  FAILED   $label ($id)"; N_SKIPPED=$((N_SKIPPED+1)); return; }
+  fi
+  echo "  installed $label ($id, $PLUGIN_SCOPE, 새 세션부터 로드)"; N_LINKED=$((N_LINKED+1))
+}
+
+do_uninstall_plugin() {
+  local src="$1" label="$2" id
+  require_claude
+  id=$(plugin_id "$src")
+  plugin_installed "$id" || { N_MISSING=$((N_MISSING+1)); return; }
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "  [dry-run] claude plugin uninstall $id --scope $PLUGIN_SCOPE"
+  else
+    (cd "$PLUGIN_CWD" && claude plugin uninstall "$id" --scope "$PLUGIN_SCOPE" >/dev/null) \
+      || { echo "  FAILED   $label ($id)"; N_SKIPPED=$((N_SKIPPED+1)); return; }
+  fi
+  echo "  removed  $label ($id, $PLUGIN_SCOPE)"; N_REMOVED=$((N_REMOVED+1))
+}
+
 # hook.json의 command가 settings에 모두 있으면 설치됨
 hook_installed() {
   local src="$1"
@@ -298,7 +356,7 @@ hook_installed() {
 
 # 유형별 소스 항목 순회 → (src, base, label) 로 콜백 실행
 #   agents/commands/rules: *.md 파일 / skills: 하위 디렉터리 / hooks: hook.json이 있는 하위 디렉터리
-#   mods: .claude-plugin/plugin.json이 있는 하위 디렉터리
+#   mods: .claude-plugin/plugin.json이 있는 하위 디렉터리 / plugins: *.json 파일
 for_each_asset() {
   local cb="$1" type src_dir base src
   for type in "${SEL_TYPES[@]}"; do
@@ -311,6 +369,13 @@ for_each_asset() {
         [[ "$type" == "hooks" && ! -f "$src/hook.json" ]] && continue
         [[ "$type" == "mods" && ! -f "$src/.claude-plugin/plugin.json" ]] && continue
         is_excluded "$base" && continue
+        name_selected "$base" || continue
+        "$cb" "$type" "$src" "$base"
+      done
+    elif [[ "$type" == "plugins" ]]; then
+      for src in "$src_dir"/*.json; do
+        [[ -f "$src" ]] || continue
+        base="$(basename "$src" .json)"
         name_selected "$base" || continue
         "$cb" "$type" "$src" "$base"
       done
@@ -331,6 +396,7 @@ do_install() {
   local type="$1" src="$2" base="$3"
   [[ "$type" == "hooks" ]] && { do_install_hook "$src" "$type/$base"; return; }
   [[ "$type" == "mods" ]] && { do_install_mod "$src" "$type/$base"; return; }
+  [[ "$type" == "plugins" ]] && { do_install_plugin "$src" "$type/$base"; return; }
   local tdir="$TARGET_BASE/$type"
   ensure_dir "$tdir"
   link_one "$src" "$tdir/$base" "$type/$base"
@@ -340,6 +406,7 @@ do_uninstall() {
   local type="$1" src="$2" base="$3"
   [[ "$type" == "hooks" ]] && { do_uninstall_hook "$src" "$type/$base"; return; }
   [[ "$type" == "mods" ]] && { do_uninstall_mod "$src" "$type/$base"; return; }
+  [[ "$type" == "plugins" ]] && { do_uninstall_plugin "$src" "$type/$base"; return; }
   unlink_one "$src" "$TARGET_BASE/$type/$base" "$type/$base"
 }
 
@@ -354,6 +421,12 @@ do_list() {
   if [[ "$type" == "mods" ]]; then
     if [[ "$SETTINGS_NAME" == "settings.json" ]] && mod_installed "$src"; then mark="✓ registered"; else mark="· 미설치"; fi
     printf "  %-9s %s/%s (CLAUDE_CODE_PLUGIN_DIRS)\n" "$mark" "$type" "$base"
+    return
+  fi
+  if [[ "$type" == "plugins" ]]; then
+    require_claude
+    if plugin_installed "$(plugin_id "$src")"; then mark="✓ installed"; else mark="· 미설치"; fi
+    printf "  %-9s %s/%s (%s, %s)\n" "$mark" "$type" "$base" "$(plugin_id "$src")" "$PLUGIN_SCOPE"
     return
   fi
   if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then

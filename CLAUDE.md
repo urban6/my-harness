@@ -11,7 +11,7 @@
 - **네이밍**: 모든 자산 이름은 kebab-case.
 - **frontmatter**: `agents/`, `skills/`의 파일은 `name`, `description`을 반드시 채운다. `description`에는 "언제 쓰는지(트리거)"를 명확히 적는다.
 - **최소 권한**: 에이전트의 `tools`는 실제 필요한 것만 나열한다.
-- **배치**: 자산은 유형에 맞는 디렉터리에 둔다 — `agents/`, `skills/`, `commands/`, `rules/`, `hooks/`, `mods/`. `install.sh`는 `agents/`·`commands/`·`rules/`·`skills/`를 심링크하고, `hooks/`는 훅 폴더(`hooks/<이름>/run.sh`·`hook.json`)의 `hook.json`을 `settings.json`(프로젝트는 `settings.local.json`)에 병합한다. `mods/`는 모드 폴더(`mods/<이름>/.claude-plugin/plugin.json`) 경로를 전역 `settings.json`의 `env.CLAUDE_CODE_PLUGIN_DIRS`에 등록한다(전역 전용).
+- **배치**: 자산은 유형에 맞는 디렉터리에 둔다 — `agents/`, `skills/`, `commands/`, `rules/`, `hooks/`, `mods/`, `plugins/`. `install.sh`는 `agents/`·`commands/`·`rules/`·`skills/`를 심링크하고, `hooks/`는 훅 폴더(`hooks/<이름>/run.sh`·`hook.json`)의 `hook.json`을 `settings.json`(프로젝트는 `settings.local.json`)에 병합한다. `mods/`는 모드 폴더(`mods/<이름>/.claude-plugin/plugin.json`) 경로를 전역 `settings.json`의 `env.CLAUDE_CODE_PLUGIN_DIRS`에 등록한다(전역 전용). `plugins/`는 외부 플러그인 파일(`plugins/<이름>.json` = `{"id": "<플러그인>@<마켓플레이스>", "marketplace": "<owner/repo>"}`)을 `claude plugin install`로 설치한다(전역 user, `--project`면 local 스코프). 외부 플러그인의 스킬·에이전트는 `skills/`·`agents/`에 복사하지 않고, 사용법은 `docs/<이름>.md`에 둔다.
 - **실험**: 방식별 비교 실험은 `playground/`에 둔다. 설치 대상이 아니다.
 - **프롬프트 템플릿**: 사람이 복사해 쓰는 프롬프트는 `prompts/`에 개발 단계별 파일 하나로 둔다. 특정 프로젝트·스택은 `{빈칸}`이나 "채워 넣은 예시"로만 적는다. 설치 대상이 아니다.
 - **참고 문서**: 외부 플러그인 사용법 등 자산이 아닌 참고 문서는 `docs/`에 주제별 파일 하나로 둔다. AI를 쓰면서 잊기 쉬운 습관·요령은 `docs/guide/`에, 설계 스펙·구현 계획은 `docs/specs/`·`docs/plans/`에 `YYYY-MM-DD-<주제>.md`로 둔다. 설치 대상이 아니다.
@@ -27,7 +27,7 @@
 claude plugin validate mods/<이름>                   # mod 매니페스트 검증
 claude plugin test mods/<이름>                       # mod 테스트
 ```
-- 반영 시점: 심링크 자산과 훅 `run.sh`는 즉시 반영된다. `hook.json` 수정은 재설치가 필요하다. mod는 전역 전용이고 새 세션부터 로드된다. hooks·mods 설치에는 `jq`가 필요하다.
+- 반영 시점: 심링크 자산과 훅 `run.sh`는 즉시 반영된다. `hook.json` 수정은 재설치가 필요하다. mod는 전역 전용이고 새 세션부터 로드된다. hooks·mods·plugins 설치에는 `jq`가, plugins에는 `claude` CLI도 필요하다. 플러그인은 새 세션부터 로드된다.
 
 ## 커밋
 - 자산 하나 = 커밋 하나를 기본으로, 관련 변경은 함께 묶는다.
