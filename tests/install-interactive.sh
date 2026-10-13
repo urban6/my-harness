@@ -62,6 +62,10 @@ for ans in n N no; do
   rc "$ans: exit 0" 0; has "$ans: 취소 안내" "취소했습니다"; yes_ "$ans: 대상 미생성" '[[ ! -e $H/.claude ]]'
 done
 
+echo "# 확인에서 y/n 외 입력(한글 입력기 ㅜ) → 다시 묻기"
+fresh; run_i "\\nn 1\\n\\n\\nㅜ\\nn\\n"
+rc "exit 0" 0; has "잘못된 입력 안내" "잘못된 입력: ㅜ"; yes_ "대상 미생성" '[[ ! -e $H/.claude ]]'
+
 echo "# 빈 선택"
 fresh; run_i "\\nn\\n\\n"
 rc "exit 0" 0; has "안내" "선택된 항목이 없습니다"

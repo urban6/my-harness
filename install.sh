@@ -229,8 +229,14 @@ interactive_run() {
   echo; echo "같은 명령: $line"
 
   # 5) 확인 후 설치
-  ask "진행할까요? [Y/n]: "
-  case "$REPLY" in [nN]*) echo "취소했습니다. 변경 없음."; exit 0 ;; esac
+  while :; do
+    ask "진행할까요? [Y/n]: "
+    case "$REPLY" in
+      ""|[yY]*) break ;;
+      [nN]*) echo "취소했습니다. 변경 없음."; exit 0 ;;
+      *) echo "잘못된 입력: $REPLY" ;;
+    esac
+  done
   echo
   DRY_RUN=0; interactive_pass
   echo
