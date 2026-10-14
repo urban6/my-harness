@@ -12,3 +12,4 @@ hooks/<훅 이름>/
 - `hooks/block-rm-rf/` → `PreToolUse(Bash)`에서 `rm -rf` 류(재귀+강제 삭제) 차단
 - `hooks/block-secret-read/` → `PreToolUse(Read|Grep|Bash)`에서 `.env`·`.env.*`·키/인증서 파일 읽기 차단(`.env.example` 등 예시 파일은 허용)
 - `hooks/block-prod-db/` → `PreToolUse(Bash)`에서 Production DB 접속 차단(`prod`·`production`·`live` 키워드 + 프로젝트별 `PROD_DB_PATTERN` 정규식)
+- `hooks/block-secret-leak/` → `PreToolUse(Write|Edit|MultiEdit|Bash)`에서 API 키 하드코딩과 시크릿 출력(`env`·`printenv`·`echo $…KEY`) 차단
