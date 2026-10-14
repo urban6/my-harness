@@ -1,0 +1,10 @@
+{
+  "PreToolUse": [
+    {
+      "matcher": "Read|Grep|Bash",
+      "hooks": [
+        { "type": "command", "command": "__HOOK_DIR__/run.sh" }
+      ]
+    }
+  ]
+}
