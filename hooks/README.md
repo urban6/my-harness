@@ -9,3 +9,4 @@ hooks/<훅 이름>/
 ```
 
 - `hooks/tdd-guard/` → `PreToolUse(Edit|Write|MultiEdit)`에서 대응 테스트 없이 프로덕션 소스 수정 차단
+- `hooks/block-rm-rf/` → `PreToolUse(Bash)`에서 `rm -rf` 류(재귀+강제 삭제) 차단
